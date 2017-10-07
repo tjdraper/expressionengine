@@ -46,8 +46,8 @@ class ViewFactory {
 	/**
 	 * This will make and return a Service\View object
 	 *
-	 * @param str $path The path to the view template file (ex: '_shared/form')
-	 * @return obj A EllisLab\ExpressionEngine\Service\View\View object
+	 * @param string $path The path to the view template file (ex: '_shared/form')
+	 * @return \EllisLab\ExpressionEngine\Service\View\View
 	 */
 	public function make($path)
 	{
