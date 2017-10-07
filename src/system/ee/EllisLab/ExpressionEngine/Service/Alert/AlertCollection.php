@@ -251,7 +251,7 @@ class AlertCollection {
 	 *
 	 * @param string $name The name of the alert
 	 * @param string $type The type of the alert (inline, banner, or standard)
-	 * @return EllisLab\ExpressionEngine\Service\Alert\Alert An Alert
+	 * @return \EllisLab\ExpressionEngine\Service\Alert\Alert
 	 */
 	public function make($name = '', $type = 'standard')
 	{
@@ -262,7 +262,7 @@ class AlertCollection {
 	 * Makes a new named inline alert.
 	 *
 	 * @param string $name The name of the alert
-	 * @return EllisLab\ExpressionEngine\Service\Alert\Alert An Alert
+	 * @return \EllisLab\ExpressionEngine\Service\Alert\Alert
 	 */
 	public function makeInline($name = '')
 	{
