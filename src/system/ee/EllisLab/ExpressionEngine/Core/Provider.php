@@ -10,12 +10,12 @@ use EllisLab\ExpressionEngine\Service\Dependency\InjectionBindingDecorator;
 class Provider extends InjectionBindingDecorator {
 
 	/**
-	 * @var Array The setup file data
+	 * @var array The setup file data
 	 */
 	protected $data;
 
 	/**
-	 * @var String The root directory for this provider
+	 * @var string The root directory for this provider
 	 */
 	protected $path;
 
@@ -30,19 +30,19 @@ class Provider extends InjectionBindingDecorator {
 	protected $autoloader;
 
 	/**
-	 * @var Path to the config directory
+	 * @var string Path to the config directory
 	 */
 	protected $config_path;
 
 	/**
-	 * @var Array of cached config file instances
+	 * @var array of cached config file instances
 	 */
 	protected $config_files = array();
 
 	/**
 	 * @param ServiceProvider $delegate The root dependencies object
 	 * @param String $path Core namespace path
-	 * @param Array $data The setup file contents
+	 * @param array $data The setup file contents
 	 */
 	public function __construct(ServiceProvider $delegate, $path, array $data)
 	{
@@ -68,7 +68,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the default config path
 	 *
-	 * @return String Path to the config directory
+	 * @return string Path to the config directory
 	 */
 	public function getConfigPath()
 	{
@@ -79,6 +79,7 @@ class Provider extends InjectionBindingDecorator {
 	 * Set the prefix in use for this provider
 	 *
 	 * @param String $prefix Prefix this was registered under
+	 * @throws \Exception
 	 */
 	public function setPrefix($prefix)
 	{
@@ -106,7 +107,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the registered path
 	 *
-	 * @return String Path in use
+	 * @return string Path in use
 	 */
 	public function getPath()
 	{
@@ -116,7 +117,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the registered prefix
 	 *
-	 * @return String Prefix in use
+	 * @return string Prefix in use
 	 */
 	public function getPrefix()
 	{
@@ -126,7 +127,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'author' key
 	 *
-	 * @return String vendor name
+	 * @return string vendor name
 	 */
 	public function getAuthor()
 	{
@@ -136,7 +137,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'name' key
 	 *
-	 * @return String product name
+	 * @return string product name
 	 */
 	public function getName()
 	{
@@ -146,7 +147,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'version' key
 	 *
-	 * @return String version number
+	 * @return string version number
 	 */
 	public function getVersion()
 	{
@@ -156,7 +157,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'namespace' key
 	 *
-	 * @return String namespace name
+	 * @return string namespace name
 	 */
 	public function getNamespace()
 	{
@@ -166,7 +167,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'services' key
 	 *
-	 * @return Array [name => closure]
+	 * @return array [name => closure]
 	 */
 	public function getServices()
 	{
@@ -176,7 +177,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'services.singletons' key
 	 *
-	 * @return Array [name => closure]
+	 * @return array [name => closure]
 	 */
 	public function getSingletons()
 	{
@@ -186,7 +187,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'models' key
 	 *
-	 * @return Array [name => class-name-in-namespace]
+	 * @return array [name => class-name-in-namespace]
 	 */
 	public function getModels()
 	{
@@ -207,7 +208,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'models.dependencies' key
 	 *
-	 * @return Array [model => [ee:foo, ee:bar]]
+	 * @return array [model => [ee:foo, ee:bar]]
 	 */
 	public function getModelDependencies()
 	{
@@ -251,6 +252,7 @@ class Provider extends InjectionBindingDecorator {
 	 * Register this provider's services
 	 *
 	 * @param String $prefix The service prefix to use
+	 * @throws \Exception
 	 */
 	protected function registerServices($prefix)
 	{
