@@ -52,6 +52,7 @@ class Facade {
 	 *
 	 * @param String $name Model to run the query on
 	 * @param Mixed $default_ids One or more ids to prime the query with [optional]
+	 * @return \EllisLab\ExpressionEngine\Service\Model\Query\Builder
 	 */
 	public function get($name, $default_ids = NULL)
 	{
