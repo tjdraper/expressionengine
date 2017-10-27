@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Security &amp; Privacy &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="System Settings" href="index.html" />
+	    <link rel="next" title="Template Settings" href="template.html" />
+	    <link rel="prev" title="Messaging Settings" href="messages.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >The Control Panel</a></li>
+								<li><a href="index.html" accesskey="U">System Settings</a></li>
+								<li class="last">Security &amp; Privacy</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="security-privacy">
+<h1>Security &amp; Privacy<a class="headerlink" href="#security-privacy" title="Permalink to this headline">¶</a></h1>
+<p class="cp-path"><strong>Control Panel Location:</strong> <span class="menuselection">Settings ‣ Security &amp; Privacy</span></p>
+<p>This section of the Control Panel allows you to define the basic
+security-related settings for your website. These are security settings that
+apply throughout the website/system.</p>
+<div class="section" id="permission-restrictions">
+<h2>Permission Restrictions<a class="headerlink" href="#permission-restrictions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Access settings: General Settings</li>
+</ul>
+</div>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#cp-session-type" id="id1">CP session type</a></li>
+<li><a class="reference internal" href="#website-session-type" id="id2">Website Session type</a></li>
+<li><a class="reference internal" href="#domain" id="id3">Domain</a></li>
+<li><a class="reference internal" href="#path" id="id4">Path</a></li>
+<li><a class="reference internal" href="#prefix" id="id5">Prefix</a></li>
+<li><a class="reference internal" href="#send-cookies-over-http-only" id="id6">Send cookies over HTTP only?</a></li>
+<li><a class="reference internal" href="#send-cookies-securely" id="id7">Send cookies securely?</a></li>
+<li><a class="reference internal" href="#allow-members-to-change-username" id="id8">Allow members to change username?</a></li>
+<li><a class="reference internal" href="#minimum-username-length" id="id9">Minimum username length</a></li>
+<li><a class="reference internal" href="#allow-multiple-logins" id="id10">Allow multiple logins?</a></li>
+<li><a class="reference internal" href="#require-user-agent-and-ip-for-login" id="id11">Require user agent and IP for login?</a></li>
+<li><a class="reference internal" href="#enable-password-lock-out" id="id12">Enable password lock out?</a></li>
+<li><a class="reference internal" href="#password-lock-out-interval" id="id13">Password lock out interval</a></li>
+<li><a class="reference internal" href="#require-secure-passwords" id="id14">Require secure passwords?</a></li>
+<li><a class="reference internal" href="#minimum-password-length" id="id15">Minimum password length</a></li>
+<li><a class="reference internal" href="#allow-dictionary-words-in-passwords" id="id16">Allow dictionary words in passwords?</a></li>
+<li><a class="reference internal" href="#dictionary-file" id="id17">Dictionary file</a></li>
+<li><a class="reference internal" href="#deny-duplicate-data" id="id18">Deny duplicate data?</a></li>
+<li><a class="reference internal" href="#require-user-agent-and-ip-for-posting" id="id19">Require user agent and IP for posting?</a></li>
+<li><a class="reference internal" href="#apply-xss-filtering" id="id20">Apply XSS filtering?</a></li>
+</ul>
+</div>
+<div class="section" id="cp-session-type">
+<span id="cp-session-type-label"></span><h3><a class="toc-backref" href="#id1">CP session type</a><a class="headerlink" href="#cp-session-type" title="Permalink to this headline">¶</a></h3>
+<p>This determines how sessions are handled for the Control Panel. You may
+use cookies, session IDs, or a combination. The available options are:</p>
+<ul class="simple">
+<li><strong>Cookies and session ID</strong>: Both cookies and URL session ID
+parameters are used to track the admin user. This is the default
+setting, and is the most secure since it relies on two individual
+cookies and a URL session ID.</li>
+<li><strong>Cookies only</strong>: Only cookies are used to track the admin user. When
+this setting is used a &#8220;remember me&#8221; checkbox will appear next to the
+Control Panel login page, enabling users to stay permanently logged
+in.</li>
+<li><strong>Session ID only</strong>: Only URL session IDs are used to track the admin
+user. This option should only be used if your desktop computer
+prevents you from accepting cookies in the event you are behind a
+firewall or due to some other technical issue.</li>
+</ul>
+</div>
+<div class="section" id="website-session-type">
+<span id="website-session-type-label"></span><h3><a class="toc-backref" href="#id2">Website Session type</a><a class="headerlink" href="#website-session-type" title="Permalink to this headline">¶</a></h3>
+<p>This determines how sessions are handled for the front-end of the site.
+You may use cookies, session IDs, or a combination. The available
+options are:</p>
+<ul class="simple">
+<li><strong>Cookies and session ID</strong>: Both cookies and URL session ID
+parameters are used to track the user throughout their visit.</li>
+<li><strong>Cookies only</strong>: Only cookies are used to track the user throughout
+their visit. This is the default setting, and generally the best
+option since it prevents URLs from showing session IDs.</li>
+<li><strong>Session ID only</strong>: Only URL session IDs are used to track the user
+throughout their visit.</li>
+</ul>
+</div>
+<div class="section" id="domain">
+<span id="cookie-domain-label"></span><h3><a class="toc-backref" href="#id3">Domain</a><a class="headerlink" href="#domain" title="Permalink to this headline">¶</a></h3>
+<p>Optionally specify a domain the cookie is available to. By default, the
+exact hostname of the requested page is set as the cookie domain. For
+example, if the page at <code class="docutils literal"><span class="pre">http://www.example.com/blog/an-entry-title</span></code>
+is loaded and the cookie domain is left blank in ExpressionEngine&#8217;s
+configuration, the browser will use <code class="docutils literal"><span class="pre">www.example.com</span></code> as the cookie
+domain. The browser will only make these cookies available when the
+page&#8217;s hostname is <em>exactly</em> <code class="docutils literal"><span class="pre">www.example.com</span></code>.</p>
+<p>If the cookie domain is explicitly specified, however, the browser will
+make the cookie available whenever the requested page&#8217;s hostname
+<em>contains</em> the cookie domain. For example, setting the cookie domain to
+<code class="docutils literal"><span class="pre">.example.com</span></code> will ensure the cookie is shared whenever the requested
+page&#8217;s hostname includes <code class="docutils literal"><span class="pre">example.com</span></code>, <code class="docutils literal"><span class="pre">www.example.com</span></code>,
+<code class="docutils literal"><span class="pre">admin.example.com</span></code>, <code class="docutils literal"><span class="pre">blog.example.com</span></code>, and so on.</p>
+<p>If you&#8217;re running multiple subdomains on a single ExpressionEngine
+installation and want member sessions to be valid across all subdomains,
+you should explicitly set the cookie domain.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There&#8217;s an important difference between <code class="docutils literal"><span class="pre">example.com</span></code> and
+<code class="docutils literal"><span class="pre">.example.com</span></code>. When the cookie domain begins with a dot, browsers
+match any hostname that <em>includes</em> the cookie domain. Without the
+dot prefix, browsers are looking for an exact hostname match in the
+URL, which means cookies will not be available to subdomains. A
+cookie set by PHP with an explicitly specified cookie domain will
+always include the dot prefix, whether or not one is included in
+this ExpressionEngine setting. For clarity&#8217;s sake, the examples here
+include a leading dot when the cookie domain is being explicitly
+set.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Browsers will not save cookies if the specified cookie domain
+isn&#8217;t included in the request&#8217;s hostname. In other words, a site can
+only set cookies for <code class="docutils literal"><span class="pre">.example.com</span></code> if its hostname actually
+includes <code class="docutils literal"><span class="pre">example.com</span></code>.</p>
+</div>
+</div>
+<div class="section" id="path">
+<span id="cookie-path-label"></span><h3><a class="toc-backref" href="#id4">Path</a><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+<p>Optionally specify a cookie path. When a cookie path is set, the browser
+will only share cookies with ExpressionEngine when the beginning of the
+URL path matches the cookie path. For example, if the cookie path is set
+to <code class="docutils literal"><span class="pre">/blog/</span></code>, a cookie for the domain <code class="docutils literal"><span class="pre">example.com</span></code> will only be sent
+by the browser if the URL begins with <code class="docutils literal"><span class="pre">http://example.com/blog/</span></code>. This
+can be useful if you have ExpressionEngine installed in a sub-directory
+and want to ensure that only that particular installation has access to
+the cookies it sets.</p>
+</div>
+<div class="section" id="prefix">
+<span id="cookie-prefix-label"></span><h3><a class="toc-backref" href="#id5">Prefix</a><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+<p>Specify a prefix for the cookie name set by ExpressionEngine. This
+protects against collisions from separate ExpressionEngine installations
+on the same cookie domain.</p>
+</div>
+<div class="section" id="send-cookies-over-http-only">
+<h3><a class="toc-backref" href="#id6">Send cookies over HTTP only?</a><a class="headerlink" href="#send-cookies-over-http-only" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, cookies will not be accessible through JavaScript.</p>
+</div>
+<div class="section" id="send-cookies-securely">
+<h3><a class="toc-backref" href="#id7">Send cookies securely?</a><a class="headerlink" href="#send-cookies-securely" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, cookies will only be transmitted over a secure HTTPS connection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your site must use SSL everywhere for this to work.</p>
+</div>
+</div>
+<div class="section" id="allow-members-to-change-username">
+<span id="allow-member-username-label"></span><h3><a class="toc-backref" href="#id8">Allow members to change username?</a><a class="headerlink" href="#allow-members-to-change-username" title="Permalink to this headline">¶</a></h3>
+<p>As the name suggests, this setting determines whether or not members are
+allowed to change their own usernames after registration. (Members will
+always be able to change their own screen names.)</p>
+</div>
+<div class="section" id="minimum-username-length">
+<span id="security-min-username-label"></span><h3><a class="toc-backref" href="#id9">Minimum username length</a><a class="headerlink" href="#minimum-username-length" title="Permalink to this headline">¶</a></h3>
+<p>You may specify the minimum length required for a member username during
+new member registration. Specify the minimum number of characters
+required.</p>
+</div>
+<div class="section" id="allow-multiple-logins">
+<span id="allow-multi-logins-label"></span><h3><a class="toc-backref" href="#id10">Allow multiple logins?</a><a class="headerlink" href="#allow-multiple-logins" title="Permalink to this headline">¶</a></h3>
+<p>Set whether an account can have multiple active sessions at one time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This feature is incompatible with the &#8220;Cookies Only&#8221; session type.</p>
+</div>
+</div>
+<div class="section" id="require-user-agent-and-ip-for-login">
+<span id="require-ip-logins-label"></span><h3><a class="toc-backref" href="#id11">Require user agent and IP for login?</a><a class="headerlink" href="#require-user-agent-and-ip-for-login" title="Permalink to this headline">¶</a></h3>
+<p>If this preference is set to &#8220;Yes&#8221;, then users will not be able to log
+in unless their browser (or other access device) correctly supplies
+their IP address and User Agent (browser) information. Having this set
+to &#8220;Yes&#8221; can help prevent hackers from logging in using direct socket
+connections or from trying to access the system with a masked IP
+address.</p>
+</div>
+<div class="section" id="enable-password-lock-out">
+<span id="security-enable-passwd-lockout-label"></span><h3><a class="toc-backref" href="#id12">Enable password lock out?</a><a class="headerlink" href="#enable-password-lock-out" title="Permalink to this headline">¶</a></h3>
+<p>When this preference is set to &#8220;Yes&#8221;, the system will lock a member
+account if more than four invalid login attempts are made within a
+specified time period (see next setting). This preference is designed to
+deter hackers from using collision attacks to guess poorly chosen
+passwords. The account remains locked for the duration of the time
+period. Once the period expires it becomes unlocked.</p>
+</div>
+<div class="section" id="password-lock-out-interval">
+<span id="security-passwd-lockout-int-label"></span><h3><a class="toc-backref" href="#id13">Password lock out interval</a><a class="headerlink" href="#password-lock-out-interval" title="Permalink to this headline">¶</a></h3>
+<p>This setting is used together with the previous preference. Here you can
+determine, in minutes, the time interval over which more than four
+invalid login attempts will trigger a lockout. You may use decimals to
+indicate fractions of a minute: e.g. 1.5 equals one and a half minutes.</p>
+</div>
+<div class="section" id="require-secure-passwords">
+<span id="security-require-secure-passwords-label"></span><h3><a class="toc-backref" href="#id14">Require secure passwords?</a><a class="headerlink" href="#require-secure-passwords" title="Permalink to this headline">¶</a></h3>
+<p>If this preference is set to &#8220;Yes&#8221;, then users will be required to
+choose a minimally &#8220;secure&#8221; password. In this case, a password
+containing at least one uppercase character, one lowercase character,
+and one numeric character. Passwords that follow this basic formula are
+much more difficult to guess.</p>
+</div>
+<div class="section" id="minimum-password-length">
+<span id="security-min-password-label"></span><h3><a class="toc-backref" href="#id15">Minimum password length</a><a class="headerlink" href="#minimum-password-length" title="Permalink to this headline">¶</a></h3>
+<p>You may specify the minimum length required for a member password during
+new member registration. Specify the minimum number of characters
+required. It is common practice to require passwords at least eight (8)
+characters long.</p>
+</div>
+<div class="section" id="allow-dictionary-words-in-passwords">
+<span id="dict-passwds-label"></span><h3><a class="toc-backref" href="#id16">Allow dictionary words in passwords?</a><a class="headerlink" href="#allow-dictionary-words-in-passwords" title="Permalink to this headline">¶</a></h3>
+<p>Set whether words commonly found in the dictionary can be used as
+passwords. Disabling will make &#8220;dictionary attacks&#8221; by hackers much more
+difficult.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order to be able to use this setting you must have <a class="reference internal" href="#dict-passwds-file-label"><span class="std std-ref">a dictionary file</span></a> installed.</p>
+</div>
+</div>
+<div class="section" id="dictionary-file">
+<span id="dict-passwds-file-label"></span><h3><a class="toc-backref" href="#id17">Dictionary file</a><a class="headerlink" href="#dictionary-file" title="Permalink to this headline">¶</a></h3>
+<p>This is the filename of the dictionary file used for the previous
+preference. Download the <a class="reference external" href="https://ellislab.com/asset/file/dictionary.zip">dictionary file</a>, unzip, and upload
+the text file (<code class="file docutils literal"><span class="pre">dictionary.txt</span></code>) to
+<code class="file docutils literal"><span class="pre">system/user/config/</span></code>.</p>
+<p>Enter only the filename of the file (<code class="file docutils literal"><span class="pre">dictionary.txt</span></code>) in this
+field.</p>
+</div>
+<div class="section" id="deny-duplicate-data">
+<h3><a class="toc-backref" href="#id18">Deny duplicate data?</a><a class="headerlink" href="#deny-duplicate-data" title="Permalink to this headline">¶</a></h3>
+<p>This option prevents data submitted by users (such as comments) from
+being processed if it is an exact duplicate of data that already exists.
+This setting is designed to deter automated spam attacks as well as
+multiple accidental submissions.</p>
+</div>
+<div class="section" id="require-user-agent-and-ip-for-posting">
+<span id="require-ip-posting-submit-comments-label"></span><h3><a class="toc-backref" href="#id19">Require user agent and IP for posting?</a><a class="headerlink" href="#require-user-agent-and-ip-for-posting" title="Permalink to this headline">¶</a></h3>
+<p>Similar to the previous setting, when turned on, this setting requires
+IP address and user agent information to be supplied when submitting
+comments.</p>
+</div>
+<div class="section" id="apply-xss-filtering">
+<h3><a class="toc-backref" href="#id20">Apply XSS filtering?</a><a class="headerlink" href="#apply-xss-filtering" title="Permalink to this headline">¶</a></h3>
+<p>Checks all file uploads for code injection attempts before finalizing the upload.
+Superadmins are exempt from image XSS filtering.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The Control Panel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/create.html">Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/edit.html">Entry Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">File Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../members/index.html">Member Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../channel/index.html">Channel Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design/index.html">Template Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../msm/index.html">Site Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addons/index.html">Add-On Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utilities/index.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logs/index.html">System Logs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">System Settings</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="avatars.html">Avatar Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="captcha.html">CAPTCHA Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="comments.html">Comment Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="content-design.html">Content &amp; Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debug-output.html">Debugging &amp; Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html">Outgoing Email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html">General Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hit-tracking.html">Hit Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="license.html">License &amp; Registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="members.html">Member Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="messages.html">Messaging Settings</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Security &amp; Privacy</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="template.html">Template Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="throttling.html">Access Throttling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urls.html">URL and Path Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="word-censor.html">Word Censorship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buttons/index.html">HTML Buttons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="menu/index.html">Menu Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../footer.html">CP Footer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

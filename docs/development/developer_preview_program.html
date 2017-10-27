@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Developer Preview Program &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="JSON Version Feed" href="json_version_feed.html" />
+	    <link rel="prev" title="Emoticon Development" href="emoticons.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Developer Preview Program</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="developer-preview-program">
+<h1>Developer Preview Program<a class="headerlink" href="#developer-preview-program" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#purpose" id="id1">Purpose</a></li>
+<li><a class="reference internal" href="#benefits" id="id2">Benefits</a></li>
+<li><a class="reference internal" href="#how-to-join" id="id3">How to Join</a></li>
+<li><a class="reference internal" href="#my-add-ons-are-bespoke-can-i-join" id="id4">My Add-ons are Bespoke, Can I Join?</a></li>
+<li><a class="reference internal" href="#security-researchers-and-reporters" id="id5">Security Researchers and Reporters</a></li>
+<li><a class="reference internal" href="#who-is-in-the-developer-preview" id="id6">Who Is in the Developer Preview?</a></li>
+</ul>
+</div>
+<div class="section" id="purpose">
+<h2><a class="toc-backref" href="#id1">Purpose</a><a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>The ExpressionEngine Developer Preview Program provides early access to
+feature releases for the purpose of allowing developers of public
+add-ons to ensure that their add-ons are compatible with new versions of
+ExpressionEngine. The primary goals of the program are to:</p>
+<ul class="simple">
+<li>Ensure that public third-party add-ons are ready to go on the same day
+that EllisLab releases a new version of ExpressionEngine</li>
+<li>Work with third-party developers to continually improve the
+ExpressionEngine API and third-party software compatibility</li>
+</ul>
+</div>
+<div class="section" id="benefits">
+<h2><a class="toc-backref" href="#id2">Benefits</a><a class="headerlink" href="#benefits" title="Permalink to this headline">¶</a></h2>
+<p>Members of the ExpressionEngine Developer Preview Program receive the
+following benefits:</p>
+<ul class="simple">
+<li>Early access to pre-release versions of ExpressionEngine (typically
+3-4 weeks ahead of a public release)</li>
+<li>Includes the pre-release builds for ExpressionEngine, Multiple Site
+Manager, Discussion Forums, the User Guide and ExpressionEngine Core</li>
+<li>Email notifications of new pre-release builds</li>
+<li>Build notes to help point out changes that are most likely to impact
+third-party add-ons</li>
+<li>Access to the ExpressionEngine Developer forums to interact with the
+entire EllisLab Team as well as other developers in the program. This
+includes alerting the EllisLab team to potential show-stopping issues
+affecting their add-ons, and working with EllisLab Engineers on
+solutions to those issues prior to a release.</li>
+</ul>
+</div>
+<div class="section" id="how-to-join">
+<h2><a class="toc-backref" href="#id3">How to Join</a><a class="headerlink" href="#how-to-join" title="Permalink to this headline">¶</a></h2>
+<p>In order to join the program you must have a publicly-available add-on
+and have at least one ExpressionEngine 2 license in your account. If you
+are interested in joining the Developer Preview Program, please send an
+email to <a class="reference external" href="mailto:team&#37;&#52;&#48;ellislab&#46;com?subject=Developer%20Preview%20Request">team<span>&#64;</span>ellislab<span>&#46;</span>com</a> and include your EllisLab.com username and
+a link to your publicly-available add-ons in your request.</p>
+</div>
+<div class="section" id="my-add-ons-are-bespoke-can-i-join">
+<h2><a class="toc-backref" href="#id4">My Add-ons are Bespoke, Can I Join?</a><a class="headerlink" href="#my-add-ons-are-bespoke-can-i-join" title="Permalink to this headline">¶</a></h2>
+<p>The Developer Preview Program is only available to developers with
+public add-ons and an ExpressionEngine license in order to maximize the
+effectiveness of the engineering resources devoted to the program at
+this time.</p>
+</div>
+<div class="section" id="security-researchers-and-reporters">
+<h2><a class="toc-backref" href="#id5">Security Researchers and Reporters</a><a class="headerlink" href="#security-researchers-and-reporters" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re always happy to work with security researchers and reporters and
+if you&#8217;ve reported at least one valid security issue, we want you to be
+part of the developer preview. If you&#8217;ve submitted an issue in the past
+and aren&#8217;t part of the program, just email us at <a class="reference external" href="mailto:team&#37;&#52;&#48;ellislab&#46;com?subject=Developer%20Preview%20Request">team<span>&#64;</span>ellislab<span>&#46;</span>com</a>.</p>
+</div>
+<div class="section" id="who-is-in-the-developer-preview">
+<h2><a class="toc-backref" href="#id6">Who Is in the Developer Preview?</a><a class="headerlink" href="#who-is-in-the-developer-preview" title="Permalink to this headline">¶</a></h2>
+<p>Curious if the developer of one of your installed add-ons is in the
+program? If you do not see them in the list below, please email them
+and encourage them to join!</p>
+<ul class="simple">
+<li>Aaron Walden</li>
+<li>Aidann Bowley (BridgingUnit)</li>
+<li>Andrew Fairlie (Red Carrot)</li>
+<li>Andrew Gunstone (Thirst Studios)</li>
+<li>Andrew Weaver</li>
+<li>Anthony Mellor (Climbing Turn)</li>
+<li>Ben Croker</li>
+<li>Benjamin Kohl (Masuga Design)</li>
+<li>Benoit Marchal</li>
+<li>Berry Timmermans</li>
+<li>Bjørn Børresen</li>
+<li>Brad Boegler (Nexcess)</li>
+<li>Brad Morse</li>
+<li>Brad Parscale (DevDemon)</li>
+<li>Brian Litzinger</li>
+<li>Brian Mallett (BlackBeltDesigns)</li>
+<li>Bryan Burgers</li>
+<li>Carl Crawley</li>
+<li>Casey Reid (Clearfire)</li>
+<li>Chris Barrett</li>
+<li>Chris Newton</li>
+<li>Christofer Sandin (Republic Factory)</li>
+<li>Christopher Imrie</li>
+<li>Clinton Reeves (Q Digital Studio)</li>
+<li>Dan Decker</li>
+<li>Dan Diemer</li>
+<li>Daniel Grebb</li>
+<li>Danny Bull (Digi Nut)</li>
+<li>Darren Miller</li>
+<li>David Dexter (Codesly)</li>
+<li>David Pak</li>
+<li>Derek Hogue</li>
+<li>Digital Surgeons</li>
+<li>Dom Stubbs</li>
+<li>Doug Black, Jr. (American Bible Society)</li>
+<li>Doug Thwaites</li>
+<li>Douglas Green</li>
+<li>Eli Van Zoeren</li>
+<li>Elliot Lewis (no two the same)</li>
+<li>Emily Fitton (Punch Buggy Digital Agency)</li>
+<li>Eric Lamb</li>
+<li>Erik Reagan</li>
+<li>Erwin van Lun</li>
+<li>Filip Quivreux</li>
+<li>Filip Vanderstappen</li>
+<li>Filippo Salza</li>
+<li>Gerhard Dalenoort</li>
+<li>Grant Rowley (Q Digital Studio)</li>
+<li>Gurudutt Verma</li>
+<li>Gustavs Gutmanis (Solspace)</li>
+<li>Iain Saxon (EE-Garage)</li>
+<li>Iain Urquhart</li>
+<li>Ian Young (Expresso)</li>
+<li>Ira Salsberg</li>
+<li>Isaac Rayway</li>
+<li>Jace Richardson (EE Harbor)</li>
+<li>James Smith</li>
+<li>Jamie Pittock</li>
+<li>Jamie Taylor (Percipio)</li>
+<li>Jan van Lysebettens</li>
+<li>Jason Boothman (Reusser Design)</li>
+<li>Jason Siffring (Surprise Highway)</li>
+<li>Jelle de Jong</li>
+<li>Jeremy Gimbel</li>
+<li>Jeremy Worboys</li>
+<li>Jeroen Dewaele (Bits of Love)</li>
+<li>Jerry Price</li>
+<li>Jesse Schutt</li>
+<li>Jimmy Fursman (Mercutio Consulting)</li>
+<li>Joe Paravisini</li>
+<li>John Baxter</li>
+<li>John de Beer</li>
+<li>John Henry Donovan</li>
+<li>John Morton</li>
+<li>John Moylan</li>
+<li>John Wells</li>
+<li>Jon Thomas (AnalyticL)</li>
+<li>Josh Clark (dynam)</li>
+<li>Justin Kimbrell</li>
+<li>Kelly Sims (Codesly)</li>
+<li>Kelsey Martens</li>
+<li>Kevin Smith</li>
+<li>Kurt Deutscher</li>
+<li>Laisvunas Sopauskas</li>
+<li>Lance Johnson (Green Egg Media)</li>
+<li>Leevi Graham</li>
+<li>Leon Dijk</li>
+<li>Lodewijk</li>
+<li>Louis Dekeister (Hop Studios)</li>
+<li>Malcolm Elsworth</li>
+<li>Manuel Payano (DevDemon)</li>
+<li>Marc Miller</li>
+<li>Marcus Neto</li>
+<li>Mark Croxton</li>
+<li>Mark Drzycimski</li>
+<li>Mark Huot</li>
+<li>Matt Barry</li>
+<li>Matt D. Johnson (EE Harbor)</li>
+<li>Matt Weinberg (Vector Media Group)</li>
+<li>Max Lazar</li>
+<li>Maxim WEB (Websecret)</li>
+<li>Michael Boyink</li>
+<li>Michael Leigeber</li>
+<li>Michael Rog</li>
+<li>Michael Witwicki (Booyant)</li>
+<li>Mike Wenger (Q Digital Studio)</li>
+<li>Nathan Pitman</li>
+<li>Nicco De Gols</li>
+<li>Nick Le Guillou</li>
+<li>Nicolas Bottari</li>
+<li>Nigel Hughes</li>
+<li>Nikolay Bronskiy</li>
+<li>Padraig Kennedy</li>
+<li>Patrick Pohler (Anecka)</li>
+<li>Patrick Woodcock</li>
+<li>Paul Larson (Creative Arc)</li>
+<li>Paul Sijpkes</li>
+<li>Pedro Guimaraes (Willow Light Studio)</li>
+<li>Peter Felix</li>
+<li>Pierre-Vincent Ledoux</li>
+<li>Ragnar Frostason (Republic Factory)</li>
+<li>Rein de Vries</li>
+<li>Richard Whitmer</li>
+<li>Rob Sanchez</li>
+<li>Robin Hodges</li>
+<li>Robin Willmot (Coffee Bean Design)</li>
+<li>Robson Sobral</li>
+<li>Roger Huges (Triad)</li>
+<li>Ryan Bonnell</li>
+<li>Ryan Irelan</li>
+<li>Ryan Masuga</li>
+<li>Sam Lomax</li>
+<li>Satya Prakash</li>
+<li>Scott Henderson</li>
+<li>Seth Giammanco</li>
+<li>Shane Eckert (EE Harbor)</li>
+<li>Shane Nielsen (EE Harbor)</li>
+<li>Shane Woodward (thotbox)</li>
+<li>Solspace</li>
+<li>Stephen Callender</li>
+<li>Steve Fickus</li>
+<li>Steven Peercy</li>
+<li>Strukt</li>
+<li>Susan Snipes (Q Digital Studio)</li>
+<li>Taylor Daughtry (Caddis)</li>
+<li>TJ Draper</li>
+<li>Tom Jaeger (EE Harbor)</li>
+<li>Travis Smith (Hop Studios)</li>
+<li>Trevor Davis (Viget Labs)</li>
+<li>Ty Wangsness</li>
+<li>Tyson Oshiro</li>
+<li>Will Hyman</li>
+<li>Willem de Boer</li>
+<li>Wouter Vervloet</li>
+<li>Yahya Jokhab (UXspan)</li>
+<li>Yuri Salimovskiy (IntoEEtive)</li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Developer Preview Program</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

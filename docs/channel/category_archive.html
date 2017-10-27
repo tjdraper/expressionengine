@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Channel Category Archive Tag &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Channel" href="index.html" />
+	    <link rel="next" title="Channel Category Heading Tag" href="category_heading.html" />
+	    <link rel="prev" title="Channel Categories Tag" href="categories.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Channel</a></li>
+								<li class="last">Channel Category Archive Tag</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="channel-category-archive-tag">
+<h1>Channel Category Archive Tag<a class="headerlink" href="#channel-category-archive-tag" title="Permalink to this headline">¶</a></h1>
+<p>This tag is designed to let you list all of your channel entries and
+have them organized by category.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:category_archive</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;default_site&quot;</span> <span class="na">style</span><span class="p">=</span><span class="s2">&quot;linear&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="k">if</span> <span class="nv">category_description</span><span class="p">}</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">category_description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">entry_titles</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">{</span><span class="nf">/entry_titles</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:category_archive</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This tag allows you to show your entry titles organized by category in a
+master archive that looks like this</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Category one<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Category one is our first category.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/1/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/2/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/3/&quot;</span><span class="p">&gt;</span>title three<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/4/&quot;</span><span class="p">&gt;</span>title four<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/5/&quot;</span><span class="p">&gt;</span>title five<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Category two<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This was our second category ever created.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/6/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/7/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/8/&quot;</span><span class="p">&gt;</span>title three<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/9/&quot;</span><span class="p">&gt;</span>title four<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/10/&quot;</span><span class="p">&gt;</span>title five<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+
+etc...
+</pre></div>
+</div>
+<p>It shows the name of each category, and the channel entry titles
+assigned to them.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Once you have hundreds of channel entries, it might become
+cumbersome to use this tag on your page.</p>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="backspace">
+<h3>backspace=<a class="headerlink" href="#backspace" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>backspace=&quot;7&quot;
+</pre></div>
+</div>
+<p>Backspacing removes characters (including spaces and line breaks) from
+the last iteration of the loop. For example, if you put a &lt;br /&gt; tag
+after each listed entry you&#8217;ll have this</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Category one
+
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/1/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/2/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/3/&quot;</span><span class="p">&gt;</span>title three<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/4/&quot;</span><span class="p">&gt;</span>title four<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/5/&quot;</span><span class="p">&gt;</span>title five<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+
+Category two
+
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/6/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/7/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>You might, however, not want the &lt;br /&gt; tag after the final item. Simply
+count the number of characters (including spaces and line breaks) you
+want to remove and add the backspace parameter to the tag. The &lt;br /&gt;
+tag has 6 characters plus a new line character, so you would do this</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:category_archive</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;default_site&quot;</span> <span class="na">style</span><span class="p">=</span><span class="s2">&quot;linear&quot;</span> <span class="na">backspace</span><span class="p">=</span><span class="s2">&quot;7&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">entry_titles</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">{</span><span class="nf">/entry_titles</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:category_archive</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>That will produce code like this</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Category one<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/1/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/2/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/3/&quot;</span><span class="p">&gt;</span>title three<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/4/&quot;</span><span class="p">&gt;</span>title four<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/5/&quot;</span><span class="p">&gt;</span>title five<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Category two<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/6/&quot;</span><span class="p">&gt;</span>title one<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;www.mysite.com/7/&quot;</span><span class="p">&gt;</span>title two<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The &#8220;backspace&#8221; parameter is only allowed if you are using the &#8220;linear&#8221;
+style. It is not applicable if you use the &#8220;nested&#8221; style for the
+display of the list.</p>
+</div>
+<div class="section" id="channel">
+<h3>channel=<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;channel&quot;
+</pre></div>
+</div>
+<p>This indicates the name of the channel that the categories are assigned
+to. The channel parameter is <strong>required</strong> unless you only have a single
+channel. Multiple channels may also be specified.</p>
+</div>
+<div class="section" id="class">
+<h3>class=<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>class=&quot;my_custom_class&quot;
+</pre></div>
+</div>
+<p>When using the &#8220;nested&#8221; style of display (see the <a class="reference external" href="#par_style">style=</a>
+parameter), this lets you specify the value of the &#8220;class&#8221; attribute in
+the opening &lt;ul&gt; tag. The default value is &#8220;nav_cat_archive&#8221;.</p>
+</div>
+<div class="section" id="disable">
+<h3>disable=<a class="headerlink" href="#disable" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>disable=&quot;category_fields&quot;
+</pre></div>
+</div>
+<p>The disable= parameter allows you to turn off aspects of the tag that
+you might not be using in order to improve performance. Valid options
+are:</p>
+<ul class="simple">
+<li>category_fields</li>
+</ul>
+</div>
+<div class="section" id="id">
+<h3>id=<a class="headerlink" href="#id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>id=&quot;my_custom_id&quot;
+</pre></div>
+</div>
+<p>When using the &#8220;nested&#8221; style of display (see the <a class="reference external" href="#par_style">style=</a>
+parameter), this lets you specify the value of the &#8220;id&#8221; attribute in the
+opening &lt;ul&gt; tag. The default value is &#8220;nav_cat_archive&#8221;.</p>
+<p>For instance, if you set the parameter as id=&#8221;my_custom_id&#8221;, then the
+beginning of the nested category output would be:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_custom_id&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderby">
+<h3>orderby=<a class="headerlink" href="#orderby" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;date&quot;
+</pre></div>
+</div>
+<p>The &#8220;order&#8221; parameter sets the display order of the entries. Setting
+options for this parameter include:</p>
+<ul class="simple">
+<li>orderby=&#8221;date&#8221;</li>
+<li>orderby=&#8221;title&#8221;</li>
+<li>orderby=&#8221;comment&#8221;</li>
+<li>orderby=&#8221;most_recent_comment&#8221;</li>
+</ul>
+<p>If this parameter is not set, it will default to ordering by the title.</p>
+</div>
+<div class="section" id="show">
+<h3>show=<a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show=&quot;4|7&quot;
+</pre></div>
+</div>
+<p>With this parameter, you can specify which categories will be included
+in the list. For instance, if you wanted to keep a particular category
+from being listed you could specify only those you wanted displayed to
+be included. Category IDs are separated by the pipe character to specify
+more than one category.</p>
+<p>You may alternatively specify which categories to not show:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show=&quot;not 3|6|8&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-empty">
+<h3>show_empty=<a class="headerlink" href="#show-empty" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_empty=&quot;no&quot;
+</pre></div>
+</div>
+<p>This parameter determines whether or not categories that contain no
+entries are displayed. If you set the parameter to &#8220;no&#8221; then categories
+which do not contain any entries will not be included in the list.</p>
+<p>By default, categories with no entries <strong>will</strong> be included.</p>
+</div>
+<div class="section" id="show-future-entries">
+<h3>show_future_entries=<a class="headerlink" href="#show-future-entries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_future_entries=&quot;yes&quot;
+</pre></div>
+</div>
+<p>You can determine whether you wish for entries dated in the &#8220;future&#8221; to
+be included. This option is useful when doing things like creating a
+list of events, some of which have not occurred yet.</p>
+</div>
+<div class="section" id="sort">
+<h3>sort=<a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>sort=&quot;asc&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>sort=&quot;desc&quot;
+</pre></div>
+</div>
+<p>The sort order can be &#8220;asc&#8221; (ascending order or &#8220;oldest item first&#8221;) or
+&#8220;desc&#8221; (descending order or &#8220;newest item first&#8221;). If you do not use a
+sort order the default is desc.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The order of the categories will always follow the Category
+Order specified in the control panel. The only things the sort
+parameter changes is the order of the <em>entries</em> within each
+category.</p>
+</div>
+</div>
+<div class="section" id="status">
+<h3>status=<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;open&quot;
+</pre></div>
+</div>
+<p>You may restrict to entries with a particular <a class="reference internal" href="../cp/channel/status/index.html"><span class="doc">status</span></a>. You can choose multiple statuses using a
+pipe</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;draft|reviewed|published&quot;
+</pre></div>
+</div>
+<p>Or exclude statuses using &#8220;not&#8221;</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;not submitted|processing|closed&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>style=<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>style=&quot;linear&quot;
+</pre></div>
+</div>
+<p>There are two list &#8220;styles&#8221; for your categories: &#8220;nested&#8221; and &#8220;linear&#8221;.</p>
+<p>By default, the category list is displayed fully &#8220;nested&#8221; to show the
+parent/child hierarchy between the categories. It will display the
+categories as nested &#8220;unordered lists&#8221; and will automatically enclose
+the contents in &lt;li&gt; tags and nest them correctly to show the hierarchy.</p>
+<p>When using the &#8220;nested&#8221; style of display, the opening &lt;ul&gt; tag of the
+list will have an id of &#8220;nav_cat_archive&#8221; applied to it. This can be
+used as a selector for javascript or CSS to create expanding lists or
+menus.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;nav_cat_archive&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The list can also be shown in a flat &#8220;linear&#8221; style.</p>
+<p>For more information about how this option works see the parameter
+description on the <a class="reference internal" href="categories.html"><span class="doc">Channel Categories</span></a> page.</p>
+</div>
+</div>
+<div class="section" id="variable-pairs">
+<h2>Variable Pairs<a class="headerlink" href="#variable-pairs" title="Permalink to this headline">¶</a></h2>
+<p>There are two variable pairs to delineate where the category markup
+starts/ends and where the title markup starts/ends.</p>
+</div>
+<div class="section" id="categories-variable-pair">
+<h2>{categories} Variable Pair<a class="headerlink" href="#categories-variable-pair" title="Permalink to this headline">¶</a></h2>
+<p>There are several variables available for use inside the
+{categories}{/categories} variable pair.</p>
+<div class="section" id="active">
+<h3>active<a class="headerlink" href="#active" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">active</span><span class="p">}</span> This category is active <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional to test whether the category shown is the
+active category or not, based on the dynamic URI segment.</p>
+</div>
+<div class="section" id="category-description">
+<h3>category_description<a class="headerlink" href="#category-description" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">category_description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This displays the content of the &#8220;category description&#8221; field associated
+with the category. The variable may also be wrapped in a conditional
+statement so that it only displays if there is content in the field:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+    <span class="p">{</span><span class="k">if</span> <span class="nv">category_description</span><span class="p">}{</span><span class="nf">category_description</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="category-id">
+<h3>category_id<a class="headerlink" href="#category-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The category ID associated with the category.</p>
+</div>
+<div class="section" id="parent-id">
+<h3>parent_id<a class="headerlink" href="#parent-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">parent_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The category ID associated with the category&#8217;s parent (or 0 in the case
+of a top level category).</p>
+</div>
+<div class="section" id="category-image">
+<h3>category_image<a class="headerlink" href="#category-image" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_image</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The image link (or other information) you can optionally store with each
+category within the Control Panel.</p>
+</div>
+<div class="section" id="category-name">
+<h3>category_name<a class="headerlink" href="#category-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This displays the name of the category.</p>
+</div>
+<div class="section" id="category-url-title">
+<h3>category_url_title<a class="headerlink" href="#category-url-title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_url_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable displays the URL title of the category</p>
+</div>
+<div class="section" id="path">
+<h3>path<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;site/categories&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The path (template_group/template) is used to create a URL to display a
+list of the entries belonging to this category.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;site/categories&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You can also use SITE_INDEX in your path to point to your main site
+index page. If you show your categories on your home page, using
+SITE_INDEX is preferable since it will make the URL cleaner.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-category-fields">
+<h3>Custom Category Fields<a class="headerlink" href="#custom-category-fields" title="Permalink to this headline">¶</a></h3>
+<p>All custom fields assigned to a category can be accessed using the
+&#8220;short name&#8221; of the field</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">class</span><span class="p">}</span> <span class="p">{</span><span class="nf">extended_description</span><span class="p">}</span> <span class="p">{</span><span class="nf">category_name_fr</span><span class="p">}</span> etc..
+</pre></div>
+</div>
+<p>These are totally dynamic in that any field you create for your category
+will automatically be available by its &#8220;short name&#8221; as a variable.</p>
+</div>
+</div>
+<div class="section" id="entry-titles-variable-pair">
+<h2>{entry_titles} Variable Pair<a class="headerlink" href="#entry-titles-variable-pair" title="Permalink to this headline">¶</a></h2>
+<p>There are several variables available for use inside the
+{entry_titles}{/entry_titles} variable pair.</p>
+<div class="section" id="entry-date">
+<h3>entry_date<a class="headerlink" href="#entry-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date the entry was submitted</p>
+</div>
+<div class="section" id="entry-id">
+<h3>entry_id<a class="headerlink" href="#entry-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID number of the channel entry.</p>
+</div>
+<div class="section" id="entry-id-path">
+<h3>entry_id_path<a class="headerlink" href="#entry-id-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_titles</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;site/index&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/entry_titles</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The path (template_group/template) is used to create a URL to display
+this entry. This variable uses the entry&#8217;s id number in the URL. This is
+typically used within a standard HTML link tag</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;site/index&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You can also use SITE_INDEX in your path to point to your main site
+index page. If you show your channel on your home page, using
+SITE_INDEX is preferable since it will make the URL cleaner.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>path<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_titles</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;site/index&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/entry_titles</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The path (template_group/template) is used to create a URL to display
+this entry. This variable uses the entry&#8217;s url_title in the URL. This
+is typically used within a standard HTML link tag</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;site/index&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You can also use SITE_INDEX in your path to point to your main site
+index page. If you show your channel on your home page, using
+SITE_INDEX is preferable since it will make the URL cleaner.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="title">
+<h3>title<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_titles</span><span class="p">}</span> <span class="p">{</span><span class="nf">title</span><span class="p">}</span> <span class="p">{</span><span class="nf">/entry_titles</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the title of the entry.</p>
+</div>
+<div class="section" id="url-title">
+<h3>url_title<a class="headerlink" href="#url-title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The human readable title used in the URL as a permalink.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Channel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="archive_month_links.html">Archive Month Links Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calendar.html">Calendar Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="categories.html">Channel Categories Tag</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Channel Category Archive Tag</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="category_heading.html">Channel Category Heading Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_entries.html">Channel Entries Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_info.html">Channel Information Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamic_parameters.html">Dynamic Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entry_linking.html">Next/Previous Entry Linking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entry_tracking.html">Entry &#8220;Views&#8221; Tracking Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination_spanning.html">Spanning a Channel Entry Across Multiple Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sets.html">Channel Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_form/index.html">Channel Form</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

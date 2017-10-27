@@ -214,7 +214,13 @@ $lang = array(
 
 'autosaved' => 'Auto saved',
 
-'autosaved_entries' => 'Auto saved Entries',
+'autosaved_entries' => 'Auto-saved Entries',
+
+'autosaved_versions' => 'Auto-saved versions',
+
+'autosaved_versions_desc' => 'Below is a list of auto-saved versions of this entry.',
+
+'autosaves' => 'Auto Saves',
 
 'blockquote' => 'Blockquote',
 
@@ -638,8 +644,6 @@ $lang = array(
 
 'select_action' => 'Select Your Placement Options',
 
-'select_all' => 'Select/Deselect All',
-
 'select_channel_to_edit' => 'Choose a channel to view',
 
 'select_channel_to_post_in' => 'Choose a channel to post in',
@@ -653,6 +657,10 @@ $lang = array(
 'show_toolbar' => 'show toolbar',
 
 'spam' => 'SPAM',
+
+'spam_comments' => 'There are <b>%d comments</b> flagged as potential spam that <a href="%s">need moderation</a>.',
+
+'spam_comments_header' => 'Spam Comments',
 
 'span' => 'Span',
 

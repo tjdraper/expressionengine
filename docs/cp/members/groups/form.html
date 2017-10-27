@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Create/Edit All Member Groups &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Member Groups" href="index.html" />
+	    <link rel="next" title="Member Profile" href="../profile/index.html" />
+	    <link rel="prev" title="Member Groups" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >The Control Panel</a></li>
+								<li><a href="../index.html" >Member Manager</a></li>
+								<li><a href="index.html" accesskey="U">Member Groups</a></li>
+								<li class="last">Create/Edit All Member Groups</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="create-edit-all-member-groups">
+<h1>Create/Edit All Member Groups<a class="headerlink" href="#create-edit-all-member-groups" title="Permalink to this headline">¶</a></h1>
+<p class="cp-path"><strong>Control Panel Location:</strong> <span class="menuselection">Members ‣ Member Groups ‣ Create/Edit</span></p>
+<p>This sections allows you to set the various permissions and settings for the selected Member Group</p>
+<div class="section" id="permission-restrictions">
+<h2>Permission Restrictions<a class="headerlink" href="#permission-restrictions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Member Groups Allowed actions: Create New Groups</li>
+<li>Member Groups Allowed actions: Edit Groups</li>
+</ul>
+</div>
+<div class="section" id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#name" id="id2">Name</a></li>
+<li><a class="reference internal" href="#description" id="id3">Description</a></li>
+<li><a class="reference internal" href="#include-members-in" id="id4">Include members in</a></li>
+<li><a class="reference internal" href="#security-lock" id="id5">Security Lock</a></li>
+<li><a class="reference internal" href="#website-access" id="id6">Website Access</a></li>
+<li><a class="reference internal" href="#access-public-profiles" id="id7">Access public profiles</a></li>
+<li><a class="reference internal" href="#email-other-members" id="id8">Email other members</a></li>
+<li><a class="reference internal" href="#delete-account" id="id9">Delete account</a></li>
+<li><a class="reference internal" href="#recipient-s-for-delete-notifications" id="id10">Recipient(s) for delete notifications</a></li>
+<li><a class="reference internal" href="#submit-comments" id="id11">Submit comments</a></li>
+<li><a class="reference internal" href="#moderation-actions" id="id12">Moderation actions</a></li>
+<li><a class="reference internal" href="#access-search-utility" id="id13">Access search utility</a></li>
+<li><a class="reference internal" href="#search-limit-in-seconds" id="id14">Search limit (in seconds)</a></li>
+<li><a class="reference internal" href="#access-personal-messages" id="id15">Access personal messages</a></li>
+<li><a class="reference internal" href="#per-day-maximum" id="id16">Per day maximum</a></li>
+<li><a class="reference internal" href="#storage-maximum" id="id17">Storage Maximum</a></li>
+<li><a class="reference internal" href="#allow-attachments" id="id18">Allow attachments</a></li>
+<li><a class="reference internal" href="#access-bulletins" id="id19">Access bulletins</a></li>
+<li><a class="reference internal" href="#access-control-panel" id="id20">Access control panel</a></li>
+<li><a class="reference internal" href="#default-cp-homepage" id="id21">Default <abbr title="Control Panel">CP</abbr> homepage</a></li>
+<li><a class="reference internal" href="#access-footer-helper-links" id="id22">Access footer helper links</a></li>
+<li><a class="reference internal" href="#channels" id="id23">Channels</a></li>
+<li><a class="reference internal" href="#channel-fields" id="id24">Channel fields</a></li>
+<li><a class="reference internal" href="#channel-categories" id="id25">Channel categories</a></li>
+<li><a class="reference internal" href="#statuses" id="id26">Statuses</a></li>
+<li><a class="reference internal" href="#allowed-actions" id="id27">Allowed actions</a></li>
+<li><a class="reference internal" href="#allowed-channels" id="id28">Allowed channels</a></li>
+<li><a class="reference internal" href="#asset-upload-directories" id="id29">Asset upload directories</a></li>
+<li><a class="reference internal" href="#assets" id="id30">Assets</a></li>
+<li><a class="reference internal" href="#rte-toolsets" id="id31">RTE toolsets</a></li>
+<li><a class="reference internal" href="#id1" id="id32">Allowed actions</a></li>
+<li><a class="reference internal" href="#manage-general-design-settings" id="id33">Manage general design settings</a></li>
+<li><a class="reference internal" href="#template-groups" id="id34">Template groups</a></li>
+<li><a class="reference internal" href="#template-partials" id="id35">Template partials</a></li>
+<li><a class="reference internal" href="#template-variables" id="id36">Template variables</a></li>
+<li><a class="reference internal" href="#allowed-template-groups" id="id37">Allowed template groups</a></li>
+<li><a class="reference internal" href="#install-or-remove-add-ons" id="id38">Install or remove add-ons</a></li>
+<li><a class="reference internal" href="#allowed-add-on-access" id="id39">Allowed add-on access</a></li>
+<li><a class="reference internal" href="#access-tools-sections" id="id40">Access Tools sections</a></li>
+<li><a class="reference internal" href="#access-settings" id="id41">Access settings</a></li>
+</ul>
+</div>
+<div class="section" id="name">
+<h3><a class="toc-backref" href="#id2">Name</a><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<p>The display name of the Member Group.</p>
+</div>
+<div class="section" id="description">
+<h3><a class="toc-backref" href="#id3">Description</a><a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>A brief description of the Member Group.</p>
+</div>
+<div class="section" id="include-members-in">
+<h3><a class="toc-backref" href="#id4">Include members in</a><a class="headerlink" href="#include-members-in" title="Permalink to this headline">¶</a></h3>
+<p>Users in this group will be including in all of the selected list types.</p>
+</div>
+<div class="section" id="security-lock">
+<h3><a class="toc-backref" href="#id5">Security Lock</a><a class="headerlink" href="#security-lock" title="Permalink to this headline">¶</a></h3>
+<p>When set to enable, only Super Admins can add or remove members from this group.</p>
+<p>If you allow frontend member registration, the group the user will be assigned to upon registration must be unlocked.</p>
+</div>
+<div class="section" id="website-access">
+<h3><a class="toc-backref" href="#id6">Website Access</a><a class="headerlink" href="#website-access" title="Permalink to this headline">¶</a></h3>
+<p>Users in this group will be allowed access to the website for each status mode selected.</p>
+</div>
+<div class="section" id="access-public-profiles">
+<h3><a class="toc-backref" href="#id7">Access public profiles</a><a class="headerlink" href="#access-public-profiles" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may view public profiles of other members.</p>
+<p>If you allow frontend member registration, the group the user will be assigned to upon registration must be unlocked</p>
+</div>
+<div class="section" id="email-other-members">
+<h3><a class="toc-backref" href="#id8">Email other members</a><a class="headerlink" href="#email-other-members" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may send emails to other members via the system.</p>
+</div>
+<div class="section" id="delete-account">
+<h3><a class="toc-backref" href="#id9">Delete account</a><a class="headerlink" href="#delete-account" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may delete their own accounts without approval</p>
+</div>
+<div class="section" id="recipient-s-for-delete-notifications">
+<h3><a class="toc-backref" href="#id10">Recipient(s) for delete notifications</a><a class="headerlink" href="#recipient-s-for-delete-notifications" title="Permalink to this headline">¶</a></h3>
+<p>All recipients will be notified anytime a user deletes their account. Separate e-mails with a comma.</p>
+</div>
+<div class="section" id="submit-comments">
+<h3><a class="toc-backref" href="#id11">Submit comments</a><a class="headerlink" href="#submit-comments" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may submit comments to the website.</p>
+</div>
+<div class="section" id="moderation-actions">
+<span id="comment-admin-privs"></span><h3><a class="toc-backref" href="#id12">Moderation actions</a><a class="headerlink" href="#moderation-actions" title="Permalink to this headline">¶</a></h3>
+<p>Users in this group will be allowed to perform all of the selected actions.</p>
+</div>
+<div class="section" id="access-search-utility">
+<h3><a class="toc-backref" href="#id13">Access search utility</a><a class="headerlink" href="#access-search-utility" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may use the search functionality of the website.</p>
+</div>
+<div class="section" id="search-limit-in-seconds">
+<h3><a class="toc-backref" href="#id14">Search limit (in seconds)</a><a class="headerlink" href="#search-limit-in-seconds" title="Permalink to this headline">¶</a></h3>
+<p>Length of time between searches a user must wait before performing another search.</p>
+</div>
+<div class="section" id="access-personal-messages">
+<h3><a class="toc-backref" href="#id15">Access personal messages</a><a class="headerlink" href="#access-personal-messages" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may send and receive personal messages.</p>
+</div>
+<div class="section" id="per-day-maximum">
+<h3><a class="toc-backref" href="#id16">Per day maximum</a><a class="headerlink" href="#per-day-maximum" title="Permalink to this headline">¶</a></h3>
+<p>Maximum number of personal messages that a user may send per day.</p>
+</div>
+<div class="section" id="storage-maximum">
+<h3><a class="toc-backref" href="#id17">Storage Maximum</a><a class="headerlink" href="#storage-maximum" title="Permalink to this headline">¶</a></h3>
+<p>Maximum number of personal messages a user may store in their account.</p>
+</div>
+<div class="section" id="allow-attachments">
+<h3><a class="toc-backref" href="#id18">Allow attachments</a><a class="headerlink" href="#allow-attachments" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may attach files to personal messages.</p>
+</div>
+<div class="section" id="access-bulletins">
+<h3><a class="toc-backref" href="#id19">Access bulletins</a><a class="headerlink" href="#access-bulletins" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may send and receive bulletins.</p>
+</div>
+<div class="section" id="access-control-panel">
+<h3><a class="toc-backref" href="#id20">Access control panel</a><a class="headerlink" href="#access-control-panel" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may access the control panel.</p>
+</div>
+<div class="section" id="default-cp-homepage">
+<h3><a class="toc-backref" href="#id21">Default <abbr title="Control Panel">CP</abbr> homepage</a><a class="headerlink" href="#default-cp-homepage" title="Permalink to this headline">¶</a></h3>
+<p>Page of the <abbr title="Control Panel">CP</abbr> this group should see when logging in.</p>
+</div>
+<div class="section" id="access-footer-helper-links">
+<h3><a class="toc-backref" href="#id22">Access footer helper links</a><a class="headerlink" href="#access-footer-helper-links" title="Permalink to this headline">¶</a></h3>
+<p>Choose which links this member group can access in the CP footer.</p>
+</div>
+<div class="section" id="channels">
+<h3><a class="toc-backref" href="#id23">Channels</a><a class="headerlink" href="#channels" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="channel-fields">
+<h3><a class="toc-backref" href="#id24">Channel fields</a><a class="headerlink" href="#channel-fields" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="channel-categories">
+<h3><a class="toc-backref" href="#id25">Channel categories</a><a class="headerlink" href="#channel-categories" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="statuses">
+<h3><a class="toc-backref" href="#id26">Statuses</a><a class="headerlink" href="#statuses" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="allowed-actions">
+<h3><a class="toc-backref" href="#id27">Allowed actions</a><a class="headerlink" href="#allowed-actions" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions on the below selected channels.</p>
+</div>
+<div class="section" id="allowed-channels">
+<h3><a class="toc-backref" href="#id28">Allowed channels</a><a class="headerlink" href="#allowed-channels" title="Permalink to this headline">¶</a></h3>
+<p>Users can access and perform the above selected actions on all selected channels.</p>
+</div>
+<div class="section" id="asset-upload-directories">
+<h3><a class="toc-backref" href="#id29">Asset upload directories</a><a class="headerlink" href="#asset-upload-directories" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="assets">
+<h3><a class="toc-backref" href="#id30">Assets</a><a class="headerlink" href="#assets" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="rte-toolsets">
+<h3><a class="toc-backref" href="#id31">RTE toolsets</a><a class="headerlink" href="#rte-toolsets" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id32">Allowed actions</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="manage-general-design-settings">
+<h3><a class="toc-backref" href="#id33">Manage general design settings</a><a class="headerlink" href="#manage-general-design-settings" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may manage content and design settings.</p>
+</div>
+<div class="section" id="template-groups">
+<h3><a class="toc-backref" href="#id34">Template groups</a><a class="headerlink" href="#template-groups" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="template-partials">
+<h3><a class="toc-backref" href="#id35">Template partials</a><a class="headerlink" href="#template-partials" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="template-variables">
+<h3><a class="toc-backref" href="#id36">Template variables</a><a class="headerlink" href="#template-variables" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all selected actions.</p>
+</div>
+<div class="section" id="allowed-template-groups">
+<h3><a class="toc-backref" href="#id37">Allowed template groups</a><a class="headerlink" href="#allowed-template-groups" title="Permalink to this headline">¶</a></h3>
+<p>Users can perform all the above selected actions on all selected template groups.</p>
+</div>
+<div class="section" id="install-or-remove-add-ons">
+<h3><a class="toc-backref" href="#id38">Install or remove add-ons</a><a class="headerlink" href="#install-or-remove-add-ons" title="Permalink to this headline">¶</a></h3>
+<p>When set to <strong>yes</strong>, users assigned to this group may install and remove add-ons.</p>
+</div>
+<div class="section" id="allowed-add-on-access">
+<h3><a class="toc-backref" href="#id39">Allowed add-on access</a><a class="headerlink" href="#allowed-add-on-access" title="Permalink to this headline">¶</a></h3>
+<p>Users can access all of the selected add-ons.</p>
+</div>
+<div class="section" id="access-tools-sections">
+<h3><a class="toc-backref" href="#id40">Access Tools sections</a><a class="headerlink" href="#access-tools-sections" title="Permalink to this headline">¶</a></h3>
+<p>Users can access all of the selected tools sections.</p>
+</div>
+<div class="section" id="access-settings">
+<h3><a class="toc-backref" href="#id41">Access settings</a><a class="headerlink" href="#access-settings" title="Permalink to this headline">¶</a></h3>
+<p>Users can access all of the selected settings.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">The Control Panel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">CP Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../publish/create.html">Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../publish/edit.html">Entry Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../files/index.html">File Manager</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Member Manager</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bans.html">Banned Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../create.html">Register a New Member</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fields/index.html">Custom Member Fields</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Member Groups</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Create/Edit All Member Groups</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../profile/index.html">Member Profile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../channel/index.html">Channel Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../design/index.html">Template Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../msm/index.html">Site Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addons/index.html">Add-On Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../utilities/index.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../logs/index.html">System Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../settings/index.html">System Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../footer.html">CP Footer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html">CP Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

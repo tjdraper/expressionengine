@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Bugs and Security Reports &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="next" title="ExpressionEngine 4.x Change Log" href="../about/changelog.html" />
+	    <link rel="prev" title="Tags within Conditionals" href="../troubleshooting/templates/tags_within_advanced_conditionals.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li class="last">Bugs and Security Reports</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="bugs-and-security-reports">
+<h1>Bugs and Security Reports<a class="headerlink" href="#bugs-and-security-reports" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#submitting-a-bug-report" id="id1">Submitting a Bug Report</a><ul>
+<li><a class="reference internal" href="#bug-tracker-statuses" id="id2">Bug Tracker Statuses</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#security-reporting-guidelines" id="id3">Security Reporting Guidelines</a><ul>
+<li><a class="reference internal" href="#what-are-security-issues" id="id4">What are Security Issues?</a></li>
+<li><a class="reference internal" href="#making-good-security-reports" id="id5">Making Good Security Reports</a></li>
+<li><a class="reference internal" href="#reporting-and-disclosure" id="id6">Reporting and Disclosure</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>This is a quick guide on how to submit a bug report and an overview of
+what we do with bugs once they&#8217;re submitted, as well as how to report
+security issues with ExpressionEngine.</p>
+<div class="section" id="submitting-a-bug-report">
+<h2><a class="toc-backref" href="#id1">Submitting a Bug Report</a><a class="headerlink" href="#submitting-a-bug-report" title="Permalink to this headline">¶</a></h2>
+<p>You can submit bug reports in the <a class="reference external" href="https://support.ellislab.com/bugs">ExpressionEngine Bug
+Tracker</a>. Tips and guidelines are updated periodically on the
+<a class="reference external" href="https://support.ellislab.com/bugs/submit">bug submission page</a>. If your bug is security
+related, please see the <a class="reference internal" href="#security-reporting-guidelines">Security Reporting Guidelines</a>. Some common
+best practices for reporting bugs are:</p>
+<ul class="simple">
+<li>Make sure this is a bug. The best way to do this is to review the
+appropriate section of the User Guide, check your preferences, and
+look for typos. We strongly suggest you submit a <a class="reference external" href="https://support.ellislab.com/">support ticket</a>
+if there is any doubt that this is a bug and not a user or server error.</li>
+<li>Check the list of <a class="reference external" href="https://support.ellislab.com/bugs">recently reported bugs</a> and/or
+perform a bug search to see if its already been reported.</li>
+<li>Tell us what you expected to happen that didn&#8217;t. For example,
+&#8220;I thought doing this task would produce this result.&#8221;</li>
+<li>Then explain what actually happened. &#8220;But instead, something else happened.&#8221;</li>
+<li>Be sure to include <em>the exact wording</em> of any error messages.</li>
+<li>If possible provide a URI where the bug can be reviewed.</li>
+</ul>
+<div class="section" id="bug-tracker-statuses">
+<h3><a class="toc-backref" href="#id2">Bug Tracker Statuses</a><a class="headerlink" href="#bug-tracker-statuses" title="Permalink to this headline">¶</a></h3>
+<p>When you enter a bug report, it will go in with a status of &#8216;New&#8217;.
+Once a staff members has evaluated the bug, the status will be changed
+to one of the following options:</p>
+<ul class="simple">
+<li><strong>Accepted:</strong> The bug has been confirmed and will be addressed by
+our engineers.</li>
+<li><strong>Duplicate:</strong> A bug report already exists for this issue and a
+link will be provided to the existing issue.</li>
+<li><strong>Clarification Requested:</strong> We are unable to duplicate the bug as
+reported, and need additional information to determine if it is a
+bug or some other issue.</li>
+<li><strong>Fixed is in Upcoming Release:</strong> The bug has been fixed and the fix
+will be included in a future release (typically the very next one).
+Where possible, a solution will walk you through adding a temporary
+fix to your own installation.</li>
+<li><strong>Bug Fixed:</strong> The bug has been fixed in the publicly released
+software.</li>
+<li><strong>See Comments:</strong> The reported issue may not be a bug, or may be an
+issue with an external application or service. Where possible, we
+will try to explain how to solve the reported problem.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="security-reporting-guidelines">
+<h2><a class="toc-backref" href="#id3">Security Reporting Guidelines</a><a class="headerlink" href="#security-reporting-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>We take security issues very seriously, and encourage responsible
+reporting with a high priority on making security fixes or patches
+available rapidly, prior to any public disclosure of the vulnerability.
+We find this is the best balance of giving security issues the attention
+they rightly deserve, and protecting end users and site visitors from
+malicious individuals and script kiddies.</p>
+<p>All software has vulnerabilities, but when we work together with developers
+and researchers, we can all help make the Internet a safer and better
+place. We love to acknowledge researchers who make valid security reports
+and work with us, and while we do not have a bounty program, sometimes
+will donate software or swag for being classy.</p>
+<p>If you have a security issue to report, you can let us know at
+<a class="reference external" href="mailto:team&#37;&#52;&#48;ellislab&#46;com?subject=Security%20Vulnerability">team<span>&#64;</span>ellislab<span>&#46;</span>com</a>
+or if you prefer at <a class="reference external" href="https://hackerone.com">HackerOne</a>.</p>
+<div class="section" id="what-are-security-issues">
+<h3><a class="toc-backref" href="#id4">What are Security Issues?</a><a class="headerlink" href="#what-are-security-issues" title="Permalink to this headline">¶</a></h3>
+<p>When we speak about security related bugs, we are most interested in:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_Scripting">Cross-site Scripting (XSS)</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-site Request Forgery (CSRF)</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Privilege_escalation">Privilege Escalation</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Session_hijacking">Session Hijacking</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Arbitrary_code_execution">Arbitrary Code Execution</a></li>
+</ul>
+</div>
+<div class="section" id="making-good-security-reports">
+<h3><a class="toc-backref" href="#id5">Making Good Security Reports</a><a class="headerlink" href="#making-good-security-reports" title="Permalink to this headline">¶</a></h3>
+<p>We don&#8217;t have rigid guidelines for what a security bug report should
+include, as we want to minimize barriers—ultimately we just want to
+receive the information. That said, the best security reports not only
+describe the vulnerability, but include a proof of concept as well as
+how it might be exploited in a realistic situation. Bonus points for
+including your recommended solution.</p>
+<p>On the converse, security reports that are merely the output of
+penetration testing software are generally not only unhelpful, but
+typically contain false-positives as the software cannot grasp the
+context or implications of a piece of code that checks off one of the
+items on the vendor&#8217;s preset list of vulnerabilities.</p>
+<p>Since our team only speaks English all security reports must be made in
+English, and communication will be in that language.</p>
+</div>
+<div class="section" id="reporting-and-disclosure">
+<h3><a class="toc-backref" href="#id6">Reporting and Disclosure</a><a class="headerlink" href="#reporting-and-disclosure" title="Permalink to this headline">¶</a></h3>
+<p>Once you have reported the security issue, a number of steps will be
+taken to assess and address the reported issue prior to disclosure.</p>
+<ul class="simple">
+<li>The report will be triaged within 48 hours to determine if the issue
+is a legitimate security issue. Issues reported on weekends or U.S.
+holidays may take 72–96 hours to be triaged.</li>
+<li>Immediately after being triaged, an engineer will be assigned as the
+owner of the issue and will contact you regarding your report.</li>
+<li>If confirmed, the engineer will set to work on resolving the issue,
+providing the reporter with a patch to test the prospective fix.</li>
+<li>We try to have all security issues fixed within two weeks of being
+triaged, often much more quickly. All valid security reports have a
+high priority, but will be addressed in a relative priority based on:<ul>
+<li>Whether a known exploit is in the wild</li>
+<li>The severity of the exploit</li>
+<li>The likelihood of user impact</li>
+<li>Complexity of the issue</li>
+</ul>
+</li>
+<li>In any case, the engineer assigned to the issue will maintain regular
+contact with the reporter throughout the process, at minimum once per
+week.</li>
+<li>The security bug fix will typically be included in the next software release.
+Depending on the priority conditions above and how distance the next
+planned release is, we may issue a release and/or patch that only
+addresses the reported security bug.</li>
+<li>We disclose in our application <a class="reference internal" href="../about/changelog.html"><span class="doc">Change Log</span></a> that a security
+bug has been fixed, and what type. We do not disclose the steps or
+circumstances to reproduce the bug.</li>
+<li>Releases are posted to our <a class="reference external" href="https://ellislab.com/blog">blog</a>, and for users who have
+left the default feature enabled, receive notification when logged in
+to their control panel.</li>
+<li>Public disclosure of a security bug prior to resolution makes our
+engineers and customers quite unhappy, and will not be met with gratitude.</li>
+</ul>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bugs and Security Reports</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

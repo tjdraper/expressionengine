@@ -1,8 +1,13 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Members;
-
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 use CP_Controller;
 use EllisLab\ExpressionEngine\Library\CP;
@@ -13,27 +18,7 @@ use EllisLab\ExpressionEngine\Service\Filter\FilterFactory;
 use EllisLab\ExpressionEngine\Service\CP\Filter\FilterRunner;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Members Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Members Controller
  */
 class Members extends CP_Controller {
 
@@ -1124,8 +1109,6 @@ class Members extends CP_Controller {
 		$this->base_url->addQueryStringVariables($this->params);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Looks through the member search string for search tokens (e.g. id:3
 	 * or username:john)
@@ -1169,8 +1152,6 @@ class Members extends CP_Controller {
 		return $search_string;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Generate post re-assignment view if applicable
 	 *
@@ -1189,26 +1170,63 @@ class Members extends CP_Controller {
 		{
 			$group_ids = ee()->member_model->get_members_group_ids($selected);
 
-			// Find Valid Member Replacements
-			ee()->db->select('member_id, username, screen_name')
-				->from('members')
-				->where_in('group_id', $group_ids)
-				->where_not_in('member_id', $selected)
-				->order_by('screen_name');
-			$heirs = ee()->db->get();
+			$vars['heirs'] = $this->heirFilter($group_ids, $selected);
 
-			foreach ($heirs->result() as $heir)
-			{
-				$name_to_use = ($heir->screen_name != '') ? $heir->screen_name : $heir->username;
-				$vars['heirs'][$heir->member_id] = $name_to_use;
-			}
+			$vars['fields'] = array(
+				'heir' => array(
+					'type' => 'radio',
+					'choices' => $vars['heirs'],
+					'filter_url' => ee('CP/URL')->make(
+						'members/heir-filter',
+						[
+							'group_ids' => implode('|', $group_ids),
+							'selected' => implode('|', $selected)
+						]
+					)->compile(),
+					'no_results' => ['text' => 'no_members_found'],
+					'margin_top' => TRUE,
+					'margin_left' => TRUE
+				)
+			);
 		}
 
 		ee()->view->cp_page_title = lang('delete_member');
 		ee()->cp->render('members/delete_confirm', $vars);
 	}
 
-	// --------------------------------------------------------------------
+	/**
+	 * AJAX endpoint for filtering heir selection
+	 *
+	 * @param array $group_ids Group IDs to search
+	 * @param array $selected Members to exclude from search
+	 * @return array List of members normalized for SelectField
+	 */
+	public function heirFilter($group_ids = NULL, $selected = NULL)
+	{
+		$search_term = ee('Request')->get('search') ?: '';
+		$group_ids = $group_ids ?: explode('|', ee('Request')->get('group_ids'));
+		$selected = $selected ?: explode('|', ee('Request')->get('selected'));
+
+		$members = ee('Model')->get('Member')
+			->fields('screen_name', 'username')
+			->search(
+				['screen_name', 'username', 'email', 'member_id'], $search_term
+			)
+			->filter('group_id', 'IN', $group_ids)
+			->filter('member_id', 'NOT IN', $selected)
+			->order('screen_name')
+			->limit(100)
+			->all();
+
+		$heirs = [];
+		foreach($members as $heir)
+		{
+			$name = ($heir->screen_name != '') ? 'screen_name' : 'username';
+			$heirs[$heir->getId()] = $heir->$name;
+		}
+
+		return ee('View/Helpers')->normalizedChoices($heirs);
+	}
 
 	/**
 	 * Member Delete
@@ -1304,8 +1322,6 @@ class Members extends CP_Controller {
 		ee()->functions->redirect($this->base_url);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Check to see if the members being deleted are super admins. If they are
 	 * we need to make sure that the deleting user is a super admin and that
@@ -1346,8 +1362,6 @@ class Members extends CP_Controller {
 			}
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Send email notifications to email addresses for the respective member
@@ -1417,8 +1431,6 @@ class Members extends CP_Controller {
 			}
 		}
 	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Set the header for the members section

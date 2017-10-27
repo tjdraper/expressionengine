@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Rich Text Editor Javascript &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Control Panel Javascript Reference" href="../index.html" />
+	    <link rel="next" title="Ranges and Selections" href="rangesandselections.html" />
+	    <link rel="prev" title="Javascript Table Plugin" href="../table.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" accesskey="U">Control Panel Javascript Reference</a></li>
+								<li class="last">Rich Text Editor Javascript</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="rich-text-editor-javascript">
+<h1>Rich Text Editor Javascript<a class="headerlink" href="#rich-text-editor-javascript" title="Permalink to this headline">¶</a></h1>
+<p>ExpressionEngine&#8217;s rich text editor has a clean API that hides away a lot
+of the finicky browser differences.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#prerequisites" id="id1">Prerequisites</a></li>
+<li><a class="reference internal" href="#registering-buttons" id="id2">Registering Buttons</a></li>
+<li><a class="reference internal" href="#responding-to-events" id="id3">Responding to Events</a></li>
+<li><a class="reference internal" href="#modifying-the-text" id="id4">Modifying the Text</a></li>
+<li><a class="reference internal" href="#async-mode" id="id5">Async Mode</a></li>
+<li><a class="reference internal" href="#quick-reference" id="id6">Quick Reference</a><ul>
+<li><a class="reference internal" href="#button-options" id="id7">Button Options</a></li>
+<li><a class="reference internal" href="#button-properties" id="id8">Button Properties</a></li>
+<li><a class="reference internal" href="#button-methods" id="id9">Button Methods</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="prerequisites">
+<h2><a class="toc-backref" href="#id1">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Before you dive into RTE button development, please make sure that you
+have a solid understanding of <a class="reference internal" href="rangesandselections.html"><span class="doc">ranges and selections</span></a>.</p>
+<p>You should also familiarize yourself with the <a class="reference internal" href="wysihat_api.html"><span class="doc">WysiHat
+API</span></a>.</p>
+</div>
+<div class="section" id="registering-buttons">
+<h2><a class="toc-backref" href="#id2">Registering Buttons</a><a class="headerlink" href="#registering-buttons" title="Permalink to this headline">¶</a></h2>
+<p>Buttons are loaded into the editor in two distinct steps. First they
+must be registered with WysiHat. Then they can be added to the WysiHat
+toolbar using just their shortname.</p>
+<p>To register a button, you must use the <a class="reference internal" href="wysihat_api.html#addButton" title="addButton"><code class="xref js js-func docutils literal"><span class="pre">addButton()</span></code></a> function on
+the WysiHat global object. It requires a name, and an object of
+properties and methods. One of these properties is required: <code class="docutils literal"><span class="pre">label</span></code>.
+It will be the text on your button.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">WysiHat</span><span class="p">.</span><span class="nx">addButton</span><span class="p">(</span><span class="s2">&quot;ytLink&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;label&#39;</span><span class="o">:</span> <span class="nx">EE</span><span class="p">.</span><span class="nx">rte</span><span class="p">.</span><span class="nx">quickLink</span><span class="p">.</span><span class="nx">add</span>
+    <span class="c1">// properties and methods</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Your button, named <cite>ytLink</cite>, is now ready for use. You can also declare
+a <code class="docutils literal"><span class="pre">toggle-text</span></code>, which will become the button&#8217;s label when the button
+is activated.</p>
+</div>
+<div class="section" id="responding-to-events">
+<h2><a class="toc-backref" href="#id3">Responding to Events</a><a class="headerlink" href="#responding-to-events" title="Permalink to this headline">¶</a></h2>
+<p>A button needs to be able to respond to its click event. This is done in
+the button&#8217;s <code class="docutils literal"><span class="pre">handler</span></code> method. Let&#8217;s add one now:</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">WysiHat</span><span class="p">.</span><span class="nx">addButton</span><span class="p">(</span><span class="s2">&quot;ytLink&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;label&#39;</span><span class="o">:</span> <span class="nx">EE</span><span class="p">.</span><span class="nx">rte</span><span class="p">.</span><span class="nx">ytLink</span><span class="p">.</span><span class="nx">add</span><span class="p">,</span>
+    <span class="nx">handler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;clicked!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>This works, but it&#8217;s not particularly interesting. Luckily the editor
+provides us with some utility methods to manipulate the current
+selection. Let&#8217;s begin with a simple requirement: the user must have
+text selected.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">WysiHat</span><span class="p">.</span><span class="nx">addButton</span><span class="p">(</span><span class="s2">&quot;ytLink&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;label&#39;</span><span class="o">:</span> <span class="nx">EE</span><span class="p">.</span><span class="nx">rte</span><span class="p">.</span><span class="nx">ytLink</span><span class="p">.</span><span class="nx">add</span><span class="p">,</span>
+    <span class="nx">handler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;you must select text&#39;</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not return <code class="docutils literal"><span class="pre">false</span></code> when bailing out early as we are doing
+here. The return value is reserved for triggering async mode, covered
+below.</p>
+</div>
+<p>Here we are using the editor&#8217;s selection utility to quickly check for
+the contents of the selection. The selection utility is used for simple
+range manipulation. It is merely concerned with text, so falling back to
+ranges may still be appropriate.</p>
+</div>
+<div class="section" id="modifying-the-text">
+<h2><a class="toc-backref" href="#id4">Modifying the Text</a><a class="headerlink" href="#modifying-the-text" title="Permalink to this headline">¶</a></h2>
+<p>With that out of the way, we will want to actually create a YouTube
+link. To do that, we can use the button&#8217;s <code class="docutils literal"><span class="pre">make</span></code> method, which will
+handle the more intricate details for us.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">WysiHat</span><span class="p">.</span><span class="nx">addButton</span><span class="p">(</span><span class="s2">&quot;ytLink&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;label&#39;</span><span class="o">:</span> <span class="nx">EE</span><span class="p">.</span><span class="nx">rte</span><span class="p">.</span><span class="nx">ytLink</span><span class="p">.</span><span class="nx">add</span><span class="p">,</span>
+    <span class="nx">handler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;you must select text&#39;</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;http://youtube.com&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Now it would be nice if we could ask the user for a video ID to use. So
+we will add an overlay to prompt the user for an ID.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">WysiHat</span><span class="p">.</span><span class="nx">addButton</span><span class="p">(</span><span class="s2">&quot;ytLink&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;label&#39;</span><span class="o">:</span> <span class="nx">EE</span><span class="p">.</span><span class="nx">rte</span><span class="p">.</span><span class="nx">ytLink</span><span class="p">.</span><span class="nx">add</span><span class="p">,</span>
+    <span class="nx">handler</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;you must select text&#39;</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">state</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_prompt</span><span class="p">(</span><span class="s1">&#39;Youtube ID:&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">_prompt</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">$input</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; value=&quot;&quot; /&gt;&#39;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$target</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;form&gt;&#39;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">html</span><span class="o">:</span> <span class="s1">&#39;&lt;span&gt;&#39;</span><span class="o">+</span><span class="nx">text</span><span class="o">+</span><span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span>
+            <span class="nx">submit</span><span class="o">:</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;_createLink&#39;</span><span class="p">,</span> <span class="nx">$input</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">$input</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">dialog</span><span class="p">({</span>
+            <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">$input</span><span class="p">,</span> <span class="s1">&#39;focus&#39;</span><span class="p">),</span> <span class="mi">10</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">},</span>
+    <span class="nx">_createLink</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$target</span><span class="p">.</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">selection</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;http://youtube.com/watch?v=&#39;</span> <span class="o">+</span> <span class="nx">$input</span><span class="p">.</span><span class="nx">val</span><span class="p">());</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>That was a lot, let&#8217;s look at it in more detail. The <code class="docutils literal"><span class="pre">_prompt</span></code> method
+is not very interesting, it is mostly jQuery UI boilerplate. In
+<code class="docutils literal"><span class="pre">_createLink</span></code> we first close the dialog, reselect the editor, and then
+create the link.</p>
+<p>What we didn&#8217;t cover above is that the handler always receives two
+parameters. The first is the starting state of the editor. This contains
+the current HTML and the selection as it is returned from the selection
+utility. We save this and reselect the text when we&#8217;re ready to modify
+the editor again.</p>
+<p>So now let&#8217;s talk about the second parameter ...</p>
+</div>
+<div class="section" id="async-mode">
+<h2><a class="toc-backref" href="#id5">Async Mode</a><a class="headerlink" href="#async-mode" title="Permalink to this headline">¶</a></h2>
+<p>While the above works fairly well at first glance, it breaks the
+editor&#8217;s undo feature. Normally, the editor stores the state changes for
+all actions to make sure that undoing works intuitively. This storing
+action runs after the handler is completely. When we do something
+asynchronous, such as waiting for an AJAX request or waiting for user
+input, the new state isn&#8217;t any different from the old.</p>
+<p>To account for this, the finalizing code is passed to your handler as
+the second parameter. To signal that you want to run the finalizer
+yourself, you must return <code class="docutils literal"><span class="pre">false</span></code> from the handler. Let&#8217;s retrofit our
+code to do this.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">handler</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">finalize</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;you must select text&#39;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">state</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">finalize</span> <span class="o">=</span> <span class="nx">finalize</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">_prompt</span><span class="p">(</span><span class="s1">&#39;Youtube ID:&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">},</span>
+
+<span class="c1">// [prompt ...]</span>
+
+<span class="nx">_createLink</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$input</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$target</span><span class="p">.</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">Selection</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">selection</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;http://youtube.com/watch?v=&#39;</span> <span class="o">+</span> <span class="nx">$input</span><span class="p">.</span><span class="nx">val</span><span class="p">());</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">finalize</span><span class="p">();</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must <strong>always</strong> call finalize. Even if an AJAX request
+fails or the user decides to cancel his or her action.</p>
+</div>
+</div>
+<div class="section" id="quick-reference">
+<h2><a class="toc-backref" href="#id6">Quick Reference</a><a class="headerlink" href="#quick-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="button-options">
+<h3><a class="toc-backref" href="#id7">Button Options</a><a class="headerlink" href="#button-options" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">label</span></code> - the label on the button</li>
+<li><code class="docutils literal"><span class="pre">toggle-text</span></code> - alternative label, this is show in the on state</li>
+<li><code class="docutils literal"><span class="pre">type</span></code> - should be set to <cite>&#8220;select&#8221;</cite> when creating a dropdown (e.g.
+headings tool)</li>
+</ul>
+</div>
+<div class="section" id="button-properties">
+<h3><a class="toc-backref" href="#id8">Button Properties</a><a class="headerlink" href="#button-properties" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">name</span></code> - the button name</li>
+<li><code class="docutils literal"><span class="pre">parent</span></code> - parent class (use when extending)</li>
+<li><code class="docutils literal"><span class="pre">$editor</span></code> - the editor element</li>
+<li><code class="docutils literal"><span class="pre">$field</span></code> - the edited textarea</li>
+<li><code class="docutils literal"><span class="pre">$element</span></code> - the button element</li>
+<li><code class="docutils literal"><span class="pre">Event</span></code> - WysiHat Event Core</li>
+<li><code class="docutils literal"><span class="pre">Commands</span></code> - WysiHat Commands Object</li>
+<li><code class="docutils literal"><span class="pre">Selection</span></code> - WysiHat Selection Utility</li>
+</ul>
+</div>
+<div class="section" id="button-methods">
+<h3><a class="toc-backref" href="#id9">Button Methods</a><a class="headerlink" href="#button-methods" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">init</span></code> - constructor</li>
+<li><code class="docutils literal"><span class="pre">handler</span></code> - event handler</li>
+<li><code class="docutils literal"><span class="pre">query</span></code> - state change handler</li>
+<li><code class="docutils literal"><span class="pre">setOn</span></code> - manually activate button</li>
+<li><code class="docutils literal"><span class="pre">setOff</span></code> - manually deactivate button</li>
+<li><code class="docutils literal"><span class="pre">is</span></code> - state query method [cannot be extended]</li>
+<li><code class="docutils literal"><span class="pre">make</span></code> - selection state change method [cannot be extended]</li>
+<li><code class="docutils literal"><span class="pre">toggle</span></code> - alias to <code class="docutils literal"><span class="pre">make</span></code></li>
+</ul>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Control Panel Javascript Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../events.html">Custom jQuery Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../table.html">Javascript Table Plugin</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Rich Text Editor Javascript</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rangesandselections.html">Ranges and Selections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wysihat_api.html">WysiHat API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

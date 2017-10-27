@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Building a Simple News Site from Start to Finish &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="How-To Guides" href="index.html" />
+	    <link rel="next" title="Hello, World!" href="hello-world.html" />
+	    <link rel="prev" title="How-To Guides" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">How-To Guides</a></li>
+								<li class="last">Building a Simple News Site from Start to Finish</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="building-a-simple-news-site-from-start-to-finish">
+<h1>Building a Simple News Site from Start to Finish<a class="headerlink" href="#building-a-simple-news-site-from-start-to-finish" title="Permalink to this headline">¶</a></h1>
+<p>This guide will introduce you to the basic concepts behind ExpressionEngine.
+We&#8217;ll create a simple two-page site with a news section to show a glimpse of the power,
+flexibility and level of control over your markup that ExpressionEngine offers over
+other systems.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#before-you-begin" id="id1">Before You Begin</a></li>
+<li><a class="reference internal" href="#the-control-panel" id="id2">The Control Panel</a></li>
+<li><a class="reference internal" href="#general-settings" id="id3">General Settings</a></li>
+<li><a class="reference internal" href="#channels" id="id4">Channels</a></li>
+<li><a class="reference internal" href="#channel-fields" id="id5">Channel Fields</a></li>
+<li><a class="reference internal" href="#channel-group-assignments" id="id6">Channel Group Assignments</a></li>
+<li><a class="reference internal" href="#publishing-entries" id="id7">Publishing Entries</a></li>
+<li><a class="reference internal" href="#templates" id="id8">Templates</a></li>
+<li><a class="reference internal" href="#tags" id="id9">Tags</a></li>
+<li><a class="reference internal" href="#putting-it-all-together" id="id10">Putting it All Together</a></li>
+<li><a class="reference internal" href="#the-more-you-know" id="id11">The More You Know</a></li>
+<li><a class="reference internal" href="#turning-the-page" id="id12">Turning the Page</a></li>
+<li><a class="reference internal" href="#go-forth-and-conquer" id="id13">Go Forth and Conquer!</a></li>
+</ul>
+</div>
+<div class="section" id="before-you-begin">
+<h2><a class="toc-backref" href="#id1">Before You Begin</a><a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ExpressionEngine assumes that you are comfortable with basic HTML.</p>
+</div>
+<p>If you have not installed ExpressionEngine yet, <a class="reference internal" href="../installation/installation.html"><span class="doc">please do so now</span></a>.</p>
+</div>
+<div class="section" id="the-control-panel">
+<h2><a class="toc-backref" href="#id2">The Control Panel</a><a class="headerlink" href="#the-control-panel" title="Permalink to this headline">¶</a></h2>
+<p>Upon completing the installation, you will land on your Control Panel login page.  Login to the control panel (also known as the &#8220;back end&#8221;) using the same username and password you provided during installation. If you don&#8217;t
+remember your Control Panel link, it&#8217;s usually similar to: <a class="reference external" href="http://example.com/admin.php">http://example.com/admin.php</a></p>
+<p>After logging in, you&#8217;ll be greeted by the Control Panel Overview page:</p>
+<div class="figure align-center">
+<img alt="Control Panel Home" src="../_images/getting_started_overview.png" />
+</div>
+<p>There isn&#8217;t a lot to overview, as you have no entries, no comments and no content.  Your site doesn&#8217;t even have a name yet.  Let&#8217;s fix that.  Click in the &#8216;Name your site&#8217; field at the top left of your screen and let&#8217;s go add  some general settings.</p>
+</div>
+<div class="section" id="general-settings">
+<h2><a class="toc-backref" href="#id3">General Settings</a><a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h2>
+<p>On the <a class="reference internal" href="../cp/settings/general.html"><span class="doc">General Settings</span></a> page, give your site a descriptive name and set your default localization values.  To access this page in the future, just click the Settings cog in the top right corner.</p>
+<p>Now it&#8217;s time to add some content.  To do that, we first need to create a channel.</p>
+<p>Click the Developer Tools icon in the top right corner and select <em>Channel Manager</em>.</p>
+<div class="figure align-center">
+<img alt="Control Panel Home" src="../_images/getting_started_general_settings_w_nav.png" />
+</div>
+</div>
+<div class="section" id="channels">
+<h2><a class="toc-backref" href="#id4">Channels</a><a class="headerlink" href="#channels" title="Permalink to this headline">¶</a></h2>
+<p>ExpressionEngine stores all of your information inside <em>Channels</em>. A <em>Channel</em> is simply a container
+that can be as simple or as complex as you need it to be, depending on your content.
+You can have as many Channels as you need, each with a different structure
+tailored to the content it holds.</p>
+<p>For our new News site, we&#8217;ll want a channel to hold our news articles.</p>
+<div class="section" id="creating-a-channel">
+<h3>Creating a Channel<a class="headerlink" href="#creating-a-channel" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click the <strong>Create Channel</strong> button or the <strong>New</strong> button to open up the <a class="reference internal" href="../cp/channel/form.html"><span class="doc">Create Channel form</span></a>.</li>
+<li>Name our new channel &#8220;News&#8221;.</li>
+<li>ExpressionEngine will automatically provide a sensible <strong>Short Name</strong> for you, in this case, &#8220;news&#8221;.</li>
+</ol>
+<div class="figure align-center">
+<img alt="Channels Page" src="../_images/getting_started_channel_create_form.png" />
+</div>
+<ol class="arabic simple" start="4">
+<li>For now, we don&#8217;t have any field or category groups to assign to our channel, so save your new channel clicking <strong>Save Channel</strong> and we&#8217;ll go create some.</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">A Channel&#8217;s <strong>Full Name</strong> should be a friendly, human-readable name. The <strong>Short Name</strong>, on
+the other hand, is how you&#8217;ll refer to this Channel in your actual code. Don&#8217;t worry, we&#8217;ll get
+to that later.</p>
+</div>
+</div>
+</div>
+<div class="section" id="channel-fields">
+<h2><a class="toc-backref" href="#id5">Channel Fields</a><a class="headerlink" href="#channel-fields" title="Permalink to this headline">¶</a></h2>
+<p>We have our <strong>News</strong> Channel, but we haven&#8217;t given it any structure to hold our content yet.
+<em>Channel Fields</em> let us do just that. There are many types of fields, and a Channel can hold
+any number of Channel Fields.</p>
+<p>First, we need to create a Channel Field Group to hold our Channel Fields. Why is
+this? Simply put, Channel Field Groups make it easy to organize and re-use a particular
+set of Channel Fields. We&#8217;ll discuss groups further in a bit.</p>
+<div class="section" id="creating-a-channel-field-group">
+<h3>Creating a Channel Field Group<a class="headerlink" href="#creating-a-channel-field-group" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click <em>NEW</em> next to the <em>Field Groups</em> link in the left navigation to go directly to the <a class="reference internal" href="../cp/channel/fields/groups/form.html"><span class="doc">Create Field Group form</span></a>.</li>
+<li>Let&#8217;s be startlingly creative and name this group &#8220;News&#8221;.</li>
+<li>Click <em>Save Field Group</em> your new field group.</li>
+</ol>
+<p>You should see your new Channel Field Group:</p>
+<div class="figure align-center">
+<img alt="Channel Field Groups Page" src="../_images/getting_started_field_group.png" />
+</div>
+<p>For our simple news section, let&#8217;s create a Rich Text field to hold the content, or &#8220;body&#8221;, of each news article.</p>
+</div>
+<div class="section" id="creating-a-field">
+<h3>Creating a Field<a class="headerlink" href="#creating-a-field" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click the <em>Fields</em> button for your <em>News</em> group.</li>
+<li>Click the <em>Create New</em> button to open up the <a class="reference internal" href="../cp/channel/fields/form.html"><span class="doc">Create Field form</span></a>.</li>
+<li>For <strong>Type</strong>, choose Rich Text Editor. (Notice the <a class="reference internal" href="../fieldtypes/index.html"><span class="doc">other available types</span></a> - exciting, no? Add-ons can even provide completely new types of fields.)</li>
+<li>For <strong>Name</strong>, type &#8220;News Body&#8221;.</li>
+<li>ExpressionEngine will automatically provide a sensible <strong>Short Name</strong> for you, in this case, &#8220;news_body&#8221;.</li>
+<li>Let&#8217;s require our field, include it in our searchable fields and leave the rest of the settings at their defaults.</li>
+</ol>
+<div class="figure align-center">
+<img alt="Channel Fields Page" src="../_images/getting_started_field_create.png" />
+</div>
+<ol class="arabic simple">
+<li>Save your new field.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="channel-group-assignments">
+<h2><a class="toc-backref" href="#id6">Channel Group Assignments</a><a class="headerlink" href="#channel-group-assignments" title="Permalink to this headline">¶</a></h2>
+<p>Even though we&#8217;ve created our <strong>News</strong> Channel, as well as our <strong>News Fields</strong> Group, we haven&#8217;t explicitly
+linked the two together yet. Let&#8217;s do that now.</p>
+<ol class="arabic simple">
+<li>Go back to the <em>Channels</em> by clicking the link in the left navigation.  Click on your <em>News</em> channel.</li>
+<li>Set <strong>Custom field group</strong> to &#8220;News Fields&#8221;.</li>
+<li>Leave <strong>Category groups</strong> set to &#8220;None&#8221;.</li>
+<li>Save your your edits and you&#8217;re ready to start adding content.</li>
+</ol>
+<p>As you&#8217;ve just seen, every Channel can have
+three types of Groups assigned to it. Let&#8217;s go over each one in a bit more detail.</p>
+<div class="section" id="category-group">
+<h3>Category Group<a class="headerlink" href="#category-group" title="Permalink to this headline">¶</a></h3>
+<p>Categories are a nice way to better organize all of your content in each Channel.
+While we aren&#8217;t creating any Categories for the purposes of this guide, know that they are a very
+powerful feature with full hierarchy support and more. See the <a class="reference internal" href="../cp/channel/cat/index.html"><span class="doc">Categories</span></a>
+section for more information.</p>
+</div>
+<div class="section" id="status-group">
+<h3>Status Group<a class="headerlink" href="#status-group" title="Permalink to this headline">¶</a></h3>
+<p>Statuses are typically used to control whether or not (or to whom) a piece of content will appear on your site. In
+this guide we&#8217;ve stuck with ExpressionEngine&#8217;s default Status Group, which contains two Statuses: <strong>Open</strong> and
+<strong>Closed</strong>. By default, content with an &#8220;Open&#8221; status will be shown, while content that is &#8220;Closed&#8221;
+will not appear at all. There are other creative uses for Statuses, especially when it comes to editorial
+workflows. See the <a class="reference internal" href="../cp/channel/status/index.html"><span class="doc">Statuses</span></a> section for more information.</p>
+</div>
+<div class="section" id="channel-field-group">
+<h3>Channel Field Group<a class="headerlink" href="#channel-field-group" title="Permalink to this headline">¶</a></h3>
+<p>Channel Fields are the core of ExpressionEngine&#8217;s content management abilities. They allow the system
+to fit to your content, instead of the other way around.</p>
+</div>
+<div class="section" id="why-groups">
+<h3>Why Groups?<a class="headerlink" href="#why-groups" title="Permalink to this headline">¶</a></h3>
+<p>As you&#8217;ve probably noticed, Categories, Statuses and Channel Fields are all contained within groups.
+This allows for easy re-use without duplicating effort. For example, if in the future we create a new
+Channel, but decide that it will use similar Categories, Statuses or Channel Fields, we can simply
+assign the already-existing group(s) to the new Channel.</p>
+</div>
+</div>
+<div class="section" id="publishing-entries">
+<h2><a class="toc-backref" href="#id7">Publishing Entries</a><a class="headerlink" href="#publishing-entries" title="Permalink to this headline">¶</a></h2>
+<p>Now that we&#8217;ve set up a basic, solid structure, let&#8217;s add some content!</p>
+<p>In ExpressionEngine, each time you add content to a Channel you are <em>publishing</em> to that
+Channel and creating a new <em>Entry</em> in it. You can think of <em>Entries</em> as being synonymous with
+<em>posts</em>, but the term <em>Entry</em> better encompasses all of the different types of data you can
+store in ExpressionEngine.</p>
+<ol class="arabic simple">
+<li>Click the <em>Create</em> button in the top left corner and select the <em>News</em> channel to publish in.  This will open up your publish form, custom built based on the fields, statuses and categories you have assigned to your channel.</li>
+<li>For the <strong>Title</strong>, type &#8220;What to do this Weekend?&#8221;. Notice that we did not have to create this field ourselves - all Entries automatically have a Title field.  You can change the label of this field by editing your <em>News</em> channel.</li>
+<li>ExpressionEngine provides a sensible <strong>URL Title</strong> for you. This is another
+automatic field that allows your entries to be easily linked to via a URL.
+See <a class="reference internal" href="../urls/url_structure.html"><span class="doc">URL Structure</span></a> for more information.</li>
+<li>Enter some text in the <strong>News Body</strong> field. Make it good!</li>
+</ol>
+<div class="figure align-center">
+<img alt="Publish Page" src="../_images/getting_started_news_publish.png" />
+</div>
+<ol class="arabic simple">
+<li>Click <em>Publish</em> to publish the Entry.</li>
+</ol>
+<p>Upon submitting, you&#8217;ll be taken to the Edit screen, which displays all of your entries in a filterable table:</p>
+<div class="figure align-center">
+<img alt="View Entry Page" src="../_images/getting_started_edit_page.png" />
+</div>
+<p>From here you could edit the Entry to make any necessary corrections, or navigate to another area
+of the Control Panel.</p>
+<p>For the purposes of this guide, publish a second Entry by following the same steps as before, but
+with a different Title and News Body. That will give us two Entries to work with later.</p>
+</div>
+<div class="section" id="templates">
+<span id="getting-started-templates"></span><h2><a class="toc-backref" href="#id8">Templates</a><a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ve probably noticed that even though we&#8217;ve entered some content in the Control Panel,
+our site&#8217;s actual homepage remains woefully blank! Fear not - we just haven&#8217;t told ExpressionEngine
+how to display our content. That&#8217;s where <em>Templates</em> come in.</p>
+<p>Templates control what gets shown to the outside world (also known as the site&#8217;s &#8220;front end&#8221;)
+and are grouped together into (you guessed it!) <em>Template Groups</em>. As usual, you can have as many
+Templates and Groups as you need. Templates are very important because by default, they define the URL structure
+of your site. Here&#8217;s how Template Groups and Templates make up an ExpressionEngine URL:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/template_group/template_name
+</pre></div>
+</div>
+<p>Every Template Group has at least one Template named <strong>index</strong>, which acts as the default if no other
+Template is specified. For example, if we create a new Template Group named <strong>news</strong>, you can access its
+index template using just:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/news
+</pre></div>
+</div>
+<div class="section" id="creating-a-template">
+<h3>Creating a Template<a class="headerlink" href="#creating-a-template" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s create our first Template, which will be a simple news page that displays Entries from our News Channel.</p>
+<ol class="arabic simple">
+<li>Click on <em>Developer Tools</em> in the top right and select <em>Template Manager</em>.</li>
+<li>Click the <em>NEW</em> button by <em>Template Groups</em> in the left navigation.</li>
+<li>For <strong>Template Group Name</strong>, type &#8220;news&#8221;.</li>
+<li>Check the box next to <strong>Make the index template in this group your site&#8217;s home page?</strong></li>
+<li>Click <em>Save Template Group</em>.</li>
+</ol>
+<p>As expected, this automatically creates an <strong>index</strong> Template in our new <strong>news</strong> Group:</p>
+<div class="figure align-center">
+<img alt="Template Manager" src="../_images/getting_started_template_group_created.png" />
+</div>
+<p>Now let&#8217;s get some content in there!</p>
+</div>
+<div class="section" id="editing-a-template">
+<h3>Editing a Template<a class="headerlink" href="#editing-a-template" title="Permalink to this headline">¶</a></h3>
+<p>Click on the <strong>index</strong> Template to open it in the Template Editor. You&#8217;ll be greeted, unsurprisingly,
+with a blank slate. Let&#8217;s add some skeleton HTML:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>What&#39;s New<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>All the news that&#39;s fit to pixelize.<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="Template Edit" src="../_images/getting_started_template_edit.png" />
+</div>
+<p>Click <em>Save Template</em> to save our changes and stay on the page (<em>Save &amp; Finish Editing</em> will return you to
+the Template Manager). Then click the <em>View Rendered</em> button in the upper-right, which
+should open the page in a new browser tab. It may not be very exciting, but it&#8217;s something:</p>
+<div class="figure align-center">
+<img alt="Template with Static Content" src="../_images/getting_started_template_v1.png" />
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You&#8217;re not confined to editing your markup inside ExpressionEngine&#8217;s Template Editor.
+You can enable <a class="reference internal" href="../templates/templates_as_files.html"><span class="doc">Saving Templates as Text Files</span></a> and then work with Template files using
+any editor you choose.</p>
+</div>
+<p>&#8220;This is all well and good,&#8221; you might be saying. &#8220;ExpressionEngine is outputting my markup exactly
+as entered; no more or less, which is awesome. But it&#8217;s still not showing any of the content
+I entered into the News Channel!&#8221;</p>
+<p>Strap yourself in, because we&#8217;re about to do just that, and we&#8217;re going to do it using
+the core of ExpressionEngine&#8217;s flexibility: <em>Tags</em>.</p>
+</div>
+</div>
+<div class="section" id="tags">
+<h2><a class="toc-backref" href="#id9">Tags</a><a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h2>
+<p><em>Tags</em> fetch the content you&#8217;ve entered into ExpressionEngine and display it in your Templates
+just the way you want. Here&#8217;s how a typical Tag starts:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This tag, like most, has three segments: <strong>exp</strong>, <strong>channel</strong>, and <strong>entries</strong>.</p>
+<ol class="arabic simple">
+<li><strong>exp</strong> simply tells ExpressionEngine that this is a Tag. All Tags will begin with this.</li>
+<li><strong>channel</strong> refers to the <em>Module</em> we want to use to fetch our data. ExpressionEngine is made
+up of various Modules, and each provides its own Tags. The <a class="reference internal" href="../channel/index.html"><span class="doc">Channel</span></a> is used to fetch
+data from your Channels, and is the most commonly used Module in ExpressionEngine.</li>
+<li><strong>entries</strong> refers to the type of data we want the Module to fetch, or in some cases,
+the action we want the Module to take. In this case, we&#8217;re telling the Channel Module
+that we want to retrieve our <a class="reference internal" href="../channel/channel_entries.html"><span class="doc">Entries</span></a>.</li>
+</ol>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<p>We often need to give more information to a Module about what we want it to do.
+In our example above, for instance, we still need to tell the Channel Module which Channel
+we want to fetch Entries from. This is easily done with <em>parameters</em>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You can specify multiple parameters, too:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This tells the Channel Module that we want the 10 most recent Entries from the Channel named
+<em>News</em>. Simple enough, right? Now that we&#8217;ve told it what to fetch, let&#8217;s actually use that data!</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Here&#8217;s the full list of available <a class="reference internal" href="../channel/channel_entries.html#channel-entries-parameters"><span class="std std-ref">parameters</span></a>
+for the <a class="reference internal" href="../channel/channel_entries.html"><span class="doc">Channel Entries Tag</span></a>.</p>
+</div>
+</div>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<p><em>Variables</em> are the actual pieces of information that ExpressionEngine retrieves and
+makes available to us. To get some content from an Entry, for example, use the Short Name
+of the Channel Field. Remember the News Body field we created earlier? You can get its contents
+like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">news_body</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And the Title of the Entry is easily accessed with:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>There is also a lot of additional information about each Entry, such as when it was submitted,
+who it was submitted by, and much more. For example, to get the author of an Entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, we&#8217;re ready to use this Tag in our Template.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Here&#8217;s the full list of available <a class="reference internal" href="../channel/channel_entries.html#channel-entries-single-variables"><span class="std std-ref">variables</span></a>
+for the <a class="reference internal" href="../channel/channel_entries.html"><span class="doc">Channel Entries Tag</span></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="putting-it-all-together">
+<h2><a class="toc-backref" href="#id10">Putting it All Together</a><a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
+<p>Switch back to the Template Editor tab in your browser and
+update the Template with the following code:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>What&#39;s New<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>All the news that&#39;s fit to pixelize.<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+        <span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>By <span class="p">{</span><span class="nf">author</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+                <span class="p">{</span><span class="nf">news_body</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>After clicking <em>Update</em>, switch back over to the browser tab with the &#8220;Rendered Template&#8221; on it and
+hit Refresh. By default, the Channel Module sorts your Entries by newest to oldest, so
+you should now see your two previously-created Entries in all their glory:</p>
+<div class="figure align-center">
+<img alt="Template with Dynamic Content" src="../_images/getting_started_template_v2.png" />
+</div>
+</div>
+<div class="section" id="the-more-you-know">
+<h2><a class="toc-backref" href="#id11">The More You Know</a><a class="headerlink" href="#the-more-you-know" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ve seen how to show the content you want, and how wrap it in any HTML you&#8217;d like,
+and you&#8217;re well on your way to unleashing awesome across the (digital) land. But first, let&#8217;s go over a
+few points about what we just did.</p>
+<div class="section" id="tag-pairs-vs-single-tags">
+<h3>Tag Pairs vs. Single Tags<a class="headerlink" href="#tag-pairs-vs-single-tags" title="Permalink to this headline">¶</a></h3>
+<p>Did you notice the {/exp:channel:entries} line in the code above? It&#8217;s called a <em>closing tag</em>,
+and it is <strong>required</strong> in order to close the opening {exp:channel:entries} Tag, in
+much the same way that closing certain HTML elements is required.</p>
+<p>Most Tags in ExpressionEngine have both an opening and a closing Tag. We refer to them as
+<em>Tag Pairs</em> to differentiate them from <em>Single Tags</em>. Single Tags are just an opening Tag -
+no closing Tag or variables inside. These are more rare and are typically used by some Modules
+to display a single piece of information.</p>
+</div>
+<div class="section" id="looping-tag-pairs">
+<h3>Looping Tag Pairs<a class="headerlink" href="#looping-tag-pairs" title="Permalink to this headline">¶</a></h3>
+<p>The {exp:channel:entries} Tag that we&#8217;ve used here is a good example of a <em>Looping Tag Pair</em>.
+It took the code we placed between its opening and closing Tags and actually processed it twice -
+once for each Entry.</p>
+<p>This is a very powerful way to output information from multiple Entries, whether in a table,
+blog format, or even a simple list. For example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="turning-the-page">
+<h2><a class="toc-backref" href="#id12">Turning the Page</a><a class="headerlink" href="#turning-the-page" title="Permalink to this headline">¶</a></h2>
+<p>At this point, you might notice that our site&#8217;s homepage
+(<a class="reference external" href="http://example.com">http://example.com</a>) is showing the same content as our News page
+(<a class="reference external" href="http://example.com/news">http://example.com/news</a>). The reason for this is simple: remember checking
+the box next to <strong>Make the index template in this group your site&#8217;s home page?</strong>
+when you created the &#8220;news&#8221; template group? That made &#8220;news&#8221; your site&#8217;s default
+Template Group, the Template Group that is displayed as the homepage when no
+Template Group is specified in the URL.</p>
+<p>Let&#8217;s change this by creating another Template Group and making it the new
+default.</p>
+<ol class="arabic simple">
+<li>From the <em>Template Manager</em> click <strong>NEW</strong> next to <strong>Template Groups</strong> again.</li>
+<li>For <strong>Template Group Name</strong>, type &#8220;site&#8221;.</li>
+<li>Tick the <strong>Make the index template in this group your site&#8217;s home page?</strong> checkbox.</li>
+<li>Submit.</li>
+</ol>
+<p>Now click the <strong>index</strong> Template of our new &#8220;site&#8221; Group to open the Template Editor.
+Let&#8217;s add this code:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Home, Sweet Home.<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Kick back and relax... you&#39;ve made it home.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>The Latest<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Check out the <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;news&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>latest news<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+                        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;news&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>As usual, click <em>Update</em> and then <em>View Rendered</em> to see the results:</p>
+<div class="figure align-center">
+<img alt="Homepage Template" src="../_images/getting_started_template_v3.png" />
+</div>
+<p>There&#8217;s a bit more going on in this Template, so let&#8217;s take a closer look.</p>
+<div class="section" id="linking-to-templates-and-entries">
+<h3>Linking to Templates and Entries<a class="headerlink" href="#linking-to-templates-and-entries" title="Permalink to this headline">¶</a></h3>
+<p>This line may have caught your attention:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Check out the <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;news&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>latest news<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>It contains the <em>path</em> variable, which creates a URL to a Template Group/Template.
+In this case we want to link to &#8220;news/index&#8221;, but since &#8220;index&#8221; is implied we can leave it off.
+The path variable is one of many <a class="reference internal" href="../templates/globals/index.html"><span class="doc">Global Template Variables</span></a> you can use. <em>Global</em> just means
+that you can access it from anywhere inside your Template; it doesn&#8217;t have to be inside a Tag Pair.</p>
+<p>Then there&#8217;s this line, which you&#8217;ll notice <em>is</em> inside our Channel Entries Tag Pair:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;news&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><em>url_title_path</em> is one of the many <a class="reference internal" href="../channel/channel_entries.html#channel-entries-single-variables"><span class="std std-ref">variables</span></a>
+you can use inside the <a class="reference internal" href="../channel/channel_entries.html"><span class="doc">Channel Entries Tag</span></a>,
+in addition to the variables containing the content of your Channel Fields. It acts very
+similarly to the <em>path</em> variable we just discussed, but it also appends the Entry&#8217;s <strong>URL Title</strong>
+to the URL which lets us link directly to the entry, as you&#8217;ll see next.</p>
+</div>
+<div class="section" id="a-dynamic-duo">
+<h3>A Dynamic Duo<a class="headerlink" href="#a-dynamic-duo" title="Permalink to this headline">¶</a></h3>
+<p>Now follow the link to our &#8220;Hello, World!&#8221; Entry, which will look like
+<a class="reference external" href="http://example.com/news/hello-world">http://example.com/news/hello-world</a> thanks to <em>url_title_path</em>. You&#8217;ll be
+taken to our <em>News</em> Template Group. But wait, only one Entry is shown now!</p>
+<div class="figure align-center">
+<img alt="Template Showing an Entry Dynamically" src="../_images/getting_started_template_v4.png" />
+</div>
+<p>What you&#8217;re seeing here is the &#8220;dynamic&#8221; behavior of the Channel Entries Tag. By default
+the Tag will look for a valid <strong>URL Title</strong> in the current URL, and if one exists,
+show only that Entry in what&#8217;s known as &#8220;Single Entry&#8221; mode. This is very useful, since
+we didn&#8217;t have to create another template just to show our Entries all by themselves.
+In some cases, though, we may not want this to happen. A good example would be if we had a sidebar
+showing a list of recent Entries from various Channels, and we didn&#8217;t want that list
+influenced by what happens to be in the current URL. To disable this behavior, set the
+<em>dynamic</em> parameter to &#8220;no&#8221;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">dynamic</span><span class="p">=</span><span class="s2">&quot;no&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Again, all of the Channel Entries&#8217; available parameters and variables are detailed in its
+<a class="reference internal" href="../channel/channel_entries.html"><span class="doc">documentation page</span></a>.</p>
+</div>
+</div>
+<div class="section" id="go-forth-and-conquer">
+<h2><a class="toc-backref" href="#id13">Go Forth and Conquer!</a><a class="headerlink" href="#go-forth-and-conquer" title="Permalink to this headline">¶</a></h2>
+<p>Congratulations! You&#8217;re ready to start <em>bringing the awesome</em>. Create Channels and Channel Fields
+to hold your content just the way you need. Then use Templates, Tags and your own markup, style
+and scripts to create flexible, dynamic websites quickly and easily on a platform that does exactly
+what you want it to do. Welcome to ExpressionEngine.</p>
+<p>While you should read the User Guide in its entirety, here are some topics you might be
+interested in:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../intro/getting_the_most.html"><span class="doc">Getting the Most Out of ExpressionEngine</span></a></li>
+<li><a class="reference internal" href="../add-ons/index.html"><span class="doc">Add-Ons</span></a></li>
+<li><a class="reference internal" href="../urls/remove_index.php.html"><span class="doc">Removing index.php from URLs</span></a></li>
+<li><a class="reference internal" href="../cp/msm/index.html"><span class="doc">Site Manager</span></a></li>
+<li><a class="reference internal" href="../templates/comments.html"><span class="doc">Commenting Template Code</span></a></li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Building a Simple News Site from Start to Finish</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="syntax_highlighting.html">Syntax Highlighting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Form Validation Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Functions Class" href="functions.html" />
+	    <link rel="prev" title="File Uploading Class" href="file_uploading.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Form Validation Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="form-validation-class">
+<h1>Form Validation Class<a class="headerlink" href="#form-validation-class" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#usage-of-form-validation-class" id="id1">Usage of Form Validation Class</a></li>
+<li><a class="reference internal" href="#setting-reference-values" id="id2">Setting Reference Values</a></li>
+<li><a class="reference internal" href="#user-specific-rules" id="id3">User Specific Rules</a><ul>
+<li><a class="reference internal" href="#valid-username" id="id4">valid_username</a></li>
+<li><a class="reference internal" href="#valid-screen-name" id="id5">valid_screen_name</a></li>
+<li><a class="reference internal" href="#valid-user-email" id="id6">valid_user_email</a></li>
+<li><a class="reference internal" href="#valid-password" id="id7">valid_password</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prepping-methods" id="id8">Prepping Methods</a><ul>
+<li><a class="reference internal" href="#prep-list" id="id9">prep_list</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="usage-of-form-validation-class">
+<h2><a class="toc-backref" href="#id1">Usage of Form Validation Class</a><a class="headerlink" href="#usage-of-form-validation-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Form_validation">
+<em class="property">class </em><code class="descname">Form_validation</code><a class="headerlink" href="#Form_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Form Validation class provides comprehensive validation framework
+to minimize the amount of code you need to write. It provides a
+toolset for validating user input, showing validation errors, and
+repopulating form fields.</p>
+<p>The base functionality for the Form Validation class is inherited from
+the corresponding CodeIgniter library&#8212;refer to the <a class="reference external" href="https://ellislab.com/codeigniter/user-guide/libraries/form_validation.html">Form
+Validation</a>
+documentation in the CodeIgniter user guide for details.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="setting-reference-values">
+<h2><a class="toc-backref" href="#id2">Setting Reference Values</a><a class="headerlink" href="#setting-reference-values" title="Permalink to this headline">¶</a></h2>
+<p>For member screen names, member usernames, and member email addresses
+the Form Validation class needs a reference value. This value will be
+ignored when checking for duplicates.</p>
+<dl class="method">
+<dt id="Form_validation::set_old_value">
+<code class="descclassname">Form_validation::</code><code class="descname">set_old_value</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Form_validation::set_old_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is used to set a reference value for a given key:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_old_value</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of input or associative array containing input
+names as the keys and their values as the values</li>
+<li><strong>$val</strong> (<em>string</em>) &#8211; The value to set</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Form_validation::old_value">
+<code class="descclassname">Form_validation::</code><code class="descname">old_value</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#Form_validation::old_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can be used to retrieve a reference value that was previously set.
+This method is primarily used internally:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">old_value</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Name of the input to retrieve</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Data of the value associated with <code class="docutils literal"><span class="pre">$key</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="user-specific-rules">
+<h2><a class="toc-backref" href="#id3">User Specific Rules</a><a class="headerlink" href="#user-specific-rules" title="Permalink to this headline">¶</a></h2>
+<p>A few rules are provided to check for illegal characters, validate input
+lengths, and check for duplicates on member fields.</p>
+<div class="section" id="valid-username">
+<h3><a class="toc-backref" href="#id4">valid_username</a><a class="headerlink" href="#valid-username" title="Permalink to this headline">¶</a></h3>
+<p>Checks the username for invalid characters, as well as making sure no
+duplicates exist. It takes an optional parameter to indicate if this is
+a new user. Expects that a reference value for <code class="docutils literal"><span class="pre">username</span></code> was set
+before running the validation:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required|valid_username&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required|valid_username[new]&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="valid-screen-name">
+<h3><a class="toc-backref" href="#id5">valid_screen_name</a><a class="headerlink" href="#valid-screen-name" title="Permalink to this headline">¶</a></h3>
+<p>Works the same way as the valid_username rule. Expects that a reference
+value for <code class="docutils literal"><span class="pre">screen_name</span></code> was set before running the validation:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_old_value</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Screen Name&#39;</span><span class="p">,</span> <span class="s1">&#39;required|valid_screen_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="valid-user-email">
+<h3><a class="toc-backref" href="#id6">valid_user_email</a><a class="headerlink" href="#valid-user-email" title="Permalink to this headline">¶</a></h3>
+<p>Identical to the previous rules, but expects the reference value to be
+set for <code class="docutils literal"><span class="pre">email</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Note: no reference value is needed if this is a new user</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;lang:email&#39;</span><span class="p">,</span> <span class="s1">&#39;required|valid_user_email[new]&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="valid-password">
+<h3><a class="toc-backref" href="#id7">valid_password</a><a class="headerlink" href="#valid-password" title="Permalink to this headline">¶</a></h3>
+<p>Checks the submitted password for weaknesses and illegal characters.
+Takes the name of a username field as a parameter, which is used to
+prevent a password that is based on the username. This rule <em>does not</em>
+check user credentials:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;lang:password&#39;</span><span class="p">,</span> <span class="s1">&#39;required|valid_password[username]&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="prepping-methods">
+<h2><a class="toc-backref" href="#id8">Prepping Methods</a><a class="headerlink" href="#prepping-methods" title="Permalink to this headline">¶</a></h2>
+<p>These are convenience methods to help sanitize and validate frequently
+used input data patterns.</p>
+<div class="section" id="prep-list">
+<h3><a class="toc-backref" href="#id9">prep_list</a><a class="headerlink" href="#prep-list" title="Permalink to this headline">¶</a></h3>
+<p>Replaces all commas, pipes, and whitespace (tabs, newlines, and spaces)
+with a given delimiter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">form_validation</span><span class="o">-&gt;</span><span class="na">set_rules</span><span class="p">(</span><span class="s1">&#39;emails&#39;</span><span class="p">,</span> <span class="s1">&#39;lang:emails&#39;</span><span class="p">,</span> <span class="s1">&#39;required|prep_list[,]|valid_emails&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Form Validation Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

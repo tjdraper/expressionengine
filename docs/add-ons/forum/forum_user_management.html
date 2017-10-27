@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Forum User Management &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Discussion Forum" href="index.html" />
+	    <link rel="next" title="Other Features" href="other_features.html" />
+	    <link rel="prev" title="Forum Themes" href="forum_themes.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-Ons</a></li>
+								<li><a href="index.html" accesskey="U">Discussion Forum</a></li>
+								<li class="last">Forum User Management</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="forum-user-management">
+<h1>Forum User Management<a class="headerlink" href="#forum-user-management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="user-management">
+<h2>User Management<a class="headerlink" href="#user-management" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the regular permissions you set up for your Member Groups
+earlier (see above), there are two special levels that you can assign to
+users: Administrator and Moderator. You can assign the Administrator or
+Moderator level to either an entire Member Group or simply to individual
+members of your site. In this way you have flexibility as to how you
+assign these special privileges.</p>
+<p>You may also set up &#8220;Member Ranks&#8221;, which are sort of steps that users
+can reach, upon which they gain particular titles.</p>
+<p>You access these areas under the User Management tab in the Forum
+Module.</p>
+<div class="section" id="administrators">
+<h3>Administrators<a class="headerlink" href="#administrators" title="Permalink to this headline">¶</a></h3>
+<p>The Administrators section is accessed by clicking the orange icon associated with a forum board. Administrators are <strong>very</strong> powerful users. Administrators have
+all rights when it comes to the forums. They can ban users, delete
+posts, move threads, close threads, etc. They have the same rights that
+a member of the &#8220;Super Admin&#8221; Member Group does, except they can&#8217;t ban
+SuperAdmins or delete threads made by a SuperAdmin.</p>
+<p>Administrators in the forums are <strong>very</strong> powerful. Be extremely careful
+when assigning this privilege to a member or Member Group.</p>
+</div>
+<div class="section" id="moderators">
+<h3>Moderators<a class="headerlink" href="#moderators" title="Permalink to this headline">¶</a></h3>
+<p>The Administrators section is accessed by clicking the blue icon associated with a forum board.
+Moderators are special members or Member Groups. You can add Moderators
+on a forum-by-forum basis and assign them permissions <em>above and beyond</em>
+those you normally assign through the regular forum permissions.</p>
+<p>There are six additional permissions that you can grant a Moderator:</p>
+<ul class="simple">
+<li><strong>Can Edit Posts</strong>: The Moderator can edit posts by other members in
+addition to their own.</li>
+<li><strong>Can Move Posts</strong>: The Moderator can move posts between forums. For
+instance, if a thread was started in the wrong forum the Moderator
+can move it to the correct one.</li>
+<li><strong>Can Delete Posts</strong>: The Moderator can delete posts.</li>
+<li><strong>Can Change Post Status</strong>: The Moderator can change the status of a
+post, so they can close a post to new replies.</li>
+<li><strong>Can Post Announcements</strong>: The Moderator can post an &#8220;announcement&#8221;
+that shows up in all forums.</li>
+<li><strong>Can View IP Addresses</strong>: The Moderator can see the IP address of
+all users who leave posts or replies.</li>
+</ul>
+<p>Remember, these permissions are <strong>in addition</strong> to any that may already
+be assigned to the Member Group when the forum was set up.</p>
+</div>
+<div class="section" id="member-ranks">
+<h3>Member Ranks<a class="headerlink" href="#member-ranks" title="Permalink to this headline">¶</a></h3>
+<p>Here you can set up levels or steps that users of the forums
+can reach. For instance, you might set it so that all users who have
+less than 50 posts are labeled as &#8220;New Member&#8221;. Those with 51-200 might
+be &#8220;Regular Member&#8221;.</p>
+<p>When you create a Member Rank, you assign it a title, set a minimum
+number of posts that must be reached in order for that Rank to apply,
+and then set how many &#8220;stars&#8221; will appear for users of that Rank.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Discussion Forum</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="channel_forum.html">Associating Channel Entries with Forum Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_boards.html">Forum Boards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_global_variables.html">Global Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_helper.html">Forum Helper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_setup.html">Discussion Forum Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_themes.html">Forum Themes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Forum User Management</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="other_features.html">Other Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recent_forum_topics.html">Displaying Recent Forum Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signatures.html">Signatures and Avatars</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

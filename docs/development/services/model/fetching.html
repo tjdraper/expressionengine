@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Fetching Models &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Model Service" href="../model.html" />
+	    <link rel="next" title="Working with Relationships" href="relationships.html" />
+	    <link rel="prev" title="Using the Model Service" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Services</a></li>
+								<li><a href="../model.html" accesskey="U">Model Service</a></li>
+								<li class="last">Fetching Models</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="fetching-models">
+<h1>Fetching Models<a class="headerlink" href="#fetching-models" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#basic-usage" id="id1">Basic Usage</a></li>
+<li><a class="reference internal" href="#filters" id="id2">Filters</a></li>
+<li><a class="reference internal" href="#searching" id="id3">Searching</a></li>
+<li><a class="reference internal" href="#sorting" id="id4">Sorting</a></li>
+<li><a class="reference internal" href="#limit-and-offset" id="id5">Limit and Offset</a></li>
+<li><a class="reference internal" href="#count" id="id6">Count</a></li>
+<li><a class="reference internal" href="#relationships" id="id7">Relationships</a></li>
+<li><a class="reference internal" href="#aliasing" id="id8">Aliasing</a></li>
+<li><a class="reference internal" href="#partial-data" id="id9">Partial Data</a></li>
+</ul>
+</div>
+<div class="section" id="basic-usage">
+<h2><a class="toc-backref" href="#id1">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>Use the <code class="docutils literal"><span class="pre">get()</span></code> method with a model name to begin a query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This will return a builder object, which we will use narrow down the selection.
+When you&#8217;re ready to retrieve the matching data, call <code class="docutils literal"><span class="pre">all()</span></code>. You will be
+returned a <a class="reference internal" href="collection.html"><span class="doc">Collection</span></a>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$templates</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Usually these calls are chained for brevity:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$templates</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filters">
+<h2><a class="toc-backref" href="#id2">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<p>You can filter your selection by individual model properties using the
+<code class="docutils literal"><span class="pre">filter()</span></code> method. It expects a property name, an operator, and a value:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="s1">&#39;!=&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The operator is optional and will default to <code class="docutils literal"><span class="pre">==</span></code> if not given:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="c1">// same as:</span>
+<span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, filters will be chained as <code class="docutils literal"><span class="pre">AND</span></code> conditions. An <code class="docutils literal"><span class="pre">OR</span></code> filter can
+be applied by using the <code class="docutils literal"><span class="pre">orFilter()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;username&#39;</span> <span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">orFilter</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="available-filters">
+<h3>Available filters<a class="headerlink" href="#available-filters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="32%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operator</th>
+<th class="head">Constraint</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">==</span></code></td>
+<td>Equal</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'==',</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">!=</span></code></td>
+<td>Not equal</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'!=',</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&lt;</span></code></td>
+<td>Less than</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'&lt;'</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&gt;</span></code></td>
+<td>Greater than</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'&gt;',</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&lt;=</span></code></td>
+<td>Less than or equals</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'&lt;=',</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&gt;=</span></code></td>
+<td>Greater than or equals</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'&gt;=',</span> <span class="pre">5)</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">IN</span></code></td>
+<td>In list of options</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'IN',</span> <span class="pre">array(5,</span> <span class="pre">8))</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">NOT</span> <span class="pre">IN</span></code></td>
+<td>Not in list of options</td>
+<td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'NOT</span> <span class="pre">IN',</span> <span class="pre">array(5,</span> <span class="pre">8))</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="searching">
+<h2><a class="toc-backref" href="#id3">Searching</a><a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
+<p>You can create basic search functionality using the <code class="docutils literal"><span class="pre">search()</span></code> method. It takes
+a field, or list of fields, as well as a search term and creates a SQL <code class="docutils literal"><span class="pre">LIKE</span></code>
+query to find these items:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// find titles that contain &quot;hello&quot; and &quot;world&quot;</span>
+<span class="o">-&gt;</span><span class="na">search</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;hello world&#39;</span><span class="p">)</span>
+<span class="c1">// find titles or body fields that contain &quot;hello&quot; and &quot;world&quot;</span>
+<span class="o">-&gt;</span><span class="na">search</span><span class="p">([</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">],</span> <span class="s1">&#39;hello world&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The search function knows about more advanced search conventions. It treats quoted
+strings as single words and excludes words that start with a minus sign:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// find titles that contain &quot;hello world&quot;, but not dog</span>
+<span class="o">-&gt;</span><span class="na">search</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;hello world&quot; -dog&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Searches are always appended as an <code class="docutils literal"><span class="pre">AND</span></code> to the end of the query and
+cannot be used inside filter groups.</p>
+</div>
+</div>
+<div class="section" id="sorting">
+<h2><a class="toc-backref" href="#id4">Sorting</a><a class="headerlink" href="#sorting" title="Permalink to this headline">¶</a></h2>
+<p>The order that the elements are selected in can be changed with the <code class="docutils literal"><span class="pre">order()</span></code>
+method. The order options are <code class="docutils literal"><span class="pre">ASC</span></code> and <code class="docutils literal"><span class="pre">DESC</span></code> for ascending and descending
+order, respectively:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">order</span><span class="p">(</span><span class="s1">&#39;template_name&#39;</span><span class="p">,</span> <span class="s1">&#39;ASC&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="limit-and-offset">
+<h2><a class="toc-backref" href="#id5">Limit and Offset</a><a class="headerlink" href="#limit-and-offset" title="Permalink to this headline">¶</a></h2>
+<p>You can limit how many models are selected, by using the <code class="docutils literal"><span class="pre">limit()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$page_one</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>To change the starting point of the selection, use the <code class="docutils literal"><span class="pre">offset()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$page_two</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">first()</span></code> method will always use a limit of 1.</p>
+</div>
+<div class="section" id="example-pagination">
+<h3>Example: Pagination<a class="headerlink" href="#example-pagination" title="Permalink to this headline">¶</a></h3>
+<p>A common use-case for limit and offset is pagination. The following function
+will accept a page number and return the correct template models for that page:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">getTemplatesForPage</span><span class="p">(</span><span class="nv">$n</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$per_page</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+  <span class="nv">$start</span> <span class="o">=</span> <span class="nv">$per_page</span> <span class="o">*</span> <span class="p">(</span><span class="nv">$n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// this ensures page 1 starts at 0</span>
+
+  <span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">offset</span><span class="p">(</span><span class="nv">$start</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="nv">$per_page</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="count">
+<h2><a class="toc-backref" href="#id6">Count</a><a class="headerlink" href="#count" title="Permalink to this headline">¶</a></h2>
+<p>To see the number of matching elements without retrieving all of their data, use
+the <code class="docutils literal"><span class="pre">count()</span></code> method instead of <code class="docutils literal"><span class="pre">all()</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$total_templates</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">count</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="relationships">
+<h2><a class="toc-backref" href="#id7">Relationships</a><a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h2>
+<p>To access a related model, you can simply access the relationship name as it
+is defined in the model. By convention, relationships that are singular will
+return a single model (or null), whereas plural relationships will return a
+collection of related models:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// singular</span>
+<span class="nv">$template</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+<span class="nv">$template_group</span> <span class="o">=</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">TemplateGroup</span><span class="p">;</span>
+
+<span class="c1">// plural</span>
+<span class="nv">$status_group</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;StatusGroup&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+<span class="nv">$statuses</span> <span class="o">=</span> <span class="nv">$status_group</span><span class="o">-&gt;</span><span class="na">Statuses</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>By default, all relationship data is loaded on a need-to-know basis. When a
+related model is accessed, its data is automatically retrieved:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+
+<span class="nv">$template_group</span> <span class="o">=</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">TemplateGroup</span><span class="p">;</span> <span class="c1">// fetches the correct template group behind the scenes</span>
+</pre></div>
+</div>
+<p>This lazy loading behavior is good for single models, but it can cause
+performance bottlenecks when it is put inside a loop. For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$templates</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$templates</span> <span class="k">as</span> <span class="nv">$template</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$group</span> <span class="o">=</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">TemplateGroup</span><span class="p">;</span> <span class="c1">// BAD, triggers a fetch for each iteration</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="eager-loading">
+<h3>Eager Loading<a class="headerlink" href="#eager-loading" title="Permalink to this headline">¶</a></h3>
+<p>To get around this problem, you can specify a relationship to be loaded with
+the original query. This is done using the <code class="docutils literal"><span class="pre">with()</span></code> method. The above snippet
+then becomes:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$templates</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;TemplateGroup&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$templates</span> <span class="k">as</span> <span class="nv">$template</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$group</span> <span class="o">=</span> <span class="nv">$template</span><span class="o">-&gt;</span><span class="na">TemplateGroup</span><span class="p">;</span> <span class="c1">// OK, already loaded</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These eager queries can also be nested to retrieve complex model hierarchies:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;LastAuthor&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MemberGroup&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-on-relationships">
+<h3>Filtering on Relationships<a class="headerlink" href="#filtering-on-relationships" title="Permalink to this headline">¶</a></h3>
+<p>Eager loading also enables more advanced filtering and sorting. To specify a
+column that is not on the main model, simply prefix it with the relationship name:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;TemplateGroup&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;TemplateGroup.group_name&#39;</span><span class="p">,</span> <span class="s1">&#39;blog&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="aliasing">
+<h2><a class="toc-backref" href="#id8">Aliasing</a><a class="headerlink" href="#aliasing" title="Permalink to this headline">¶</a></h2>
+<p>To simplify writing complex filters, any named model can be aliased and the
+alias used instead:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template as t&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;TemplateGroup as tg&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;tg.group_name&#39;</span><span class="p">,</span> <span class="s1">&#39;news&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">sort</span><span class="p">(</span><span class="s1">&#39;t.template_name&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="partial-data">
+<h2><a class="toc-backref" href="#id9">Partial Data</a><a class="headerlink" href="#partial-data" title="Permalink to this headline">¶</a></h2>
+<p>In order to reduce memory usage, you can ask for only a subset of the available
+data. This is done with the <code class="docutils literal"><span class="pre">fields()</span></code> method, which takes as arguments the
+names of the fields you want to fetch:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$template</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
+  <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Template&#39;</span><span class="p">)</span>
+  <span class="o">-&gt;</span><span class="na">fields</span><span class="p">(</span><span class="s1">&#39;template_id&#39;</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">)</span>
+  <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method should only be used for querying data. It should not be
+used for models that will be edited, deleted, or passed to other code for
+processing.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Services</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../addon.html">Addon Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../alert.html">CP/Alert Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config.html">Config Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../csv.html">CSV Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../encrypt.html">Encrypt Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../event.html">Event Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filepicker.html">CP/FilePicker Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filter.html">CP/Filter Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format.html">Format Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modal.html">CP/Modal Service</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../model.html">Model Service</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html">Using the Model Service</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Fetching Models</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="relationships.html">Working with Relationships</a></li>
+<li class="toctree-l4"><a class="reference internal" href="collection.html">Collections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../building_models/index.html">Building your own Models</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pagination.html">CP/Pagination Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../permission.html">Permission Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sidebar.html">CP/Sidebar Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spam.html">Spam Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../table.html">CP/Table Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../url.html">CP/URL Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html">Validation Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../view.html">View Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

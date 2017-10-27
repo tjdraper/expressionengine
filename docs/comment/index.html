@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Comment &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="next" title="Comment Module Control Panel" href="control_panel/index.html" />
+	    <link rel="prev" title="Channel Form Examples" href="../channel/channel_form/examples.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li class="last">Comment</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="comment">
+<h1>Comment<a class="headerlink" href="#comment" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id32">Introduction</a></li>
+<li><a class="reference internal" href="#comment-entries-tag" id="id33">Comment Entries Tag</a><ul>
+<li><a class="reference internal" href="#parameters" id="id34">Parameters</a></li>
+<li><a class="reference internal" href="#variables" id="id35">Variables</a></li>
+<li><a class="reference internal" href="#custom-member-fields" id="id36">Custom Member Fields</a></li>
+<li><a class="reference internal" href="#conditionals" id="id37">Conditionals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comment-notification-links-tag" id="id38">Comment Notification Links Tag</a></li>
+<li><a class="reference internal" href="#comment-subscriber-list-tag" id="id39">Comment Subscriber List Tag</a><ul>
+<li><a class="reference internal" href="#id8" id="id40">Parameters</a></li>
+<li><a class="reference internal" href="#id11" id="id41">Variables</a></li>
+<li><a class="reference internal" href="#id13" id="id42">Conditionals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#displaying-recent-comments" id="id43">Displaying Recent Comments</a></li>
+<li><a class="reference internal" href="#comment-submission-form" id="id44">Comment Submission Form</a><ul>
+<li><a class="reference internal" href="#id16" id="id45">Parameters</a></li>
+<li><a class="reference internal" href="#id21" id="id46">Conditionals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comment-previewing" id="id47">Comment Previewing</a><ul>
+<li><a class="reference internal" href="#id23" id="id48">Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#allowing-members-to-edit-comments-on-the-front-end" id="id49">Allowing Members to Edit Comments on the Front End</a><ul>
+<li><a class="reference internal" href="#example-code" id="id50">Example Code</a></li>
+<li><a class="reference internal" href="#comment-edit-script-tag" id="id51">Comment Edit Script Tag</a></li>
+<li><a class="reference internal" href="#ajax-edit-url-tag" id="id52">AJAX Edit URL Tag</a></li>
+<li><a class="reference internal" href="#useful-comment-entry-tags" id="id53">Useful Comment Entry Tags</a></li>
+<li><a class="reference internal" href="#editing-permissions" id="id54">Editing Permissions</a></li>
+<li><a class="reference internal" href="#customizing-client-side-code" id="id55">Customizing Client-Side Code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#control-panel" id="id56">Control Panel</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id32">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Comment Module allows you to show user-submitted comments on your
+site. Comments can be managed via the Comment Module Control Panel, and
+users can  edit their own comments via AJAX on the front-end of your
+site. In addition, the comment module supports <a class="reference internal" href="../templates/pagination.html"><span class="doc">Comment Pagination</span></a>.</p>
+</div>
+<div class="section" id="comment-entries-tag">
+<h2><a class="toc-backref" href="#id33">Comment Entries Tag</a><a class="headerlink" href="#comment-entries-tag" title="Permalink to this headline">¶</a></h2>
+<p>The Comment Entries Tag enables you to show the user-submitted comments
+associated with your entries.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Comment Entries Tag is intended for use in one of your
+&#8220;single entry&#8221; pages. That is, a page that shows a single, specific
+channel entry. Therefore, your Comment page must be linked to from
+within your Channel entries using the <a class="reference internal" href="../channel/channel_entries.html#channel-entries-url-title-path"><span class="std std-ref">url_title_path</span></a>
+variable or the <a class="reference internal" href="../channel/channel_entries.html#channel-entries-entry-id-path"><span class="std std-ref">entry_id_path</span></a> variable,
+so that the comments can be associated to a specific entry.</p>
+</div>
+<p>Here is a basic example showing how you might use the comment tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:entries</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;asc&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;20&quot;</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>By <span class="p">{</span><span class="nf">name</span><span class="p">}</span> on <span class="p">{</span><span class="nf">comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The Comment Entries tag should <strong>not</strong> be
+nested inside of a standard {exp:channel:entries} tag.</p>
+</div>
+<div class="section" id="parameters">
+<h3><a class="toc-backref" href="#id34">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#dynamic" id="id57">dynamic=</a></li>
+<li><a class="reference internal" href="#entry-id" id="id58">entry_id=</a></li>
+<li><a class="reference internal" href="#comment-id" id="id59">comment_id=</a></li>
+<li><a class="reference internal" href="#limit" id="id60">limit=</a></li>
+<li><a class="reference internal" href="#orderby" id="id61">orderby=</a></li>
+<li><a class="reference internal" href="#paginate" id="id62">paginate=</a></li>
+<li><a class="reference internal" href="#paginate-base" id="id63">paginate_base=</a></li>
+<li><a class="reference internal" href="#show-expired" id="id64">show_expired=</a></li>
+<li><a class="reference internal" href="#sort" id="id65">sort=</a></li>
+<li><a class="reference internal" href="#url-title" id="id66">url_title=</a></li>
+<li><a class="reference internal" href="#channel" id="id67">channel=</a></li>
+<li><a class="reference internal" href="#entry-status" id="id68">entry_status=</a></li>
+<li><a class="reference internal" href="#status" id="id69">status=</a></li>
+<li><a class="reference internal" href="#author-id" id="id70">author_id=</a></li>
+</ul>
+</div>
+<div class="section" id="dynamic">
+<h4><a class="toc-backref" href="#id57">dynamic=</a><a class="headerlink" href="#dynamic" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>dynamic=&quot;no&quot;
+</pre></div>
+</div>
+<p>The channel and comment display engines set some parameters dynamically,
+based on what is in the URL. There are times, however, where you do not
+want the parameters affected by what the URL contains. To override the
+dynamic nature of the comment tag, use dynamic=&#8221;no&#8221;.</p>
+<p>This is often useful if you want to list comments in a &#8220;sidebar&#8221; on your
+site and have them always be the same ones regardless of which page on
+your site you visit (main page, archives, comments, etc.). Using this,
+you can create a &#8220;recent comments&#8221; list. By setting dynamic=&#8221;no&#8221; you
+will ensure that the list is not affected by anything passed in the URL.</p>
+<p>When dynamic is set to &#8216;no&#8217;, pagination will still function using an &#8216;N&#8217;
+as a pagination indicator in the url rather than the standard &#8216;P&#8217;
+indicator.</p>
+</div>
+<div class="section" id="entry-id">
+<h4><a class="toc-backref" href="#id58">entry_id=</a><a class="headerlink" href="#entry-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;24&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment entries tag to show comments for a
+specific channel entry by its entry ID. You may also specify comments
+from multiple entries by separating them with the pipe character:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;13|42|147&quot; Or use &quot;not&quot; to exclude entries::
+
+entry_id=&quot;not 45|534|807&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This parameter takes precedence over any entry specified
+dynamically in the URL, so when using this parameter you will want
+to make sure it is clear to the user which entry the displayed
+comments belong to.</p>
+</div>
+</div>
+<div class="section" id="comment-id">
+<h4><a class="toc-backref" href="#id59">comment_id=</a><a class="headerlink" href="#comment-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>comment_id=&quot;22&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment entries tag to show specific comments. As
+with the entry_id parameter, you may also specify multiple comments by
+separating them with the pipe character. This parameter takes precedence
+over any entry specified in the url.</p>
+</div>
+<div class="section" id="limit">
+<h4><a class="toc-backref" href="#id60">limit=</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>limit=&quot;30&quot;
+</pre></div>
+</div>
+<p>Allows you to limit the number of comments. The limit will default to
+100 comments if a value is not specified. If you are using
+<a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> then this
+will determine the number of comments shown per page.</p>
+</div>
+<div class="section" id="orderby">
+<span id="comment-entries-orderby"></span><h4><a class="toc-backref" href="#id61">orderby=</a><a class="headerlink" href="#orderby" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;date&quot;
+</pre></div>
+</div>
+<p>The &#8220;order&#8221; parameter sets the display order of the comments. Setting
+options for this parameter include:</p>
+<ul class="simple">
+<li>orderby=&#8221;date&#8221;</li>
+<li>orderby=&#8221;email&#8221;</li>
+<li>orderby=&#8221;location&#8221;</li>
+<li>orderby=&#8221;name&#8221;</li>
+<li>orderby=&#8221;url&#8221;</li>
+<li>orderby=&#8221;random&#8221;</li>
+</ul>
+</div>
+<div class="section" id="paginate">
+<h4><a class="toc-backref" href="#id62">paginate=</a><a class="headerlink" href="#paginate" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate=&quot;top&quot; paginate=&quot;bottom&quot;  paginate=&quot;both&quot;  paginate=&quot;inline&quot;
+</pre></div>
+</div>
+<p>This parameter is for use with entry
+<a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> and determines where the
+pagination code will appear for your comments:</p>
+<ol class="arabic simple">
+<li><strong>top</strong>: The navigation text and links will appear <em>above</em> your list
+of comments.</li>
+<li><strong>bottom</strong>: The navigation text and links will appear <em>below</em> your
+list of comments.</li>
+<li><strong>both</strong>: The navigation text and links will appear both above and
+below your list of comments.</li>
+<li><strong>inline</strong>: The navigation text and links will appear within the list
+of entries for each entry.</li>
+</ol>
+<p>If no parameter is specified, the navigation block will default to the
+&#8220;bottom&#8221; behavior.</p>
+</div>
+<div class="section" id="paginate-base">
+<h4><a class="toc-backref" href="#id63">paginate_base=</a><a class="headerlink" href="#paginate-base" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate_base=&quot;site/index&quot;
+</pre></div>
+</div>
+<p>This tells ExpressionEngine to override the normal
+<a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> link locations and point
+instead to the explicitly stated template group and template.</p>
+</div>
+<div class="section" id="show-expired">
+<h4><a class="toc-backref" href="#id64">show_expired=</a><a class="headerlink" href="#show-expired" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_expired=&quot;yes&quot;
+</pre></div>
+</div>
+<p>You can determine whether you wish for comments on &#8220;expired&#8221; entries to
+be included.</p>
+</div>
+<div class="section" id="sort">
+<h4><a class="toc-backref" href="#id65">sort=</a><a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>sort=&quot;asc&quot; ``sort=&quot;desc&quot;``
+</pre></div>
+</div>
+<p>The sort order can be &#8220;asc&#8221; (ascending order or &#8220;oldest item first&#8221; for
+dates) or &#8220;desc&#8221; (descending order or &#8220;newest item first&#8221; for dates). If
+you do not use a sort order the default is desc.</p>
+</div>
+<div class="section" id="url-title">
+<h4><a class="toc-backref" href="#id66">url_title=</a><a class="headerlink" href="#url-title" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;my_wedding&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment entries tag to show comments for a
+specific channel entry by its URL title.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This parameter takes precedence over any entry specified
+dynamically in the URL, so when using this parameter you will want
+to make sure it is clear to the user which entry the displayed
+comments belong to.</p>
+</div>
+</div>
+<div class="section" id="channel">
+<h4><a class="toc-backref" href="#id67">channel=</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;which&quot;
+</pre></div>
+</div>
+<p>From which <a class="reference internal" href="../cp/channel/index.html"><span class="doc">channel</span></a> to
+show the comments (will show comments from any channel if no channel is
+specified). Additionally, you can use the pipe character to separate
+multiple channels:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;channel1|channel2|channel3&quot;
+</pre></div>
+</div>
+<p>Or you can add the word &#8220;not&#8221; (with a space after it) to exclude
+channels:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;not channel1|channel2|channel3&quot;
+</pre></div>
+</div>
+<p>The channel= parameter can have some security implications. If you do
+<strong>not</strong> use this parameter then it is possible that people could see
+comments for a channel entry that they otherwise would not have access
+to. If you use multiple channels and want to make sure only certain
+people can see certain content, then you&#8217;re encouraged to make use of
+this parameter.</p>
+</div>
+<div class="section" id="entry-status">
+<h4><a class="toc-backref" href="#id68">entry_status=</a><a class="headerlink" href="#entry-status" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_status=&quot;Featured&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="status">
+<h4><a class="toc-backref" href="#id69">status=</a><a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;Closed&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="author-id">
+<h4><a class="toc-backref" href="#id70">author_id=</a><a class="headerlink" href="#author-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;5&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="variables">
+<h3><a class="toc-backref" href="#id35">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><a class="reference internal" href="#absolute-count" id="id71">absolute_count</a></li>
+<li><a class="reference internal" href="#author" id="id72">author</a></li>
+<li><a class="reference internal" href="#id3" id="id73">author_id</a></li>
+<li><a class="reference internal" href="#avatar-image-height" id="id74">avatar_image_height</a></li>
+<li><a class="reference internal" href="#avatar-image-width" id="id75">avatar_image_width</a></li>
+<li><a class="reference internal" href="#avatar-url" id="id76">avatar_url</a></li>
+<li><a class="reference internal" href="#can-moderate-comment" id="id77">can_moderate_comment</a></li>
+<li><a class="reference internal" href="#channel-short-name" id="id78">channel_short_name</a></li>
+<li><a class="reference internal" href="#channel-title" id="id79">channel_title</a></li>
+<li><a class="reference internal" href="#id4" id="id80">comment</a></li>
+<li><a class="reference internal" href="#comment-stripped" id="id81">comment_stripped</a></li>
+<li><a class="reference internal" href="#comment-auto-path" id="id82">comment_auto_path</a></li>
+<li><a class="reference internal" href="#comment-date" id="id83">comment_date</a></li>
+<li><a class="reference internal" href="#comment-entry-id-auto-path" id="id84">comment_entry_id_auto_path</a></li>
+<li><a class="reference internal" href="#id5" id="id85">comment_id</a></li>
+<li><a class="reference internal" href="#comment-site-id" id="id86">comment_site_id</a></li>
+<li><a class="reference internal" href="#comment-url-title-auto-path" id="id87">comment_url_title_auto_path</a></li>
+<li><a class="reference internal" href="#count" id="id88">count</a></li>
+<li><a class="reference internal" href="#editable" id="id89">editable</a></li>
+<li><a class="reference internal" href="#edit-date" id="id90">edit_date</a></li>
+<li><a class="reference internal" href="#email" id="id91">email</a></li>
+<li><a class="reference internal" href="#entry-author-id" id="id92">entry_author_id</a></li>
+<li><a class="reference internal" href="#id6" id="id93">entry_id</a></li>
+<li><a class="reference internal" href="#entry-id-path" id="id94">entry_id_path</a></li>
+<li><a class="reference internal" href="#gmt-comment-date" id="id95">gmt_comment_date</a></li>
+<li><a class="reference internal" href="#ip-address" id="id96">ip_address</a></li>
+<li><a class="reference internal" href="#location" id="id97">location</a></li>
+<li><a class="reference internal" href="#group-id" id="id98">group_id</a></li>
+<li><a class="reference internal" href="#member-search-path" id="id99">member_search_path</a></li>
+<li><a class="reference internal" href="#name" id="id100">name</a></li>
+<li><a class="reference internal" href="#id7" id="id101">paginate=</a></li>
+<li><a class="reference internal" href="#permalink" id="id102">permalink</a></li>
+<li><a class="reference internal" href="#photo-url" id="id103">photo_url</a></li>
+<li><a class="reference internal" href="#photo-image-height" id="id104">photo_image_height</a></li>
+<li><a class="reference internal" href="#photo-image-width" id="id105">photo_image_width</a></li>
+<li><a class="reference internal" href="#signature" id="id106">signature</a></li>
+<li><a class="reference internal" href="#signature-image-height" id="id107">signature_image_height</a></li>
+<li><a class="reference internal" href="#signature-image-url" id="id108">signature_image_url</a></li>
+<li><a class="reference internal" href="#signature-image-width" id="id109">signature_image_width</a></li>
+<li><a class="reference internal" href="#switch" id="id110">switch=</a></li>
+<li><a class="reference internal" href="#title" id="id111">title</a></li>
+<li><a class="reference internal" href="#total-results" id="id112">total_results</a></li>
+<li><a class="reference internal" href="#total-comments" id="id113">total_comments</a></li>
+<li><a class="reference internal" href="#url-title-path" id="id114">url_title_path</a></li>
+<li><a class="reference internal" href="#username" id="id115">username</a></li>
+<li><a class="reference internal" href="#channel-id" id="id116">channel_id</a></li>
+</ul>
+</div>
+<div class="section" id="absolute-count">
+<h4><a class="toc-backref" href="#id71">absolute_count</a><a class="headerlink" href="#absolute-count" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">absolute_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The absolute &#8220;count&#8221; out of the current comment being displayed by the
+tag, including those comments on previous pages (if using pagination).</p>
+<p>If five entries are being displayed per page, then for the fourth entry
+on the second page the {absolute_count} variable would have a value of
+&#8220;9&#8221;.</p>
+</div>
+<div class="section" id="author">
+<h4><a class="toc-backref" href="#id72">author</a><a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The comment author&#8217;s screen name, if a member; otherwise, this variable
+will display the name submitted with the comment.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/member/</span><span class="p">{</span><span class="nf">author_id</span><span class="p">}</span><span class="s">/&quot;</span><span class="p">&gt;{</span><span class="nf">author</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4><a class="toc-backref" href="#id73">author_id</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID corresponding to the comment author&#8217;s member profile. This is
+only applicable if the comment was left by a registered member.
+Non-registered commenters will return a zero (0).</p>
+<p>This can be useful for creating links to the commenter&#8217;s member profile:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/member/</span><span class="p">{</span><span class="nf">author_id</span><span class="p">}</span><span class="s">/&quot;</span><span class="p">&gt;{</span><span class="nf">name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avatar-image-height">
+<h4><a class="toc-backref" href="#id74">avatar_image_height</a><a class="headerlink" href="#avatar-image-height" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The height of the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avatar-image-width">
+<h4><a class="toc-backref" href="#id75">avatar_image_width</a><a class="headerlink" href="#avatar-image-width" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The width of the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avatar-url">
+<h4><a class="toc-backref" href="#id76">avatar_url</a><a class="headerlink" href="#avatar-url" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="can-moderate-comment">
+<h4><a class="toc-backref" href="#id77">can_moderate_comment</a><a class="headerlink" href="#can-moderate-comment" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">can_moderate_comment</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be used in a conditional to allow <a class="reference internal" href="#comment-editing"><span class="std std-ref">comment
+editing</span></a>. It indicates whether a member has
+permission to edit a given comment AND/OR close that comment.</p>
+</div>
+<div class="section" id="channel-short-name">
+<h4><a class="toc-backref" href="#id78">channel_short_name</a><a class="headerlink" href="#channel-short-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_short_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The short name of the channel of that the comment belongs to.</p>
+</div>
+<div class="section" id="channel-title">
+<h4><a class="toc-backref" href="#id79">channel_title</a><a class="headerlink" href="#channel-title" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable simply displays the content from the &#8220;Full Channel Name&#8221;
+setting of the channel that the comment belongs to.</p>
+</div>
+<div class="section" id="id4">
+<h4><a class="toc-backref" href="#id80">comment</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The body of the comment</p>
+</div>
+<div class="section" id="comment-stripped">
+<h4><a class="toc-backref" href="#id81">comment_stripped</a><a class="headerlink" href="#comment-stripped" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_stripped</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The body of the comment without any typographical processing and with
+ExpressionEngine tags encoded. This tag is for use in <a class="reference internal" href="#comment-editing"><span class="std std-ref">comment
+editing</span></a>.</p>
+</div>
+<div class="section" id="comment-auto-path">
+<h4><a class="toc-backref" href="#id82">comment_auto_path</a><a class="headerlink" href="#comment-auto-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong> preference
+under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. No
+entry id, URL Title, or other information is included; this is simply the exact
+URL from the preference.</p>
+</div>
+<div class="section" id="comment-date">
+<h4><a class="toc-backref" href="#id83">comment_date</a><a class="headerlink" href="#comment-date" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date of the comment. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="comment-entry-id-auto-path">
+<h4><a class="toc-backref" href="#id84">comment_entry_id_auto_path</a><a class="headerlink" href="#comment-entry-id-auto-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_entry_id_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong> preference
+under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. The ID
+number of the entry will be automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_entry_id_auto_path</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/234/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4><a class="toc-backref" href="#id85">comment_id</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID associated with the comment</p>
+</div>
+<div class="section" id="comment-site-id">
+<h4><a class="toc-backref" href="#id86">comment_site_id</a><a class="headerlink" href="#comment-site-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_site_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Site ID for the comment.</p>
+</div>
+<div class="section" id="comment-url-title-auto-path">
+<h4><a class="toc-backref" href="#id87">comment_url_title_auto_path</a><a class="headerlink" href="#comment-url-title-auto-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_url_title_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong> preference
+under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. The
+URL Title of the entry will be automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_url_title_auto_path</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/ice_cream/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="count">
+<h4><a class="toc-backref" href="#id88">count</a><a class="headerlink" href="#count" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8220;count&#8221; out of the current comment being displayed by the tag on the
+current page.</p>
+<p>If five entries are being displayed per page, then for the fourth entry
+on the page the {count} variable would have a value of &#8220;4&#8221;.</p>
+</div>
+<div class="section" id="editable">
+<h4><a class="toc-backref" href="#id89">editable</a><a class="headerlink" href="#editable" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">editable</span><span class="p">}</span>Show Edit<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be used in a conditional to allow <a class="reference internal" href="#comment-editing"><span class="std std-ref">comment
+editing</span></a>. It indicates whether a member has
+<a class="reference internal" href="../cp/members/groups/form.html#comment-admin-privs"><span class="std std-ref">permission to edit a given comment</span></a>.</p>
+</div>
+<div class="section" id="edit-date">
+<h4><a class="toc-backref" href="#id90">edit_date</a><a class="headerlink" href="#edit-date" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">edit_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date on which the comment was edited. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable
+Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="email">
+<h4><a class="toc-backref" href="#id91">email</a><a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The comment author&#8217;s email address, if specified.</p>
+</div>
+<div class="section" id="entry-author-id">
+<h4><a class="toc-backref" href="#id92">entry_author_id</a><a class="headerlink" href="#entry-author-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_author_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The member ID for the creator of the entry whose comments are being
+displayed.</p>
+</div>
+<div class="section" id="id6">
+<h4><a class="toc-backref" href="#id93">entry_id</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID number of the entry</p>
+</div>
+<div class="section" id="entry-id-path">
+<h4><a class="toc-backref" href="#id94">entry_id_path</a><a class="headerlink" href="#entry-id-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the specified template. The ID number of the entry with which
+the comment is associated will be automatically added. For example,
+this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/234/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gmt-comment-date">
+<h4><a class="toc-backref" href="#id95">gmt_comment_date</a><a class="headerlink" href="#gmt-comment-date" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">gmt_comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date of the comment but <strong>not</strong> localized for the user. See
+<a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a>
+for more information.</p>
+</div>
+<div class="section" id="ip-address">
+<h4><a class="toc-backref" href="#id96">ip_address</a><a class="headerlink" href="#ip-address" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">ip_address</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The IP address of the commenter</p>
+</div>
+<div class="section" id="location">
+<h4><a class="toc-backref" href="#id97">location</a><a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">location</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The commenter&#8217;s location as entered in their profile</p>
+</div>
+<div class="section" id="group-id">
+<h4><a class="toc-backref" href="#id98">group_id</a><a class="headerlink" href="#group-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">group_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The commenter&#8217;s member group id (0 for non-members)</p>
+</div>
+<div class="section" id="member-search-path">
+<h4><a class="toc-backref" href="#id99">member_search_path</a><a class="headerlink" href="#member-search-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_search_path</span><span class="p">=</span><span class="s1">&#39;search/results&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by a URL that passes the author&#8217;s member name
+to your search results Template. In this way, you can display all
+entries made by the author. You should specify the
+Template_Group/Template that you use to display search results. For
+example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">member_search_path</span><span class="p">=</span><span class="s1">&#39;search/results&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>View entries by this member<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="name">
+<h4><a class="toc-backref" href="#id100">name</a><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Name of the author</p>
+</div>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id101">paginate=</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate=&quot;top&quot; paginate=&quot;bottom&quot;  paginate=&quot;both&quot;  paginate=&quot;inline&quot;
+</pre></div>
+</div>
+<p>This parameter is for use with entry
+<a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> and
+determines where the pagination code will appear for your entries:</p>
+<ol class="arabic simple">
+<li><strong>top</strong>: The navigation text and links will appear <em>above</em> your list
+of entries.</li>
+<li><strong>bottom</strong>: The navigation text and links will appear <em>below</em> your
+list of entries.</li>
+<li><strong>both</strong>: The navigation text and links will appear both above and
+below your list of entries.</li>
+<li><strong>inline</strong>: The navigation text and links will appear within the list
+of entries for each entry.</li>
+</ol>
+<p>If no parameter is specified, the navigation block will default to the
+&#8220;bottom&#8221; behavior.</p>
+</div>
+<div class="section" id="permalink">
+<h4><a class="toc-backref" href="#id102">permalink</a><a class="headerlink" href="#permalink" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">permalink</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the actual comment with anchor. Put this variable in a link:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">permalink</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>permanent link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="photo-url">
+<h4><a class="toc-backref" href="#id103">photo_url</a><a class="headerlink" href="#photo-url" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the URL to the member photo (if you have that
+option enabled and the member has uploaded their photo). It is intended
+for use in an image tag.</p>
+</div>
+<div class="section" id="photo-image-height">
+<h4><a class="toc-backref" href="#id104">photo_image_height</a><a class="headerlink" href="#photo-image-height" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the height of the member photo. It is intended
+for use in an image tag.</p>
+</div>
+<div class="section" id="photo-image-width">
+<h4><a class="toc-backref" href="#id105">photo_image_width</a><a class="headerlink" href="#photo-image-width" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the width of the member photo. It is intended for
+use in an image tag.</p>
+</div>
+<div class="section" id="signature">
+<h4><a class="toc-backref" href="#id106">signature</a><a class="headerlink" href="#signature" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The signature associated with the entry&#8217;s author. Typically used as
+such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">signature</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-height">
+<h4><a class="toc-backref" href="#id107">signature_image_height</a><a class="headerlink" href="#signature-image-height" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The height of the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-url">
+<h4><a class="toc-backref" href="#id108">signature_image_url</a><a class="headerlink" href="#signature-image-url" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-width">
+<h4><a class="toc-backref" href="#id109">signature_image_width</a><a class="headerlink" href="#signature-image-width" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The width of the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="switch">
+<h4><a class="toc-backref" href="#id110">switch=</a><a class="headerlink" href="#switch" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">switch</span><span class="p">=</span><span class="s2">&quot;option_one|option_two|option_three&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable permits you to rotate through any number of values as the
+entries are displayed. The first entry will use &#8220;option_one&#8221;, the
+second will use &#8220;option_two&#8221;, the third &#8220;option_three&#8221;, the fourth
+&#8220;option_one&#8221;, and so on.</p>
+<p>The most straightforward use for this would be to alternate colors. It
+could be used like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:entries</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">switch</span><span class="p">=</span><span class="s2">&quot;one|two&quot;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">name</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">comment</span><span class="p">}</span> <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The entries would then alternate between &lt;div class=&#8221;one&#8221;&gt; and &lt;div
+class=&#8221;two&#8221;&gt;.</p>
+<p>Multiple instances of the {switch=} tag may be used and the system will
+intelligently keep track of each one.</p>
+</div>
+<div class="section" id="title">
+<h4><a class="toc-backref" href="#id111">title</a><a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The title of the channel entry with which the comment is associated.</p>
+</div>
+<div class="section" id="total-results">
+<h4><a class="toc-backref" href="#id112">total_results</a><a class="headerlink" href="#total-results" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">total_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of comments being displayed by this tag on the current
+page.</p>
+</div>
+<div class="section" id="total-comments">
+<h4><a class="toc-backref" href="#id113">total_comments</a><a class="headerlink" href="#total-comments" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">total_comments</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of comments for this tag on all pages.</p>
+</div>
+<div class="section" id="url-title-path">
+<h4><a class="toc-backref" href="#id114">url_title_path</a><a class="headerlink" href="#url-title-path" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the specified template. The &#8220;url title&#8221; of the entry with
+which the comment is associated will be automatically added. For
+example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>permalink<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/ice_cream/&quot;</span><span class="p">&gt;</span>permalink<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="username">
+<h4><a class="toc-backref" href="#id115">username</a><a class="headerlink" href="#username" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">username</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s username (returns FALSE for non-members)</p>
+</div>
+<div class="section" id="channel-id">
+<h4><a class="toc-backref" href="#id116">channel_id</a><a class="headerlink" href="#channel-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID number of the actual channel</p>
+</div>
+</div>
+<div class="section" id="custom-member-fields">
+<h3><a class="toc-backref" href="#id36">Custom Member Fields</a><a class="headerlink" href="#custom-member-fields" title="Permalink to this headline">¶</a></h3>
+<p>All custom member profile fields can be accessed using the &#8220;short name&#8221;
+of the field:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">age</span><span class="p">}</span> <span class="p">{</span><span class="nf">gender</span><span class="p">}</span> <span class="p">{</span><span class="nf">zodiac</span><span class="p">}</span> etc..
+</pre></div>
+</div>
+<p>These are totally dynamic in that any profile field you create for your
+members will automatically be available by its &#8220;short name&#8221; as a
+variable.</p>
+</div>
+<div class="section" id="conditionals">
+<h3><a class="toc-backref" href="#id37">Conditionals</a><a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h3>
+<p>Conditionals work in comments:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">name</span><span class="o">==</span><span class="s2">&quot;bozo&quot;</span><span class="p">}</span>  You&#39;ve got a big nose!  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="if-avatar">
+<h4>if avatar<a class="headerlink" href="#if-avatar" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry&#8217;s author has an avatar image specified.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-comments-expired">
+<h4>if comments_expired<a class="headerlink" href="#if-comments-expired" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">comments_expired</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If commenting has expired (and expiration is not set to be
+<a class="reference internal" href="control_panel/index.html"><span class="doc">overridden by moderation</span></a>),
+the contents of this conditional will be displayed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">{if</span> <span class="pre">no_results}</span></code> has precedence over this conditional. If there are
+no comments, this conditional is not evaluated.</p>
+</div>
+</div>
+<div class="section" id="if-comments-disabled">
+<h4>if comments_disabled<a class="headerlink" href="#if-comments-disabled" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">comments_disabled</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If commenting has been disabled, the contents of this conditional will
+be displayed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">{if</span> <span class="pre">no_results}</span></code> has precedence over this conditional. If there are
+no comments, this conditional is not evaluated.</p>
+</div>
+</div>
+<div class="section" id="if-is-ignored">
+<h4>if is_ignored<a class="headerlink" href="#if-is-ignored" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">is_ignored</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This conditionals allows you to show (or hide) specific content if the
+comment was made by a member on the logged-in user&#8217;s ignore list. A
+simplified example of how this might be used is:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:entries</span><span class="p">}</span>
+        <span class="p">{</span><span class="k">if</span> <span class="nv">is_ignored</span><span class="p">}</span>You are ignoring <span class="p">{</span><span class="nf">author</span><span class="p">}</span>.<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="p">{</span><span class="k">if</span> <span class="nv">is_ignored</span><span class="p">}</span><span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none;&quot;</span><span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&gt;{</span><span class="nf">comment</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you can use Javascript to allow the user to read the comment if they
+wish:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+        <span class="kd">function</span> <span class="nx">showHideComment</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">==</span> <span class="s2">&quot;block&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;block&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">{</span><span class="nf">exp:comment:entries</span><span class="p">}</span>
+        <span class="p">{</span><span class="k">if</span> <span class="nv">is_ignored</span><span class="p">}</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;showHideComment(&#39;</span><span class="p">{</span><span class="nf">comment_id</span><span class="p">}</span><span class="s">&#39;)&quot;</span><span class="p">&gt;</span>View / Hide<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> comment from ignored member: <span class="p">{</span><span class="nf">author</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_id</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">{</span><span class="k">if</span> <span class="nv">is_ignored</span><span class="p">}</span><span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none;&quot;</span><span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&gt;{</span><span class="nf">comment</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Avoid using Template Caching on any Template containing
+this conditional. If you do not avoid caching, then data will not be
+dynamic for each user. Instead, whoever happens to load the page when it
+is cached will have their ignore list applied to everyone until the
+cache expires.</p>
+</div>
+</div>
+<div class="section" id="if-no-results">
+<h4>if no_results<a class="headerlink" href="#if-no-results" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional for displaying a message in the case when
+no comments are returned. The contents inside of the conditional will be
+displayed in cases where there are no results returned for the tag.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>There are no comments for this entry yet.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Further, you may specify that another Template be shown in a case when
+there are no results. In order to do that, you must use the redirect=
+variable:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span> <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s2">&quot;site/noresult&quot;</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-signature-image">
+<h4>if signature_image<a class="headerlink" href="#if-signature-image" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry&#8217;s author has a signature image specified.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span> <span class="p">/&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="comment-notification-links-tag">
+<h2><a class="toc-backref" href="#id38">Comment Notification Links Tag</a><a class="headerlink" href="#comment-notification-links-tag" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">{exp:comment:notification_links}</span></code> tag can be to allow members to
+subscribe to an entry without commenting via a simple link. This tag may only be
+used on a single entry page.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:notification_links</span><span class="p">}</span>
+        <span class="p">{</span><span class="k">if</span> <span class="nv">subscribed</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">unsubscribe_link</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Unsubscribe to comment notification for this entry.<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="k">if:else</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">subscribe_link</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Subscribe to comment notification for this entry.<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:comment:notification_links</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Comment notification links will only show on a single-entry pages, such
+as &#8220;comment&#8221; pages.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only logged in members may subscribe without commenting. The
+tag will return nothing for non-logged in members.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your URL does not contain the entry ID or url_title, you must use
+either the <code class="docutils literal"><span class="pre">entry_id=</span></code> or <code class="docutils literal"><span class="pre">url_title=</span></code> parameter on your
+<code class="docutils literal"><span class="pre">{exp:comment:notification_links}</span></code> tag.</p>
+</div>
+</div>
+<div class="section" id="comment-subscriber-list-tag">
+<h2><a class="toc-backref" href="#id39">Comment Subscriber List Tag</a><a class="headerlink" href="#comment-subscriber-list-tag" title="Permalink to this headline">¶</a></h2>
+<p>The Comment Subscriber List Tag enables you to display the members who
+have subscribed to comment notifications for a particular entry.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Comment Subscriber List Tag is intended for use in one of your
+&#8220;single entry&#8221; pages. That is, a page that shows a single, specific
+channel entry. Its variables are all prefixed, so you can easily use it
+inside of a channel entries tag or a comment entries tag.</p>
+</div>
+<p>Here is a basic example showing how you might use the Comment Subscriber
+List Tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:subscriber_list</span><span class="p">}</span>
+        <span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_count</span> <span class="o">==</span> <span class="m">1</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">subscriber_total_results</span><span class="p">}</span> Subscribed<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+        <span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_is_member</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;member/{subscriber_member_id}&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">subscriber_screen_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+        <span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_count</span> <span class="o">==</span> <span class="nv">subscriber_total_results</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>and <span class="p">{</span><span class="nf">subscriber_guest_total</span><span class="p">}</span> Guest<span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_guest_total</span> <span class="o">!=</span> <span class="m">1</span><span class="p">}</span>s<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:comment:subscriber_list</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id40">Parameters</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id9">
+<ul class="simple">
+<li><a class="reference internal" href="#id10" id="id117">entry_id=</a></li>
+<li><a class="reference internal" href="#exclude-guests" id="id118">exclude_guests=</a></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h4><a class="toc-backref" href="#id117">entry_id=</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;24&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment subscriber list tag to show subscribers
+for a specific channel entry by its entry ID.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This parameter takes precedence over any entry specified
+dynamically in the URL, so when using this parameter you will want to
+make sure it is clear to the user which entry the displayed comments
+belong to.</p>
+</div>
+</div>
+<div class="section" id="exclude-guests">
+<h4><a class="toc-backref" href="#id118">exclude_guests=</a><a class="headerlink" href="#exclude-guests" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>exclude_guests=&quot;yes&quot;
+</pre></div>
+</div>
+<p>If you would like to exclude guest comments from the list and totals, set
+the <cite>exclude_guests</cite> parameter to &#8220;yes&#8221;. Comments made by non-members will
+not be included in the totals, and their email addresses will not be
+available for output to Super Admins.</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><a class="toc-backref" href="#id41">Variables</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id12">
+<ul class="simple">
+<li><a class="reference internal" href="#subscriber-count" id="id119">subscriber_count</a></li>
+<li><a class="reference internal" href="#subscriber-email" id="id120">subscriber_email</a></li>
+<li><a class="reference internal" href="#subscriber-guest-total" id="id121">subscriber_guest_total</a></li>
+<li><a class="reference internal" href="#subscriber-member-id" id="id122">subscriber_member_id</a></li>
+<li><a class="reference internal" href="#subscriber-member-total" id="id123">subscriber_member_total</a></li>
+<li><a class="reference internal" href="#subscriber-screen-name" id="id124">subscriber_screen_name</a></li>
+<li><a class="reference internal" href="#subscriber-total-results" id="id125">subscriber_total_results</a></li>
+</ul>
+</div>
+<div class="section" id="subscriber-count">
+<h4><a class="toc-backref" href="#id119">subscriber_count</a><a class="headerlink" href="#subscriber-count" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8220;count&#8221; out of the current subscriber being displayed by the tag. Also
+available simply as <cite>{count}</cite>, but using the prefixed version makes this
+variable safe to use inside of other tags that may have their own <cite>{count}</cite>
+variable.</p>
+</div>
+<div class="section" id="subscriber-email">
+<h4><a class="toc-backref" href="#id120">subscriber_email</a><a class="headerlink" href="#subscriber-email" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The email address of the subscriber being displayed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the privacy of your site&#8217;s members, email addresses will
+<strong>only</strong> be output to logged in Super Admins. This is useful for making
+this information known to administrators, e.g.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_is_member</span><span class="p">}</span>
+     <span class="p">{</span><span class="nf">subscriber_screen_name</span><span class="p">}</span>
+<span class="p">{</span><span class="k">if:else</span><span class="p">}</span>
+     <span class="p">{</span><span class="nf">encode</span><span class="p">=</span><span class="s2">&quot;{subscriber_email}&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p class="last"><cite>{subscriber_email}</cite> will be empty if you are not logged in as a
+Super Admin so it is best to use this variable in a conditional.</p>
+</div>
+</div>
+<div class="section" id="subscriber-guest-total">
+<h4><a class="toc-backref" href="#id121">subscriber_guest_total</a><a class="headerlink" href="#subscriber-guest-total" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_guest_total</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of subscribers to an entry who are <strong>not</strong> registered
+members of the site.</p>
+</div>
+<div class="section" id="subscriber-member-id">
+<h4><a class="toc-backref" href="#id122">subscriber_member_id</a><a class="headerlink" href="#subscriber-member-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_member_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The member ID of the subscriber being displayed. This will be &#8220;0&#8221; if the
+subscriber is a guest, so it is best to use this variable in a conditional.</p>
+</div>
+<div class="section" id="subscriber-member-total">
+<h4><a class="toc-backref" href="#id123">subscriber_member_total</a><a class="headerlink" href="#subscriber-member-total" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_member_total</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of subscribers to an entry who are registered members
+of the site.</p>
+</div>
+<div class="section" id="subscriber-screen-name">
+<h4><a class="toc-backref" href="#id124">subscriber_screen_name</a><a class="headerlink" href="#subscriber-screen-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_screen_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The screen name of the subscriber. This will be empty if the subscriber
+is a guest, so it is best to use this variable in a conditional.</p>
+</div>
+<div class="section" id="subscriber-total-results">
+<h4><a class="toc-backref" href="#id125">subscriber_total_results</a><a class="headerlink" href="#subscriber-total-results" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">subscriber_total_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of subscribers to an entry. Also available simply as
+<cite>{total_results}</cite>, but using the prefixed version makes this variable
+safe to use inside of other tags that may have their own
+<cite>{total_results}</cite> variable.</p>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id42">Conditionals</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id14">
+<ul class="simple">
+<li><a class="reference internal" href="#subscriber-is-member" id="id126">subscriber_is_member</a></li>
+</ul>
+</div>
+<div class="section" id="subscriber-is-member">
+<h4><a class="toc-backref" href="#id126">subscriber_is_member</a><a class="headerlink" href="#subscriber-is-member" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">subscriber_is_member</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The conditional allows you to show (or hide) content based on whether
+the subscriber is a registered member of the site.</p>
+</div>
+</div>
+</div>
+<div class="section" id="displaying-recent-comments">
+<h2><a class="toc-backref" href="#id43">Displaying Recent Comments</a><a class="headerlink" href="#displaying-recent-comments" title="Permalink to this headline">¶</a></h2>
+<p>The standard ExpressionEngine {exp:comment:entries} comment tag can be
+used to display a list of recent comments. Many people use a list like
+this in a sidebar of their site.</p>
+<p>A simple example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:entries</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;desc&quot;</span> <span class="na">orderby</span><span class="p">=</span><span class="s2">&quot;date&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">dynamic</span><span class="p">=</span><span class="s2">&quot;no&quot;</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                By <span class="p">{</span><span class="nf">name</span><span class="p">}</span> on <span class="p">{</span><span class="nf">comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+                From the entry &#39;<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_url_title_auto_path</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>&#39;.
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>It is very important that the dynamic=&#8221;no&#8221; parameter be included above.
+This is what allows ExpressionEngine to display the comments independent
+of a particular entry. Also note that you can use a number of values for
+the <cite>comment-entries-orderby</cite> parameter.</p>
+</div>
+<div class="section" id="comment-submission-form">
+<span id="id15"></span><h2><a class="toc-backref" href="#id44">Comment Submission Form</a><a class="headerlink" href="#comment-submission-form" title="Permalink to this headline">¶</a></h2>
+<p>The comment submission form is created very similar to a standard web form, only
+you don&#8217;t specify the opening and closing form tags. There are a few
+variables that are required in order to enable people&#8217;s personal
+information (name, email, url, etc.) to appear in the form. Here&#8217;s how
+the comment form is typically created:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:form</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">preview</span><span class="p">=</span><span class="s2">&quot;channel/preview&quot;</span><span class="p">}</span>
+
+        <span class="p">{</span><span class="k">if</span> <span class="nv">logged_out</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>Name:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;email&quot;</span><span class="p">&gt;</span>Email:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">email</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;location&quot;</span><span class="p">&gt;</span>Location:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;location&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">location</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;url&quot;</span><span class="p">&gt;</span>URL:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;url&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>Comment:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;comment&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;70&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;10&quot;</span><span class="p">&gt;{</span><span class="nf">comment</span><span class="p">}&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;save_info&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="p">{</span><span class="nf">save_info</span><span class="p">}</span> <span class="p">/&gt;</span> Remember my personal information<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;notify_me&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="p">{</span><span class="nf">notify_me</span><span class="p">}</span> <span class="p">/&gt;</span> Notify me of follow-up comments?<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+
+        <span class="p">{</span><span class="k">if</span> <span class="nv">captcha</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span><span class="p">&gt;</span>Please enter the word you see in the image below:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">captcha</span><span class="p">}&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">captcha_word</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;preview&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Preview&quot;</span> <span class="p">/&gt;</span>
+
+<span class="p">{</span><span class="nf">/exp:comment:form</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This form should be placed on a &#8220;single-entry&#8221; type page such as a
+comments page, of course.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Notice the variables in the &#8220;value&#8221; form fields? These allow us to show
+the user&#8217;s information in the form automatically if they click the
+&#8220;remember personal info&#8221; option.</p>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id45">Parameters</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id17">
+<ul class="simple">
+<li><a class="reference internal" href="#id18" id="id127">entry_id=</a></li>
+<li><a class="reference internal" href="#preview" id="id128">preview=</a></li>
+<li><a class="reference internal" href="#id19" id="id129">url_title=</a></li>
+<li><a class="reference internal" href="#id20" id="id130">channel=</a></li>
+<li><a class="reference internal" href="#form-class" id="id131">form_class=</a></li>
+<li><a class="reference internal" href="#form-id" id="id132">form_id=</a></li>
+<li><a class="reference internal" href="#return" id="id133">return=</a></li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h4><a class="toc-backref" href="#id127">entry_id=</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;24&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment form tag to display a comment form for a
+specific channel entry by its entry ID.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This parameter takes precedence over any entry specified
+dynamically in the URL, so when using this parameter you will want
+to make sure it is clear to the user which entry the displayed
+comment form belongs to.</p>
+</div>
+</div>
+<div class="section" id="preview">
+<h4><a class="toc-backref" href="#id128">preview=</a><a class="headerlink" href="#preview" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>preview=&quot;channel/preview&quot;
+</pre></div>
+</div>
+<p>This is a <strong>required</strong> parameter if you are using comment previews
+indicating which template should be used for comment previews. Like
+other &#8220;path&#8221; variables in ExpressionEngine you will use the Template
+Group/Template name. More on previewing can be found in the <a class="reference internal" href="#comment-previewing">Comment
+Previewing</a> section.</p>
+</div>
+<div class="section" id="id19">
+<h4><a class="toc-backref" href="#id129">url_title=</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;my_wedding&quot;
+</pre></div>
+</div>
+<p>You can hard code the comment for tag to display a comment form for a
+specific channel entry by its URL title.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This parameter takes precedence over any entry specified
+dynamically in the URL, so when using this parameter you will want
+to make sure it is clear to the user which entry the displayed
+comment form belong to.</p>
+</div>
+</div>
+<div class="section" id="id20">
+<h4><a class="toc-backref" href="#id130">channel=</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;news&quot;
+</pre></div>
+</div>
+<p>With this parameter you can specify exactly which channel you want the
+submitted comment associated to. This is an important, but optional,
+parameter.</p>
+<p>If you link to your comment form page using the entry&#8217;s URL Title, then
+you are <strong>strongly encouraged</strong> to include this parameter in your tag.</p>
+<p>Because you can have the same URL Title in different channels, using
+this parameter will ensure that the comment submitted will be associated
+with the correct entry. Without this parameter, it is possible that the
+comment could be associated with an entry in a different channel that
+happens to have the same URL Title.</p>
+</div>
+<div class="section" id="form-class">
+<h4><a class="toc-backref" href="#id131">form_class=</a><a class="headerlink" href="#form-class" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>form_class=&quot;news_comment_form&quot;
+</pre></div>
+</div>
+<p>With this parameter, you can specify the css class you want the form to
+have, enabling fine-grained styling of the comment form.</p>
+</div>
+<div class="section" id="form-id">
+<h4><a class="toc-backref" href="#id132">form_id=</a><a class="headerlink" href="#form-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>form_id=&quot;news_comment_form&quot;
+</pre></div>
+</div>
+<p>With this parameter, you can specify the css id you want the form to
+have. The default value is &#8216;comment_form&#8217;</p>
+</div>
+<div class="section" id="return">
+<h4><a class="toc-backref" href="#id133">return=</a><a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;template_group/template/url_title&quot;
+</pre></div>
+</div>
+<p>This parameter allows you to define where the user will be returned
+after submitting a comment. The parameter can be defined in two ways:</p>
+<ol class="arabic simple">
+<li>Use the standard Template_Group/Template syntax to specify where to
+return the user. For instance, if you want the user to be returned to
+the &#8220;local&#8221; Template in the &#8220;news&#8221; Template Group, you would use:
+return=&#8221;news/local&#8221;</li>
+<li>Use a full URL. For example: return=&#8221;<a class="reference external" href="http://example.com/return.html">http://example.com/return.html</a>&#8220;</li>
+</ol>
+<p>If this parameter is not defined, they will be returned to the form
+page.</p>
+</div>
+</div>
+<div class="section" id="id21">
+<h3><a class="toc-backref" href="#id46">Conditionals</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id22">
+<ul class="simple">
+<li><a class="reference internal" href="#logged-out" id="id134">logged_out</a></li>
+<li><a class="reference internal" href="#captcha" id="id135">captcha</a></li>
+<li><a class="reference internal" href="#comments-expired" id="id136">comments_expired</a></li>
+<li><a class="reference internal" href="#comments-disabled" id="id137">comments_disabled</a></li>
+</ul>
+</div>
+<div class="section" id="logged-out">
+<h4><a class="toc-backref" href="#id134">logged_out</a><a class="headerlink" href="#logged-out" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">logged_out</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The conditional variable {if logged_out} allows the system to show the
+short form (textarea only) if the user is a logged in member. We
+recommend you use the form this way because if a member is logged in,
+their personal data is fetched automatically.</p>
+</div>
+<div class="section" id="captcha">
+<h4><a class="toc-backref" href="#id135">captcha</a><a class="headerlink" href="#captcha" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">captcha</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>As noted in the <a class="reference internal" href="../security/captchas.html"><span class="doc">captcha section</span></a>, the contents
+of the conditional ({if captcha}) tag will only appear if you have the
+CAPTCHA preference turned on for comments in the channel the entry is
+associated with.</p>
+</div>
+<div class="section" id="comments-expired">
+<h4><a class="toc-backref" href="#id136">comments_expired</a><a class="headerlink" href="#comments-expired" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">comments_expired</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If commenting has expired (and expiration is not set to be
+<a class="reference internal" href="control_panel/index.html"><span class="doc">overridden by moderation</span></a>),
+the contents of this conditional will replace all other tag contents.</p>
+</div>
+<div class="section" id="comments-disabled">
+<h4><a class="toc-backref" href="#id137">comments_disabled</a><a class="headerlink" href="#comments-disabled" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">comments_disabled</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If commenting has been disabled, the contents of this conditional will
+replace all other tag contents.</p>
+</div>
+</div>
+</div>
+<div class="section" id="comment-previewing">
+<h2><a class="toc-backref" href="#id47">Comment Previewing</a><a class="headerlink" href="#comment-previewing" title="Permalink to this headline">¶</a></h2>
+<p>To preview a comment requires that you create a specific Template for
+it. This Template will contain at minimum two tags. The first is the tag
+that shows the preview:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:preview</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:comment:preview</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The second is the <a class="reference internal" href="#id15">Comment Submission Form</a> tag. This
+allows the comment to be displayed as well as the form containing the
+info so it can be previewed again or submitted.</p>
+<div class="section" id="id23">
+<h3><a class="toc-backref" href="#id48">Variables</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id24">
+<ul class="simple">
+<li><a class="reference internal" href="#id25" id="id138">comment</a></li>
+<li><a class="reference internal" href="#id26" id="id139">comment_date</a></li>
+<li><a class="reference internal" href="#id27" id="id140">email</a></li>
+<li><a class="reference internal" href="#id28" id="id141">location</a></li>
+<li><a class="reference internal" href="#id29" id="id142">name</a></li>
+<li><a class="reference internal" href="#url" id="id143">url</a></li>
+<li><a class="reference internal" href="#url-as-author" id="id144">url_as_author</a></li>
+<li><a class="reference internal" href="#url-or-email" id="id145">url_or_email</a></li>
+<li><a class="reference internal" href="#url-or-email-as-author" id="id146">url_or_email_as_author</a></li>
+<li><a class="reference internal" href="#url-or-email-as-link" id="id147">url_or_email_as_link</a></li>
+<li><a class="reference internal" href="#id30" id="id148">Conditionals</a></li>
+</ul>
+</div>
+<div class="section" id="id25">
+<h4><a class="toc-backref" href="#id138">comment</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The body of the comment.</p>
+</div>
+<div class="section" id="id26">
+<h4><a class="toc-backref" href="#id139">comment_date</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date of the comment. As with other date variables, this requires the
+&#8220;format&#8221; parameter in order to define how the date should be displayed.
+See the <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">date variable formatting</span></a> page for more information.</p>
+</div>
+<div class="section" id="id27">
+<h4><a class="toc-backref" href="#id140">email</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The email address of the comment author.</p>
+</div>
+<div class="section" id="id28">
+<h4><a class="toc-backref" href="#id141">location</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">location</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s location as entered in their profile or the comment entry
+form.</p>
+</div>
+<div class="section" id="id29">
+<h4><a class="toc-backref" href="#id142">name</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Name of the author.</p>
+</div>
+<div class="section" id="url">
+<h4><a class="toc-backref" href="#id143">url</a><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s raw URL, if it exists.</p>
+</div>
+<div class="section" id="url-as-author">
+<h4><a class="toc-backref" href="#id144">url_as_author</a><a class="headerlink" href="#url-as-author" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_as_author</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Hyperlink pointing to the URL (if it exists) with the author name as the
+link title. If the URL does not exist simply the name is returned.</p>
+</div>
+<div class="section" id="url-or-email">
+<h4><a class="toc-backref" href="#id145">url_or_email</a><a class="headerlink" href="#url-or-email" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_or_email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>URL if it exists, otherwise the email address.</p>
+</div>
+<div class="section" id="url-or-email-as-author">
+<h4><a class="toc-backref" href="#id146">url_or_email_as_author</a><a class="headerlink" href="#url-or-email-as-author" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_or_email_as_author</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Hyperlink or email link as author screen_name (or username if they
+haven&#8217;t specified a screen name).</p>
+</div>
+<div class="section" id="url-or-email-as-link">
+<h4><a class="toc-backref" href="#id147">url_or_email_as_link</a><a class="headerlink" href="#url-or-email-as-link" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_or_email_as_link</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Same as above only it will display the URL or email address as a link.</p>
+</div>
+<div class="section" id="id30">
+<h4><a class="toc-backref" href="#id148">Conditionals</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<p>The following conditionals are available:</p>
+<ul class="simple">
+<li>{if email}</li>
+<li>{if location}</li>
+<li>{if logged_in}</li>
+<li>{if logged_out}</li>
+<li>{if name}</li>
+<li>{if url}</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="allowing-members-to-edit-comments-on-the-front-end">
+<span id="comment-editing"></span><h2><a class="toc-backref" href="#id49">Allowing Members to Edit Comments on the Front End</a><a class="headerlink" href="#allowing-members-to-edit-comments-on-the-front-end" title="Permalink to this headline">¶</a></h2>
+<p>The available tags and variables allow you to write your own client side
+code for implementing comment editing. The following is a simplified
+example using the native <a class="reference internal" href="../add-ons/jquery/index.html#jquery-script-tag"><span class="std std-ref">{exp:jquery:script_tag}</span></a>.</p>
+<div class="section" id="example-code">
+<h3><a class="toc-backref" href="#id50">Example Code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<p>The Comment Entries Tag Code:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:entries</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;20&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment_</span><span class="p">{</span><span class="nf">comment_id</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment_body&quot;</span><span class="p">&gt;</span>
+                        <span class="p">{</span><span class="nf">comment</span><span class="p">}</span>
+                <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+
+                <span class="p">{</span><span class="k">if</span> <span class="nv">editable</span><span class="p">}</span>
+                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;edit_link&quot;</span><span class="p">&gt;</span>Edit<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+
+                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;editCommentBox&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display:none;&quot;</span><span class="p">&gt;</span>
+                                <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;70&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;8&quot;</span><span class="p">&gt;{</span><span class="nf">comment_stripped</span><span class="p">}&lt;/</span><span class="nt">textarea</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;cancel&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Cancel&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;cancel_edit&quot;</span><span class="p">&gt;</span>
+                                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;save&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Save&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;submit_edit&quot;</span><span class="p">&gt;</span>
+                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+                <span class="p">{</span><span class="k">if</span> <span class="nv">can_moderate_comment</span><span class="p">}</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mod_link&quot;</span><span class="p">&gt;</span>Close<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:comment:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The JavaScript Code:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">exp:comment:edit_comment_script</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comment-edit-script-tag">
+<h3><a class="toc-backref" href="#id51">Comment Edit Script Tag</a><a class="headerlink" href="#comment-edit-script-tag" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:edit_comment_script</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This tag outputs a script tag that will include the necessary JavaScript
+for your comment editor. This script requires jQuery, so you will
+typically use it in conjunction with the <a class="reference internal" href="../add-ons/jquery/index.html#jquery-script-tag"><span class="std std-ref">Script Tag</span></a>.</p>
+</div>
+<div class="section" id="ajax-edit-url-tag">
+<h3><a class="toc-backref" href="#id52">AJAX Edit URL Tag</a><a class="headerlink" href="#ajax-edit-url-tag" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:comment:ajax_edit_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This tag outputs an action url that links to a method that processes the
+submitted data. It is useful if you are <a class="reference external" href="#customizing-client-side-code">customizing the client-side
+code</a>. The method requires both a comment id and either
+a comment or a status variable. For example:</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;{exp:comment:ajax_edit_url}&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">status</span><span class="o">:</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="nx">comment_id</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">XID</span><span class="o">:</span> <span class="nx">hash</span><span class="p">});</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If secure forms is enabled, a proper security hash must be
+sent in order to edit or close the comment.</p>
+</div>
+<p>A request for an edit will return a response array. In the case of an
+error, an error key with a response message will be sent. If the request
+is successful, an array with a new security hash will be sent with the
+key of &#8216;XID&#8217;. If the entry was closed, a &#8216;moderated&#8217; key will be set. If
+it was edited, a &#8216;comment&#8217; key will be returned containing the updated
+comment text.</p>
+</div>
+<div class="section" id="useful-comment-entry-tags">
+<h3><a class="toc-backref" href="#id53">Useful Comment Entry Tags</a><a class="headerlink" href="#useful-comment-entry-tags" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="#editable">{if editable}</a></li>
+<li><a class="reference external" href="#can-moderate-comment">{if can_moderate_comment}</a></li>
+<li><a class="reference external" href="#comment-stripped">{comment_stripped}</a></li>
+</ul>
+</div>
+<div class="section" id="editing-permissions">
+<h3><a class="toc-backref" href="#id54">Editing Permissions</a><a class="headerlink" href="#editing-permissions" title="Permalink to this headline">¶</a></h3>
+<p>The {if editable} conditional in the Comment Entries tag outputs content
+when the viewing member has permission to edit the comment indicated
+while the {if can_moderate_comment} outputs content if they have
+permission to both edit the comment and close it.</p>
+<p>For regular members, in order to edit comments they must be a logged in
+member, the author of the comment, and the editing time limit must not
+have expired.</p>
+<p>Comment moderators may both edit the comment contents or close the
+comment. Superadmins will always have {editable} and
+{can_moderate_comment} permissions on any comment. If a member is in a
+group with permission to edit comments to their own entries and the
+comment is to one of their entries, they will have edit permissions.
+Lastly, if a member is in a group with permission to edit comments in
+any entry, they will have edit permissions. The edit time limit does not
+apply to moderators.</p>
+</div>
+<div class="section" id="customizing-client-side-code">
+<h3><a class="toc-backref" href="#id55">Customizing Client-Side Code</a><a class="headerlink" href="#customizing-client-side-code" title="Permalink to this headline">¶</a></h3>
+<p>If you need additional control or customized hooks in your markup and
+JavaScript for the comment editor, you can forego the simplified jQuery
+and <a class="reference external" href="#comment-edit-script-tag">{exp:comment:edit_comment_script}</a> and roll your own. You can use
+the example code below for reference, or download and fork from our <a class="reference external" href="https://github.com/EllisLab/CommentEditor">GitHub repo</a>.</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">CommentEditor</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="kd">var</span> <span class="nx">OPT</span><span class="p">;</span>
+
+                <span class="nx">OPT</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                        <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;{exp:comment:ajax_edit_url}&quot;</span><span class="p">,</span>
+                        <span class="nx">comment_body</span><span class="o">:</span> <span class="s1">&#39;.comment_body&#39;</span><span class="p">,</span>
+                        <span class="nx">showEditor</span><span class="o">:</span> <span class="s1">&#39;.edit_link&#39;</span><span class="p">,</span>
+                        <span class="nx">hideEditor</span><span class="o">:</span> <span class="s1">&#39;.cancel_edit&#39;</span><span class="p">,</span>
+                        <span class="nx">saveComment</span><span class="o">:</span> <span class="s1">&#39;.submit_edit&#39;</span><span class="p">,</span>
+                        <span class="nx">closeComment</span><span class="o">:</span> <span class="s1">&#39;.mod_link&#39;</span>
+                <span class="p">},</span> <span class="nx">options</span><span class="p">);</span>
+
+                <span class="kd">var</span> <span class="nx">view_elements</span> <span class="o">=</span> <span class="p">[</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">comment_body</span><span class="p">,</span> <span class="nx">OPT</span><span class="p">.</span><span class="nx">showEditor</span><span class="p">,</span> <span class="nx">OPT</span><span class="p">.</span><span class="nx">closeComment</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span>
+                        <span class="nx">edit_elements</span> <span class="o">=</span> <span class="s1">&#39;.editCommentBox&#39;</span><span class="p">,</span>
+                        <span class="nx">hash</span> <span class="o">=</span> <span class="s1">&#39;{XID_HASH}&#39;</span><span class="p">;</span>
+
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                        <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;comment_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                        <span class="nx">parent</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+                        <span class="nx">parent</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">showEditor</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">showEditor</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">});</span>
+                        <span class="nx">parent</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">hideEditor</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">hideEditor</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">});</span>
+                        <span class="nx">parent</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">saveComment</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">saveComment</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">});</span>
+                        <span class="nx">parent</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">closeComment</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">closeComment</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span> <span class="p">});</span>
+                <span class="p">});</span>
+
+                <span class="kd">function</span> <span class="nx">showEditor</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#comment_&quot;</span><span class="o">+</span><span class="nx">id</span><span class="p">)</span>
+                                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">view_elements</span><span class="p">).</span><span class="nx">hide</span><span class="p">().</span><span class="nx">end</span><span class="p">()</span>
+                                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">edit_elements</span><span class="p">).</span><span class="nx">show</span><span class="p">().</span><span class="nx">end</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="kd">function</span> <span class="nx">hideEditor</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#comment_&quot;</span><span class="o">+</span><span class="nx">id</span><span class="p">)</span>
+                                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">view_elements</span><span class="p">).</span><span class="nx">show</span><span class="p">().</span><span class="nx">end</span><span class="p">()</span>
+                                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">edit_elements</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="kd">function</span> <span class="nx">closeComment</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">status</span><span class="o">:</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="nx">comment_id</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">XID</span><span class="o">:</span> <span class="nx">hash</span><span class="p">};</span>
+
+                        <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                                        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Could not moderate comment.&#39;</span><span class="p">);</span>
+                                <span class="p">}</span>
+
+                                <span class="nx">hash</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">XID</span><span class="p">;</span>
+                                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input[name=XID]&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">hash</span><span class="p">);</span>
+                                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment_&#39;</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+                   <span class="p">});</span>
+                <span class="p">}</span>
+
+                <span class="kd">function</span> <span class="nx">saveComment</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#comment_&quot;</span><span class="o">+</span><span class="nx">id</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.editCommentBox&#39;</span><span class="o">+</span><span class="s1">&#39; textarea&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+                                <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">comment</span><span class="o">:</span> <span class="nx">content</span><span class="p">,</span> <span class="nx">comment_id</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">XID</span><span class="o">:</span> <span class="nx">hash</span><span class="p">};</span>
+
+                <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">OPT</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                                        <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Could not save comment.&#39;</span><span class="p">);</span>
+                                <span class="p">}</span>
+
+                                <span class="nx">hash</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">XID</span><span class="p">;</span>
+                                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;input[name=XID]&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">hash</span><span class="p">);</span>
+                                <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#comment_&quot;</span><span class="o">+</span><span class="nx">id</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.comment_body&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">comment</span><span class="p">);</span>
+                                <span class="nx">hideEditor</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+                        <span class="p">});</span>
+                <span class="p">}</span>
+        <span class="p">};</span>
+
+
+        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.comment&#39;</span><span class="p">).</span><span class="nx">CommentEditor</span><span class="p">();</span> <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="control-panel">
+<h2><a class="toc-backref" href="#id56">Control Panel</a><a class="headerlink" href="#control-panel" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="control_panel/index.html"><span class="doc">Comment Module Control Panel</span></a> page.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Comment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control_panel/index.html">Comment Module Control Panel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Ranges and Selections &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Control Panel Javascript Reference" href="../index.html" />
+	    <link rel="next" title="WysiHat API Reference" href="wysihat_api.html" />
+	    <link rel="prev" title="Rich Text Editor Javascript" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" accesskey="U">Control Panel Javascript Reference</a></li>
+								<li class="last">Ranges and Selections</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="ranges-and-selections">
+<h1>Ranges and Selections<a class="headerlink" href="#ranges-and-selections" title="Permalink to this headline">¶</a></h1>
+<p>A brief introduction to DOM ranges and selections. Having a solid
+understanding of these will make developing for the rich text editor a
+lot more pleasant.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#ranges" id="id1">Ranges</a></li>
+<li><a class="reference internal" href="#selections" id="id2">Selections</a></li>
+</ul>
+</div>
+<div class="section" id="ranges">
+<h2><a class="toc-backref" href="#id1">Ranges</a><a class="headerlink" href="#ranges" title="Permalink to this headline">¶</a></h2>
+<p>At their core ranges simply describe a section of the page from one
+point in the DOM to another.</p>
+<p>To illustrate we&#8217;ll use an imaginary bit of selected text in the
+browser, which looks something like this:</p>
+<p class="admonition"><img alt="Rendered HTML" src="../../../_images/ranges_selections_rendered.png" /></p>
+<p>We are going to try to describe the selection we see here as a range,
+going from the beginning of the word &#8220;me&#8221; to the end of the word
+&#8220;Science&#8221;. Keep in mind that ranges are not inherently visible. They
+give us a way of <em>describing</em> where to start and end when manipulating
+the DOM across elements.</p>
+<p>If we just worked with text, we could count characters (including the
+newline) and say that our range starts at 8 and ends at 45. While this
+works, it is not always enough information. Let&#8217;s look at the HTML that
+was used to create this text:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Look at <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">em</span><span class="p">&gt;</span>me<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span> still talking<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;</span>when there&#39;s Science to do!<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Now our text approach is in trouble. Our end of 45 is still ok, but the
+beginning could be inside the span, between the span and the em, or at
+the beginning of the em. Simply saying 8 does not convey enough
+information.</p>
+<p>These differences become especially important when dealing with block
+elements. The end of the first paragraph and beginning of the next look
+contiguous in HTML, but to the user they appear separated by a new line.</p>
+<p>Before we can look into how we can solve it. Let&#8217;s break this HTML down
+into the pieces we can access from javascript. The DOM is a collection
+of nodes, there are two types that we care about:</p>
+<p>Nodes that hold text. We will call those <cite>text nodes</cite>. And nodes that
+hold other nodes. We will call those <cite>element nodes</cite>.</p>
+<div class="highlight-js"><div class="highlight"><pre><span></span><span class="nx">someTextNode</span><span class="p">.</span><span class="nx">textValue</span> <span class="c1">// node text</span>
+<span class="nx">someElementNode</span><span class="p">.</span><span class="nx">childNodes</span> <span class="c1">// children</span>
+</pre></div>
+</div>
+<p>When combined these form sort of a tree. For our example above:</p>
+<p><img alt="DOM Tree" src="../../../_images/ranges_selections_tree.png" /></p>
+<p>Or, in a more flat representation:</p>
+<p><img alt="Flat Tree" src="../../../_images/ranges_selections_flattree.png" /></p>
+<p>Armed with this knowledge, we can now understand the four pieces of data
+we need to describe a range:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">startContainer</span></code> - node of the range start</li>
+<li><code class="docutils literal"><span class="pre">startOffset</span></code> - offset in the startContainer</li>
+<li><code class="docutils literal"><span class="pre">endContainer</span></code> - node of the range end</li>
+<li><code class="docutils literal"><span class="pre">endOffset</span></code> - offset in the endContainer</li>
+</ul>
+<p>We can also see that the offset can have two different meanings. For a
+text node it will be the index of the character we want. For an element
+node, it will be the index of a child node.</p>
+<p>So let&#8217;s solve the puzzle of our example. The end is still quite simple:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">endContainer</span></code> - textNode (&#8220;when there&#8217;s Science to do!&#8221;)</li>
+<li><code class="docutils literal"><span class="pre">endOffset</span></code> - 20 (to the end of &#8220;Science&#8221;)</li>
+</ul>
+<p>For the beginning we still have a few options. We can either use the
+element nodes right around our selection point. Or we can go into the
+text nodes again.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="17%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">startContainer</th>
+<th class="head">startOffset</th>
+<th class="head">Resulting Range Position</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">span</span></code></td>
+<td>1</td>
+<td>End of the span</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">p</span></code></td>
+<td>1</td>
+<td>Between the span and em</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">em</span></code></td>
+<td>0</td>
+<td>Beginning of the em</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">span</span> <span class="pre">text</span></code>
+(&#8220;Look at &#8221;)</td>
+<td>8</td>
+<td>End of the span&#8217;s child text node</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">em</span> <span class="pre">text</span></code>
+(&#8220;me&#8221;)</td>
+<td>0</td>
+<td>Beginning of the em&#8217;s text node</td>
+</tr>
+</tbody>
+</table>
+<p>Which you choose will depend on your situation.</p>
+</div>
+<div class="section" id="selections">
+<h2><a class="toc-backref" href="#id2">Selections</a><a class="headerlink" href="#selections" title="Permalink to this headline">¶</a></h2>
+<p>A selection is simply a range made visible to the user. The distinction
+is still important. You can have as many ranges as you want, but you can
+only have one selection.</p>
+<p>In other words, the selection holds a single range. When you select a
+new piece of text, this single range changes to match your selection.
+Conversely, when you programmatically ask the browser to select a range,
+the old selection is lost and your new one is displayed.</p>
+<p>The range in the current selection can be accessed without having to
+retrieve the range from the selection. To do so you must use the
+<code class="docutils literal"><span class="pre">anchorNode</span></code>, <code class="docutils literal"><span class="pre">anchorOffset</span></code>, <code class="docutils literal"><span class="pre">focusNode</span></code>, and <code class="docutils literal"><span class="pre">focusOffset</span></code>
+attributes.</p>
+<p>The anchor node and offset is the point of the selection where the user
+started selecting. The focus node and offset describe the moving part of
+the selection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is one selection per window and it contains a <strong>single</strong>
+range.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Control Panel Javascript Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../events.html">Custom jQuery Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../table.html">Javascript Table Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html">Rich Text Editor Javascript</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ranges and Selections</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wysihat_api.html">WysiHat API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

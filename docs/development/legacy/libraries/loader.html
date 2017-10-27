@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Loader Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Localize Class" href="localization.html" />
+	    <link rel="prev" title="Layout Class" href="layout.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Loader Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="loader-class">
+<h1>Loader Class<a class="headerlink" href="#loader-class" title="Permalink to this headline">¶</a></h1>
+<p>Loader, as the name suggests, is used to load elements. These elements can be libraries (classes) <a class="reference internal" href="../views.html"><span class="doc">View files</span></a>, <a class="reference internal" href="../drivers.html"><span class="doc">Drivers</span></a>, <a class="reference internal" href="../helpers/index.html"><span class="doc">Helpers</span></a>, <a class="reference internal" href="../models.html"><span class="doc">Models</span></a>, or your own files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This class is initialized automatically by the system so there is no need to do it manually.</p>
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#add-on-packages" id="id2">Add-on Packages</a></li>
+<li><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></li>
+</ul>
+</div>
+<div class="section" id="add-on-packages">
+<h2><a class="toc-backref" href="#id2">Add-on Packages</a><a class="headerlink" href="#add-on-packages" title="Permalink to this headline">¶</a></h2>
+<p>An add-on allows for the easy distribution of complete sets of resources in a single directory, complete with its own libraries, models, helpers, config, and language files. The following is an example of a directory for an add-on named &#8220;Foo Bar&#8221;</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/system/user/addons/foo_bar
+├─ config/
+├─ helpers/
+├─ language/
+├─ libraries/
+└─ models/
+</pre></div>
+</div>
+<p>Whatever the purpose of the &#8220;Foo Bar&#8221; add-on, it can have its own config files, helpers, language files, libraries, and models.</p>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EE_Loader">
+<em class="property">class </em><code class="descname">EE_Loader</code><a class="headerlink" href="#EE_Loader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::library">
+<code class="descclassname">EE_Loader::</code><code class="descname">library</code><span class="sig-paren">(</span><em>$library</em><span class="optional">[</span>, <em>$params = NULL</em><span class="optional">[</span>, <em>$object_name = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::library" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$library</strong> (<em>mixed</em>) &#8211; Library name as a string or an array with multiple libraries</li>
+<li><strong>$params</strong> (<em>array</em>) &#8211; Optional array of parameters to pass to the loaded library&#8217;s constructor</li>
+<li><strong>$object_name</strong> (<em>string</em>) &#8211; Optional object name to assign the library to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is used to load core classes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We use the terms &#8220;class&#8221; and &#8220;library&#8221; interchangeably.</p>
+</div>
+<p>For example, if you would like to send email with your add-on, the first step is to load the email class within your controller:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once loaded, the library will be ready for use, using <code class="docutils literal"><span class="pre">ee()-&gt;email</span></code>.</p>
+<p>Library files can be stored in subdirectories within the main &#8220;libraries&#8221; directory, or within your personal <em>application/libraries</em> directory. To load a file located in a subdirectory, simply include the path, relative to the &#8220;libraries&#8221; directory. For example, if you have file located at:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">libraries</span><span class="o">/</span><span class="nx">flavors</span><span class="o">/</span><span class="nx">Chocolate</span><span class="o">.</span><span class="nx">php</span>
+</pre></div>
+</div>
+<p>You will load it using:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;flavors/chocolate&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You may nest the file in as many subdirectories as you want.</p>
+<p>Additionally, multiple libraries can be loaded at the same time by passing an array of libraries to the load method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p><strong>Setting options</strong></p>
+<p>The second (optional) parameter allows you to optionally pass configuration setting. You will typically pass these as an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;mailtype&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;charset&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;priority&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Config options can usually also be set via a config file. Each library is explained in detail in its own page, so please read the information regarding each one you would like to use.</p>
+<p>Please take note, when multiple libraries are supplied in an array for the first parameter, each will receive the same parameter information.</p>
+<p><strong>Assigning a Library to a different object name</strong></p>
+<p>If the third (optional) parameter is blank, the library will usually be assigned to an object with the same name as the library. For example, if the library is named Calendar, it will be assigned to a variable named <code class="docutils literal"><span class="pre">ee()-&gt;calendar</span></code>.</p>
+<p>If you prefer to set your own class names you can pass its value to the third parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;calendar&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="s1">&#39;my_calendar&#39;</span><span class="p">);</span>
+
+<span class="c1">// Calendar class is now accessed using:</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">my_calendar</span>
+</pre></div>
+</div>
+<p>Please take note, when multiple libraries are supplied in an array for the first parameter, this parameter is discarded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::driver">
+<code class="descclassname">EE_Loader::</code><code class="descname">driver</code><span class="sig-paren">(</span><em>$library</em><span class="optional">[</span>, <em>$params = NULL</em><span class="optional">[</span>, <em>$object_name</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::driver" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$library</strong> (<em>mixed</em>) &#8211; Library name as a string or an array with multiple libraries</li>
+<li><strong>$params</strong> (<em>array</em>) &#8211; Optional array of parameters to pass to the loaded library&#8217;s constructor</li>
+<li><strong>$object_name</strong> (<em>string</em>) &#8211; Optional object name to assign the library to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is used to load driver libraries, acts very much like the <code class="docutils literal"><span class="pre">library()</span></code> method.</p>
+<p>As an example, if you would like to use sessions with your add-on, the first step is to load the session driver within your controller:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">driver</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once loaded, the library will be ready for use, using <code class="docutils literal"><span class="pre">ee()-&gt;session</span></code>.</p>
+<p>Driver files must be stored in a subdirectory within the main &#8220;libraries&#8221; directory, or within your personal <em>application/libraries</em> directory. The subdirectory must match the parent class name. Read the <a class="reference internal" href="../drivers.html"><span class="doc">Drivers</span></a> description for details.</p>
+<p>Additionally, multiple driver libraries can be loaded at the same time by passing an array of drivers to the load method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">driver</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="s1">&#39;cache&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p><strong>Setting options</strong></p>
+<p>The second (optional) parameter allows you to optionally pass configuration settings. You will typically pass these as an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;sess_driver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;cookie&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sess_encrypt_cookie&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;encryption_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mysecretkey&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">driver</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Config options can usually also be set via a config file. Each library is explained in detail in its own page, so please read the information regarding each one you would like to use.</p>
+<p><strong>Assigning a Driver to a different object name</strong></p>
+<p>If the third (optional) parameter is blank, the library will be assigned to an object with the same name as the parent class. For example, if the library is named Session, it will be assigned to a variable named <code class="docutils literal"><span class="pre">ee()-&gt;session</span></code>.</p>
+<p>If you prefer to set your own class names you can pass its value to the third parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;my_session&#39;</span><span class="p">);</span>
+
+<span class="c1">// Session class is now accessed using:</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">my_session</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::view">
+<code class="descclassname">EE_Loader::</code><code class="descname">view</code><span class="sig-paren">(</span><em>$view</em><span class="optional">[</span>, <em>$vars = array()</em><span class="optional">[</span>, <em>return = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::view" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$view</strong> (<em>string</em>) &#8211; View name</li>
+<li><strong>$vars</strong> (<em>array</em>) &#8211; An associative array of variables</li>
+<li><strong>$return</strong> (<em>bool</em>) &#8211; Whether to return the loaded view</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">View content string if $return is set to TRUE, otherwise EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is used to load your View files. If you haven&#8217;t read the <a class="reference internal" href="../views.html"><span class="doc">Views</span></a> section of the user guide it is recommended that you do since it shows you how this method is typically used.</p>
+<p>The first parameter is required. It is the name of the view file you would like to load.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">.php</span></code> file extension does not need to be specified unless you use something other than <code class="docutils literal"><span class="pre">.php</span></code>.</p>
+</div>
+<p>The second <strong>optional</strong> parameter can take an associative array or an object as input, which it runs through the PHP <a class="reference external" href="http://www.php.net/extract">extract()</a> function to convert to variables that can be used in your view files. Again, read the <a class="reference internal" href="../views.html"><span class="doc">Views</span></a> page to learn how this might be useful.</p>
+<p>The third <strong>optional</strong> parameter lets you change the behavior of the method so that it returns data as a string rather than sending it to your browser. This can be useful if you want to process the data in some way. If you set the parameter to TRUE (boolean) it will return data. The default behavior is FALSE, which sends it to your browser. Remember to assign it to a variable if you want the data returned:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;myfile&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::vars">
+<code class="descclassname">EE_Loader::</code><code class="descname">vars</code><span class="sig-paren">(</span><em>$vars</em><span class="optional">[</span>, <em>$val = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::vars" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$vars</strong> (<em>mixed</em>) &#8211; An array of variables or a single variable name</li>
+<li><strong>$val</strong> (<em>mixed</em>) &#8211; Optional variable value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method takes an associative array as input and generates variables using the PHP <a class="reference external" href="http://www.php.net/extract">extract()</a> function. This method produces the same result as using the second parameter of the <code class="docutils literal"><span class="pre">ee()-&gt;load-&gt;view()</span></code> method above. The reason you might want to use this method independently is if you would like to set some global variables in the constructor of your controller and have them become available in any view file loaded from any method. You can have multiple calls to this method. The data get cached and merged into one array for conversion to variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::get_var">
+<code class="descclassname">EE_Loader::</code><code class="descname">get_var</code><span class="sig-paren">(</span><em>$key</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::get_var" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Variable name key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value if key is found, NULL if not</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method checks the associative array of variables available to your views. This is useful if for any reason a var is set in a library or another controller method using <code class="docutils literal"><span class="pre">ee()-&gt;load-&gt;vars()</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::get_vars">
+<code class="descclassname">EE_Loader::</code><code class="descname">get_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::get_vars" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array of all assigned view variables</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
+<p>This method retrieves all variables available to your views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::clear_vars">
+<code class="descclassname">EE_Loader::</code><code class="descname">clear_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::clear_vars" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">EE_Loader instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">EE_Loader</td>
+</tr>
+</tbody>
+</table>
+<p>Clears cached view variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::model">
+<code class="descclassname">EE_Loader::</code><code class="descname">model</code><span class="sig-paren">(</span><em>$model</em><span class="optional">[</span>, <em>$name = ''</em><span class="optional">[</span>, <em>$db_conn = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::model" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$model</strong> (<em>mixed</em>) &#8211; Model name or an array containing multiple models</li>
+<li><strong>$name</strong> (<em>string</em>) &#8211; Optional object name to assign the model to</li>
+<li><strong>$db_conn</strong> (<em>string</em>) &#8211; Optional database configuration group to load</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">model</span><span class="p">(</span><span class="s1">&#39;model_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If your model is located in a subdirectory, include the relative path from your models directory. For example, if you have a model located at <em>application/models/blog/Queries.php</em> you&#8217;ll load it using:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">model</span><span class="p">(</span><span class="s1">&#39;blog/queries&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you would like your model assigned to a different object name you can specify it via the second parameter of the loading method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">model</span><span class="p">(</span><span class="s1">&#39;model_name&#39;</span><span class="p">,</span> <span class="s1">&#39;fubar&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fubar</span><span class="o">-&gt;</span><span class="na">method</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::database">
+<code class="descclassname">EE_Loader::</code><code class="descname">database</code><span class="sig-paren">(</span><span class="optional">[</span><em>$params = ''</em><span class="optional">[</span>, <em>$return = FALSE</em><span class="optional">[</span>, <em>$query_builder = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::database" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$params</strong> (<em>mixed</em>) &#8211; Database group name or configuration options</li>
+<li><strong>$return</strong> (<em>bool</em>) &#8211; Whether to return the loaded database object</li>
+<li><strong>$query_builder</strong> (<em>bool</em>) &#8211; Whether to load the Query Builder</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Loaded CI_DB instance or FALSE on failure if $return is set to TRUE, otherwise EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method lets you load the database class. The two parameters are <strong>optional</strong>. Please see the <a class="reference internal" href="../database/index.html"><span class="doc">database</span></a> section for more info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::dbforge">
+<code class="descclassname">EE_Loader::</code><code class="descname">dbforge</code><span class="sig-paren">(</span><span class="optional">[</span><em>$db = NULL</em><span class="optional">[</span>, <em>$return = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::dbforge" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$db</strong> (<em>object</em>) &#8211; Database object</li>
+<li><strong>$return</strong> (<em>bool</em>) &#8211; Whether to return the Database Forge instance</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Loaded CI_DB_forge instance if $return is set to TRUE, otherwise EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Loads the <a class="reference internal" href="../database/forge.html"><span class="doc">Database Forge</span></a> class, please refer to that manual for more info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::dbutil">
+<code class="descclassname">EE_Loader::</code><code class="descname">dbutil</code><span class="sig-paren">(</span><span class="optional">[</span><em>$db = NULL</em><span class="optional">[</span>, <em>$return = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::dbutil" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$db</strong> (<em>object</em>) &#8211; Database object</li>
+<li><strong>$return</strong> (<em>bool</em>) &#8211; Whether to return the Database Utilities instance</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Loaded CI_DB_utility instance if $return is set to TRUE, otherwise EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Loads the <a class="reference internal" href="../database/utilities.html"><span class="doc">Database Utilities</span></a> class, please refer to that manual for more info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::helper">
+<code class="descclassname">EE_Loader::</code><code class="descname">helper</code><span class="sig-paren">(</span><em>$helpers</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::helper" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$helpers</strong> (<em>mixed</em>) &#8211; Helper name as a string or an array containing multiple helpers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method loads helper files, where file_name is the name of the file, without the <code class="docutils literal"><span class="pre">_helper.php</span></code> extension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::file">
+<code class="descclassname">EE_Loader::</code><code class="descname">file</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$return = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::file" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>string</em>) &#8211; File path</li>
+<li><strong>$return</strong> (<em>bool</em>) &#8211; Whether to return the loaded file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">File contents if $return is set to TRUE, otherwise EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is a generic file loading method. Supply the filepath and name in the first parameter and it will open and read the file. By default the data is sent to your browser, just like a View file, but if you set the second parameter to boolean <code class="docutils literal"><span class="pre">TRUE</span></code> it will instead return the data as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::language">
+<code class="descclassname">EE_Loader::</code><code class="descname">language</code><span class="sig-paren">(</span><em>$files</em><span class="optional">[</span>, <em>$lang = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::language" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$files</strong> (<em>mixed</em>) &#8211; Language file name or an array of multiple language files</li>
+<li><strong>$lang</strong> (<em>string</em>) &#8211; Language name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is an alias of <a class="reference internal" href="language.html#Language::loadfile" title="Language::loadfile"><code class="xref php php-meth docutils literal"><span class="pre">Language::loadfile()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::config">
+<code class="descclassname">EE_Loader::</code><code class="descname">config</code><span class="sig-paren">(</span><em>$file</em><span class="optional">[</span>, <em>$use_sections = FALSE</em><span class="optional">[</span>, <em>$fail_gracefully = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::config" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$file</strong> (<em>string</em>) &#8211; Configuration file name</li>
+<li><strong>$use_sections</strong> (<em>bool</em>) &#8211; Whether configuration values should be loaded into their own section</li>
+<li><strong>$fail_gracefully</strong> (<em>bool</em>) &#8211; Whether to just return FALSE in case of failure</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is an alias of <a class="reference internal" href="config.html#EE_Config::load" title="EE_Config::load"><code class="xref php php-meth docutils literal"><span class="pre">EE_Config::load()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::is_loaded">
+<code class="descclassname">EE_Loader::</code><code class="descname">is_loaded</code><span class="sig-paren">(</span><em>$class</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::is_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$class</strong> (<em>string</em>) &#8211; Class name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Singleton property name if found, FALSE if not</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allows you to check if a class has already been loaded or not.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The word &#8220;class&#8221; here refers to libraries and drivers.</p>
+</div>
+<p>If the requested class has been loaded, the method returns its assigned name in the <code class="docutils literal"><span class="pre">ee()</span></code> object and <code class="docutils literal"><span class="pre">FALSE</span></code> if it&#8217;s not:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;form_validation&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">is_loaded</span><span class="p">(</span><span class="s1">&#39;Form_validation&#39;</span><span class="p">);</span>       <span class="c1">// returns &#39;form_validation&#39;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">is_loaded</span><span class="p">(</span><span class="s1">&#39;Nonexistent_library&#39;</span><span class="p">);</span>   <span class="c1">// returns FALSE</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If you have more than one instance of a class (assigned to different properties), then the first one will be returned.</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;form_validation&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">,</span> <span class="s1">&#39;fv&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;form_validation&#39;</span><span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">is_loaded</span><span class="p">(</span><span class="s1">&#39;Form_validation&#39;</span><span class="p">);</span>       <span class="c1">// returns &#39;fv&#39;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::add_package_path">
+<code class="descclassname">EE_Loader::</code><code class="descname">add_package_path</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$view_cascade = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::add_package_path" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>string</em>) &#8211; Path to add</li>
+<li><strong>$view_cascade</strong> (<em>bool</em>) &#8211; Whether to use cascading views</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adding a package path instructs the Loader class to prepend a given path for subsequent requests for resources. As an example, the &#8220;Foo Bar&#8221; application package above has a library named Foo_bar.php. In our controller, we&#8217;d do the following:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">add_package_path</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;addons/foo_bar/&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;foo_bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::remove_package_path">
+<code class="descclassname">EE_Loader::</code><code class="descname">remove_package_path</code><span class="sig-paren">(</span><span class="optional">[</span><em>$path = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::remove_package_path" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>string</em>) &#8211; Path to remove</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Loader instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Loader</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>When your controller is finished using resources from an application package, and particularly if you have other application packages you want to work with, you may wish to remove the package path so the Loader no longer looks in that directory for resources. To remove the last path added, simply call the method with no parameters.</p>
+<p>Or to remove a specific package path, specify the same path previously given to <code class="docutils literal"><span class="pre">add_package_path()</span></code> for a package.:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">remove_package_path</span><span class="p">(</span><span class="nx">APPPATH</span><span class="o">.</span><span class="s1">&#39;addons/foo_bar/&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Loader::get_package_paths">
+<code class="descclassname">EE_Loader::</code><code class="descname">get_package_paths</code><span class="sig-paren">(</span><span class="optional">[</span><em>$include_base = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Loader::get_package_paths" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$include_base</strong> (<em>bool</em>) &#8211; Whether to include BASEPATH</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array of package paths</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns all currently available package paths.</p>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Loader Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

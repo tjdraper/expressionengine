@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>View Service &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Services" href="index.html" />
+	    <link rel="next" title="Shared Form View" href="../shared_form_view.html" />
+	    <link rel="prev" title="Validation Service" href="validation.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Services</a></li>
+								<li class="last">View Service</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="view-service">
+<h1>View Service<a class="headerlink" href="#view-service" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#simple-example" id="id1">Simple Example</a></li>
+<li><a class="reference internal" href="#creating-a-view" id="id2">Creating a View</a></li>
+<li><a class="reference internal" href="#rendering-a-view" id="id3">Rendering a View</a></li>
+<li><a class="reference internal" href="#disabling-view-features" id="id4">Disabling View Features</a></li>
+<li><a class="reference internal" href="#embedding-sub-views" id="id5">Embedding Sub-Views</a></li>
+<li><a class="reference internal" href="#extending-parent-views" id="id6">Extending Parent Views</a></li>
+<li><a class="reference internal" href="#view-blocks" id="id7">View Blocks</a></li>
+</ul>
+</div>
+<div class="section" id="simple-example">
+<h2><a class="toc-backref" href="#id1">Simple Example</a><a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<p>Views are how you display your data. Separating these from application code keeps your application logic
+neat and concise. It also prevents markup changes from triggering large code
+changes.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addon_name:member/profile&#39;</span><span class="p">);</span>
+
+<span class="nv">$output</span> <span class="o">=</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;member&#39;</span> <span class="o">=&gt;</span> <span class="nv">$current_member</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-view">
+<h2><a class="toc-backref" href="#id2">Creating a View</a><a class="headerlink" href="#creating-a-view" title="Permalink to this headline">¶</a></h2>
+<p>All views are represented as separate objects. To create a new view instance,
+simply call <code class="docutils literal"><span class="pre">make()</span></code> on the core view service and pass in a the path to a
+view file, prefixed with the folder name of your add-on:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addon_name:member/profile&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The view file should be a plain <code class="docutils literal"><span class="pre">.php</span></code> file in the <code class="docutils literal"><span class="pre">views</span></code> folder. In this
+case it would be: <code class="docutils literal"><span class="pre">views/member/profile.php</span></code></p>
+</div>
+<div class="section" id="rendering-a-view">
+<h2><a class="toc-backref" href="#id3">Rendering a View</a><a class="headerlink" href="#rendering-a-view" title="Permalink to this headline">¶</a></h2>
+<p>To render a view, call the <code class="docutils literal"><span class="pre">render()</span></code> method. You can optionally pass an
+associative array to use as the view data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mike&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The keys of this array will be accessible as local variables inside the view:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;&lt;?=</span><span class="nv">$username</span><span class="cp">?&gt;</span><span class="x">&lt;/h1&gt;</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Using the <a class="reference external" href="https://secure.php.net/manual/en/function.echo.php">echo shortcut</a>
+(<code class="docutils literal"><span class="pre">&lt;?=</span></code>) and the <a class="reference external" href="https://secure.php.net/manual/en/control-structures.alternative-syntax.php">alternative syntax</a>
+for control structures can help improve readability of your views.</p>
+</div>
+</div>
+<div class="section" id="disabling-view-features">
+<h2><a class="toc-backref" href="#id4">Disabling View Features</a><a class="headerlink" href="#disabling-view-features" title="Permalink to this headline">¶</a></h2>
+<p>Reusing a view sometimes requires small reductions in markup. For example, a
+profile image may require some wrapping markup for most of the site, but not
+universally. To avoid passing around boolean values, views can have have
+disabled features:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">disable</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;figure&#39;</span><span class="p">,</span> <span class="s1">&#39;data-attribute&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>In the view, these can be checked using the <code class="docutils literal"><span class="pre">$this-&gt;disabled()</span></code> and
+<code class="docutils literal"><span class="pre">$this-&gt;enabled()</span></code> helper methods:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">enabled</span><span class="p">(</span><span class="s1">&#39;figure&#39;</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  &lt;figure&gt;</span><span class="cp">&lt;?</span><span class="o">=</span><span class="nv">$username</span><span class="cp">?&gt;</span><span class="x">&lt;/figure&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endif</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default all features are enabled.</p>
+</div>
+</div>
+<div class="section" id="embedding-sub-views">
+<h2><a class="toc-backref" href="#id5">Embedding Sub-Views</a><a class="headerlink" href="#embedding-sub-views" title="Permalink to this headline">¶</a></h2>
+<p>Views can be rendered directly inside of another view. This is done using the
+<code class="docutils literal"><span class="pre">$this-&gt;embed()</span></code> helper method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;addon_name:sub/view&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
+</pre></div>
+</div>
+<p>All of the current view variables are automatically made available to the
+subview. You can optionally pass additional ones in the second parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;addon_name:sub/view&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="nv">$member</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
+</pre></div>
+</div>
+<p>Notice that you do not need to echo the output of this method, it is added to
+the right place automatically.</p>
+<p>You can also disable features in a view, using the third parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;addon_name:sub/view&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;figure&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extending-parent-views">
+<h2><a class="toc-backref" href="#id6">Extending Parent Views</a><a class="headerlink" href="#extending-parent-views" title="Permalink to this headline">¶</a></h2>
+<p>A view can extend another view, by calling the <code class="docutils literal"><span class="pre">$this-&gt;extend()</span></code> helper method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;html-wrapper&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>The rendered child view will be available to the parent as <code class="docutils literal"><span class="pre">$child_view</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">section</span><span class="o">&gt;&lt;?=</span><span class="nv">$child_view</span><span class="cp">?&gt;</span><span class="x">&lt;/section&gt;</span>
+</pre></div>
+</div>
+<p>The API for this this method is otherwise identical to <code class="docutils literal"><span class="pre">embed()</span></code>. The second
+and third parameter are used for additional variables and disabled features,
+respectively.</p>
+</div>
+<div class="section" id="view-blocks">
+<h2><a class="toc-backref" href="#id7">View Blocks</a><a class="headerlink" href="#view-blocks" title="Permalink to this headline">¶</a></h2>
+<p>Passing large chunks of data from a child view to a parent can be tedious. To
+solve this problem, the child view can create blocks of content that are passed
+to the parent view automatically:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;html_wrapper&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+
+<span class="cp">&lt;?php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">startBlock</span><span class="p">(</span><span class="s1">&#39;js&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  &lt;script&gt; ... &lt;/script&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">endBlock</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>This data is passed to the parent view as an associative array called <code class="docutils literal"><span class="pre">$blocks</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span><span class="nv">$blocks</span><span class="p">[</span><span class="s1">&#39;js&#39;</span><span class="p">]</span><span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Services</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="addon.html">Addon Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alert.html">CP/Alert Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html">Config Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="csv.html">CSV Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encrypt.html">Encrypt Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="event.html">Event Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filepicker.html">CP/FilePicker Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filter.html">CP/Filter Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html">Format Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modal.html">CP/Modal Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Model Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pagination.html">CP/Pagination Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="permission.html">Permission Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sidebar.html">CP/Sidebar Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spam.html">Spam Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="table.html">CP/Table Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="url.html">CP/URL Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html">Validation Service</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">View Service</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

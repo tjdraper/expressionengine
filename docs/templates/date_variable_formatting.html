@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Date Variable Formatting &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Template Language Overview" href="index.html" />
+	    <link rel="next" title="Embedding Templates within Other Templates" href="embedding.html" />
+	    <link rel="prev" title="Conditional Tags" href="conditionals.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Template Language Overview</a></li>
+								<li class="last">Date Variable Formatting</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="date-variable-formatting">
+<h1>Date Variable Formatting<a class="headerlink" href="#date-variable-formatting" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id6">Introduction</a></li>
+<li><a class="reference internal" href="#standard-dates" id="id7">Standard Dates</a><ul>
+<li><a class="reference internal" href="#parameters" id="id8">Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relative-dates" id="id9">Relative Dates</a><ul>
+<li><a class="reference internal" href="#rounding" id="id10">Rounding</a></li>
+<li><a class="reference internal" href="#id4" id="id11">Parameters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id6">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Many tags, including channel fields of the &#8220;date&#8221; type, are designed to
+display dates and times. The output of these tags can be formatted so
+that the date and time appear in the manner you wish. This includes the format
+of the date, a fixed timezone, and relative date options.</p>
+</div>
+<div class="section" id="standard-dates">
+<h2><a class="toc-backref" href="#id7">Standard Dates</a><a class="headerlink" href="#standard-dates" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="parameters">
+<span id="date-variable-parameters"></span><h3><a class="toc-backref" href="#id8">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#format" id="id12">format=</a></li>
+<li><a class="reference internal" href="#timezone" id="id13">timezone=</a></li>
+</ul>
+</div>
+<div class="section" id="format">
+<h4><a class="toc-backref" href="#id12">format=</a><a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">format=</span></code> parameter enables you to format the date using the Date
+Formatting Codes listed below. Each code letter is always preceded by a
+percent sign. The example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_time</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%F %d %Y&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>January 15 2006
+</pre></div>
+</div>
+<p>You are allowed to use any character you want within the format
+parameter, <strong>except</strong> a percent sign. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_time</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%D, %F %d, %Y - %g:%i:%s&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Mon, January 15, 2006 - 10:23:45
+</pre></div>
+</div>
+<div class="section" id="date-formatting-codes">
+<span id="id2"></span><h5>Date Formatting Codes<a class="headerlink" href="#date-formatting-codes" title="Permalink to this headline">¶</a></h5>
+<p>If you are familiar with PHP, then these will look <a class="reference external" href="http://php.net/manual/en/function.date.php#refsect1-function.date-parameters">remarkably similar</a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="56%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Description</th>
+<th class="head">Sample Rendering</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="3">Seconds</td>
+</tr>
+<tr class="row-odd"><td><strong>%s</strong></td>
+<td>seconds</td>
+<td>&#8220;00&#8221; to &#8220;59&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%U</strong></td>
+<td>seconds since the epoch</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>%u</strong></td>
+<td>Microseconds (always 000000, see note, below)</td>
+<td>&#8220;000000&#8221;</td>
+</tr>
+<tr class="row-even"><td colspan="3">Minutes</td>
+</tr>
+<tr class="row-odd"><td><strong>%i</strong></td>
+<td>minutes</td>
+<td>&#8220;00&#8221; - &#8220;59&#8221;</td>
+</tr>
+<tr class="row-even"><td colspan="3">Hours</td>
+</tr>
+<tr class="row-odd"><td><strong>%g</strong></td>
+<td>hour, 12-hour format without leading zeros</td>
+<td>&#8220;1&#8221; to &#8220;12&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%G</strong></td>
+<td>hour, 24-hour format without leading zeros</td>
+<td>&#8220;0&#8221; to &#8220;23&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%h</strong></td>
+<td>hour, 12-hour format</td>
+<td>&#8220;01&#8221; to &#8220;12&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%H</strong></td>
+<td>hour, 24-hour format</td>
+<td>&#8220;00&#8221; to &#8220;23&#8221;</td>
+</tr>
+<tr class="row-odd"><td colspan="3">AM / PM</td>
+</tr>
+<tr class="row-even"><td><strong>%a</strong></td>
+<td>&nbsp;</td>
+<td>&#8220;am&#8221; / &#8220;pm&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%A</strong></td>
+<td>&nbsp;</td>
+<td>&#8220;AM&#8221; / &#8220;PM&#8221;</td>
+</tr>
+<tr class="row-even"><td colspan="3">Day</td>
+</tr>
+<tr class="row-odd"><td><strong>%d</strong></td>
+<td>day of the month, 2 digits with leading zeros</td>
+<td>&#8220;01&#8221; to &#8220;31&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%D</strong></td>
+<td>day of the week, textual, 3 letters</td>
+<td>&#8220;Fri&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%j</strong></td>
+<td>day of the month without leading zeros</td>
+<td>&#8220;1&#8221; to &#8220;31&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%l</strong></td>
+<td>(lowercase &#8216;L&#8217;) - day of the week, textual, long</td>
+<td>&#8220;Friday&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%w</strong></td>
+<td>day of the week, numeric</td>
+<td>&#8220;0&#8221; (Sunday) to &#8220;6&#8221; (Saturday)</td>
+</tr>
+<tr class="row-even"><td><strong>%N</strong></td>
+<td>ISO-8601 numeric representation of the day of the week, numeric</td>
+<td>&#8220;1&#8221; (Monday) to &#8220;7&#8221; (Sunday)</td>
+</tr>
+<tr class="row-odd"><td colspan="3">Week</td>
+</tr>
+<tr class="row-even"><td><strong>%W</strong></td>
+<td>ISO-8601 week number of year, weeks starting on Monday</td>
+<td>&#8220;42&#8221;: the 42nd week in the year</td>
+</tr>
+<tr class="row-odd"><td colspan="3">Month</td>
+</tr>
+<tr class="row-even"><td><strong>%m</strong></td>
+<td>month</td>
+<td>&#8220;01&#8221; to &#8220;12&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%M</strong></td>
+<td>month, textual, 3 letters</td>
+<td>&#8220;Jan&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%F</strong></td>
+<td>month, textual, long</td>
+<td>&#8220;January&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%n</strong></td>
+<td>month without leading zeros</td>
+<td>&#8220;1&#8221; to &#8220;12&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%t</strong></td>
+<td>number of days in the given month</td>
+<td>&#8220;28&#8221; to &#8220;31&#8221;</td>
+</tr>
+<tr class="row-odd"><td colspan="3">Year</td>
+</tr>
+<tr class="row-even"><td><strong>%L</strong></td>
+<td>boolean for whether it is a leap year</td>
+<td>&#8220;0&#8221; or &#8220;1&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%o</strong></td>
+<td>ISO-8601 year number. This has the same value as Y, except that if
+the ISO week number (W) belongs to the previous or next year,
+that year is used instead.</td>
+<td>&#8220;1999&#8221; or &#8220;2003&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%y</strong></td>
+<td>year, 2 digits</td>
+<td>&#8220;99&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%Y</strong></td>
+<td>year, 4 digits</td>
+<td>&#8220;1999&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%z</strong></td>
+<td>day of the year</td>
+<td>&#8220;0&#8221; to &#8220;365&#8221;</td>
+</tr>
+<tr class="row-odd"><td colspan="3">Other</td>
+</tr>
+<tr class="row-even"><td><strong>%B</strong></td>
+<td>Swatch Internet time</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>%e</strong></td>
+<td>Timezone identifier</td>
+<td>UTC, GMT, Atlantic/Azores</td>
+</tr>
+<tr class="row-even"><td><strong>%I</strong></td>
+<td>(capital i)</td>
+<td>&#8220;1&#8221; if Daylight Saving Time, &#8220;0&#8221; otherwise</td>
+</tr>
+<tr class="row-odd"><td><strong>%O</strong></td>
+<td>Difference to Greenwich time (GMT) in hours</td>
+<td>&#8220;-0500&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%P</strong></td>
+<td>Difference to Greenwich time (GMT) with colon between hours and
+minutes</td>
+<td>&#8220;-05:00&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%c</strong></td>
+<td>ISO 8601 date</td>
+<td>2004-02-12T15:19:21+00:00</td>
+</tr>
+<tr class="row-even"><td><strong>%r</strong></td>
+<td>RFC 2822 formatting</td>
+<td>&#8220;Thu, 21 Dec 2000 16:01:07 +0200&#8221;</td>
+</tr>
+<tr class="row-odd"><td><strong>%S</strong></td>
+<td>English ordinal suffix, 2 characters</td>
+<td>&#8220;th&#8221;, &#8220;nd&#8221;</td>
+</tr>
+<tr class="row-even"><td><strong>%T</strong></td>
+<td>Time zone setting of this machine</td>
+<td>MDT</td>
+</tr>
+<tr class="row-odd"><td><strong>%Z</strong></td>
+<td>time zone offset in seconds. The offset for time zones west of UTC is
+always negative, and for those east of UTC is always positive.</td>
+<td>&#8220;-43200&#8221; to &#8220;43200&#8221;</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dates in ExpressionEngine are most often stored as integers, which translate to whole seconds. So as with PHP&#8217;s own <code class="docutils literal"><span class="pre">date()</span></code> function, <cite>u</cite> isn&#8217;t a particularly useful formatting code in this context, and will always output <cite>000000</cite> for microseconds.</p>
+</div>
+</div>
+<div class="section" id="date-formatting-constants">
+<span id="template-date-formatting-constants"></span><h5>Date Formatting Constants<a class="headerlink" href="#date-formatting-constants" title="Permalink to this headline">¶</a></h5>
+<p>You may also use the pre-defined Date Formatting Constants listed below
+for easy access to some standard format strings. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_time</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;{DATE_ATOM}&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>2006-01-15T20:23:45-06:00
+</pre></div>
+</div>
+<p>Available pre-defined formatting strings are described in the table
+below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="33%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">Date Formatting Constants</th>
+</tr>
+<tr class="row-even"><th class="head">Variable</th>
+<th class="head">Equivalent</th>
+<th class="head">Sample Rendering</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>{DATE_ATOM}</strong></td>
+<td>%Y-%m-%dT%H:%i:%s%Q</td>
+<td>2006-10-16T08:19:39-06:00</td>
+</tr>
+<tr class="row-even"><td><strong>{DATE_COOKIE}</strong></td>
+<td>%l, %d-%M-%y %H:%i:%s UTC</td>
+<td>Monday, 16-Oct-06 08:19:39 UTC</td>
+</tr>
+<tr class="row-odd"><td><strong>{DATE_ISO8601}</strong></td>
+<td>%Y-%m-%dT%H:%i:%s%Q</td>
+<td>2006-10-16T08:19:39-05:00</td>
+</tr>
+<tr class="row-even"><td><strong>{DATE_RFC822}</strong></td>
+<td>%D, %d %M %y %H:%i:%s %O</td>
+<td>Mon, 16 Oct 06 08:19:39 -0500</td>
+</tr>
+<tr class="row-odd"><td><strong>{DATE_RFC850}</strong></td>
+<td>%l, %d-%M-%y %H:%i:%s UTC</td>
+<td>Monday, 16-Oct-06 08:10:19 UTC</td>
+</tr>
+<tr class="row-even"><td><strong>{DATE_RFC1036}</strong></td>
+<td>%D, %d %M %y %H:%i:%s %O</td>
+<td>Mon, 16 Oct 06 08:19:39 -0500</td>
+</tr>
+<tr class="row-odd"><td><strong>{DATE_RFC1123}</strong></td>
+<td>%D, %d %M %Y %H:%i:%s %O</td>
+<td>Mon, 16 Oct 2006 08:19:39 -0500</td>
+</tr>
+<tr class="row-even"><td><strong>{DATE_RFC2822}</strong></td>
+<td>%D, %d %M %Y %H:%i:%s %O</td>
+<td>Mon, 16 Oct 2006 08:19:39 -0500</td>
+</tr>
+<tr class="row-odd"><td><strong>{DATE_RSS}</strong></td>
+<td>%D, %d %M %Y %H:%i:%s %O</td>
+<td>Mon, 16 Oct 2006 08:19:39 -0500</td>
+</tr>
+<tr class="row-even"><td><strong>{DATE_W3C}</strong></td>
+<td>%Y-%m-%dT%H:%i:%s%Q</td>
+<td>2006-10-16T08:19:39-06:00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="timezone">
+<h4><a class="toc-backref" href="#id13">timezone=</a><a class="headerlink" href="#timezone" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">timezone=</span></code> parameter will convert the date to the specified timezone:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>timezone=&quot;America/Los_Angeles&quot;
+</pre></div>
+</div>
+<p>This will override the timezone specified in the
+<a class="reference internal" href="../cp/settings/general.html"><span class="doc">localization settings</span></a> in the control
+panel, and the member&#8217;s localization settings.  PHP.net has a
+<a class="reference external" href="http://php.net/manual/en/timezones.php">list of supported timezones</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="relative-dates">
+<span id="id3"></span><h2><a class="toc-backref" href="#id9">Relative Dates</a><a class="headerlink" href="#relative-dates" title="Permalink to this headline">¶</a></h2>
+<p>Relative dates are always a string indicating the difference between the date
+and right now. By default the number of years, months, weeks, days, hours,
+minutes, and seconds are calculated, and the first non zero unit is displayed.
+Control over which units are calculated, how many units are used in the
+display, and determining when to stop showing a relative date are available.</p>
+<p>Any date can be displayed with relative language. For example, assuming a
+channel entry was posted 2 days ago, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>2 days ago
+</pre></div>
+</div>
+<p>This also works into the future. For example, assume you have a launch date
+just 2 days away, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">launch_date:relative</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>in 2 days
+</pre></div>
+</div>
+<div class="section" id="rounding">
+<h3><a class="toc-backref" href="#id10">Rounding</a><a class="headerlink" href="#rounding" title="Permalink to this headline">¶</a></h3>
+<p>Relative dates will be rounded to the least significant displayed unit. This
+only happens when fewer significant units are displayed than were calculated.
+We do this by examining the number of remaining seconds after we calculate
+least significant displayed unit. If the remainder equals or exceeds the
+threshold we round up. The thresholds are outlined in the table below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="46%" />
+<col width="54%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Relative Date Thresholds</th>
+</tr>
+<tr class="row-even"><th class="head">Unit Rounding To</th>
+<th class="head">Remainder Threshold</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>Years</td>
+<td>345 days</td>
+</tr>
+<tr class="row-even"><td>Months</td>
+<td>25 days</td>
+</tr>
+<tr class="row-odd"><td>Weeks</td>
+<td>6 days</td>
+</tr>
+<tr class="row-even"><td>Days</td>
+<td>22 hours</td>
+</tr>
+<tr class="row-odd"><td>Hours</td>
+<td>45 minutes</td>
+</tr>
+<tr class="row-even"><td>Minutes</td>
+<td>45 seconds</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id11">Parameters</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id5">
+<ul class="simple">
+<li><a class="reference internal" href="#about" id="id14">about=</a></li>
+<li><a class="reference internal" href="#depth" id="id15">depth=</a></li>
+<li><a class="reference internal" href="#future" id="id16">future=</a></li>
+<li><a class="reference internal" href="#less-than" id="id17">less_than=</a></li>
+<li><a class="reference internal" href="#past" id="id18">past=</a></li>
+<li><a class="reference internal" href="#singular" id="id19">singular=</a></li>
+<li><a class="reference internal" href="#stop" id="id20">stop=</a></li>
+<li><a class="reference internal" href="#units" id="id21">units=</a></li>
+</ul>
+</div>
+<div class="section" id="about">
+<h4><a class="toc-backref" href="#id14">about=</a><a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">about=</span></code> parameter determines what text to use when the date has been
+rounded. The default is &#8220;about&#8221;. For example, assuming a date 1 hour and 50
+minutes ago this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">about</span><span class="p">=</span><span class="s2">&quot;nearly&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>nearly 2 hours ago
+</pre></div>
+</div>
+</div>
+<div class="section" id="depth">
+<h4><a class="toc-backref" href="#id15">depth=</a><a class="headerlink" href="#depth" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">depth=</span></code> parameter determines how many calculated units to display,
+starting from the largest non zero unit to the smallest. The default is &#8220;1&#8221;.
+When depth is 2 we will join the two units with &#8220;and&#8221;. For example, assuming a
+relative date 4 days, 3 hours, 2 minutes, and 1 second in the past this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">depth</span><span class="p">=</span><span class="s2">&quot;2&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>4 days and 3 hours ago
+</pre></div>
+</div>
+<p>When the depth is greater than 2 the units are displayed with commas. Using the
+same date as above this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">depth</span><span class="p">=</span><span class="s2">&quot;3&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>4 days, 3 hours, and 2 minutes ago
+</pre></div>
+</div>
+</div>
+<div class="section" id="future">
+<h4><a class="toc-backref" href="#id16">future=</a><a class="headerlink" href="#future" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">future=</span></code> parameter determines what text is wrapped around the relative
+date when the date is in the future. Any text is allowed, and all copies of
+<code class="docutils literal"><span class="pre">%s</span></code> will be replaced with the relative date. The default is &#8220;in %s&#8221;. For
+example, assuming a date 2 days into the future, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">future</span><span class="p">=</span><span class="s2">&quot;%s until&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>2 days until
+</pre></div>
+</div>
+<p>Another example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">future</span><span class="p">=</span><span class="s2">&quot;in %s time&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>in 2 days time
+</pre></div>
+</div>
+</div>
+<div class="section" id="less-than">
+<h4><a class="toc-backref" href="#id17">less_than=</a><a class="headerlink" href="#less-than" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">less_than=</span></code> parameter determines what text to use when the relative date
+is below the threshold of the smallest unit. The default is &#8220;less than&#8221;. For
+example, assuming a date only seconds old this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">units</span><span class="p">=</span><span class="s2">&quot;minutes&quot;</span> <span class="na">less_than</span><span class="p">=</span><span class="s2">&quot;not quite&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>not quite one minute ago
+</pre></div>
+</div>
+</div>
+<div class="section" id="past">
+<h4><a class="toc-backref" href="#id18">past=</a><a class="headerlink" href="#past" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">past=</span></code> parameter determines what text is wrapped around the relative
+date when the date is in the past. Any text is allowed, and all copies of
+<code class="docutils literal"><span class="pre">%s</span></code> will be replaced with the relative date. The default is &#8220;ago&#8221;. For
+example, assuming a date 2 days ago, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">past</span><span class="p">=</span><span class="s2">&quot;%s in the past&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>2 days in the past
+</pre></div>
+</div>
+</div>
+<div class="section" id="singular">
+<h4><a class="toc-backref" href="#id19">singular=</a><a class="headerlink" href="#singular" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">singular=</span></code> parameter determines what text to display when the value of a
+given unit is 1. The default is &#8220;one&#8221;. For example, assuming a date 1 day in the past this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">singular</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>1 day ago
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop">
+<h4><a class="toc-backref" href="#id20">stop=</a><a class="headerlink" href="#stop" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">stop=</span></code> parameter determines when to stop calculating a relative date and
+instead display a standard date. When this happens the <a class="reference internal" href="#format">format=</a> and
+<a class="reference internal" href="#timezone">timezone=</a> parameters will be processed. Any valid date/time string parameter
+for PHP&#8217;s <a class="reference external" href="http://www.php.net/manual/en/function.strtotime.php">strtotime()</a>
+function is acceptable. ExpressionEngine will compute a timestamp based on the
+date and the provided <code class="docutils literal"><span class="pre">stop=</span></code> value. When the current timestamp is greater
+than or equal to the computed timestamp the date will be displayed as a
+standard date.</p>
+<p>For example, if you want relative dates but only for one day:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">stop</span><span class="p">=</span><span class="s2">&quot;+1 day&quot;</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%F %d %Y&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or perhaps you would rather show relative dates until midnight:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">stop</span><span class="p">=</span><span class="s2">&quot;tomorrow&quot;</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%F %d %Y&quot;</span> <span class="na">timezone</span><span class="p">=</span><span class="s2">&quot;Pacific/Tahiti&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If an invalid value is used for <code class="docutils literal"><span class="pre">stop=</span></code> a relative date will be displayed.</p>
+</div>
+<div class="section" id="units">
+<h4><a class="toc-backref" href="#id21">units=</a><a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">units=</span></code> parameter determines which parts of a relative date are
+calculated prior to displaying them. The following units are available:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">years</span></code></li>
+<li><code class="docutils literal"><span class="pre">months</span></code></li>
+<li><code class="docutils literal"><span class="pre">weeks</span></code></li>
+<li><code class="docutils literal"><span class="pre">days</span></code></li>
+<li><code class="docutils literal"><span class="pre">hours</span></code></li>
+<li><code class="docutils literal"><span class="pre">minutes</span></code></li>
+<li><code class="docutils literal"><span class="pre">seconds</span></code></li>
+</ul>
+<p>When a unit is omitted the next smallest unit will reflect it. For example,
+assuming a date 8 days old this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">units</span><span class="p">=</span><span class="s2">&quot;weeks|days&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>one week ago
+</pre></div>
+</div>
+<p>But this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date:relative</span> <span class="na">units</span><span class="p">=</span><span class="s2">&quot;days&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>8 days ago
+</pre></div>
+</div>
+<p>The default is equivalent to:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>units=&quot;years|months|weeks|days|hours|minutes|seconds&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Template Language Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="comments.html">Commenting Template Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conditionals.html">Conditional Tags</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Date Variable Formatting</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding Templates within Other Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hidden_templates.html">Hidden Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hit_counter.html">Hit Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layouts.html">DRY: Template Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php.html">PHP in Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Using Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template_engine.html">The Template Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="templates_as_files.html">Saving Templates as Text Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_modifiers.html">Variable Modifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals/index.html">Global Template Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

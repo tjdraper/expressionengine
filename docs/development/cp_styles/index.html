@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Control Panel Styles &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="v3 Add-on Migration" href="../v3_addon_migration/index.html" />
+	    <link rel="next" title="The addon.setup.php File" href="../addon_setup_php_file.html" />
+	    <link rel="prev" title="Syntax Changes" href="../v3_addon_migration/syntax.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="../v3_addon_migration/index.html" accesskey="U">v3 Add-on Migration</a></li>
+								<li class="last">Control Panel Styles</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="control-panel-styles">
+<h1>Control Panel Styles<a class="headerlink" href="#control-panel-styles" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#style-guidelines" id="id1">Style Guidelines</a></li>
+<li><a class="reference internal" href="#php-related-guidelines" id="id2">PHP Related Guidelines</a><ul>
+<li><a class="reference internal" href="#external-links" id="id3">External Links</a></li>
+<li><a class="reference internal" href="#internal-links" id="id4">Internal Links</a></li>
+<li><a class="reference internal" href="#control-panel-constants" id="id5">Control Panel Constants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="style-guidelines">
+<h2><a class="toc-backref" href="#id1">Style Guidelines</a><a class="headerlink" href="#style-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>For UI we have published the <a class="reference external" href="https://ellislab.com/style-guide">ExpressionEngine 3.0 CP style-guide</a> which should be used when
+building user interfaces for the Control Panel.</p>
+<p>For UX we have published the (link) Human Interface Guidelines for
+interactions in the Control Panel so users have a consistent
+experience throughout the application.</p>
+</div>
+<div class="section" id="php-related-guidelines">
+<h2><a class="toc-backref" href="#id2">PHP Related Guidelines</a><a class="headerlink" href="#php-related-guidelines" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="external-links">
+<h3><a class="toc-backref" href="#id3">External Links</a><a class="headerlink" href="#external-links" title="Permalink to this headline">¶</a></h3>
+<p>To protect the users control panel URL from ending up in web server
+referrer logs, use <a class="reference internal" href="../legacy/libraries/cp.html#Cp::masked_url" title="Cp::masked_url"><code class="xref php php-meth docutils literal"><span class="pre">Cp::masked_url</span></code></a> from the Control Panel Class:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">masked_url</span><span class="p">(</span><span class="s1">&#39;http://www.google.com&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will result in:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">URL</span><span class="o">=</span><span class="nx">http</span><span class="o">://</span><span class="nx">www</span><span class="o">.</span><span class="nx">google</span><span class="o">.</span><span class="nx">com</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="internal-links">
+<span id="cp-internal-links"></span><h3><a class="toc-backref" href="#id4">Internal Links</a><a class="headerlink" href="#internal-links" title="Permalink to this headline">¶</a></h3>
+<p>Internal control panel links should be generated with the <code class="docutils literal"><span class="pre">ee('CP/URL')</span></code>
+helper function which generates control panel URLs based on parameters
+passed in.</p>
+<p>For example, to link to the <code class="docutils literal"><span class="pre">publish</span></code> controller, pass it in
+as the first parameter to <code class="docutils literal"><span class="pre">ee('CP/URL')</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;publish&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To link to a particular method in a controller, add it to the parameter
+with a slash:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;publish/method_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If the method accepts arguments, they can be passed in cleanly by adding
+them on the end separated by a slash:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;publish/method_name/5&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If the link requires any other GET parameters, they can be passed in via
+an associative array in the second parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;publish/edit&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;filter_by_channel&#39;</span> <span class="o">=&gt;</span> <span class="nv">$channel_id</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../services/url.html"><span class="doc">CP/URL Service</span></a> for the full documentation.</p>
+</div>
+<div class="section" id="control-panel-constants">
+<h3><a class="toc-backref" href="#id5">Control Panel Constants</a><a class="headerlink" href="#control-panel-constants" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">BASE</span></code> - Name of control panel file with the users session id</li>
+<li><code class="docutils literal"><span class="pre">AMP</span></code> - Will render <code class="docutils literal"><span class="pre">&amp;amp;</span></code></li>
+<li><code class="docutils literal"><span class="pre">AJAX_REQUEST</span></code> - Returns Boolean TRUE if a request was made via an Ajax Request</li>
+<li><code class="docutils literal"><span class="pre">QUERY_MARKER</span></code> - Renders a query marker (<code class="docutils literal"><span class="pre">?</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">APPPATH</span></code> - Server path to the <code class="docutils literal"><span class="pre">system/ee/legacy</span></code> directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_ADDONS</span></code> - Server path to the first-party addons directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_THIRD</span></code> - Server path to the third-party addons directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_JQUERY</span></code> - Server path to jQuery files at
+<code class="docutils literal"><span class="pre">themes/ee/javascript/compressed/jquery</span></code></li>
+</ul>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../v3_addon_migration/extensions.html">Extension Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v3_addon_migration/fieldtypes.html">Fieldtype Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v3_addon_migration/modules.html">Module Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v3_addon_migration/plugins.html">Plugin Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v3_addon_migration/syntax.html">Syntax Changes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Control Panel Styles</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Email Contact Form &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Email" href="index.html" />
+	    <link rel="next" title="Tell-A-Friend Form" href="tellafriend.html" />
+	    <link rel="prev" title="Email" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-Ons</a></li>
+								<li><a href="index.html" accesskey="U">Email</a></li>
+								<li class="last">Email Contact Form</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="email-contact-form">
+<h1>Email Contact Form<a class="headerlink" href="#email-contact-form" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id8">Introduction</a></li>
+<li><a class="reference internal" href="#parameters" id="id9">Parameters</a></li>
+<li><a class="reference internal" href="#variables" id="id10">Variables</a></li>
+<li><a class="reference internal" href="#form-fields" id="id11">Form Fields</a></li>
+<li><a class="reference internal" href="#id7" id="id12">Preview</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id8">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this tag is to create a contact form on one of your pages
+that your users can use to send you email. To show your contact form use
+this tag pair:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:email:contact_form</span><span class="p">}</span>  <span class="p">{</span><span class="nf">/exp:email:contact_form</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The contact form is created similar to a standard web form, only you
+<strong>do not</strong> specify the opening and closing form tags; ExpressionEngine
+takes care of those for you. There are a few variables that are
+available in order to auto-fill fields in the form, and also a few tag
+parameters to specify form handling and hidden recipients. Here&#8217;s an
+example showing how you might typically create a contact form:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:email:contact_form</span> <span class="na">user_recipients</span><span class="p">=</span><span class="s2">&quot;no&quot;</span> <span class="na">recipients</span><span class="p">=</span><span class="s2">&quot;admin@example.com&quot;</span> <span class="na">charset</span><span class="p">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Support Form<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;from&quot;</span><span class="p">&gt;</span>Your Email:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;from&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;from&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;35&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">member_email</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">&gt;</span>Subject:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;subject&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;subject&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Contact Form&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;message&quot;</span><span class="p">&gt;</span>Message:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+                <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;18&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;40&quot;</span><span class="p">&gt;</span>
+                        Support Email from: <span class="p">{</span><span class="nf">member_name</span><span class="p">}</span>
+                        Sent at:  <span class="p">{</span><span class="nf">current_time</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+                <span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#39;submit&#39;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#39;Submit Form&#39;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:email:contact_form</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2><a class="toc-backref" href="#id9">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#charset" id="id13">charset=</a></li>
+<li><a class="reference internal" href="#name" id="id14">name=</a></li>
+<li><a class="reference internal" href="#recipients" id="id15">recipients=</a></li>
+<li><a class="reference internal" href="#redirect" id="id16">redirect=</a></li>
+<li><a class="reference internal" href="#replyto" id="id17">replyto=</a></li>
+<li><a class="reference internal" href="#return" id="id18">return=</a></li>
+<li><a class="reference internal" href="#preview" id="id19">preview=</a></li>
+<li><a class="reference internal" href="#markdown" id="id20">markdown=</a></li>
+<li><a class="reference internal" href="#user-recipients" id="id21">user_recipients=</a></li>
+<li><a class="reference internal" href="#form-class" id="id22">form_class=</a></li>
+<li><a class="reference internal" href="#form-id" id="id23">form_id=</a></li>
+</ul>
+</div>
+<div class="section" id="charset">
+<h3><a class="toc-backref" href="#id13">charset=</a><a class="headerlink" href="#charset" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>charset=&quot;utf-8&quot;
+</pre></div>
+</div>
+<p>This allows you to set the character set of the email being sent. Use
+this if your form&#8217;s template is using a character set other than
+iso-8859-1.</p>
+</div>
+<div class="section" id="name">
+<h3><a class="toc-backref" href="#id14">name=</a><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>name=&quot;myForm&quot;
+</pre></div>
+</div>
+<p>This allows you to set a name= attribute for the form. Keep in mind that
+name= is deprecated in XHTML.</p>
+</div>
+<div class="section" id="recipients">
+<h3><a class="toc-backref" href="#id15">recipients=</a><a class="headerlink" href="#recipients" title="Permalink to this headline">¶</a></h3>
+<p>This optional parameter allows you to specify an email address to
+receive the email:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>recipients=&quot;admin@example.com&quot;
+</pre></div>
+</div>
+<p>To specify more than one recipient, separate each email address
+with a comma:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>recipients=&quot;admin@example.com,ceo@example.com,president@example.com&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the event that recipients are specified with this parameter
+and the regular &#8220;To:&#8221; field is <em>also</em> filled out, the recipients
+specified with this parameter will be mailed using BCC (Blind Carbon
+Copy) so that the &#8220;To:&#8221; recipient does not see those &#8220;hidden&#8221; email
+recipients.</p>
+</div>
+</div>
+<div class="section" id="redirect">
+<h3><a class="toc-backref" href="#id16">redirect=</a><a class="headerlink" href="#redirect" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>redirect=&quot;5&quot;
+</pre></div>
+</div>
+<p>After the form is submitted, the user will be shown a message stating
+that the submission was successful. With this parameter you can
+determine how long ExpressionEngine should display the message. The
+value for this parameter is set in the number of seconds. For instance,
+if you want the message displayed for six seconds, you would use</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>redirect=&quot;6&quot;
+</pre></div>
+</div>
+<p>You may also set ExpressionEngine to not redirect the user after they
+reach the message page. In that case, the user would simply remain on
+the message page. To do this, set the value to none:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>redirect=&quot;none&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="replyto">
+<h3><a class="toc-backref" href="#id17">replyto=</a><a class="headerlink" href="#replyto" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>replyto=&quot;yes&quot;
+</pre></div>
+</div>
+<p>By default the email address sending the email will be put in the From
+header for the email. If this parameter is set to &#8220;yes&#8221;, then that email
+address will be put into the Reply-To field and the site&#8217;s webmaster
+email will be put in the From header. This is necessary at times because
+certain email servers will not send an email with an address not from
+its domain, so ExpressionEngine will use the site&#8217;s webmaster email
+address to get past this restriction while still allowing any replies to
+go to the sender of the email.</p>
+</div>
+<div class="section" id="return">
+<h3><a class="toc-backref" href="#id18">return=</a><a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;http://example.com/index.php&quot;
+</pre></div>
+</div>
+<p>This parameter lets you specify a URL where the user should be directed
+after the form is submitted. Upon submission, the user is presented with
+a standard &#8220;thank you&#8221; message and a link. If this parameter is <strong>not</strong>
+used, then the link will point to the page they were on prior to
+arriving at the email form.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;http://example.com/index.php&quot;
+</pre></div>
+</div>
+<p>If used with the redirect=&#8221;none&#8221; parameter, the link text can be
+specified by adding the pipe character and the desired link text. If you
+are specifying only the link text, then you must precede it by the pipe
+character:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;http://example.com/index.php|Return to Home Page&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;|Return to the Site&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="preview">
+<h3><a class="toc-backref" href="#id19">preview=</a><a class="headerlink" href="#preview" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>preview=&quot;about/contact-preview&quot;
+</pre></div>
+</div>
+<p>Specify a URL where the user can preview their message before sending
+it. This can be used in conjunction with the <a class="reference internal" href="#markdown">markdown=</a> parameter.</p>
+</div>
+<div class="section" id="markdown">
+<h3><a class="toc-backref" href="#id20">markdown=</a><a class="headerlink" href="#markdown" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>markdown=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Optionally enable <a class="reference external" href="https://daringfireball.net/projects/markdown/">Markdown</a> processing for
+<a class="reference internal" href="#message">message</a> of the contact form.</p>
+</div>
+<div class="section" id="user-recipients">
+<h3><a class="toc-backref" href="#id21">user_recipients=</a><a class="headerlink" href="#user-recipients" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>user_recipients=&quot;yes&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>user_recipients=&quot;no&quot;
+</pre></div>
+</div>
+<p>The user_recipients parameter specifies whether or not the form will
+accept having the user input recipients via a &#8216;to&#8217; field in the
+form. If set to true, then you can create a form field with the name
+&#8220;to&#8221; in which a user can input addresses where the email should be sent.
+The default value is &#8220;no&#8221;.</p>
+</div>
+<div class="section" id="form-class">
+<h3><a class="toc-backref" href="#id22">form_class=</a><a class="headerlink" href="#form-class" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>form_class=&quot;my_form&quot;
+</pre></div>
+</div>
+<p>With this parameter, you can specify the css class you want the form to
+have, enabling fine-grained styling of the form.</p>
+</div>
+<div class="section" id="form-id">
+<h3><a class="toc-backref" href="#id23">form_id=</a><a class="headerlink" href="#form-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>form_id=&quot;contact_form&quot;
+</pre></div>
+</div>
+<p>With this parameter, you can specify the css id you want the form to
+have. The default value is &#8216;contact_form&#8217;.</p>
+</div>
+</div>
+<div class="section" id="variables">
+<h2><a class="toc-backref" href="#id10">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id3">
+<ul class="simple">
+<li><a class="reference internal" href="#author-email" id="id24">author_email</a></li>
+<li><a class="reference internal" href="#author-name" id="id25">author_name</a></li>
+<li><a class="reference internal" href="#member-email" id="id26">member_email</a></li>
+<li><a class="reference internal" href="#member-name" id="id27">member_name</a></li>
+</ul>
+</div>
+<div class="section" id="author-email">
+<h3><a class="toc-backref" href="#id24">author_email</a><a class="headerlink" href="#author-email" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author_email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you create a permalink to a page containing the
+{exp:email:contact_form} tag, then the form allows the use of this
+variable to put in the email address of the author who wrote the linked
+entry. This feature allows the creation of a &#8220;contact author&#8221; page.</p>
+</div>
+<div class="section" id="author-name">
+<h3><a class="toc-backref" href="#id25">author_name</a><a class="headerlink" href="#author-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you create a permalink to a page containing the
+{exp:email:contact_form} tag, then the form allows the use of this
+variable to put in the screen name of the author who wrote the linked
+entry. This feature allows the creation of a &#8220;contact author&#8221; page.</p>
+</div>
+<div class="section" id="member-email">
+<h3><a class="toc-backref" href="#id26">member_email</a><a class="headerlink" href="#member-email" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If a user is logged in, then it will display their email address as
+recorded in their member profile.</p>
+</div>
+<div class="section" id="member-name">
+<h3><a class="toc-backref" href="#id27">member_name</a><a class="headerlink" href="#member-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If a user is logged in, then it will display their screen name as
+recorded in their member profile.</p>
+</div>
+</div>
+<div class="section" id="form-fields">
+<h2><a class="toc-backref" href="#id11">Form Fields</a><a class="headerlink" href="#form-fields" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id4">
+<ul class="simple">
+<li><a class="reference internal" href="#captcha" id="id28">captcha</a></li>
+<li><a class="reference internal" href="#from" id="id29">from</a></li>
+<li><a class="reference internal" href="#message" id="id30">message</a></li>
+<li><a class="reference internal" href="#id5" id="id31">name</a></li>
+<li><a class="reference internal" href="#required" id="id32">required</a></li>
+<li><a class="reference internal" href="#subject" id="id33">subject</a></li>
+<li><a class="reference internal" href="#to" id="id34">to</a></li>
+</ul>
+</div>
+<div class="section" id="captcha">
+<h3><a class="toc-backref" href="#id28">captcha</a><a class="headerlink" href="#captcha" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>The CAPTCHA input for the form. It is usually used with a conditional so
+that it is only displayed if necessary:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">captcha</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Please enter the word you see in the image below:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">captcha</span><span class="p">}&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="p">/&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The setting to disable or enable CAPTCHA for the contact form can be
+found in the <a class="reference internal" href="../../cp/settings/email.html"><span class="doc">Email Configuration</span></a>
+preferences.</p>
+</div>
+<div class="section" id="from">
+<h3><a class="toc-backref" href="#id29">from</a><a class="headerlink" href="#from" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;from&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>Email address of person who is sending the email. You must include this
+form field, even if it is just a hidden field.</p>
+</div>
+<div class="section" id="message">
+<h3><a class="toc-backref" href="#id30">message</a><a class="headerlink" href="#message" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;10&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;40&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Main message of the email. You must include this form field, even if it
+is just a hidden field.</p>
+<p>You may specify multiple fields by making the name= attribute an array
+by using &#8220;message[]&#8221;. For example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Home Phone: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;message[]&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;12&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;15&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span> <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Cell Phone: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;message[]&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;12&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;15&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id31">name</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>Name of person who is sending the email.</p>
+</div>
+<div class="section" id="required">
+<h3><a class="toc-backref" href="#id32">required</a><a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;required&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;5&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="na">readonly</span><span class="o">=</span><span class="s">&quot;readonly&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>This field allows you to have required information that is included at
+top of each email. Useful for support emails where the information can
+be readonly or hidden.</p>
+<p>You may specify multiple fields by making the name= attribute an array
+by using &#8220;required[]&#8221;. For example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Age: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;required[]&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="p">/&gt;&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span> <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Bio: <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;required[]&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;5&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;40&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="subject">
+<h3><a class="toc-backref" href="#id33">subject</a><a class="headerlink" href="#subject" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;subject&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>Subject of the email that is being sent. You must include this form
+field, even if it is just a hidden field.</p>
+</div>
+<div class="section" id="to">
+<h3><a class="toc-backref" href="#id34">to</a><a class="headerlink" href="#to" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;to&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>Email address to which the email is being sent. Multiple email addresses
+may be specified by separating them with a comma. You must include this
+form field, even if it is just a hidden field. This data may also be
+specified with the <a class="reference external" href="#recipients">recipients=</a> parameter of the
+tag.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you leave this field open to user input, you are
+potentially giving spammers an easy way to send anonymous emails. If you
+allow users to access this field, consider using a &lt;select&gt; field to
+limit the email address to specific choices. Further, you should enable
+CAPTCHAs to help prevent automated abuse.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id12">Preview</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>Occasionally you&#8217;ll want to provide a way for users to preview their
+email message before sending it. You&#8217;ll start by specifying a
+<a class="reference internal" href="#preview">preview=</a> parameter in your opening tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:email:contact_form</span> <span class="na">preview</span><span class="p">=</span><span class="s2">&quot;about/contact-preview&quot;</span><span class="p">}</span>
+
+OR
+
+<span class="p">{</span><span class="nf">exp:email:tell_a_friend</span> <span class="na">preview</span><span class="p">=</span><span class="s2">&quot;about/tellafriend-preview&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Next, you&#8217;ll need to add a preview submit input to your form, probably
+somewhere near the submit input:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;preview&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#39;submit&#39;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#39;Preview&#39;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#39;submit&#39;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#39;Send&#39;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>Last, you&#8217;ll need to use the <code class="docutils literal"><span class="pre">{exp:email:preview}</span></code> tagpair in the
+template specified in the <a class="reference internal" href="#preview">preview=</a> parameter. You can use all of the
+<a class="reference internal" href="#form-fields">Form Fields</a> specified above and you&#8217;ll typically have the preview
+directly above or below the email form:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:email:preview</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">dl</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>From<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;{</span><span class="nf">name</span><span class="p">}</span> (<span class="p">{</span><span class="nf">from</span><span class="p">}</span>)<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>To<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;{</span><span class="nf">to</span><span class="p">}&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Subject<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;{</span><span class="nf">subject</span><span class="p">}&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">dl</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">message</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:email:preview</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:email:contact_form</span><span class="p">}</span>
+  ...
+</pre></div>
+</div>
+<p>You can optionally specify that the <code class="docutils literal"><span class="pre">{message}</span></code> contents should be
+parsed with Markdown by using the same <a class="reference internal" href="#markdown">markdown=</a> parameter that the
+contact form uses:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:email:preview</span> <span class="na">markdown</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Email</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Email Contact Form</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tellafriend.html">Tell-A-Friend Form</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../forum/index.html">Discussion Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

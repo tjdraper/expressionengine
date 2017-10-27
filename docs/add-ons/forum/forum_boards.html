@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Forum Boards &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Discussion Forum" href="index.html" />
+	    <link rel="next" title="Global Variables" href="forum_global_variables.html" />
+	    <link rel="prev" title="Associating Channel Entries with Forum Topics" href="channel_forum.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-Ons</a></li>
+								<li><a href="index.html" accesskey="U">Discussion Forum</a></li>
+								<li class="last">Forum Boards</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="forum-boards">
+<h1>Forum Boards<a class="headerlink" href="#forum-boards" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Discussion Forum module allows you to create multiple forum &#8220;boards&#8221;
+enabling you to run separate forums on one installation. Each board can
+have its own URL, making it possible for you to have separate boards for
+each site, or even run multiple distinct boards on a single site.</p>
+<p>Aliases allow you to use alternative URLs from which to display your
+boards.</p>
+</div>
+<div class="section" id="managing-boards">
+<h2>Managing Boards<a class="headerlink" href="#managing-boards" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;Forum Boards&#8221; are displayed in the left navigation.  From there you can add new boards and edit or delete existing ones.</p>
+<div class="section" id="adding-editing-a-forum-board">
+<h3>Adding/Editing a Forum Board<a class="headerlink" href="#adding-editing-a-forum-board" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="enable-board">
+<h4>Enable board<a class="headerlink" href="#enable-board" title="Permalink to this headline">¶</a></h4>
+<p>When set to <strong>enable</strong>, this forum board will be accessible to member groups with proper permissions</p>
+</div>
+<div class="section" id="name">
+<h4>Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h4>
+<p>Full descriptive name of this board.</p>
+</div>
+<div class="section" id="short-name">
+<h4>Short name<a class="headerlink" href="#short-name" title="Permalink to this headline">¶</a></h4>
+<p>The &#8220;short name&#8221; for the forum board, used in the board= parameter of
+the Forum tag when running forums through regular templates. No spaces. Underscores and dashes are allowed.</p>
+</div>
+<div class="section" id="forum-directory">
+<h4>Forum directory<a class="headerlink" href="#forum-directory" title="Permalink to this headline">¶</a></h4>
+<p>URL location to the forum.</p>
+</div>
+<div class="section" id="forum-url-segment">
+<h4>Forum URL segment<a class="headerlink" href="#forum-url-segment" title="Permalink to this headline">¶</a></h4>
+<p>Word that triggers forum display. Cannot be the same as a template or template group.</p>
+</div>
+<div class="section" id="default-theme">
+<h4>Default theme<a class="headerlink" href="#default-theme" title="Permalink to this headline">¶</a></h4>
+<p>Forum theme for this forum.</p>
+</div>
+<div class="section" id="allow-php">
+<h4>Allow PHP?<a class="headerlink" href="#allow-php" title="Permalink to this headline">¶</a></h4>
+<p>Allows the use of standard PHP within forum templates.</p>
+</div>
+<div class="section" id="php-parsing-stage">
+<h4>PHP parsing stage<a class="headerlink" href="#php-parsing-stage" title="Permalink to this headline">¶</a></h4>
+<p>When set to <strong>output</strong>, PHP will be parsed after the template.</p>
+</div>
+<div class="section" id="attachments-per-post">
+<h4>Attachments per post<a class="headerlink" href="#attachments-per-post" title="Permalink to this headline">¶</a></h4>
+<p>Maximum attachments allowed per post.</p>
+</div>
+<div class="section" id="upload-directory">
+<h4>Upload directory<a class="headerlink" href="#upload-directory" title="Permalink to this headline">¶</a></h4>
+<p>URL location of this upload directory.</p>
+</div>
+<div class="section" id="allowed-file-types">
+<h4>Allowed file types?<a class="headerlink" href="#allowed-file-types" title="Permalink to this headline">¶</a></h4>
+<p>The type of files that can be uploaded as attachments.</p>
+</div>
+<div class="section" id="file-size">
+<h4>File size<a class="headerlink" href="#file-size" title="Permalink to this headline">¶</a></h4>
+<p>Maximum file size in megabytes.</p>
+</div>
+<div class="section" id="image-width">
+<h4>Image width<a class="headerlink" href="#image-width" title="Permalink to this headline">¶</a></h4>
+<p>Maximum image width in pixels.</p>
+</div>
+<div class="section" id="image-height">
+<h4>Image height<a class="headerlink" href="#image-height" title="Permalink to this headline">¶</a></h4>
+<p>Maximum image height in pixels.</p>
+</div>
+<div class="section" id="enable-thumbnail-creation">
+<h4>Enable thumbnail creation?<a class="headerlink" href="#enable-thumbnail-creation" title="Permalink to this headline">¶</a></h4>
+<p>When set to <strong>enable</strong>, clickable thumbnails will be shown in posts.</p>
+</div>
+<div class="section" id="thumbnail-width">
+<h4>Thumbnail width<a class="headerlink" href="#thumbnail-width" title="Permalink to this headline">¶</a></h4>
+<p>Maximum thumbnail width in pixels.</p>
+</div>
+<div class="section" id="thumbnail-height">
+<h4>Thumbnail height<a class="headerlink" href="#thumbnail-height" title="Permalink to this headline">¶</a></h4>
+<p>Maximum thumbnail height in pixels.</p>
+</div>
+</div>
+</div>
+<div class="section" id="forum-board-alias-details">
+<h2>Forum Board Alias Details<a class="headerlink" href="#forum-board-alias-details" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="forum-board-alias-settings">
+<h3>Forum Board Alias Settings<a class="headerlink" href="#forum-board-alias-settings" title="Permalink to this headline">¶</a></h3>
+<p>The Forum Board Alias settings are essentially the same as the General
+Settings for a normal forum board. The difference is that an existing
+forum board is selected as the one being aliased. This enables you to
+display a forum board on different sites / locations within the same
+ExpressionEngine installation as the normal location.</p>
+<div class="section" id="forum-board-label">
+<h4>Forum Board Label<a class="headerlink" href="#forum-board-label" title="Permalink to this headline">¶</a></h4>
+<p>The label that is displayed for the forum board alias.</p>
+</div>
+<div class="section" id="forum-board-short-name">
+<h4>Forum Board Short Name<a class="headerlink" href="#forum-board-short-name" title="Permalink to this headline">¶</a></h4>
+<p>The &#8220;short name&#8221; for the forum board alias, used in the board= parameter
+of the Forum tag when running forums through regular templates.</p>
+</div>
+<div class="section" id="forum-url">
+<span id="forum-boards-forum-url-label"></span><h4>Forum URL<a class="headerlink" href="#forum-url" title="Permalink to this headline">¶</a></h4>
+<p>The base URL where the forum board alias will be displayed.</p>
+</div>
+<div class="section" id="site-for-forum">
+<h4>Site for Forum<a class="headerlink" href="#site-for-forum" title="Permalink to this headline">¶</a></h4>
+<p>If the <a class="reference internal" href="../../cp/msm/index.html"><span class="doc">Multiple Site Manager</span></a> is installed, this
+allows you to determine which Site the forum board belongs to.</p>
+</div>
+<div class="section" id="forum-triggering-word">
+<span id="forum-forum-triggering-word"></span><h4>Forum Triggering Word<a class="headerlink" href="#forum-triggering-word" title="Permalink to this headline">¶</a></h4>
+<p>When this word is encountered in your URL it will display your forum.
+The word you choose cannot be the name of an existing template group.</p>
+</div>
+<div class="section" id="enable-forum-board">
+<h4>Enable Forum Board<a class="headerlink" href="#enable-forum-board" title="Permalink to this headline">¶</a></h4>
+<p>Yes / No. Whether or not the forum board alias is turned on.</p>
+</div>
+<div class="section" id="forum-board-being-aliased">
+<h4>Forum Board Being Aliased<a class="headerlink" href="#forum-board-being-aliased" title="Permalink to this headline">¶</a></h4>
+<p>The Forum Board that this Alias points to.</p>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Discussion Forum</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="channel_forum.html">Associating Channel Entries with Forum Topics</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Forum Boards</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="forum_global_variables.html">Global Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_helper.html">Forum Helper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_setup.html">Discussion Forum Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_themes.html">Forum Themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forum_user_management.html">Forum User Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other_features.html">Other Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recent_forum_topics.html">Displaying Recent Forum Topics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signatures.html">Signatures and Avatars</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

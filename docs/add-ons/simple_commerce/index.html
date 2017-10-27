@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Simple Commerce &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Add-Ons" href="../index.html" />
+	    <link rel="next" title="Simple Commerce Control Panel" href="sc_cp.html" />
+	    <link rel="prev" title="Simple Search Form Tag" href="../search/simple.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Add-Ons</a></li>
+								<li class="last">Simple Commerce</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="simple-commerce">
+<h1>Simple Commerce<a class="headerlink" href="#simple-commerce" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id8">Introduction</a></li>
+<li><a class="reference internal" href="#simple-commerce-purchase-tag" id="id9">Simple Commerce Purchase Tag</a><ul>
+<li><a class="reference internal" href="#parameters" id="id10">Parameters</a></li>
+<li><a class="reference internal" href="#variables" id="id11">Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recurring-payments" id="id12">Recurring Payments</a><ul>
+<li><a class="reference internal" href="#recurring-payment-variables-in-template-tags" id="id13">Recurring Payment Variables in Template Tags</a></li>
+<li><a class="reference internal" href="#recurring-payment-subscription-expiration-date" id="id14">Recurring Payment Subscription Expiration Date</a></li>
+<li><a class="reference internal" href="#how-recurring-payments-may-be-terminated" id="id15">How Recurring Payments may be terminated</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-purchases" id="id16">Testing Purchases</a><ul>
+<li><a class="reference internal" href="#setting-up-a-developer-account-with-paypal" id="id17">Setting up a Developer Account with PayPal</a></li>
+<li><a class="reference internal" href="#debug-mode" id="id18">Debug Mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#encrypted-website-payments" id="id19">Encrypted Website Payments</a><ul>
+<li><a class="reference internal" href="#how-encrypted-payments-work" id="id20">How Encrypted Payments Work</a></li>
+<li><a class="reference internal" href="#id4" id="id21">Generate a private key</a></li>
+<li><a class="reference internal" href="#id5" id="id22">Generate a public certificate</a></li>
+<li><a class="reference internal" href="#id6" id="id23">Upload your public certificate to PayPal</a></li>
+<li><a class="reference internal" href="#update-your-certificate-id" id="id24">Update your Certificate ID</a></li>
+<li><a class="reference internal" href="#id7" id="id25">Download PayPal&#8217;s public certificate</a></li>
+<li><a class="reference internal" href="#update-paths-to-your-certificates-and-key" id="id26">Update paths to your certificates and key</a></li>
+<li><a class="reference internal" href="#accept-encrypted-payments-only" id="id27">Accept encrypted payments only</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#control-panel" id="id28">Control Panel</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id8">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Simple Commerce Module is a basic but flexible module
+that easily integrates ExpressionEngine with PayPal.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Simple Commerce Module is available only with a <a class="reference external" href="https://store.ellislab.com/">purchased</a> ExpressionEngine license.</p>
+</div>
+<ul class="simple">
+<li>Integrates with ExpressionEngine&#8217;s Channel Module to define items for
+sale</li>
+<li>Tracks purchases automatically utilizing PayPal&#8217;s <a class="reference external" href="https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&amp;content_ID=developer/e_howto_admin_IPNIntro">Instant Payment
+Notification</a>
+(external link)</li>
+<li>Lets you create any number of customized email notification templates
+for both the administrator and customers, even a different
+email template for <em>every item</em>!</li>
+<li>Add and Edit multiple items at once</li>
+<li>Ability to assign sale prices to items, and easily mark items
+&#8220;on sale&#8221;</li>
+<li>Allows purchases of items to change the user&#8217;s member group</li>
+<li>Supports PayPal Encrypted Payments</li>
+<li>Tab delimited export of items and purchases</li>
+</ul>
+</div>
+<div class="section" id="simple-commerce-purchase-tag">
+<span id="id1"></span><h2><a class="toc-backref" href="#id9">Simple Commerce Purchase Tag</a><a class="headerlink" href="#simple-commerce-purchase-tag" title="Permalink to this headline">¶</a></h2>
+<p>The Simple Commerce Purchase tag is the primary tag used to display
+information about items in your store. It is designed to be used within
+a Channel Entries tag, as store items are actually Channel Entries.</p>
+<p>Here is a simple example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:simple_commerce:purchase</span> <span class="na">entry_id</span><span class="p">=</span><span class="s2">&quot;{entry_id}&quot;</span> <span class="na">success</span><span class="p">=</span><span class="s2">&quot;site/success&quot;</span> <span class="na">cancel</span><span class="p">=</span><span class="s2">&quot;site/index&quot;</span><span class="p">}</span>
+ <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">item_name</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+
+ <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">item_sale_price</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+ <span class="p">{</span><span class="k">if</span> <span class="nv">item_type</span> <span class="o">==</span> <span class="s2">&quot;purchase&quot;</span><span class="p">}</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">buy_now_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Buy Now<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">add_to_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Add to Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">view_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>View Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+ <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+ <span class="p">{</span><span class="k">if</span> <span class="nv">item_type</span> <span class="o">==</span> <span class="s2">&quot;subscription&quot;</span><span class="p">}</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">subscribe_now_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Subscribe Now<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+ <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:simple_commerce:purchase</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="parameters">
+<h3><a class="toc-backref" href="#id10">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><a class="reference internal" href="#cancel" id="id29">cancel=</a></li>
+<li><a class="reference internal" href="#country-code" id="id30">country_code=</a></li>
+<li><a class="reference internal" href="#currency" id="id31">currency=</a></li>
+<li><a class="reference internal" href="#decimal" id="id32">decimal=</a></li>
+<li><a class="reference internal" href="#entry-id" id="id33">entry_id=</a></li>
+<li><a class="reference internal" href="#show-disabled" id="id34">show_disabled=</a></li>
+<li><a class="reference internal" href="#success" id="id35">success=</a></li>
+</ul>
+</div>
+<div class="section" id="cancel">
+<h4><a class="toc-backref" href="#id29">cancel=</a><a class="headerlink" href="#cancel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>cancel=&quot;store/cancel&quot;
+</pre></div>
+</div>
+<p>You may specify a particular Template to display if a purchase is
+cancelled mid-transaction. This takes a standard
+&#8220;Template_Group/Template&#8221; as input, or you may provide a full URL, e.g.
+<a class="reference external" href="http://example.com/index.php/store/cancel/">http://example.com/index.php/store/cancel/</a>. If this parameter is not
+supplied, your site&#8217;s main index template will be displayed.</p>
+</div>
+<div class="section" id="country-code">
+<h4><a class="toc-backref" href="#id30">country_code=</a><a class="headerlink" href="#country-code" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>country_code=&quot;DE&quot;
+</pre></div>
+</div>
+<p>This parameter controls the language that will be used on the initial
+PayPal shopping cart / log in screen when someone makes a purchase from
+your store. Use the two letter country abbreviation, following the <a class="reference external" href="http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes">ISO
+3166
+standard</a>.
+If no parameter is given, a default of &#8216;US&#8217; will be used.</p>
+</div>
+<div class="section" id="currency">
+<h4><a class="toc-backref" href="#id31">currency=</a><a class="headerlink" href="#currency" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>currency=&quot;USD&quot;
+</pre></div>
+</div>
+<p>The three letter representation of the currency for the item prices in
+the store, using the ISO 4217 standard. Default is &#8220;USD&#8221; (U.S. Dollars).
+For other currencies, please refer to <a class="reference external" href="http://en.wikipedia.org/wiki/ISO_4217#Active_codes">Wikipedia&#8217;s ISO 4127
+listing</a>.</p>
+</div>
+<div class="section" id="decimal">
+<h4><a class="toc-backref" href="#id32">decimal=</a><a class="headerlink" href="#decimal" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>decimal=&quot;,&quot;
+</pre></div>
+</div>
+<p>Change the decimal separator for display. For example, instead of
+display 3.95, you can have the price outputted as 3,95.</p>
+</div>
+<div class="section" id="entry-id">
+<h4><a class="toc-backref" href="#id33">entry_id=</a><a class="headerlink" href="#entry-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;<span class="p">{</span><span class="nf">entry_id</span><span class="p">}</span>&quot;
+</pre></div>
+</div>
+<p><strong>REQUIRED</strong>. As the Simple Commerce Purchase tag is designed to be used
+inside a Channel Entries tag, the {entry_id} variable of the Channel
+Entries tag will normally be used to provide the value. You may also use
+a specific entry id to display an item&#8217;s information outside of a
+Channel Entries tag.</p>
+</div>
+<div class="section" id="show-disabled">
+<h4><a class="toc-backref" href="#id34">show_disabled=</a><a class="headerlink" href="#show-disabled" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_disabled=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Allows the Simple Commerce Purchase tag to output information for store
+items that are not enabled. This can be used in conjunction with an
+item_enabled conditional to display information for enabled / disabled
+items. e.g.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">item_enabled</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>NOT AVAILABLE<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="k">if:else</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">item_sale_price</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">buy_now_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Buy Now<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">add_to_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Add to Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">view_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>View Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="success">
+<h4><a class="toc-backref" href="#id35">success=</a><a class="headerlink" href="#success" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>success=&quot;store/thank_you&quot;
+</pre></div>
+</div>
+<p><strong>REQUIRED</strong>. You must specify a particular Template to display after a
+successful purchase transaction. This takes a standard
+&#8220;Template_Group/Template&#8221; as input, or you may provide a full URL, e.g.
+<a class="reference external" href="http://example.com/index.php/store/thank_you/">http://example.com/index.php/store/thank_you/</a>.</p>
+</div>
+</div>
+<div class="section" id="variables">
+<h3><a class="toc-backref" href="#id11">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id3">
+<ul class="simple">
+<li><a class="reference internal" href="#item-details" id="id36">Item Details</a><ul>
+<li><a class="reference internal" href="#item-id" id="id37">item_id</a></li>
+<li><a class="reference internal" href="#item-name" id="id38">item_name</a></li>
+<li><a class="reference internal" href="#item-enabled" id="id39">item_enabled</a></li>
+<li><a class="reference internal" href="#item-purchases" id="id40">item_purchases</a></li>
+<li><a class="reference internal" href="#item-regular-price" id="id41">item_regular_price</a></li>
+<li><a class="reference internal" href="#item-sale-price" id="id42">item_sale_price</a></li>
+<li><a class="reference internal" href="#item-use-sale" id="id43">item_use_sale</a></li>
+<li><a class="reference internal" href="#item-type" id="id44">item_type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#purchase-links" id="id45">Purchase Links</a><ul>
+<li><a class="reference internal" href="#add-to-cart-url" id="id46">add_to_cart_url</a></li>
+<li><a class="reference internal" href="#buy-now-url" id="id47">buy_now_url</a></li>
+<li><a class="reference internal" href="#view-cart-url" id="id48">view_cart_url</a></li>
+<li><a class="reference internal" href="#subscribe-now-url" id="id49">subscribe_now_url</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#purchase-buttons" id="id50">Purchase Buttons</a><ul>
+<li><a class="reference internal" href="#add-to-cart-button" id="id51">add_to_cart_button</a></li>
+<li><a class="reference internal" href="#buy-now-button" id="id52">buy_now_button</a></li>
+<li><a class="reference internal" href="#view-cart-button" id="id53">view_cart_button</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="item-details">
+<h4><a class="toc-backref" href="#id36">Item Details</a><a class="headerlink" href="#item-details" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="item-id">
+<h5><a class="toc-backref" href="#id37">item_id</a><a class="headerlink" href="#item-id" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The store item&#8217;s id.</p>
+</div>
+<div class="section" id="item-name">
+<h5><a class="toc-backref" href="#id38">item_name</a><a class="headerlink" href="#item-name" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The descriptive name of the item.</p>
+</div>
+<div class="section" id="item-enabled">
+<h5><a class="toc-backref" href="#id39">item_enabled</a><a class="headerlink" href="#item-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_enabled</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Whether or not the store item is enabled (y/n). This can be useful if
+you use custom queries to access information about your store items. If
+the item is not enabled (&#8220;n&#8221;), the {exp:simple_commerce:purchase} tag
+will not output information for that item.</p>
+</div>
+<div class="section" id="item-purchases">
+<h5><a class="toc-backref" href="#id40">item_purchases</a><a class="headerlink" href="#item-purchases" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_purchases</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The number of times the item has been purchased.</p>
+</div>
+<div class="section" id="item-regular-price">
+<h5><a class="toc-backref" href="#id41">item_regular_price</a><a class="headerlink" href="#item-regular-price" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_regular_price</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The item&#8217;s regular price.</p>
+</div>
+<div class="section" id="item-sale-price">
+<h5><a class="toc-backref" href="#id42">item_sale_price</a><a class="headerlink" href="#item-sale-price" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_sale_price</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The item&#8217;s sale price.</p>
+</div>
+<div class="section" id="item-use-sale">
+<h5><a class="toc-backref" href="#id43">item_use_sale</a><a class="headerlink" href="#item-use-sale" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_use_sale</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Whether or not the item is on sale (y/n). Useful in conditionals and
+custom queries. If the item is marked as on sale, the PayPal purchase
+links will automatically use the sale price.</p>
+</div>
+<div class="section" id="item-type">
+<h5><a class="toc-backref" href="#id44">item_type</a><a class="headerlink" href="#item-type" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">item_type</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Whether item is a recurring item (subscription/purchase). Useful in
+conditionals and custom queries.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Recurring payments cannot be made using the shopping cart.
+Thus item_type conditionals should be used if you offer cart links
+and are mixing recurring and non-recurring items.</p>
+</div>
+</div>
+</div>
+<div class="section" id="purchase-links">
+<h4><a class="toc-backref" href="#id45">Purchase Links</a><a class="headerlink" href="#purchase-links" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="add-to-cart-url">
+<h5><a class="toc-backref" href="#id46">add_to_cart_url</a><a class="headerlink" href="#add-to-cart-url" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">add_to_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Add to Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The PayPal URL to add the item to the PayPal shopping cart. The example
+shown is a typical usage as a popup link. Recurring payments <em>cannot</em> be
+made using the cart.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If using encrypted payments, this link may be cutoff in some
+browsers. Purchase buttons are recommended as an alternative.</p>
+</div>
+</div>
+<div class="section" id="buy-now-url">
+<h5><a class="toc-backref" href="#id47">buy_now_url</a><a class="headerlink" href="#buy-now-url" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">buy_now_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Buy Now<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If using encrypted payments, this link may be cutoff in some
+browsers. Purchase buttons are recommended as an alternative.</p>
+</div>
+</div>
+<div class="section" id="view-cart-url">
+<h5><a class="toc-backref" href="#id48">view_cart_url</a><a class="headerlink" href="#view-cart-url" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">view_cart_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>View Cart<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The PayPal URL to view the contents of the shopping cart. The example
+shown is a typical usage as a popup link.</p>
+</div>
+<div class="section" id="subscribe-now-url">
+<h5><a class="toc-backref" href="#id49">subscribe_now_url</a><a class="headerlink" href="#subscribe-now-url" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">subscribe_now_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;window.open(this.href);return false;&quot;</span><span class="p">&gt;</span>Subscribe Now<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The &#8220;Subscribe Now&#8221; PayPal URL. The example shown is a typical usage as
+a popup link.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If using encrypted payments, this link may be cutoff in some
+browsers. Purchase buttons are recommended as an alternative.</p>
+</div>
+</div>
+</div>
+<div class="section" id="purchase-buttons">
+<h4><a class="toc-backref" href="#id50">Purchase Buttons</a><a class="headerlink" href="#purchase-buttons" title="Permalink to this headline">¶</a></h4>
+<p>Purchase buttons are variable pairs, and enclose the text used for the
+button label.</p>
+<div class="section" id="add-to-cart-button">
+<h5><a class="toc-backref" href="#id51">add_to_cart_button</a><a class="headerlink" href="#add-to-cart-button" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">add_to_cart_button</span><span class="p">}</span>Add to Cart<span class="p">{</span><span class="nf">/add_to_cart_button</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>A button that adds the item to the PayPal shopping cart.</p>
+</div>
+<div class="section" id="buy-now-button">
+<h5><a class="toc-backref" href="#id52">buy_now_button</a><a class="headerlink" href="#buy-now-button" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">buy_now_button</span><span class="p">}</span>Buy Now<span class="p">{</span><span class="nf">/buy_now_button</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>A &#8220;Buy Now&#8221; PayPal button.</p>
+</div>
+<div class="section" id="view-cart-button">
+<h5><a class="toc-backref" href="#id53">view_cart_button</a><a class="headerlink" href="#view-cart-button" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">view_cart_button</span><span class="p">}</span>View Cart<span class="p">{</span><span class="nf">/view_cart_button</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>A button to view the contents of the shopping cart.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="recurring-payments">
+<span id="simple-commerce-recurring-payments"></span><h2><a class="toc-backref" href="#id12">Recurring Payments</a><a class="headerlink" href="#recurring-payments" title="Permalink to this headline">¶</a></h2>
+<p>The Simple Commerce Module supports Paypal <a class="reference external" href="https://www.paypal.com/us/cgi-bin/?cmd=p/xcl/rec/subscr-intro-outside">Subscriptions and Recurring
+Payments</a> (offsite link). Using recurring payments, you can offer your
+users automatically recurring subscriptions. For purchases managed
+through the module, you can specify emails to be sent upon a recurring
+purchase, emails to be sent when a recurring payment is canceled, and
+alter a member&#8217;s group assignment based on their subscription status.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Automatic emails and member group changes rely on <a class="reference internal" href="sc_cp_ipn.html"><span class="doc">Instant
+Payment Notification</span></a>. New subscription automated
+features will only work for purchases made by logged-in members of your
+site. Subscription termination automatic features will only work for
+purchases made by members.</p>
+</div>
+<div class="section" id="recurring-payment-variables-in-template-tags">
+<h3><a class="toc-backref" href="#id13">Recurring Payment Variables in Template Tags</a><a class="headerlink" href="#recurring-payment-variables-in-template-tags" title="Permalink to this headline">¶</a></h3>
+<p>Paypal does not allow recurring payments to be added to the shopping
+cart. It is therefore important to use the <a class="reference internal" href="#item-type">item_type</a> variable in a
+conditional if you use shopping cart links.</p>
+</div>
+<div class="section" id="recurring-payment-subscription-expiration-date">
+<h3><a class="toc-backref" href="#id14">Recurring Payment Subscription Expiration Date</a><a class="headerlink" href="#recurring-payment-subscription-expiration-date" title="Permalink to this headline">¶</a></h3>
+<p>There is no set expiration date for a recurring payment. In the control
+panel display, ongoing recurring payments will be marked as such. An
+expiration date is provided only for subscriptions that have been
+terminated.</p>
+</div>
+<div class="section" id="how-recurring-payments-may-be-terminated">
+<h3><a class="toc-backref" href="#id15">How Recurring Payments may be terminated</a><a class="headerlink" href="#how-recurring-payments-may-be-terminated" title="Permalink to this headline">¶</a></h3>
+<p>PayPal will send an instant payment notification if the purchaser has
+canceled their subscription. You may also cancel a subscription through
+the PayPal control panel, triggering an instant payment notification.
+See the PayPal documentation for details.</p>
+</div>
+</div>
+<div class="section" id="testing-purchases">
+<h2><a class="toc-backref" href="#id16">Testing Purchases</a><a class="headerlink" href="#testing-purchases" title="Permalink to this headline">¶</a></h2>
+<p>When setting up your Simple Commerce store, it can be valuable to test
+your settings by running fake purchases through your store. PayPal makes
+this possible with a &#8220;sandbox&#8221; area, where fictitious purchases can be
+made without anyone&#8217;s credit card or PayPal account actually being used.</p>
+<div class="section" id="setting-up-a-developer-account-with-paypal">
+<h3><a class="toc-backref" href="#id17">Setting up a Developer Account with PayPal</a><a class="headerlink" href="#setting-up-a-developer-account-with-paypal" title="Permalink to this headline">¶</a></h3>
+<p>To use the sandbox area, you will have to set up a free developer
+account with PayPal.</p>
+<ol class="arabic simple">
+<li>Point your browser to
+<a class="reference external" href="https://developer.paypal.com/">https://developer.paypal.com/</a></li>
+<li>Click &#8220;Sandbox&#8221; and then &#8220;Create Test Accounts&#8221;. Sandbox accounts are
+not tied to your PayPal account on www.paypal.com in any way.<ol class="arabic">
+<li>Create a Premier Account for Merchant. You can usually use the
+same information that your real merchant account uses. Remember
+that nothing on the Sandbox is tied to real world information or
+accounts.</li>
+<li>Create a Personal Account for a test purchaser. Keep this
+account&#8217;s login information handy, as you will be using it to make
+test purchases.</li>
+</ol>
+</li>
+<li>Launch Sandbox for the Premier Account<ol class="arabic">
+<li>Set up <a class="reference internal" href="sc_cp_ipn.html"><span class="doc">Instant Payment Notification</span></a>.</li>
+<li>Add a Bank Account. Enter a fictional name, PayPal will
+automatically create fake account numbers for you.</li>
+<li>Confirm the Bank Account. Simply click confirm&#8211;no test deposits
+are made.</li>
+</ol>
+</li>
+<li>Launch Sandbox for the Personal Account<ol class="arabic">
+<li>Add a Credit Card. Again, you can use fictitious information, and
+allow PayPal to provide the false account numbers automatically.</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="debug-mode">
+<h3><a class="toc-backref" href="#id18">Debug Mode</a><a class="headerlink" href="#debug-mode" title="Permalink to this headline">¶</a></h3>
+<p>In order for the Simple Commerce module to create purchase links that
+utilize PayPal&#8217;s Sandbox area instead of the real PayPal site, you need
+to enable the module&#8217;s debug mode. To do so, open
+mod.simple_commerce.php, and near the top where the class variables are
+defined, set $debug to TRUE.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>var $debug                = TRUE;
+</pre></div>
+</div>
+<p>Remember to set this variable to FALSE when you wish to take your store
+live and route purchases to the real PayPal website.</p>
+</div>
+</div>
+<div class="section" id="encrypted-website-payments">
+<span id="simple-commerce-encrypted-payments"></span><h2><a class="toc-backref" href="#id19">Encrypted Website Payments</a><a class="headerlink" href="#encrypted-website-payments" title="Permalink to this headline">¶</a></h2>
+<p>The Simple Commerce Module has the ability to utilize PayPal&#8217;s Encrypted
+Website Payments feature. In order to use these features, there are some
+additional steps you will need to take to set up Encrypted Website
+Payments with PayPal. A brief background on the process will also be
+beneficial.</p>
+<div class="section" id="how-encrypted-payments-work">
+<h3><a class="toc-backref" href="#id20">How Encrypted Payments Work</a><a class="headerlink" href="#how-encrypted-payments-work" title="Permalink to this headline">¶</a></h3>
+<p>After exchanging public certificates with PayPal, the button or link
+parameters of a purchase are encrypted with PayPal&#8217;s public key, and
+digitally signed with the merchant&#8217;s private key. When a purchase
+request is made from the encrypted form or link, PayPal checks the
+authenticity of the information by using the merchant&#8217;s uploaded public
+certificate. PayPal then decrypts the information with their private
+key, and the purchase transaction is allowed to continue.</p>
+<p>The steps required to use Encrypted Website Payments with PayPal are to:</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="#private_key">Generate a private key</a></li>
+<li><a class="reference external" href="#public_cert">Generate a public certificate</a></li>
+<li><a class="reference external" href="#upload_public_cert">Upload your public certificate to PayPal</a></li>
+<li><a class="reference external" href="#public_cert_id">Update your Certificate ID in your Simple Commerce control
+panel</a></li>
+<li><a class="reference external" href="#download_paypal_cert">Download PayPal&#8217;s public certificate</a></li>
+<li><a class="reference external" href="#update_paths">Update the paths to the files in your Simple Commerce control
+panel</a></li>
+</ol>
+<p>For the most security, you may also wish to set up your PayPal account
+so that it <a class="reference external" href="#encrypted_only">only accepts encrypted payments</a>.</p>
+<p>PayPal accepts only X.509 public certificates in OpenSSL PEM format,
+from any established certificate authority, such as
+<a class="reference external" href="http://www.verisign.com/">VeriSign</a> You can also create your own
+private key and public certificate using the open source software
+<a class="reference external" href="http://www.openssl.org/">OpenSSL</a>. Most *nix based operating systems
+(including Macintosh OS X) will already have this software compiled and
+ready to use. If you are running Windows, there are <a class="reference external" href="http://www.openssl.org/related/binaries.html">pre-compiled
+binaries</a> available. The
+sections that follow describe creating your public certificate and
+private key using OpenSSL.</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id21">Generate a private key</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>private key</strong> is the portion of the encryption method that is kept
+secret and not sent to anyone. To create your private key, key in the
+following at the command line:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>openssl genrsa -out private_key.pem 1024
+</pre></div>
+</div>
+<p>&#8220;private_key.pem&#8221; is the name of the file that will be created in the
+directory you are running the command from. You will need to upload this
+file to <em>your server only</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ExpressionEngine must have read access to the directory you
+upload the private key to, but for security it is highly recommended
+that you use a location above the public HTML folder on your account so
+that it is not accessible via the web.</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id22">Generate a public certificate</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>public certificate</strong> is the portion of the encryption method that
+you provide PayPal to enable them to accept encrypted payments for you.
+To create your public certificate, key in the following at the command
+line:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>openssl req -new -key private_key.pem -x509 -days 730 -out public_certificate.pem
+</pre></div>
+</div>
+<p>&#8220;private_key.pem&#8221; is the name of the private key file generated in step
+one. This command needs to be ran from the same directory, or provide a
+path to the private key file. &#8220;public_certificate.pem&#8221; is the name of
+the public certificate file that will be created in the directory you
+are running the command from.</p>
+<p>You will be prompted to answer some questions. You should answer these
+questions with the same information used by the PayPal merchant account.
+Once the public certificate is created, you must upload it to your
+server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ExpressionEngine must have read access to the directory you
+upload the public certificate to, but for security it is highly
+recommended that you use a location above the public HTML folder on your
+account so that it is not accessible via the web.</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id23">Upload your public certificate to PayPal</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>You must also upload your public certificate to PayPal at the following
+URL:
+<a class="reference external" href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_profile-website-cert">https://www.paypal.com/us/cgi-bin/webscr?cmd=_profile-website-cert</a>,
+or as follows:</p>
+<ol class="arabic simple">
+<li>Log into your PayPal account</li>
+<li>Click the Profile subtab</li>
+<li>In the Seller Preferences column, click Encrypted Payment Settings.</li>
+<li>Click Add</li>
+<li>Click browse and select the public certificate file you just created</li>
+</ol>
+<p>When you have successfully uploaded your public certificate to PayPal,
+it will be displayed under &#8220;Your Public Certificates&#8221;. You will need
+information from this screen in the following step.</p>
+</div>
+<div class="section" id="update-your-certificate-id">
+<h3><a class="toc-backref" href="#id24">Update your Certificate ID</a><a class="headerlink" href="#update-your-certificate-id" title="Permalink to this headline">¶</a></h3>
+<p>In the Encrypted Payment Settings section of your PayPal Seller
+Preferences, the &#8220;Cert ID&#8221; column of the table showing your uploaded
+public certificates displays the certificate ID that PayPal assigned to
+the certificate. In your Simple Commerce control panel <a class="reference internal" href="sc_cp_paypal_settings.html"><span class="doc">PayPal
+Settings</span></a>, key in your certificate ID to
+the field marked <strong>ID Given to Public Certificate by PayPal</strong>.</p>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id25">Download PayPal&#8217;s public certificate</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>In the same area of PayPal&#8217;s website that you used in step 3 to upload
+your public certificate, download PayPal&#8217;s public certificate. Upload
+this file to your server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ExpressionEngine must have read access to the directory you
+upload the public certificate to, but for security it is highly
+recommended that you use a location above the public HTML folder on your
+account so that it is not accessible via the web.</p>
+</div>
+</div>
+<div class="section" id="update-paths-to-your-certificates-and-key">
+<h3><a class="toc-backref" href="#id26">Update paths to your certificates and key</a><a class="headerlink" href="#update-paths-to-your-certificates-and-key" title="Permalink to this headline">¶</a></h3>
+<p>In your Simple Commerce control panel <a class="reference internal" href="sc_cp_paypal_settings.html"><span class="doc">PayPal
+Settings</span></a>, update the paths for the
+certificates and key, as well as the folder used to temporarily store
+encrypted files. As indicated in the notes, this path must be readable
+by ExpressionEngine, but should not be accessible from the web.</p>
+</div>
+<div class="section" id="accept-encrypted-payments-only">
+<h3><a class="toc-backref" href="#id27">Accept encrypted payments only</a><a class="headerlink" href="#accept-encrypted-payments-only" title="Permalink to this headline">¶</a></h3>
+<p>For maximum security, you may wish to set up PayPal so that your account
+only accepts encrypted payments. This will make it impossible for people
+to alter the price or information for a purchase unless they obtain your
+public certificate and private key (keep them safe!).</p>
+<p>To block unencrypted payments, log in to PayPal and click the Profile
+subtab. Click Website Payment Preferences in the right-hand menu, and
+then select &#8220;On&#8221; next to &#8220;Block Non-encrypted Website Payments&#8221;.</p>
+</div>
+</div>
+<div class="section" id="control-panel">
+<h2><a class="toc-backref" href="#id28">Control Panel</a><a class="headerlink" href="#control-panel" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="sc_cp.html"><span class="doc">Simple Commerce Control Panel</span></a> page for more information
+on:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="sc_cp_items.html"><span class="doc">Managing Store Items</span></a></li>
+<li><a class="reference internal" href="sc_cp_purchases.html"><span class="doc">Managing Store Purchases</span></a></li>
+<li><a class="reference internal" href="sc_cp_email_templates.html"><span class="doc">Store Email Templates</span></a></li>
+<li><a class="reference internal" href="sc_cp_ipn.html"><span class="doc">Instant Payment Notification</span></a></li>
+<li><a class="reference internal" href="sc_cp_paypal_settings.html"><span class="doc">PayPal Settings</span></a></li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../forum/index.html">Discussion Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simple Commerce</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp.html">Simple Commerce Control Panel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp_email_templates.html">Simple Commerce – Email Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp_ipn.html">Simple Commerce – Instant Payment Notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp_items.html">Simple Commerce – Managing Store Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp_paypal_settings.html">Simple Commerce – PayPal Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sc_cp_purchases.html">Simple Commerce – Managing Store Purchases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

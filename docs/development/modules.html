@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Modules &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="Extensions Development" href="extensions.html" />
+	    <link rel="prev" title="Plugins" href="plugins.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Modules</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<p>Modules are the most complex form of add-on. They can have their own
+database tables, backend control panels, tabs and fields that are
+included on the publish page, as well as their own tags for use in
+templates.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#basic-file-structure" id="id2">Basic File Structure</a></li>
+<li><a class="reference internal" href="#the-update-file-upd-module-name-php" id="id3">The Update file (upd.module_name.php)</a></li>
+<li><a class="reference internal" href="#update-file-function-reference" id="id4">Update File Function Reference</a></li>
+<li><a class="reference internal" href="#the-language-file-module-name-lang-php" id="id5">The Language File (module_name_lang.php)</a></li>
+<li><a class="reference internal" href="#the-tab-file-tab-module-name-php" id="id6">The Tab File (tab.module_name.php)</a></li>
+<li><a class="reference internal" href="#tab-file-function-reference" id="id7">Tab File Function Reference</a></li>
+<li><a class="reference internal" href="#the-control-panel-file-mcp-module-name-php" id="id8">The Control Panel File (mcp.module_name.php)</a></li>
+<li><a class="reference internal" href="#view-files" id="id9">View Files</a></li>
+</ul>
+</div>
+<div class="section" id="basic-file-structure">
+<h2><a class="toc-backref" href="#id2">Basic File Structure</a><a class="headerlink" href="#basic-file-structure" title="Permalink to this headline">¶</a></h2>
+<p>Modules should be placed into the addons folder in a package and
+be named after that package name. At a minimum, there are 4 required
+files for any module:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">addons/module_name/upd.module_name.php</span></code> - installs, uninstalls
+and updates the module</li>
+<li><code class="docutils literal"><span class="pre">addons/module_name/mcp.module_name.php</span></code> - the backend control
+panel</li>
+<li><code class="docutils literal"><span class="pre">addons/module_name/mod.module_name.php</span></code> - the core module
+file, which process module tags used in templates</li>
+<li><code class="docutils literal"><span class="pre">addons/module_name/language/english/module_name_lang.php</span></code> -
+holds all language variables, allowing multiple language versions of
+the module</li>
+</ul>
+<p>In addition to these required files, there are a number of optional
+files that may be useful for modules:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">addons/module_name/tab.module_name.php</span></code> - required to add a
+tab/fields to the publish page</li>
+<li><code class="docutils literal"><span class="pre">addons/module_name/views/anyname.html</span></code> - multiple view files
+inside the view folder are the primary method of presenting the
+backend control panel pages</li>
+<li><code class="docutils literal"><span class="pre">addons/module_name/libraries/anyname.php</span></code> - modules may make
+use of their own libraries, either extending existing libraries or
+adding new ones for use within the module</li>
+</ul>
+<p>With the possible exception of library files, file names and folders
+should be lower-case and contain no spaces.</p>
+</div>
+<div class="section" id="the-update-file-upd-module-name-php">
+<h2><a class="toc-backref" href="#id3">The Update file (upd.module_name.php)</a><a class="headerlink" href="#the-update-file-upd-module-name-php" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Module_name_upd">
+<em class="property">class </em><code class="descname">Module_name_upd</code><a class="headerlink" href="#Module_name_upd" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Update file for a module includes a class with a name that is a
+combination of the package&#8217;s name with a <code class="docutils literal"><span class="pre">_upd</span></code> suffix. The first
+letter and only the first letter of the class name should be
+capitalized. There is only one required class variable is
+<code class="docutils literal"><span class="pre">$version</span></code>, which should indicate the current version of this
+module:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Module_name_upd</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">$version</span> <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="update-file-function-reference">
+<h2><a class="toc-backref" href="#id4">Update File Function Reference</a><a class="headerlink" href="#update-file-function-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install">
+<h3>install() *<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_upd::install">
+<code class="descclassname">Module_name_upd::</code><code class="descname">install</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_upd::install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Installs the module, adding a record to the <code class="docutils literal"><span class="pre">exp_modules</span></code> table,
+creates and populates and necessary database tables, adds any
+necessary records to the <code class="docutils literal"><span class="pre">exp_actions</span></code> table, and if custom tabs are
+to be used, adds those fields to any saved publish layouts.</p>
+<ul>
+<li><p class="first">Add the module to the <code class="docutils literal"><span class="pre">exp_modules</span></code> table&#8212;this step is required.
+Note <code class="docutils literal"><span class="pre">has_cp_backend</span></code> should be <code class="docutils literal"><span class="pre">'y'</span></code> if the module has a
+control panel, <code class="docutils literal"><span class="pre">'n'</span></code> otherwise; <code class="docutils literal"><span class="pre">has_publish_fields</span></code>&#8216; should be
+<code class="docutils literal"><span class="pre">'y'</span></code> if the module adds tabs/fields to the publish page, <code class="docutils literal"><span class="pre">'n'</span></code>
+otherwise:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+   <span class="s1">&#39;module_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Module_name&#39;</span> <span class="p">,</span>
+   <span class="s1">&#39;module_version&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">,</span>
+   <span class="s1">&#39;has_cp_backend&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;has_publish_fields&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;modules&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Optionally add records to the <code class="docutils literal"><span class="pre">exp_actions</span></code> table&#8212;used if your
+module needs to invoke actions based on frontend behavior such as
+form submission:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+   <span class="s1">&#39;class&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Module_name&#39;</span> <span class="p">,</span>
+   <span class="s1">&#39;method&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;method_to_call&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;actions&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Optionally add the publish page tab fields to any saved publish
+layouts. This is ONLY used if the module adds a tab to the publish
+page and it requires the <code class="docutils literal"><span class="pre">tabs()</span></code> function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;layout&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">layout</span><span class="o">-&gt;</span><span class="na">add_layout_tabs</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">tabs</span><span class="p">(),</span> <span class="s1">&#39;module_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">TRUE</span></code> if everything installed properly, <code class="docutils literal"><span class="pre">FALSE</span></code> if not</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="update-current">
+<h3>update($current = &#8216;&#8217;) *<a class="headerlink" href="#update-current" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_upd::update">
+<code class="descclassname">Module_name_upd::</code><code class="descname">update</code><span class="sig-paren">(</span><em>$current = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_upd::update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is checked on any visit to the module&#8217;s control panel, and
+compares the current version number in the file to the recorded version
+in the database. This allows you to easily make database or other
+changes as new versions of the module come out:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">update</span><span class="p">(</span><span class="nv">$current</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">version_compare</span><span class="p">(</span><span class="nv">$current</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">FALSE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">version_compare</span><span class="p">(</span><span class="nv">$current</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="c1">// Do your update code here</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">TRUE</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$current</strong> (<em>string</em>) &#8211; The last recorded version of the module in the
+<code class="docutils literal"><span class="pre">exp_modules</span></code> table</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">FALSE</span></code> if no update is needed, <code class="docutils literal"><span class="pre">TRUE</span></code> otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="uninstall">
+<h3>uninstall() *<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_upd::uninstall">
+<code class="descclassname">Module_name_upd::</code><code class="descname">uninstall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_upd::uninstall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the module record from exp_modules, any associated actions from
+exp_actions, and uninstalls any tables created by the module. Returns
+TRUE</p>
+<ul>
+<li><p class="first">Optionally delete any publish page tab fields saved in publish
+layouts. This is ONLY used if the module adds a tab to the publish
+page and it requires the <code class="docutils literal"><span class="pre">tabs()</span></code> function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;layout&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">layout</span><span class="o">-&gt;</span><span class="na">delete_layout_tabs</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">tabs</span><span class="p">(),</span> <span class="s1">&#39;module_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">TRUE</span></code> if everything uninstalled properly, <code class="docutils literal"><span class="pre">FALSE</span></code>
+otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="tabs">
+<h3>tabs()<a class="headerlink" href="#tabs" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_upd::tabs">
+<code class="descclassname">Module_name_upd::</code><code class="descname">tabs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_upd::tabs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional function, included only if the module adds a tab to the
+publish page. This function should return an multidimensional
+associative array, the top array key consisting of the tab name,
+followed by any field names, with each field having a variety of default
+settings. Note that when the fields are added to the publish page, they
+are namespaced to prevent variable collisions:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">tabs</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$tabs</span><span class="p">[</span><span class="s1">&#39;tab_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;field_name_one&#39;</span><span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;visible&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;collapse&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;htmlbuttons&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;width&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100%&#39;</span>
+            <span class="p">),</span>
+        <span class="s1">&#39;field_name_two&#39;</span><span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;visible&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;collapse&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;htmlbuttons&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;width&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100%&#39;</span>
+            <span class="p">),</span>
+        <span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$tabs</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Associative array of the tab name and tab fields</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="the-language-file-module-name-lang-php">
+<h2><a class="toc-backref" href="#id5">The Language File (module_name_lang.php)</a><a class="headerlink" href="#the-language-file-module-name-lang-php" title="Permalink to this headline">¶</a></h2>
+<p>The Language file contains an array named <code class="docutils literal"><span class="pre">$lang</span></code>, which is used along
+with the Language class to display text on a page in whatever language
+is selected in the user&#8217;s account settings. There are two required lines
+in the language file for each module, which allows the name and
+description of the module to be viewable on the MODULES page:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$lang</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+
+<span class="c1">// Required for MODULES page</span>
+
+<span class="s1">&#39;my_module_module_name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Module Name&#39;</span><span class="p">,</span>
+<span class="s1">&#39;my_module_module_description&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Brief description of the module- displayed on the Modules page&#39;</span><span class="p">,</span>
+
+<span class="c1">//----------------------------------------</span>
+
+<span class="c1">// Additional Key =&gt; Value pairs go here</span>
+
+<span class="c1">// END</span>
+<span class="s1">&#39;&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="module-tab-label">
+<h3>module tab label<a class="headerlink" href="#module-tab-label" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the two required fields you can have a custom tab label
+for your publish fields. Just assign the desired label to a key which
+shares the name of your module name:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Additional Key =&gt; Value pairs go here</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Tab Label for publish fields</span>
+<span class="sd"> *</span>
+<span class="sd"> * Assign the label you wish to use to the module_name array key</span>
+<span class="sd"> * Remember only alphanumeric characters, underscores, dashes and spaces are allowed.</span>
+<span class="sd"> */</span>
+
+<span class="s1">&#39;module_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Tab label&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-tab-file-tab-module-name-php">
+<h2><a class="toc-backref" href="#id6">The Tab File (tab.module_name.php)</a><a class="headerlink" href="#the-tab-file-tab-module-name-php" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Module_name_tab">
+<em class="property">class </em><code class="descname">Module_name_tab</code><a class="headerlink" href="#Module_name_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an optional file, required only if your module needs to
+include a tab on the publish page. It must have a class with a name
+that is a combination of the package&#8217;s name with a <code class="docutils literal"><span class="pre">_tab</span></code> suffix.
+There are no required class variables. Because multiple modules may be
+adding fields to the publish page, all third party tab fields are
+namespaced using the package name when displayed on the publish page.
+This namespacing will be stripped prior to any data being returned to
+the tab functions.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if your module includes a tab, do not forget to indicate
+this in the update file when installing the module. Further, be sure
+to include the <code class="docutils literal"><span class="pre">tabs()</span></code> function in the update file, and use it
+when updating custom layouts on installation and uninstallation.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tab-file-function-reference">
+<span id="id1"></span><h2><a class="toc-backref" href="#id7">Tab File Function Reference</a><a class="headerlink" href="#tab-file-function-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="display-channel-id-entry-id">
+<h3>display($channel_id, $entry_id = &#8216;&#8217;) *<a class="headerlink" href="#display-channel-id-entry-id" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_tab::display">
+<code class="descclassname">Module_name_tab::</code><code class="descname">display</code><span class="sig-paren">(</span><em>$channel_id</em><span class="optional">[</span>, <em>$entry_id = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_tab::display" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates the fields that will be displayed on the publish
+page. It must return <code class="docutils literal"><span class="pre">$settings</span></code>, an associative array
+specifying the display settings and values associated with each of
+your fields.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$channel_id</strong> (<em>int</em>) &#8211; Channel ID where the entry is being created or
+edited</li>
+<li><strong>$entry_id</strong> (<em>int</em>) &#8211; Entry ID if this is an edit, empty otherwise</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Settings (see below)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The settings array elements:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">Array</span><span class="p">(</span>
+  <span class="s1">&#39;...&#39;</span> <span class="o">=&gt;</span> <span class="k">Array</span><span class="p">(</span> <span class="c1">// name of the field (same as &#39;field_id&#39; below)</span>
+    <span class="s1">&#39;field_id&#39;</span>              <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// name of the field</span>
+    <span class="s1">&#39;field_label&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// field label, typically a language variable is used here</span>
+    <span class="s1">&#39;field_required&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// whether to include the &#39;required&#39; class next to the field label: y/n</span>
+    <span class="s1">&#39;field_data&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// current data, if applicable</span>
+    <span class="s1">&#39;field_list_items&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// array of options, otherwise empty string</span>
+    <span class="s1">&#39;options&#39;</span>               <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// array of options, otherwise empty string</span>
+    <span class="s1">&#39;selected&#39;</span>              <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// selected value if applicable to the field_type</span>
+    <span class="s1">&#39;field_fmt&#39;</span>             <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// allowed field format options, if applicable</span>
+    <span class="s1">&#39;field_instructions&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// instructions to be displayed for this field on the publish page</span>
+    <span class="s1">&#39;field_show_fmt&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// whether the field format dropdown shows: y/n. Note: if &#39;y&#39;, you must specify the options available in field_fmt</span>
+    <span class="s1">&#39;field_pre_populate&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// can pre-populate a field when it&#39;s a new entry</span>
+    <span class="s1">&#39;field_text_direction&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="c1">// direction of the text: ltr/rtl</span>
+    <span class="s1">&#39;field_type&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span>  <span class="c1">// may be any existing field type</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="validate-entry-values">
+<h3>validate($entry, $values) *<a class="headerlink" href="#validate-entry-values" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_tab::validate">
+<code class="descclassname">Module_name_tab::</code><code class="descname">validate</code><span class="sig-paren">(</span><em>$entry</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_tab::validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows you to validate the data after the publish form has been
+submitted but before any additions to the database:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">$entry</span><span class="p">,</span> <span class="nv">$values</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$validator</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Validation&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;foo_field_one&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo_field_two&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|enum[y,n]&#39;</span><span class="p">,</span>
+  <span class="p">));</span>
+
+  <span class="k">return</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$values</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$entry</strong> (<em>EllisLabExpressionEngineModuleChannelModelChannelEntry</em>) &#8211; The
+channel entry entity</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; an associative array with field names as keys and form
+submission data as the value (i.e. <code class="docutils literal"><span class="pre">array('fortune'</span> <span class="pre">=&gt;</span> <span class="pre">'All</span> <span class="pre">your</span> <span class="pre">hard</span> <span class="pre">work</span>
+<span class="pre">will</span> <span class="pre">soon</span> <span class="pre">pay</span> <span class="pre">off.'))</span></code>. The keys are derrived from the data returned by
+<code class="docutils literal"><span class="pre">display()</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EllisLabExpressionEngineServiceValidationResult</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="save-entry-values">
+<h3>save($entry, $values) *<a class="headerlink" href="#save-entry-values" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_tab::save">
+<code class="descclassname">Module_name_tab::</code><code class="descname">save</code><span class="sig-paren">(</span><em>$entry</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_tab::save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called during a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> entity&#8217;s <code class="docutils literal"><span class="pre">afterSave</span></code> event, this allows
+you to insert data/update data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">save</span><span class="p">(</span><span class="nv">$entry</span><span class="p">,</span> <span class="nv">$values</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;field_name_one&#39;</span><span class="p">])</span> <span class="k">OR</span> <span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;field_name_one&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;entry_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="na">entry_id</span><span class="p">,</span>
+        <span class="s1">&#39;file_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;field_name_one&#39;</span><span class="p">]</span>
+    <span class="p">);</span>
+
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$entry</strong> (<em>EllisLabExpressionEngineModuleChannelModelChannelEntry</em>) &#8211; The
+channel entry entity</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; an associative array with field names as keys and form
+submission data as the value (i.e. <code class="docutils literal"><span class="pre">array('fortune'</span> <span class="pre">=&gt;</span> <span class="pre">'Do</span> <span class="pre">not</span> <span class="pre">make</span> <span class="pre">extra</span>
+<span class="pre">work</span> <span class="pre">for</span> <span class="pre">yourself.'))</span></code>. The keys are derrived from the data returned by
+<code class="docutils literal"><span class="pre">display()</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="delete-entry-ids">
+<h3>delete($entry_ids) *<a class="headerlink" href="#delete-entry-ids" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Module_name_tab::delete">
+<code class="descclassname">Module_name_tab::</code><code class="descname">delete</code><span class="sig-paren">(</span><em>$entry_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#Module_name_tab::delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called during a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> entity&#8217;s <code class="docutils literal"><span class="pre">beforeDelete</span></code> event, this allows
+you to sync your records if any are tied to channel entry_ids.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$entry_ids</strong> (<em>array</em>) &#8211; An indexed array of entry IDs that were deleted</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="the-control-panel-file-mcp-module-name-php">
+<h2><a class="toc-backref" href="#id8">The Control Panel File (mcp.module_name.php)</a><a class="headerlink" href="#the-control-panel-file-mcp-module-name-php" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Module_name_mcp">
+<em class="property">class </em><code class="descname">Module_name_mcp</code><a class="headerlink" href="#Module_name_mcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to create the backend control panel, it includes a class with a name that is a combination of the package&#8217;s name with a <code class="docutils literal"><span class="pre">_mcp</span></code> suffix. The first letter and only the first letter of the class name should be capitalized. There are no required class variables. The control panel file for a module without a backend control panel would look like:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
+
+<span class="k">class</span> <span class="nc">Module_name_mcp</span> <span class="p">{</span>
+
+<span class="p">}</span>
+<span class="c1">// END CLASS</span>
+
+<span class="cm">/* End of file mcp.module_name.php */</span>
+<span class="cm">/* Location: ./system/user/addons/modules/module_name/mcp.module_name.php */</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="control-panel-urls">
+<h3>Control Panel URLS<a class="headerlink" href="#control-panel-urls" title="Permalink to this headline">¶</a></h3>
+<p>The Control Panel URLs for your module follow the pattern <code class="docutils literal"><span class="pre">addons/settings/package_name/method_name/arguments</span></code>. For example, if we had a fortune cookie module with a view for list our cookies its URL would be <code class="docutils literal"><span class="pre">addons/settings/fortune_cookie/cookies</span></code>. Like 2.x the routing is automatic; all public methods in your <code class="docutils literal"><span class="pre">mcp.package_name.php</span></code> are automatically routed. We will also pass any arguments to your method found in the url. If the URL is <code class="docutils literal"><span class="pre">addons/settings/fortune_cookie/edit_cookie/3</span></code> we would need to have the following method signature:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">edit_cookie</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We have a <a class="reference internal" href="services/url.html"><span class="doc">CP/URL Service</span></a> to help you construct your URLs.</p>
+</div>
+<div class="section" id="output-breadcrumbs-and-headings">
+<h3>Output, Breadcrumbs, and Headings<a class="headerlink" href="#output-breadcrumbs-and-headings" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to output your control panels. You may either return an HTML string, or you may return an associative array.</p>
+<p>If you return a string that data will be used in the &#8220;body&#8221; section of the Control Panel layout inside our Add-On Manager. The breadcrumb will default to <code class="docutils literal"><span class="pre">Add-On</span> <span class="pre">Manager</span> <span class="pre">/</span> <span class="pre">Your</span> <span class="pre">Add-On</span> <span class="pre">Name</span></code> and the heading will default to <code class="docutils literal"><span class="pre">Your</span> <span class="pre">Add-On</span> <span class="pre">Name</span> <span class="pre">Configuration</span></code>. In our fortune cookie module example we would have <code class="docutils literal"><span class="pre">Add-On</span> <span class="pre">Manager</span> <span class="pre">/</span> <span class="pre">Fortune</span> <span class="pre">Cookies</span></code> as the breadcrumb and <code class="docutils literal"><span class="pre">Fortune</span> <span class="pre">Cookie</span> <span class="pre">Configuration</span></code> as the heading.</p>
+<p>If you return an associative array it must contain the key <code class="docutils literal"><span class="pre">body</span></code> and may contain the keys <code class="docutils literal"><span class="pre">breadcrumb</span></code>, and <code class="docutils literal"><span class="pre">heading</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;body&#39;</span>       <span class="o">=&gt;</span> <span class="nv">$html</span><span class="p">,</span>
+  <span class="s1">&#39;breadcrumb&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addons/settings/module_name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">compile</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;module_name&#39;</span><span class="p">)</span>
+  <span class="p">),</span>
+  <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;module_name_settings&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">body</span></code> (string): HTML string which will be used in the &#8220;body&#8221; section of the Control Panel layout inside the Add-On manager</li>
+<li><code class="docutils literal"><span class="pre">breadcrumb</span></code> (array): Associative array containing key/value pairs where the key is the <a class="reference internal" href="services/url.html"><span class="doc">CP/URL</span></a> and the value is the string to display as the breadcrumb</li>
+<li><code class="docutils literal"><span class="pre">heading</span></code> (string): The string to display as the page <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> and the <a class="reference external" href="https://ellislab.com/style-guide/c/structure#section-header">Section Header</a></li>
+</ul>
+<p>If your add-on needs a <a class="reference external" href="https://ellislab.com/style-guide/c/structure#content-box-sidebar">sidebar</a> use the <a class="reference internal" href="services/sidebar.html"><span class="doc">Sidebar Service</span></a>.</p>
+<div class="section" id="ee-cp-header">
+<h4>ee()-&gt;cp-&gt;header<a class="headerlink" href="#ee-cp-header" title="Permalink to this headline">¶</a></h4>
+<p>This variable allows you to further customize your <a class="reference external" href="https://ellislab.com/style-guide/c/structure#section-header">Section Header</a> by specifying icons to go in front of the title.</p>
+<p>Within your control panel method, or potentially the constructor, just set <code class="docutils literal"><span class="pre">ee()-&gt;cp-&gt;header</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">header</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;toolbar_items&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;settings&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;href&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;settings/template&#39;</span><span class="p">),</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;settings&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">toolbar_items</span></code> (array): An associative array of <a class="reference external" href="https://ellislab.com/style-guide/c/structure#section-settings">buttons</a> to go in front of the title. The key will define the class and provide an icon (e.g. <code class="docutils literal"><span class="pre">settings</span></code> and <code class="docutils literal"><span class="pre">download</span></code>), and the value is another associative array containing the <code class="docutils literal"><span class="pre">href</span></code> and the <code class="docutils literal"><span class="pre">title</span></code> of the link.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="javascript">
+<h3>Javascript<a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h3>
+<p>ExpressionEngine includes both its own JavaScript library as well as the <a class="reference external" href="http://jquery.com/">The jQuery</a> JavaScript library, enabling developers to easily include JavaScript enhancements. It is worth noting some &#8216;best practices&#8217; when using JavaScript in your control panel:</p>
+<ul>
+<li><p class="first">Loading jQuery plugins:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">add_js_script</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;plugin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;dataTables&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Outputting JavaScript to the browser:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">javascript</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">After defining any JavaScript output, you must compile in order to
+display it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">javascript</span><span class="o">-&gt;</span><span class="na">compile</span><span class="p">();</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="working-with-forms">
+<h3>Working with Forms<a class="headerlink" href="#working-with-forms" title="Permalink to this headline">¶</a></h3>
+<p>While creating forms for the backend is fairly routine, there are several differences/additions worth noting:</p>
+<ul class="simple">
+<li>The <a class="reference internal" href="legacy/libraries/form_validation.html"><span class="doc">Form Validation library</span></a> is available, but the best means of checking submitted form data and returning in-line errors is to either use <a class="reference internal" href="services/model/index.html#model-validation"><span class="std std-ref">Model Validation</span></a> or the <a class="reference internal" href="services/validation.html"><span class="doc">Validation Service</span></a>.</li>
+<li>After form submission, you will generally want to output a success (or failure) message using the <a class="reference internal" href="services/alert.html"><span class="doc">CP/Alert Service</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="outputting-pages">
+<h3>Outputting Pages<a class="headerlink" href="#outputting-pages" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to output content to the screen. For very simple pages, you may want to simply return the desired output in a string. Any string that the method returns is placed inside the cp page&#8217;s content container. With all but the simplest of output, the use of View files will be the preferred method for handling your markup and presentation.</p>
+</div>
+</div>
+<div class="section" id="view-files">
+<h2><a class="toc-backref" href="#id9">View Files</a><a class="headerlink" href="#view-files" title="Permalink to this headline">¶</a></h2>
+<p>While you aren&#8217;t required to use views to create your backend pages,
+they are the most modular and easy to read, modify, and edit approach to
+building control panel pages. A view is simply an html page, or snippet
+of a page, with some minimal php used to output variables. The variables
+are passed to the view in an array when you make it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;module_name:index&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This would return the index.php view page, located in a <code class="docutils literal"><span class="pre">views</span></code>
+folder. The view file is passed an array with all of the variables used
+by the view, and those variables are simple &#8216;plugged into&#8217; the html. See the
+<a class="reference internal" href="services/view.html"><span class="doc">View Service</span></a> for more details.</p>
+<p>It is recommended that in view pages only, you use the <a class="reference internal" href="guidelines/view_php_syntax.html"><span class="doc">PHP&#8217;s alternate
+syntax</span></a> in your views, as it makes
+them easier to read and limits the amount of php. If this is not
+supported by your server, ExpressionEngine will automatically rewrite
+the tags.</p>
+<div class="section" id="the-core-module-file-mod-module-name-php">
+<h3>The Core Module File (mod.module_name.php)<a class="headerlink" href="#the-core-module-file-mod-module-name-php" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Module_name">
+<em class="property">class </em><code class="descname">Module_name</code><a class="headerlink" href="#Module_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The Core Module file is used for outputting content via Templates
+and doing any processing that is required by both the Control Panel and
+any module tags contained in a template. It includes a class with a name
+that matches the package (the first letter of the class name must be
+capitalized). There is one required class variable, $return_data, which
+will contain the module&#8217;s outputted content and is retrieved by the
+Template parser after the module is done processing.</p>
+<p>The tag structure of a module follows the same rules as the <a class="reference internal" href="plugins.html"><span class="doc">Plugins
+API</span></a>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">module_name</span><span class="o">:</span><span class="nx">method</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Modules</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

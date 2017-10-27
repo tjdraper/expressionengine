@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>In-app Documentation &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Guidelines" href="index.html" />
+	    <link rel="next" title="Performance Guidelines" href="performance.html" />
+	    <link rel="prev" title="General Style and Syntax" href="general.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Guidelines</a></li>
+								<li class="last">In-app Documentation</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="in-app-documentation">
+<h1>In-app Documentation<a class="headerlink" href="#in-app-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#markdown-file-structure" id="id1">Markdown File Structure</a></li>
+<li><a class="reference internal" href="#documentation-template" id="id2">Documentation Template</a></li>
+</ul>
+</div>
+<p>ExpressionEngine will render beautiful documentation for your add-on directly in the control panel if you follow a few simple guidelines. By including a <cite>README.md</cite> file in your add-on folder (like you probably already do on GitHub/BitBucket/etc.), and using the following Markdown as a template, your documentation will render nicely, and give your users a consistent experience throughout the control panel. And on its own outside of ExpressionEngine, it is still easy to read, and easy to write.</p>
+<img alt="../../_images/rss-parser-readme.png" src="../../_images/rss-parser-readme.png" />
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you use GitHub, you can include a symlink at the top level of your repository to display your in-app documentation on your repo&#8217;s home page without having to duplicate any files. e.g.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Your Repo
+├── your_addon
+│   ├── addon.setup.php
+│   ├── pi.your_addon.php
+│   └── README.md (your in-app documentation readme)
+└── README.md (symlink to the real README file)
+</pre></div>
+</div>
+<p class="last">To create a symlink, use the following command in your root folder: <code class="docutils literal"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">./&lt;your_addon&gt;/README.md</span> <span class="pre">./README.md</span></code></p>
+</div>
+<div class="section" id="markdown-file-structure">
+<h2><a class="toc-backref" href="#id1">Markdown File Structure</a><a class="headerlink" href="#markdown-file-structure" title="Permalink to this headline">¶</a></h2>
+<p>The basic structure is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Add-on Name
+├── Requirements (optional)
+├── Installation (optional)
+├── Usage
+│   └── {exp:tag}
+│       ├── Example Usage
+│       ├── Parameters
+│       │   ├── param_name
+│       │   └── another_param
+│       └── Variables
+│           ├── variable_name
+│           └── another_var
+├── Changelog
+│   └── X.Y.Z
+├── Disclaimer (optional)
+└── License (optional)
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-template">
+<h2><a class="toc-backref" href="#id2">Documentation Template</a><a class="headerlink" href="#documentation-template" title="Permalink to this headline">¶</a></h2>
+<p>The template below demonstrates sections to include, the order to include them, and the meaning behind each header level.</p>
+<div class="highlight-md"><div class="highlight"><pre><span></span><span class="k"># </span><span class="gh">Add-on Name</span>
+
+A description of the add-on. Might include what it&#39;s purpose is, sample output, or use-case. The level 1 header is ignored in ExpressionEngine since we already output the Add-on name in the header. This full description however is rendered.
+
+Any level 2 and 3 headers will appear in the side navigation as links. Thus, the structure below should be used. Your <span class="k">`</span><span class="sb">README.md</span><span class="k">`</span> will be easy to write and consume for GitHub, and look beautiful in ExpressionEngine and meet your users&#39; expectations of a consistent experience throughout the control panel.
+
+<span class="k">## </span><span class="gh">Requirements</span>
+
+Optional, but put here if they exist.
+
+<span class="k">## </span><span class="gh">Installation</span>
+
+Optional, but put here if steps are required beyond copying the files and clicking install in ExpressionEngine
+
+<span class="k">## </span><span class="gh">Usage</span>
+
+Required ## heading, but does not have its own content, it is for the side menu only.
+
+<span class="k">### </span><span class="gh">`{exp:addon:method}`</span>
+
+Tags are level 3 headers under the <span class="k">**</span><span class="gs">Usage</span><span class="k">**</span> section. Here, describe what the general purpose of the tag is.
+
+<span class="k">#### </span><span class="gh">Example Usage</span>
+
+<span class="k">```</span><span class="cp"></span>
+<span class="cp">{exp:addon:method}</span>
+<span class="cp">  Put a typical code example here.</span>
+<span class="cp">  You can use code fencing or indented code blocks.</span>
+<span class="cp">  It will be converted to a textarea in ExpressionEngine for each copying and pasting.</span>
+<span class="cp">{/exp:addon:method}</span>
+<span class="k">```</span>
+
+<span class="k">#### </span><span class="gh">Parameters</span>
+
+Describe any parameters this tag has. You should use either a bullet list like:
+
+<span class="k">- `</span><span class="sb">param_name</span><span class="k">`</span> (required) - This is what this parameter does
+<span class="k">- `</span><span class="sb">another_param</span><span class="k">`</span> - And this one is for such and such
+
+or use level 5 headers like below. The latter should be used if you need more than a brief sentence to describe how to use the parameters. Choose one or the other, do not mix the two styles.
+
+<span class="k">##### </span><span class="gh">param_name (*required*)</span>
+
+Full description of <span class="k">`</span><span class="sb">param_name</span><span class="k">`</span> here.
+
+<span class="k">##### </span><span class="gh">another_param</span>
+
+Full description of <span class="k">`</span><span class="sb">another_param</span><span class="k">`</span> here.
+
+<span class="k">#### </span><span class="gh">Variables</span>
+
+Describe any variables this tag has. You should use either a bullet list like:
+
+<span class="k">- `</span><span class="sb">{variable_name}</span><span class="k">`</span> - The thing
+<span class="k">- `</span><span class="sb">{another_variable}</span><span class="k">`</span> - The other thing
+
+or use level 5 headers like below. The latter should be used if you need more than a brief sentence to describe how to use the variables. Choose one or the other, do not mix the two styles.
+
+<span class="k">##### </span><span class="gh">param_name (*required*)</span>
+
+Full description of <span class="k">`</span><span class="sb">param_name</span><span class="k">`</span> here.
+
+<span class="k">##### </span><span class="gh">another_param</span>
+
+Full description of <span class="k">`</span><span class="sb">another_param</span><span class="k">`</span> here.
+
+<span class="k">### </span><span class="gh">`{exp:addon:another_tag}`</span>
+
+Repeat as above for every tag your add-on includes.
+
+<span class="k">## </span><span class="gh">Changelog</span>
+
+<span class="k">### </span><span class="gh">1.1</span>
+
+<span class="k">- </span>Improved the handling of <span class="k">`</span><span class="sb">param_name</span><span class="k">`</span> options
+<span class="k">- </span>Fixed a bug where this might happen
+
+<span class="k">### </span><span class="gh">1.0</span>
+
+<span class="k">- </span>Released!
+
+<span class="k">## </span><span class="gh">Disclaimer</span>
+
+Optional, typically only needed when stating independence from trademarked third-party services the add-on might integrate with.
+
+<span class="k">## </span><span class="gh">License</span>
+
+Optional, but you may include a software license here if you don&#39;t store a separate file in your repo.
+</pre></div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guidelines</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Developer Guidelines Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html">General Style and Syntax</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">In-app Documentation</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Performance Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="view_php_syntax.html">View Files and PHP Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

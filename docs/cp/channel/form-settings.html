@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Channel Settings &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Channel Manager" href="index.html" />
+	    <link rel="next" title="Channel Set Import" href="import.html" />
+	    <link rel="prev" title="Create/Edit Channel" href="form.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >The Control Panel</a></li>
+								<li><a href="index.html" accesskey="U">Channel Manager</a></li>
+								<li class="last">Channel Settings</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="channel-settings">
+<h1>Channel Settings<a class="headerlink" href="#channel-settings" title="Permalink to this headline">¶</a></h1>
+<p class="cp-path"><strong>Control Panel Location:</strong> <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Channel Settings</span></p>
+<p>This screen allows you to edit the preferences and settings associated with the
+channel. They include General, Administrative, Channel Posting, and Comment
+Posting settings.</p>
+<div class="section" id="permission-restrictions">
+<h2>Permission Restrictions<a class="headerlink" href="#permission-restrictions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Access settings: Design &amp; Content</li>
+<li>Channels: Create Channels</li>
+<li>Channels: Edit Channels</li>
+</ul>
+</div>
+<div class="section" id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#description" id="id5">Description</a></li>
+<li><a class="reference internal" href="#xml-language" id="id6">XML language</a></li>
+<li><a class="reference internal" href="#channel" id="id7">Channel</a></li>
+<li><a class="reference internal" href="#comment-form" id="id8">Comment form</a></li>
+<li><a class="reference internal" href="#search-results" id="id9">Search results</a></li>
+<li><a class="reference internal" href="#rss-feed" id="id10">RSS feed</a></li>
+<li><a class="reference internal" href="#live-look-template" id="id11">Live Look template</a></li>
+<li><a class="reference internal" href="#generated-title" id="id12">Generated title</a></li>
+<li><a class="reference internal" href="#url-title-prefix" id="id13">URL title prefix</a></li>
+<li><a class="reference internal" href="#status" id="id14">Status</a></li>
+<li><a class="reference internal" href="#category" id="id15">Category</a></li>
+<li><a class="reference internal" href="#search-excerpt" id="id16">Search excerpt</a></li>
+<li><a class="reference internal" href="#html-formatting" id="id17">HTML formatting</a></li>
+<li><a class="reference internal" href="#show-extra-publish-controls" id="id18">Show extra publish controls?</a></li>
+<li><a class="reference internal" href="#allow-image-urls" id="id19">Allow image URLs?</a></li>
+<li><a class="reference internal" href="#render-urls-and-email-addresses-as-links" id="id20">Render URLs and Email addresses as links?</a></li>
+<li><a class="reference internal" href="#id1" id="id21">Status</a></li>
+<li><a class="reference internal" href="#author" id="id22">Author</a></li>
+<li><a class="reference internal" href="#allow-guest-submissions" id="id23">Allow guest submissions?</a></li>
+<li><a class="reference internal" href="#enable-entry-versioning" id="id24">Enable entry versioning?</a></li>
+<li><a class="reference internal" href="#maximum-versions-per-entry" id="id25">Maximum versions per entry</a></li>
+<li><a class="reference internal" href="#enable-author-notification" id="id26">Enable author notification?</a></li>
+<li><a class="reference internal" href="#enable-channel-entry-notification" id="id27">Enable channel entry notification?</a></li>
+<li><a class="reference internal" href="#enable-comment-notification" id="id28">Enable comment notification?</a></li>
+<li><a class="reference internal" href="#allow-comments" id="id29">Allow comments?</a></li>
+<li><a class="reference internal" href="#allow-comments-default" id="id30">Allow comments default?</a></li>
+<li><a class="reference internal" href="#require-membership" id="id31">Require membership?</a></li>
+<li><a class="reference internal" href="#require-email" id="id32">Require Email?</a></li>
+<li><a class="reference internal" href="#moderate-comments" id="id33">Moderate comments?</a></li>
+<li><a class="reference internal" href="#maximum-characters-allowed" id="id34">Maximum characters allowed?</a></li>
+<li><a class="reference internal" href="#comment-time-limit" id="id35">Comment time limit</a></li>
+<li><a class="reference internal" href="#comment-expiration" id="id36">Comment expiration</a></li>
+<li><a class="reference internal" href="#text-formatting" id="id37">Text formatting</a></li>
+<li><a class="reference internal" href="#id2" id="id38">HTML formatting</a></li>
+<li><a class="reference internal" href="#id3" id="id39">Allow image URLs?</a></li>
+<li><a class="reference internal" href="#id4" id="id40">Render URLs and Email addresses as links?</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We recommend using the default base URL variable <code class="docutils literal"><span class="pre">{base_url}</span></code> defined in <a class="reference internal" href="../settings/urls.html"><span class="doc">URL and Path Settings</span></a> in your URL settings.</p>
+</div>
+<div class="section" id="description">
+<h3><a class="toc-backref" href="#id5">Description</a><a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>A short description of the channel. Spaces, punctuation, and other
+special characters are allowed. This is used, for example, in RSS feeds.</p>
+</div>
+<div class="section" id="xml-language">
+<h3><a class="toc-backref" href="#id6">XML language</a><a class="headerlink" href="#xml-language" title="Permalink to this headline">¶</a></h3>
+<p>This preference determines the XML language setting that you can use for
+your channel pages. This information is available as a variable for use
+in the channel Templates. A drop-down list is available for selection.</p>
+</div>
+<div class="section" id="channel">
+<h3><a class="toc-backref" href="#id7">Channel</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h3>
+<p>The full URL to the main page for this channel.</p>
+</div>
+<div class="section" id="comment-form">
+<h3><a class="toc-backref" href="#id8">Comment form</a><a class="headerlink" href="#comment-form" title="Permalink to this headline">¶</a></h3>
+<p>The full URL to the &#8220;comments&#8221; page for this channel. The URL should
+include the Template Group and Template. For example:
+<a class="reference external" href="http://example.com/index.php/channel/comments/">http://example.com/index.php/channel/comments/</a></p>
+</div>
+<div class="section" id="search-results">
+<h3><a class="toc-backref" href="#id9">Search results</a><a class="headerlink" href="#search-results" title="Permalink to this headline">¶</a></h3>
+<p>The full URL where you would like search results from this channel to be
+pointed. The URL should include the Template Group and Template. For
+example, if you wish that links off the search results page point to
+your &#8220;comments&#8221; Template you might use:
+{base_url}/index.php/channel/comments/.</p>
+</div>
+<div class="section" id="rss-feed">
+<h3><a class="toc-backref" href="#id10">RSS feed</a><a class="headerlink" href="#rss-feed" title="Permalink to this headline">¶</a></h3>
+<p>The URL where you can view the RSS feed for this channel. For example:
+<a class="reference external" href="http://example.com/index.php/channel/rss_2.0">http://example.com/index.php/channel/rss_2.0</a></p>
+</div>
+<div class="section" id="live-look-template">
+<h3><a class="toc-backref" href="#id11">Live Look template</a><a class="headerlink" href="#live-look-template" title="Permalink to this headline">¶</a></h3>
+<p>The template that will be used for a Live Look at your entries. Links
+are available on the main Edit section of the control panel and will use the format site_url/template_group/template_name/entry_id.
+If you do not want to use a Live Look Template with a channel, simply
+set this preference to &#8220;No Live Look Template&#8221;.</p>
+</div>
+<div class="section" id="generated-title">
+<h3><a class="toc-backref" href="#id12">Generated title</a><a class="headerlink" href="#generated-title" title="Permalink to this headline">¶</a></h3>
+<p>When a new entry is created or previewed, this value will be inserted by
+default in the Title field. This is helpful if you wish every entry in a
+channel to have the titles follow a certain format. The automatic URL
+Title creating javascript for the Publish page will ignore this text
+during processing.</p>
+</div>
+<div class="section" id="url-title-prefix">
+<h3><a class="toc-backref" href="#id13">URL title prefix</a><a class="headerlink" href="#url-title-prefix" title="Permalink to this headline">¶</a></h3>
+<p>When a new entry is created or previewed, this value will be appended to
+the beginning of the url_title value, which will help you insure that
+url_titles are unique between channels.</p>
+</div>
+<div class="section" id="status">
+<h3><a class="toc-backref" href="#id14">Status</a><a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<p>The default status for new channel entries. The available options depend
+on what <a class="reference internal" href="status/index.html"><span class="doc">Status Group</span></a> the channel is assigned to
+use and which statuses are defined for that group.</p>
+</div>
+<div class="section" id="category">
+<h3><a class="toc-backref" href="#id15">Category</a><a class="headerlink" href="#category" title="Permalink to this headline">¶</a></h3>
+<p>The default category for new channel entries. The available options
+depend on what <a class="reference internal" href="cat/index.html"><span class="doc">Category Group</span></a> the channel is
+assigned to use and which categories are defined for that group. In
+addition to the categories from that group, the &#8220;None&#8221; option is also
+available, in which case no category will be selected by default.</p>
+</div>
+<div class="section" id="search-excerpt">
+<h3><a class="toc-backref" href="#id16">Search excerpt</a><a class="headerlink" href="#search-excerpt" title="Permalink to this headline">¶</a></h3>
+<p>You can specify which field from your entries to use in search result
+excerpts. The list is dynamically populated depending on which <a class="reference internal" href="fields/groups/index.html"><span class="doc">Field
+Group</span></a> the channel is assigned to use and which
+fields are defined for that group. Only fields that have been set as
+&#8220;searchable&#8221; will be included.</p>
+</div>
+<div class="section" id="html-formatting">
+<h3><a class="toc-backref" href="#id17">HTML formatting</a><a class="headerlink" href="#html-formatting" title="Permalink to this headline">¶</a></h3>
+<p>This setting determines how raw HTML code within entries is handled.
+There are three options:</p>
+<ol class="arabic simple">
+<li><strong>Convert HTML into character entities</strong>: This will convert the HTML
+tags so that they will display as plain text on a page when viewed.
+This would be useful if you want to display example code often.</li>
+<li><strong>Allow only safe HTML</strong>: This will allow &#8220;safe&#8221; HTML (&lt;b&gt;, &lt;i&gt;,
+&lt;em&gt;, &lt;del&gt;, &lt;ins&gt;, &lt;strong&gt;, &lt;pre&gt;, &lt;code&gt;, &lt;blockquote&gt;, &lt;h2&gt;,
+&lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;) to be kept so that they are interpreted by
+the browser when the entry is viewed. All other HTML is converted to
+character entities and the raw code will be seen upon viewing.</li>
+<li><strong>Allow ALL HTML</strong>: This leaves the HTML code as written and the code
+will then be interpreted by the browser when the entry is viewed.</li>
+</ol>
+</div>
+<div class="section" id="show-extra-publish-controls">
+<h3><a class="toc-backref" href="#id18">Show extra publish controls?</a><a class="headerlink" href="#show-extra-publish-controls" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, a second set of publish controls will appear at the top of the publish form for this channel.</p>
+</div>
+<div class="section" id="allow-image-urls">
+<h3><a class="toc-backref" href="#id19">Allow image URLs?</a><a class="headerlink" href="#allow-image-urls" title="Permalink to this headline">¶</a></h3>
+<p>You can determine whether or not you want people to be able to display
+images within your entries by using the URL for the image. If &#8220;Yes&#8221; is
+selected for this option, people can display images as inline content in
+your channel. If the setting is &#8220;No&#8221; then images will not be allowed.</p>
+</div>
+<div class="section" id="render-urls-and-email-addresses-as-links">
+<h3><a class="toc-backref" href="#id20">Render URLs and Email addresses as links?</a><a class="headerlink" href="#render-urls-and-email-addresses-as-links" title="Permalink to this headline">¶</a></h3>
+<p>When this option is set to &#8220;Yes&#8221;, any full URLs or email addresses will
+be automatically formatted as a valid HTML link to the address. If the
+option is &#8220;No&#8221; then the URL or email address will be treated and
+displayed as plain text.</p>
+</div>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id21">Status</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Status assigned to all new entires in the channel.</p>
+</div>
+<div class="section" id="author">
+<h3><a class="toc-backref" href="#id22">Author</a><a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h3>
+<p>Default author for guest entries posted via Channel Form.</p>
+</div>
+<div class="section" id="allow-guest-submissions">
+<h3><a class="toc-backref" href="#id23">Allow guest submissions?</a><a class="headerlink" href="#allow-guest-submissions" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, unregistered users will be able to submit forms for this channel.</p>
+</div>
+<div class="section" id="enable-entry-versioning">
+<h3><a class="toc-backref" href="#id24">Enable entry versioning?</a><a class="headerlink" href="#enable-entry-versioning" title="Permalink to this headline">¶</a></h3>
+<p>When set to enable, ExpressinEngine will save revisions of each entry for this channel.</p>
+</div>
+<div class="section" id="maximum-versions-per-entry">
+<h3><a class="toc-backref" href="#id25">Maximum versions per entry</a><a class="headerlink" href="#maximum-versions-per-entry" title="Permalink to this headline">¶</a></h3>
+<p>Maximum number of revisions to be saved per entry.</p>
+</div>
+<div class="section" id="enable-author-notification">
+<h3><a class="toc-backref" href="#id26">Enable author notification?</a><a class="headerlink" href="#enable-author-notification" title="Permalink to this headline">¶</a></h3>
+<p>Whenever a new comment is submitted, the author of the entry can be
+notified. An email will be sent to the email address associated with the
+author member in the system.</p>
+</div>
+<div class="section" id="enable-channel-entry-notification">
+<h3><a class="toc-backref" href="#id27">Enable channel entry notification?</a><a class="headerlink" href="#enable-channel-entry-notification" title="Permalink to this headline">¶</a></h3>
+<p>If the previous setting is set to &#8220;Yes&#8221;, then these are the recipients
+of the email alert. You may define a single email address or list
+multiple addresses by separating them with a comma. Ex:
+&#8220;<a class="reference external" href="mailto:admin&#37;&#52;&#48;example&#46;com">admin<span>&#64;</span>example<span>&#46;</span>com</a>, <a class="reference external" href="mailto:joe&#37;&#52;&#48;example&#46;com">joe<span>&#64;</span>example<span>&#46;</span>com</a>&#8220;</p>
+</div>
+<div class="section" id="enable-comment-notification">
+<h3><a class="toc-backref" href="#id28">Enable comment notification?</a><a class="headerlink" href="#enable-comment-notification" title="Permalink to this headline">¶</a></h3>
+<p>You can specify a list of email addresses to receive notifications when
+a comment is posted. This setting determines whether or not the list
+will receive the updates. The addresses are specified in the next
+setting.</p>
+<p>If the previous setting is set to &#8220;Yes&#8221;, then these are the recipients
+of the email alert. You may define a single email address or list
+multiple addresses by separating them with a comma. Ex:
+&#8220;<a class="reference external" href="mailto:admin&#37;&#52;&#48;example&#46;com">admin<span>&#64;</span>example<span>&#46;</span>com</a>, <a class="reference external" href="mailto:joe&#37;&#52;&#48;example&#46;com">joe<span>&#64;</span>example<span>&#46;</span>com</a>&#8220;</p>
+</div>
+<div class="section" id="allow-comments">
+<span id="channel-prefs-allow-comments"></span><h3><a class="toc-backref" href="#id29">Allow comments?</a><a class="headerlink" href="#allow-comments" title="Permalink to this headline">¶</a></h3>
+<p>Determines whether or not comments are allowed in this channel.</p>
+</div>
+<div class="section" id="allow-comments-default">
+<h3><a class="toc-backref" href="#id30">Allow comments default?</a><a class="headerlink" href="#allow-comments-default" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, the &#8220;Allow comments&#8221; option on the publish page will be set to
+&#8220;yes&#8221; by default</p>
+</div>
+<div class="section" id="require-membership">
+<h3><a class="toc-backref" href="#id31">Require membership?</a><a class="headerlink" href="#require-membership" title="Permalink to this headline">¶</a></h3>
+<p>Determines whether visitors to the website must be members in order to
+post. If this preferences is set to &#8220;Yes&#8221; and an unregistered visitor
+attempts to post a comment the comment will not be accepted and the
+visitor will receive a message.</p>
+</div>
+<div class="section" id="require-email">
+<h3><a class="toc-backref" href="#id32">Require Email?</a><a class="headerlink" href="#require-email" title="Permalink to this headline">¶</a></h3>
+<p>You can optionally require that anyone posting comments must list an
+email address. You can determine in your
+<a class="reference internal" href="../design/index.html"><span class="doc">Template Manager</span></a> whether or not the address is shown
+publicly, but requiring an email address in order to post comments can
+help reduce the number of &#8220;spam&#8221; comments you receive since the visitor
+must submit a valid email address.</p>
+</div>
+<div class="section" id="moderate-comments">
+<h3><a class="toc-backref" href="#id33">Moderate comments?</a><a class="headerlink" href="#moderate-comments" title="Permalink to this headline">¶</a></h3>
+<p>If this option is enabled, then comments will not immediately appear on
+the site. Instead, the comments will go into a queue and await
+review/moderation by an administrator.</p>
+<p>Member Groups (such as the SuperAdmin Group by default) can be set to
+bypass comment moderation and have their comments posted immediately.
+That option can be set at <span class="menuselection">Members ‣ Member Groups</span>.</p>
+</div>
+<div class="section" id="maximum-characters-allowed">
+<h3><a class="toc-backref" href="#id34">Maximum characters allowed?</a><a class="headerlink" href="#maximum-characters-allowed" title="Permalink to this headline">¶</a></h3>
+<p>You may set a maximum number of characters allowed in any comment.
+Setting this preference to 0 (zero) will not place a restriction on the
+number of characters allowed.</p>
+</div>
+<div class="section" id="comment-time-limit">
+<h3><a class="toc-backref" href="#id35">Comment time limit</a><a class="headerlink" href="#comment-time-limit" title="Permalink to this headline">¶</a></h3>
+<p>This is the optional number of seconds that must lapse after a comment
+is posted before that same user can post another comment. This setting
+can help reduce comment &#8220;spam&#8221;. The preference can be left blank or set
+to 0 (zero) if you do not want to impose a limit.</p>
+</div>
+<div class="section" id="comment-expiration">
+<h3><a class="toc-backref" href="#id36">Comment expiration</a><a class="headerlink" href="#comment-expiration" title="Permalink to this headline">¶</a></h3>
+<p>The number of days after an entry is posted in which to allow comments.
+After that period has expired, the entry will be closed to commenting
+and the comment form will no longer appear. Existing comments will still
+be displayed. Enter 0 (zero) for no expiration. Note that this
+preference sets the <em>default</em> setting for the channel. The setting can
+be overridden and changed on a per-entry basis.</p>
+<p>You may override this setting in the
+<a class="reference internal" href="../../comment/control_panel/index.html"><span class="doc">Comment Module Control Panel</span></a> section of the Comment
+Module so that comments are set to be moderated rather than closed once
+the expiration period is passed.</p>
+<p>If you also select the checkbox accompanying this setting, then all
+existing entries in this channel will be updated to reflect the new
+setting when you submit.</p>
+</div>
+<div class="section" id="text-formatting">
+<h3><a class="toc-backref" href="#id37">Text formatting</a><a class="headerlink" href="#text-formatting" title="Permalink to this headline">¶</a></h3>
+<p>This setting determines how comments are formatted by the system. There
+are three possible choices:</p>
+<ol class="arabic simple">
+<li><strong>None</strong>: No automatic formatting is done; the comment is left as-is.
+This could be useful if you want people to be able to use full HTML
+in their comments.</li>
+<li><strong>xhtml</strong>: Comments will be formatted as valid XHTML. Text blocks
+with double line breaks will be turned into paragraphs, line breaks
+will be replaced by &lt;br /&gt; tags, special characters will be formatted
+as character entities, etc.</li>
+<li><strong>Auto &lt;br /&gt;</strong>: All line breaks in the comment will be converted
+into &lt;br /&gt; tags. This includes any line breaks that may occur inside
+HTML code, which could cause unexpected displays.</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id38">HTML formatting</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Like the channel setting, this preference determines how raw HTML code
+within comments is handled. There are three options:</p>
+<ol class="arabic simple">
+<li><strong>Convert HTML into character entities</strong>: This will convert the HTML
+tags so that they will display as plain text on a page when viewed.
+This would be useful if you want to display example code often.</li>
+<li><strong>Allow only safe HTML</strong>: This will allow &#8220;safe&#8221; HTML (&lt;b&gt;, &lt;i&gt;, &lt;u&gt;,
+&lt;em&gt;, &lt;strike&gt;, &lt;strong&gt;, &lt;pre&gt;, &lt;code&gt;, &lt;blockquote&gt;) to be kept so
+that they are interpreted by the browser when the entry is viewed.
+All other HTML is converted to character entities and the raw code
+will be seen upon viewing. Note that while &lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;,
+&lt;h6&gt; are considered &#8220;safe&#8221; in channel entries, they are not allowed
+in comments.</li>
+<li><strong>Allow all HTML (not recommended)</strong>: This leaves the HTML code as
+written and the code will then be interpreted by the browser when the
+entry is viewed. This is generally not recommended since visitors
+would be able to submit HTML code which could drastically alter the
+display of your webpage.</li>
+</ol>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id39">Allow image URLs?</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>You can determine whether or not you want people to be able to display
+images within comments by using the URL for the image.</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id40">Render URLs and Email addresses as links?</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>When this option is set to &#8220;Yes&#8221;, any full URLs or email addresses will
+be automatically formatted as a valid HTML link to the address. If the
+option is &#8220;No&#8221; then the URL or email address will be treated and
+displayed as plain text.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The Control Panel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/create.html">Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/edit.html">Entry Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">File Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../members/index.html">Member Manager</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Channel Manager</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="form.html">Create/Edit Channel</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Channel Settings</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="import.html">Channel Set Import</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cat/index.html">Category Groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fields/groups/index.html">Field Groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts/index.html">Form Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="status/index.html">Status Groups</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../design/index.html">Template Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../msm/index.html">Site Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addons/index.html">Add-On Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utilities/index.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logs/index.html">System Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../settings/index.html">System Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../footer.html">CP Footer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

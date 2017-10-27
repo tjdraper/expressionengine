@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Create &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="The Control Panel" href="../index.html" />
+	    <link rel="next" title="Entry Manager" href="edit.html" />
+	    <link rel="prev" title="CP Overview" href="../overview.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">The Control Panel</a></li>
+								<li class="last">Create</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="create">
+<h1>Create<a class="headerlink" href="#create" title="Permalink to this headline">¶</a></h1>
+<p class="cp-path"><strong>Control Panel Location:</strong> <span class="menuselection">Create</span></p>
+<p>This is the area where you&#8217;ll create content for your site by
+publishing new Entries to your Channels. If you have more than one Channel,
+moving your cursor over the Publish menu will show all of your Channels and
+allow you to select one.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">site builders can customize the display of the Publish Page on a per
+Channel bases by creating a custom layout.  Just go to the <a class="reference internal" href="../channel/index.html"><span class="doc">Channel
+manager</span></a> and click &#8216;layouts&#8217; to access the <a class="reference internal" href="../channel/layouts/index.html"><span class="doc">Form
+layout</span></a>.</p>
+</div>
+<div class="figure">
+<img alt="../../_images/create.png" src="../../_images/create.png" />
+</div>
+<div class="section" id="permission-restrictions">
+<h2>Permission Restrictions<a class="headerlink" href="#permission-restrictions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Access settings: Design &amp; Content</li>
+<li>Allowed actions: Create Entries</li>
+<li>Allowed channels</li>
+</ul>
+</div>
+<div class="section" id="publish-form-tab">
+<h2>Publish Form Tab<a class="headerlink" href="#publish-form-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="title-field">
+<h3>Title Field<a class="headerlink" href="#title-field" title="Permalink to this headline">¶</a></h3>
+<p>This field contains the title of your channel entry. Titles can be up to
+100 characters in length.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For those times where &#8216;Title&#8217; isn&#8217;t really the appropriate title, you
+can set a custom descriptive name for this field on a per channel basis.
+Just <a class="reference internal" href="../channel/form.html"><span class="doc">edit the channel settings</span></a> and specify a <strong>Title field label</strong>.</p>
+</div>
+</div>
+<div class="section" id="url-title">
+<h3>URL Title<a class="headerlink" href="#url-title" title="Permalink to this headline">¶</a></h3>
+<p>Here you can define a &#8220;human readable&#8221; URL title for your entry. URL
+titles may only contain alpha-numeric characters and no spaces. The
+purpose of a URL Title is to enable your entries to be accessed using a
+URL such as:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/index.php/channel/comments/joes_first_entry/
+</pre></div>
+</div>
+<p>If you do not specify a &#8220;URL Title&#8221; one will automatically be created
+for you based upon your entry Title. URL Titles must be unique within a
+channel, so if an entry with the same title already exists then the URL
+Title will have a number appended to the end to make it unique.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you let the system create your URL Title for you it will
+convert spaces into underscores by default. For example, if the title
+of your entry is &#8220;Joe&#8217;s First Entry&#8221; it will be converted to
+&#8220;joes_first_entry&#8221;. If you prefer dashes to be used instead of
+underscores you can change it with the <strong>Word Separator for URL Titles</strong>
+preference under <span class="menuselection">Admin ‣ Channel Administration ‣ Global Channel Preferences</span>.</p>
+</div>
+</div>
+<div class="section" id="entry-fields">
+<h3>Entry Fields<a class="headerlink" href="#entry-fields" title="Permalink to this headline">¶</a></h3>
+<p>The names and types of entry fields displayed will be determined by what
+<a class="reference internal" href="../channel/fields/index.html"><span class="doc">Custom Fields</span></a> you have defined for
+this channel. If an entry field is set to be &#8220;hidden&#8221; by default, it
+will have to be expanded by clicking on the field name before content
+can be entered.</p>
+</div>
+<div class="section" id="save-revision">
+<h3>Save Revision<a class="headerlink" href="#save-revision" title="Permalink to this headline">¶</a></h3>
+<p>Allows the content editor to force a revision save.</p>
+</div>
+<div class="section" id="submit">
+<h3>Submit<a class="headerlink" href="#submit" title="Permalink to this headline">¶</a></h3>
+<p>The Submit button allows you to save the entry and publish it to your
+site.</p>
+</div>
+</div>
+<div class="section" id="date-tab">
+<h2>Date Tab<a class="headerlink" href="#date-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="entry-date">
+<h3>Entry Date<a class="headerlink" href="#entry-date" title="Permalink to this headline">¶</a></h3>
+<p>The entry date is the primary date associated with an entry. You may use
+the interactive calendar to set the date/time. If you specify a date in
+the future, ExpressionEngine will not display the entry on your site
+until the date has arrived. This behavior can be overruled if you
+instruct ExpressionEngine to include &#8220;future dates&#8221; in the Channel Tags
+in your Templates.</p>
+</div>
+<div class="section" id="expiration-date">
+<h3>Expiration Date<a class="headerlink" href="#expiration-date" title="Permalink to this headline">¶</a></h3>
+<p>You may <em>optionally</em> specify an expiration date for the entry, causing
+the system to no longer show the entry anywhere on your website after
+that date. You may also use an interactive calendar to set the
+date/time.</p>
+</div>
+<div class="section" id="comment-expiration-date">
+<h3>Comment Expiration Date<a class="headerlink" href="#comment-expiration-date" title="Permalink to this headline">¶</a></h3>
+<p>You may <em>optionally</em> specify a date on which comments for this entry
+will no longer be accepted. Once the date passes, the entry will act as
+though the Allow Comments checkbox (see below) is unchecked. You may
+also use an interactive calendar to set the date/time.</p>
+</div>
+</div>
+<div class="section" id="categories-tab">
+<h2>Categories Tab<a class="headerlink" href="#categories-tab" title="Permalink to this headline">¶</a></h2>
+<p>You may assign your entries to one ore more categories. To select more
+than one category you will typically hold down the CTRL (or CMD) key
+while choosing the individual category names.</p>
+<p>Clicking the Edit Categories link will permit you to add, edit, or
+delete categories that appear in the list.</p>
+</div>
+<div class="section" id="options-tab">
+<h2>Options Tab<a class="headerlink" href="#options-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="author">
+<h3>Author<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h3>
+<p>You may select the author for this entry from the drop-down list. By
+default only the person submitting the entry is shown in the author
+list. If you would like to enable other authors so that the author name
+can be changed please see this <a class="reference internal" href="../../troubleshooting/channels_and_entries/new_members_not_authors.html"><span class="doc">troubleshooting page</span></a> for
+information.</p>
+</div>
+<div class="section" id="channel">
+<h3>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h3>
+<p>This option is only available when <em>editing</em> an entry.</p>
+<p>This drop-down list will contain all channels that share the same Field
+Group, Category Group, and Status Group with the current channel for the
+entry. Using this option, you can move an entry from one channel to
+another channel that is set up similarly.</p>
+</div>
+<div class="section" id="status">
+<h3>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<p>There are two primary statuses that are always available: Open and
+Closed. Typically, &#8220;open&#8221; entries are viewable at your site, and
+&#8220;closed&#8221; entries are not. You can add additional statuses for editorial
+workflow in your <a class="reference internal" href="../channel/status/index.html"><span class="doc">Status Groups</span></a> page, and opt to
+display or suppress entries assigned to these by modifying the &#8220;status&#8221;
+parameter found in the various &#8220;Channel&#8221; Tags in your Templates.</p>
+</div>
+<div class="section" id="make-entry-sticky">
+<h3>Make Entry Sticky<a class="headerlink" href="#make-entry-sticky" title="Permalink to this headline">¶</a></h3>
+<p>If this option is checked, then the entry will be &#8220;stuck&#8221; at the top of
+the list when displaying multiple entries. This can be useful for things
+like announcement posts.</p>
+</div>
+<div class="section" id="allow-comments">
+<h3>Allow Comments<a class="headerlink" href="#allow-comments" title="Permalink to this headline">¶</a></h3>
+<p>If this option is checked, then comments will be allowed for this entry.
+When this option is unchecked, your comment submission form will be
+suppressed. Any existing comments will still appear.</p>
+</div>
+</div>
+<div class="section" id="forum-tab">
+<span id="publish-forum-tab"></span><h2>Forum Tab<a class="headerlink" href="#forum-tab" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tab will only appear if you have the Discussion Forum
+Module installed.</p>
+</div>
+<p>The Forum tab allows you to optionally publish a forum topic to be
+associated with the channel entry. You can then automatically link to
+the created forum topic from within your {exp:channel:entries} tag using
+the <a class="reference internal" href="../../channel/channel_entries.html#channel-entries-forum-topic-id"><span class="std std-ref">forum_topic_id</span></a> variable.</p>
+<div class="section" id="forum-topic-title">
+<h3>Forum Topic Title<a class="headerlink" href="#forum-topic-title" title="Permalink to this headline">¶</a></h3>
+<p>You may specify the title to use for the new thread in the forum.</p>
+</div>
+<div class="section" id="forum-topic-text">
+<h3>Forum Topic Text<a class="headerlink" href="#forum-topic-text" title="Permalink to this headline">¶</a></h3>
+<p>This is the main text for the forum thread.</p>
+<p>You may use {permalink} to link from the Forum Entry to the Channel
+Entry. This variable is replaced by the URL set in the <strong>Comment Page
+URL</strong> preference under <span class="menuselection">Admin ‣ Channel Management</span>. The
+URL Title of the entry will be automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">permalink</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/ice_cream/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forum">
+<h3>Forum<a class="headerlink" href="#forum" title="Permalink to this headline">¶</a></h3>
+<p>Here you choose in which forum the new thread should be added.</p>
+</div>
+<div class="section" id="forum-topic-id">
+<h3>Forum Topic ID<a class="headerlink" href="#forum-topic-id" title="Permalink to this headline">¶</a></h3>
+<p>Instead of the previous settings, you may instead specify the ID for an
+existing forum topic. This is useful if the forum topic already exists,
+or if you want it to have a Poll or other special features.</p>
+<p>This is an &#8220;either/or&#8221; type situation. You may either have a forum
+thread created for you by specifying the title, text, and forum <strong>or</strong>
+you may associate the entry with an existing ID.</p>
+</div>
+</div>
+<div class="section" id="revisions-tab">
+<h2>Revisions Tab<a class="headerlink" href="#revisions-tab" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tab will only appear if you have Entry Versioning enabled
+in the particular channel&#8217;s preferences
+at <span class="menuselection">Admin ‣ Channel Administration ‣ Channels</span>.</p>
+</div>
+<p>When Entry Versioning is enabled, every time you save changes to your
+entries they will be saved so you can go back in time and retrieve older
+versions of your entries. The Revisions Tab will show a list of all
+revisions for the entry being edited.</p>
+<p>When a previous revision is selected it will be loaded into the Publish
+page form so you can view or further edit it. If you save your changes,
+a new revision will be created rather than updating the previous
+revision. In other words, every time you click the save button a new
+revision is stored.</p>
+</div>
+<div class="section" id="pages-tab">
+<span id="publish-pages-tab"></span><h2>Pages Tab<a class="headerlink" href="#pages-tab" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tab will only appear if you have the <a class="reference internal" href="../../add-ons/pages/index.html"><span class="doc">Pages Module</span></a> installed.</p>
+</div>
+<div class="section" id="pages-uri">
+<h3>Pages URI<a class="headerlink" href="#pages-uri" title="Permalink to this headline">¶</a></h3>
+<p>Here you can choose the URI that will be used to display this &#8220;page&#8221;
+entry. Provide only the URI segments and not a full URL. Since this will
+be used in the URL, only URL safe characters are allowed, i.e. low ASCII
+alpha-numeric characters, underscore / dash separators, and periods.</p>
+<p><strong>CORRECT:</strong></p>
+<ul class="simple">
+<li>/company/roster/board/ceo/</li>
+<li>/my_stuff/list.html</li>
+</ul>
+<p><strong>INCORRECT:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="http://example.com/index.php/company/roster/board/ceo/">http://example.com/index.php/company/roster/board/ceo/</a></li>
+<li>/my_stuff/über_list.html</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Entries cannot share the same Page URI. Each &#8220;page&#8221; entry must
+be given a unique URI so the system knows which entry to display when
+the Page URI is requested.</p>
+</div>
+</div>
+<div class="section" id="template">
+<h3>Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h3>
+<p>Here you can choose which template to use to display this &#8220;page&#8221; entry
+when the above URI is requested.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The Control Panel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="edit.html">Entry Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">File Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../members/index.html">Member Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../channel/index.html">Channel Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design/index.html">Template Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../msm/index.html">Site Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addons/index.html">Add-On Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utilities/index.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logs/index.html">System Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../settings/index.html">System Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../footer.html">CP Footer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

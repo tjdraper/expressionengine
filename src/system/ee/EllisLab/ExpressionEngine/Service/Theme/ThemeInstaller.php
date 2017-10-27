@@ -1,30 +1,19 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Service\Theme;
 
 /**
- * ExpressionEngine - by EllisLab
+ * ThemeInstaller
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://ellislab.com/expressionengine/user-guide/license.html
- * @link		http://ellislab.com
- * @since		Version 3.2.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine ThemeInstaller Class
+ * @internal This Class is not ready for third-party usage and will mostly likely change quickly
  *
- * @package		ExpressionEngine
- * @category	Service
- * @author		EllisLab Dev Team
- * @link		http://ellislab.com
- * @internal    This Class is not ready for third-party usage and will mostly
- * 				likely change quickly
  */
 class ThemeInstaller {
 
@@ -50,7 +39,7 @@ class ThemeInstaller {
 
 	/**
 	 * @var array Multidimensional associative array containing model data for
-	 * 	- status_group
+	 * 	- statuses
 	 * 	- cat_group
 	 * 	- upload_destination
 	 * 	- field_group
@@ -128,7 +117,7 @@ class ThemeInstaller {
 		$channel_set = $this->loadChannelSet($theme_name);
 
 		$this->createTemplates($theme_name, $channel_set->template_preferences);
-		$this->createStatusGroups($channel_set->status_groups);
+		$this->createStatuses($channel_set->statuses);
 		$this->createCategoryGroups($channel_set->category_groups);
 		$this->createUploadDestinations($theme_name, $channel_set->upload_destinations);
 		$this->createFieldGroups($theme_name);
@@ -290,34 +279,27 @@ class ThemeInstaller {
 	}
 
 	/**
-	 * Create the status groups
-	 * @param array $status_groups Array of objects representing the status
-	 * 	groups supplied by loadChannelSet
+	 * Create the statuses
+	 * @param array $statuses Array of objects representing the statuses
+	 * 	supplied by loadChannelSet
 	 * @return void
 	 */
-	private function createStatusGroups($status_groups)
+	private function createStatuses($statuses)
 	{
-		foreach ($status_groups as $status_group_data)
+		foreach ($statuses as $status_data)
 		{
-			$status_group = ee('Model')->make('StatusGroup');
-			$status_group->site_id = 1;
-			$status_group->group_name = $status_group_data->name;
-			$status_group->save();
+			$status = ee('Model')->make('Status');
+			$status->status = $status_data->status;
 
-			$this->model_data['status_group'][$status_group->group_name] = $status_group;
-
-			foreach ($status_group_data->statuses as $status_data)
+			if ( ! empty($status_data->highlight))
 			{
-				$status = ee('Model')->make('Status');
-				$status->site_id = 1;
-				$status->group_id = $status_group->group_id;
-				$status->status = $status_data->status;
+				$status->highlight = $status_data->highlight;
+			}
 
-				if ( ! empty($status_data->highlight))
-				{
-					$status->highlight = $status_data->highlight;
-				}
+			$result = $status->validate();
 
+			if ($result->isValid())
+			{
 				$status->save();
 			}
 		}
@@ -474,14 +456,6 @@ class ThemeInstaller {
 						{
 							foreach ($column as $col_label => $col_value)
 							{
-								// Grid is expecting a POSTed checkbox, so if it's in POST at all
-								// this value will be set to 'y'
-								// @todo Fieldtypes should receive data, not reach into POST
-								if ($col_label == 'required' && $col_value == 'n')
-								{
-									continue;
-								}
-
 								$_POST['grid']['cols']["new_{$i}"]['col_'.$col_label] = $col_value;
 							}
 
@@ -537,13 +511,36 @@ class ThemeInstaller {
 			$channel->channel_lang = 'en';
 			unset($channel_data->channel_title);
 
-			foreach (array('field_group', 'status_group', 'cat_group') as $group_type)
+			foreach (array('cat_group') as $group_type)
 			{
 				if (isset($channel_data->$group_type))
 				{
 					$channel->$group_type = $this->model_data[$group_type][$channel_data->$group_type]->group_id;
 					unset($channel_data->$group_type);
 				}
+			}
+
+			if (isset($channel_data->field_group))
+			{
+				$group_id = $this->model_data['field_group'][$channel_data->field_group]->group_id;
+				$field_group = ee('Model')->get('ChannelFieldGroup', $group_id)->all();
+
+				if ($field_group)
+				{
+					$channel->FieldGroups = $field_group;
+				}
+
+				unset($channel_data->field_group);
+			}
+
+			if (isset($channel_data->statuses))
+			{
+				$statuses = array_merge(['open', 'closed'], $channel_data->statuses);
+				$channel->Statuses = ee('Model')->get('Status')
+					->filter('status', 'IN', $statuses)
+					->all();
+
+				unset($channel_data->statuses);
 			}
 
 			foreach ($channel_data as $pref_key => $pref_value)

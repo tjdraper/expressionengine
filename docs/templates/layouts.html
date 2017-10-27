@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>DRY: Template Layouts &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Template Language Overview" href="index.html" />
+	    <link rel="next" title="Pagination" href="pagination.html" />
+	    <link rel="prev" title="Hit Counters" href="hit_counter.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Template Language Overview</a></li>
+								<li class="last">DRY: Template Layouts</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="dry-template-layouts">
+<h1>DRY: Template Layouts<a class="headerlink" href="#dry-template-layouts" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#basic-usage" id="id3">Basic Usage</a></li>
+<li><a class="reference internal" href="#simple-example" id="id4">Simple Example</a></li>
+<li><a class="reference internal" href="#layout-variables" id="id5">Layout Variables</a></li>
+<li><a class="reference internal" href="#expanded-example" id="id6">Expanded Example</a></li>
+<li><a class="reference internal" href="#nesting-and-embeds" id="id7">Nesting and Embeds</a></li>
+<li><a class="reference internal" href="#complex-example" id="id8">Complex Example</a></li>
+</ul>
+</div>
+<div class="section" id="basic-usage">
+<h2><a class="toc-backref" href="#id3">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>In addition to <a class="reference internal" href="embedding.html"><span class="doc">embedding</span></a> templates within each other, you can also create shared layouts for your templates. A layout can be thought of as a wrapping template or a reverse embed. To use a template you use the <code class="docutils literal"><span class="pre">{layout=&quot;&quot;}</span></code> tag at the top of your template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;template_group/template&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Where &#8220;template_group&#8221; is the name of the group and &#8220;template&#8221; is the name of the template. You <strong>must</strong> include both the template group and the template name in the layout tag. For example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;site/wrapper&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This will use the &#8220;wrapper&#8221; template in the &#8220;site&#8221; template group as a a layout for the current template. In the layout itself you must now specify a location where the template contents will be shown. This is done using the &#8220;layout:contents&#8221; tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The layout tag <strong>must</strong> come before any module or plugin tags.</p>
+</div>
+</div>
+<div class="section" id="simple-example">
+<h2><a class="toc-backref" href="#id4">Simple Example</a><a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<p>The most common usage for layouts is to provide the skeleton structure of your site. With embeds, this can be done with using a header and footer embed on each template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s2">&quot;site/_header&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">summary</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s2">&quot;site/_footer&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>With a &#8220;site/_header&#8221; template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>News Site<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>And a &#8220;site/_footer&#8221; template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>As you add more code to your header and footer templates this approach can become a little messy. With layouts, we can define our header and footer in a single template called &#8220;site/_html-layout&#8221; in this example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>News Site<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You can now write the main template using a single layout tag instead of two embeds:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;site/_html-layout&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">summary</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice that the layout is a <a class="reference internal" href="hidden_templates.html"><span class="doc">hidden template</span></a>. This lets you prevent direct access to the layout template, which is most likely not useful to your users on its own.</p>
+</div>
+<div class="section" id="layout-variables">
+<span id="id1"></span><h2><a class="toc-backref" href="#id5">Layout Variables</a><a class="headerlink" href="#layout-variables" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><a class="reference internal" href="#dynamic-variables-lists" id="id9">Dynamic Variables &amp; Lists</a><ul>
+<li><a class="reference internal" href="#layout-set" id="id10">{layout:set}</a></li>
+<li><a class="reference internal" href="#layout-set-append" id="id11">{layout:set:append}</a></li>
+<li><a class="reference internal" href="#layout-set-prepend" id="id12">{layout:set:prepend}</a></li>
+<li><a class="reference internal" href="#using-layout-lists-together" id="id13">Using Layout Lists Together</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#static-variables" id="id14">Static Variables</a></li>
+</ul>
+</div>
+<div class="section" id="dynamic-variables-lists">
+<h3><a class="toc-backref" href="#id9">Dynamic Variables &amp; Lists</a><a class="headerlink" href="#dynamic-variables-lists" title="Permalink to this headline">¶</a></h3>
+<p>You can set variables in your templates that can later be used in your layouts. For instance you can set the contents of the page title tag, or breadcrumb navigation, sidebar content, etc. The content can be set in one of three ways, depending on how you need to use it in your layout:</p>
+<div class="section" id="layout-set">
+<h4><a class="toc-backref" href="#id10">{layout:set}</a><a class="headerlink" href="#layout-set" title="Permalink to this headline">¶</a></h4>
+<p><strong>Setting</strong> a variable works similarly to setting a string variable in a programming language, like JavaScript. The contents are set to the variable name you provide. In your template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;title&#39;</span><span class="p">}</span>My Page Title<span class="p">{</span><span class="nf">/layout:set</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And then in the layout, wherever you need to use this variable, reference it by name, e.g. <code class="docutils literal"><span class="pre">{layout:title}</span></code>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;{</span><span class="nf">layout:title</span><span class="p">}&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="layout-set-append">
+<h4><a class="toc-backref" href="#id11">{layout:set:append}</a><a class="headerlink" href="#layout-set-append" title="Permalink to this headline">¶</a></h4>
+<p><strong>Appending</strong> a variable creates lists, and is similar to setting an array in a programming language, like JavaScript. Use this tag in a loop, when you want to capture the contents as individual items:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s1">&#39;news&#39;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;titles&#39;</span><span class="p">}{</span><span class="nf">title</span><span class="p">}{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And then in the layout, wherever you want to display the variable, use a tag pair, and loop through the values with the <code class="docutils literal"><span class="pre">{value}</span></code> variable:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:titles</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">value</span><span class="p">}&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/layout:titles</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Like most pair variables, you have access to <code class="docutils literal"><span class="pre">{count}</span></code>, <code class="docutils literal"><span class="pre">{total_results}</span></code> as well:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:titles</span><span class="p">}</span>
+  <span class="p">{</span><span class="k">if</span> <span class="nv">count</span> <span class="o">==</span> <span class="m">1</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">ol</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">value</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">count</span> <span class="o">==</span> <span class="nv">total_results</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">ol</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/layout:titles</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="layout-set-prepend">
+<h4><a class="toc-backref" href="#id12">{layout:set:prepend}</a><a class="headerlink" href="#layout-set-prepend" title="Permalink to this headline">¶</a></h4>
+<p><strong>Prepending</strong> a variable works identical to <code class="docutils literal"><span class="pre">{layout:set:append}</span></code> above, except the new item gets pushed to the <strong>front</strong> of the list instead of added to the back.</p>
+</div>
+<div class="section" id="using-layout-lists-together">
+<h4><a class="toc-backref" href="#id13">Using Layout Lists Together</a><a class="headerlink" href="#using-layout-lists-together" title="Permalink to this headline">¶</a></h4>
+<p>Sometimes it is helpful to be able to reference a specific item in a list, such as when you have set multiple layout variables with corresponding content. As a simple example, pairing URLs with titles:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s1">&#39;news&#39;</span> <span class="na">limit</span><span class="p">=</span><span class="s1">&#39;5&#39;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;titles&#39;</span><span class="p">}{</span><span class="nf">title</span><span class="p">}{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;urls&#39;</span><span class="p">}{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;news/story&#39;</span><span class="p">}{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Then you can use them in the layout like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:urls</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">layout:titles</span> <span class="na">index</span><span class="p">=</span><span class="s1">&#39;{index}&#39;</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/layout:urls</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice how you only have to loop through one of the lists, and to output the correct counterpart from another list, we simply reference them by <strong>index</strong>. Every looping list will output its current index, and every list variable can reference a single item from its own list with the <code class="docutils literal"><span class="pre">index=</span></code> parameter:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:list_variable</span> <span class="na">index</span><span class="p">=</span><span class="s1">&#39;3&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="example-breadcrumbs">
+<h5>Example: Breadcrumbs<a class="headerlink" href="#example-breadcrumbs" title="Permalink to this headline">¶</a></h5>
+<p>In this more verbose example, we use this basic idea to set a list of URLs and corresponding titles for use in HTML and JSON-LD breadcrumbs. In your template you might use:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_urls&#39;</span><span class="p">}{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;overlanding&#39;</span><span class="p">}{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_titles&#39;</span><span class="p">}</span>Overlanding<span class="p">{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_jsonld_positions&#39;</span><span class="p">}</span>2<span class="p">{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_urls&#39;</span><span class="p">}{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;overlanding/kitchens&#39;</span><span class="p">}{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_titles&#39;</span><span class="p">}</span>Kitchens<span class="p">{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">layout:set:append</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;breadcrumb_jsonld_positions&#39;</span><span class="p">}</span>3<span class="p">{</span><span class="nf">/layout:set:append</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We now have 3 items in each list, and the URL, titles, and JSON-LD ListItem position correspond to each other in each list. In our parent layout we can now use these lists to create both sets of breadcrumbs:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;crumbs&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">homepage</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">layout:breadcrumb_urls</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">layout:breadcrumb_titles</span> <span class="na">index</span><span class="p">=</span><span class="s1">&#39;{index}&#39;</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/layout:breadcrumb_urls</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;application/ld+json&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;@context&quot;</span><span class="o">:</span> <span class="s2">&quot;http://schema.org&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;BreadcrumbList&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;itemListElement&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;ListItem&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;position&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;item&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;@id&quot;</span><span class="o">:</span> <span class="s2">&quot;</span><span class="p">{</span><span class="nf">homepage</span><span class="p">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Home&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">{</span><span class="nf">layout:breadcrumb_urls</span><span class="p">}</span>
+      <span class="p">,{</span>
+        <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;ListItem&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;position&quot;</span><span class="o">:</span> <span class="p">{</span><span class="nf">layout:breadcrumb_jsonld_positions</span> <span class="na">index</span><span class="p">=</span><span class="s1">&#39;{index}&#39;</span><span class="p">},</span>
+        <span class="s2">&quot;item&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;@id&quot;</span><span class="o">:</span> <span class="s2">&quot;</span><span class="p">{</span><span class="nf">value</span><span class="p">}</span><span class="s2">&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;</span><span class="p">{</span><span class="nf">layout:breadcrumb_titles</span> <span class="na">index</span><span class="p">=</span><span class="s1">&#39;{index}&#39;</span><span class="p">}</span><span class="s2">&quot;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">{</span><span class="nf">/layout:breadcrumb_urls</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Resulting in:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;crumbs&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com/overlanding&quot;</span><span class="p">&gt;</span>Overlanding<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com/overlanding/kitchens&quot;</span><span class="p">&gt;</span>Kitchens<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;application/ld+json&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;@context&quot;</span><span class="o">:</span> <span class="s2">&quot;http://schema.org&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;BreadcrumbList&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;itemListElement&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;ListItem&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;position&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;item&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;@id&quot;</span><span class="o">:</span> <span class="s2">&quot;https://example.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Home&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">,{</span>
+      <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;ListItem&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;position&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;item&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;@id&quot;</span><span class="o">:</span> <span class="s2">&quot;https://example.com/overlanding&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Overlanding&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">,{</span>
+      <span class="s2">&quot;@type&quot;</span><span class="o">:</span> <span class="s2">&quot;ListItem&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;position&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="s2">&quot;item&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;@id&quot;</span><span class="o">:</span> <span class="s2">&quot;https://example.com/overlanding/kitchens&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Kitchens&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="static-variables">
+<h3><a class="toc-backref" href="#id14">Static Variables</a><a class="headerlink" href="#static-variables" title="Permalink to this headline">¶</a></h3>
+<p>For static content, short words, etc. that are defined directly in the template, and not from a variable, there are two shortcuts available. In the layout tag itself you can use parameters to pass additional data to your layout template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;site/_html-layout&quot;</span> <span class="na">login_required</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In your layout this will be available as a <code class="docutils literal"><span class="pre">{layout:login_required}</span></code> variable:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">layout:login_required</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">logged_in_member_id</span> <span class="o">==</span> <span class="m">0</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s1">&#39;site/_login-modal&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you can use the <code class="docutils literal"><span class="pre">{layout:set}</span></code> static-variable shortcut:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s1">&#39;login_required&#39;</span> <span class="na">value</span><span class="p">=</span><span class="s1">&#39;yes&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">{layout:set}</span></code> tags are not output on the template itself, since they are intended to be output on the parent layout. If you need the contents to also display inside the <code class="docutils literal"><span class="pre">{layout:contents}</span></code>, you must output it separately.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using <code class="docutils literal"><span class="pre">{layout:set}</span></code> in a looping tag pair will set the layout variable with the last item in the loop. Layout variables can be intentionally overwritten this way, but is something to be mindful of.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The name <code class="docutils literal"><span class="pre">contents</span></code> is reserved for the template data.</p>
+</div>
+</div>
+</div>
+<div class="section" id="expanded-example">
+<h2><a class="toc-backref" href="#id6">Expanded Example</a><a class="headerlink" href="#expanded-example" title="Permalink to this headline">¶</a></h2>
+<p>The previous example can be made more dynamic by using layout variables. Your layout can now respond to the template that it is wrapping. For example, you could use variables to dynamically update the browser window&#8217;s title:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Site Name<span class="p">{</span><span class="k">if</span> <span class="nv">layout:title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> | <span class="p">{</span><span class="nf">layout:title</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>By using a <a class="reference internal" href="conditionals.html"><span class="doc">conditional</span></a> we have made the title parameter optional. If the parameter is not given, or is blank, the title will simply be &#8220;Site Name&#8221;. Any template using this layout can choose to add to the output of the title tag using the parameter. You can even take it a step further. After setting a default section title in the parameter you can override it dynamically based on what your template is currently showing:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;site/_html-layout&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;News&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">total_results</span> <span class="o">==</span> <span class="m">1</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">body</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;title&quot;</span><span class="p">}</span>News | <span class="p">{</span><span class="nf">title</span><span class="p">}{</span><span class="nf">/layout:set</span><span class="p">}</span>
+  <span class="p">{</span><span class="k">if:else</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">summary</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Your title for this template will now show &#8220;Site Name | News&#8221; unless a single news entry is being displayed, in which case it will show a more user friendly title of &#8220;Site Name | News | Article Title&#8221;. Unlike header and footer embeds, this can all be done using a single <a class="reference internal" href="../channel/channel_entries.html"><span class="doc">Channel Entries</span></a> loop which will improve the overall <a class="reference internal" href="../optimization/index.html"><span class="doc">performance</span></a> of this template.</p>
+</div>
+<div class="section" id="nesting-and-embeds">
+<h2><a class="toc-backref" href="#id7">Nesting and Embeds</a><a class="headerlink" href="#nesting-and-embeds" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nested-layouts">
+<h3>Nested Layouts<a class="headerlink" href="#nested-layouts" title="Permalink to this headline">¶</a></h3>
+<p>Each template on your site can only specify a single layout. However, each layout can also use a layout, thus progressively nesting your template. For more complex sites this allows you to have a single HTML wrapper and still take advantage of layouts to build out the different sections of your site.</p>
+</div>
+<div class="section" id="layouts-and-embeds">
+<h3>Layouts and Embeds<a class="headerlink" href="#layouts-and-embeds" title="Permalink to this headline">¶</a></h3>
+<p>Layouts and embeds can be used together to create complex template hierarchies. When building nested template structures you should keep your layouts general and avoid nesting embeds or layouts too deeply. A good implementation will be easy to read and easy to follow. This will make your site more maintainable and it will help you spot performance bottlenecks more quickly.</p>
+<p>It is important to understand how layouts and embeds can affect each other. Layouts are <a class="reference internal" href="template_engine.html"><span class="doc">processed before embeds</span></a>, so that setting a layout variable inside an embed cannot affect the layout of the embedding template. If an embed is using a layout, then the embed will be wrapped by that layout before being placed in the embedding template. Setting a layout variable inside the embed will be usable by the embed&#8217;s layout and that layout will have full access to the variables passed to the embed.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="22%" />
+<col width="27%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">Read Embed Variables</th>
+<th class="head">Set Embed Layout Variables</th>
+<th class="head">Set Parent Layout Variables</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Embedded Template</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>Parent Template</td>
+<td>&#8211;</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>Embed Layout</td>
+<td>Yes</td>
+<td>&#8211;</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>Parent&#8217;s Layout</td>
+<td>No</td>
+<td>No</td>
+<td>&#8211;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="complex-example">
+<h2><a class="toc-backref" href="#id8">Complex Example</a><a class="headerlink" href="#complex-example" title="Permalink to this headline">¶</a></h2>
+<p>Putting all of these together lets you create flexible page layouts with multiple dynamic sections. This example will add a sidebar and footer to the news example above.</p>
+<p>We will keep the existing &#8220;site/_html-layout&#8221; from before, with a small addition to allow for additional JavaScript and CSS to be set from the template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Site Name<span class="p">{</span><span class="k">if</span> <span class="nv">layout:title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> | <span class="p">{</span><span class="nf">layout:title</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/assets/global.css&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">{</span><span class="nf">layout:css</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">layout:js</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>For the news section we will now have a separate layout that defines the structure of a given news page. Let&#8217;s call it &#8220;news/_layout&#8221;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;site/_html-layout&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;title&quot;</span><span class="p">}</span>News<span class="p">{</span><span class="k">if</span> <span class="nv">layout:title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> | <span class="p">{</span><span class="nf">layout:title</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}{</span><span class="nf">/layout:set</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;css&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/assets/news.css&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="p">/&gt;</span>
+<span class="p">{</span><span class="nf">/layout:set</span><span class="p">}</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;wrapper&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;main&quot;</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">aside</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">layout:sidebar</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Our news homepage &#8220;news/index&#8221; will use the news layout to show a list of recent entries and also provide a search box in the sidebar. We will use an embed for the search and come back to it later:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;news/_layout&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;Recent&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;30&quot;</span> <span class="na">dynamic</span><span class="p">=</span><span class="s2">&quot;no&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;news/article&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">summary</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;sidebar&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s2">&quot;news/_embed-search&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/layout:set</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We will use the &#8220;news/article&#8221; template to display the full article and change the sidebar to show an article list in addition to the search:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;news/_layout&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">require_entry</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;title&quot;</span> <span class="na">value</span><span class="p">=</span><span class="s2">&quot;{title}&quot;</span><span class="p">}</span>
+
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">body</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">layout:set</span> <span class="na">name</span><span class="p">=</span><span class="s2">&quot;sidebar&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s2">&quot;news/_embed-search&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s2">&quot;news/_embed-recent-articles&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/layout:set</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>For each element in the sidebar we will have a small piece of wrapping code in a layout, &#8220;news/_sidebar-layout&#8221;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidebar-item&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;{</span><span class="nf">layout:header</span><span class="p">}&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">layout:contents</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Now we can create &#8220;news/_embed-search&#8221; using the <a class="reference internal" href="../add-ons/search/simple.html"><span class="doc">Simple Search Form</span></a> tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;news/_sidebar-layout&quot;</span> <span class="na">header</span><span class="p">=</span><span class="s2">&quot;Search&quot;</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">exp:search:simple_form</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;search&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;keywords&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;100&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:search:simple_form</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And &#8220;news/_embed-recent-articles&#8221;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;news/_sidebar-layout&quot;</span> <span class="na">header</span><span class="p">=</span><span class="s2">&quot;Recent Articles&quot;</span><span class="p">}</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">dynamic</span><span class="p">=</span><span class="s2">&quot;no&quot;</span> <span class="na">disable</span><span class="p">=</span><span class="s2">&quot;custom_fields&quot;</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Template Language Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="comments.html">Commenting Template Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conditionals.html">Conditional Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="date_variable_formatting.html">Date Variable Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding Templates within Other Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hidden_templates.html">Hidden Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hit_counter.html">Hit Counters</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DRY: Template Layouts</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php.html">PHP in Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Using Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template_engine.html">The Template Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="templates_as_files.html">Saving Templates as Text Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_modifiers.html">Variable Modifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals/index.html">Global Template Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,30 +1,17 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-use Michelf\MarkdownExtra;
-use EllisLab\ExpressionEngine\Core\Autoloader;
-
+<?php
 /**
- * ExpressionEngine - by EllisLab
+ * ExpressionEngine (https://expressionengine.com)
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
- * @filesource
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
  */
 
-// ------------------------------------------------------------------------
+use Michelf\MarkdownExtra;
+use  EllisLab\ExpressionEngine\Core\Autoloader;
 
 /**
- * ExpressionEngine Core Typography Class
- *
- * @package		ExpressionEngine
- * @subpackage	Core
- * @category	Core
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Core Typography
  */
 class EE_Typography {
 
@@ -98,8 +85,6 @@ class EE_Typography {
 		$this->initialize();
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * __set magic method
 	 *
@@ -116,8 +101,6 @@ class EE_Typography {
 			$this->$var = $val;
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Initialize
@@ -247,9 +230,9 @@ class EE_Typography {
 		/**  Fetch word censoring prefs
 		/** -------------------------------------*/
 
-		if (ee()->config->item('enable_censoring') == 'y')
+		if (bool_config_item('enable_censoring'))
 		{
-			$this->_fetch_word_censor_prefs();
+			$this->word_censor = TRUE;
 		}
 
 		/** -------------------------------------
@@ -259,8 +242,6 @@ class EE_Typography {
 		ee()->load->model('addons_model');
 		$this->text_fmt_plugins = ee()->addons_model->get_plugin_formatting();
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Auto Typography
@@ -458,8 +439,6 @@ class EE_Typography {
 
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Format Characters
 	 *
@@ -524,8 +503,6 @@ class EE_Typography {
 		return preg_replace(array_keys($table), $table, $str);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Format Newlines
 	 *
@@ -569,8 +546,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// ------------------------------------------------------------------------
-
 	/**
 	 * Protect Characters
 	 *
@@ -587,8 +562,6 @@ class EE_Typography {
 	{
 		return str_replace(array("'",'"','--','  '), array('{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'), $match[0]);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Convert newlines to HTML line breaks except within PRE tags
@@ -621,8 +594,6 @@ class EE_Typography {
 		return $newstr;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Parse file paths
 	 *
@@ -638,8 +609,6 @@ class EE_Typography {
 		ee()->load->library('file_field');
 		return ee()->file_field->parse_string($str, TRUE);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Typographic parser
@@ -773,11 +742,7 @@ class EE_Typography {
 		$str = $this->emoticon_replace($str);
 
 		//  Parse censored words
-		if ($this->word_censor === TRUE && count($this->censored_words > 0))
-		{
-			ee()->load->helper('text');
-			$str = word_censor($str, $this->censored_words, $this->censored_replace);
-		}
+		$str = $this->filter_censored_words($str);
 
 		// Decode {encode=...} only in the CP since the template parser handles
 		// this for page requets
@@ -813,8 +778,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Set up preferences for parse_type()
@@ -870,8 +833,6 @@ class EE_Typography {
 		$this->auto_links      = ($this->separate_parser) ? 'n' : $this->auto_links;
 	}
 
-	// -------------------------------------------------------------------------
-
 	/**
 	 * Parse a generic plugin's contents
 	 * @param  String $str String to parse
@@ -910,8 +871,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Protected Quotes in EE Tags
@@ -979,8 +938,6 @@ class EE_Typography {
 
 		return str_replace(array($single_quote_marker, $double_quote_marker), array('\'', '"'), $str);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Format HTML
@@ -1110,8 +1067,6 @@ class EE_Typography {
 		return $this->encode_tags($str);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Build Tag
 	 *
@@ -1148,8 +1103,6 @@ class EE_Typography {
 		return $ob.$name.$tag_params.$cb.$tagdata.$ob.'/'.$name.$cb;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Get Brackets By Style
 	 *
@@ -1174,8 +1127,6 @@ class EE_Typography {
 		return array($ob, $cb);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Match Full Tags
 	 *
@@ -1192,8 +1143,6 @@ class EE_Typography {
 		return $matches;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Match Tag Attributes
 	 *
@@ -1205,8 +1154,6 @@ class EE_Typography {
 		preg_match_all("/(\S+?)\s*=\s*(\"|\')([^\\2]*?)\\2/is", $open_tag, $attr_matches, PREG_SET_ORDER);
 		return $attr_matches;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Clean bbcode from Markdown style code blocks
@@ -1298,8 +1245,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Unencode Markdown Links
 	 *
@@ -1381,8 +1326,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Unencode Markdown Reference Links
@@ -1476,8 +1419,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Formats an entry title for front-end presentation; things like converting
 	 * EE tag brackets, filtering for safe HTML, and converting characters to
@@ -1522,8 +1463,6 @@ class EE_Typography {
 		return $title;
 	}
 
-	// ------------------------------------------------------------------------
-
 	/**
 	 * Markdown Post Process
 	 *
@@ -1542,8 +1481,6 @@ class EE_Typography {
 			$str
 		);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Parse content to Markdown
@@ -1609,8 +1546,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Auto link URLs and email addresses
 	 *
@@ -1674,8 +1609,6 @@ class EE_Typography {
 		return substr($str, 0, -1);  // Removes space added above
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Callback function used above
 	 */
@@ -1711,8 +1644,6 @@ class EE_Typography {
 
 	   return $matches['1'].'[url='.$url.']'.$url.'[/url]'.$end.$matches['7'];
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Decode BBCode
@@ -1982,8 +1913,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clean BBCode Attributes from [quote]
 	 *
@@ -1996,8 +1925,6 @@ class EE_Typography {
 		$date = filter_var($matches[2], FILTER_SANITIZE_NUMBER_INT);
 		return "<blockquote author=\"${author}\" date=\"${date}\">";
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Clean BBCode Attributes from [size]
@@ -2028,8 +1955,6 @@ class EE_Typography {
 		return '<span style="font-size:'.$size.';">'.$matches['2'].'</span>';
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clean BBCode Attributes from [color]
 	 *
@@ -2045,8 +1970,6 @@ class EE_Typography {
 			'</span>';
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clean BBCode Attributes from [style=some_class]
 	 *
@@ -2061,8 +1984,6 @@ class EE_Typography {
 			$matches[2].
 			'</span>';
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Replace [div class="codeblock"] with <div class="codeblock">
@@ -2081,8 +2002,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Make images safe, limited what attributes are carried through
@@ -2123,8 +2042,6 @@ class EE_Typography {
 		return "<img src=\"{$url}\" {$alt}{$width}{$height} />";
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Decode and spam protect email addresses
 	 */
@@ -2145,8 +2062,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Format Email via callback
@@ -2171,8 +2086,6 @@ class EE_Typography {
 		return "<a href=\"mailto:".$matches['1']."\">".$title."</a>";
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Font sizing matrix via callback
 	 */
@@ -2184,8 +2097,6 @@ class EE_Typography {
 		return $this->cleanBBCodeAttributesSize($matches);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Encode tags
 	 */
@@ -2193,8 +2104,6 @@ class EE_Typography {
 	{
 		return str_replace(array("<", ">"), array("&lt;", "&gt;"), $str);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Strip IMG tags
@@ -2209,8 +2118,6 @@ class EE_Typography {
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Emoticon replacement
@@ -2264,8 +2171,6 @@ class EE_Typography {
 		return ltrim($str);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Word censor
 	 */
@@ -2276,11 +2181,8 @@ class EE_Typography {
 			return $str;
 		}
 
-		ee()->load->helper('text');
-		return word_censor($str, $this->censored_words, $this->censored_replace);
+		return (string) ee('Format')->make('Text', $str)->censor();
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Colorize code strings
@@ -2350,8 +2252,6 @@ class EE_Typography {
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Convert ampersands to entities
 	 */
@@ -2364,8 +2264,6 @@ class EE_Typography {
 
 		return str_replace(array("&","AMP14TX903DVGHY4QW","AMP14TX903DVGHY4QT"),array("&amp;", "&#","&"), $str);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Encode Email Address
@@ -2470,8 +2368,6 @@ while (--j >= 0)
 		return str_replace(array("\n", "\t"), '', $buffer);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Fetch Emotions Preferences
 	 */
@@ -2488,44 +2384,6 @@ while (--j >= 0)
 			}
 		}
 	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Fetch Word Censor Preferences
-	 */
-	private function _fetch_word_censor_prefs()
-	{
-		$this->word_censor = TRUE;
-
-		if ($this->word_censor == TRUE && ee()->config->item('censored_words') != '')
-		{
-			if (ee()->config->item('censor_replacement') !== FALSE)
-			{
-				$this->censored_replace = ee()->config->item('censor_replacement');
-			}
-
-			$words = str_replace('OR', '|', trim(ee()->config->item('censored_words')));
-
-			if (substr($words, -1) == "|")
-			{
-				$words = substr($words, 0, -1);
-			}
-
-			$this->censored_words = explode("|", $words);
-
-			if (count($this->censored_words) == 0)
-			{
-				$this->word_censor = FALSE;
-			}
-		}
-		else
-		{
-			$this->word_censor = FALSE;
-		}
-	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Protect BBCode within code blocks
@@ -2551,8 +2409,6 @@ while (--j >= 0)
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Parse [code] blocks
@@ -2590,8 +2446,6 @@ while (--j >= 0)
 		return $str;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Clean up code blocks after everything has been rendered
 	 *
@@ -2627,8 +2481,6 @@ while (--j >= 0)
 			$str
 		);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Convert Code Markers back to rendered code.
@@ -2669,8 +2521,6 @@ while (--j >= 0)
 
 		return $str;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * If present we'll run `idn_to_ascii` on the the URL to protect against

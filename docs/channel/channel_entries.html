@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Channel Entries Tag &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Channel" href="index.html" />
+	    <link rel="next" title="Channel Information Tag" href="channel_info.html" />
+	    <link rel="prev" title="Channel Category Heading Tag" href="category_heading.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Channel</a></li>
+								<li class="last">Channel Entries Tag</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="channel-entries-tag">
+<h1>Channel Entries Tag<a class="headerlink" href="#channel-entries-tag" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id18">Introduction</a></li>
+<li><a class="reference internal" href="#parameters" id="id19">Parameters</a></li>
+<li><a class="reference internal" href="#single-variables" id="id20">Single Variables</a></li>
+<li><a class="reference internal" href="#conditional-tags" id="id21">Conditional Tags</a></li>
+<li><a class="reference internal" href="#variable-pairs" id="id22">Variable Pairs</a></li>
+<li><a class="reference internal" href="#pagination" id="id23">Pagination</a></li>
+<li><a class="reference internal" href="#entry-views-tracking" id="id24">Entry &#8220;Views&#8221; Tracking</a></li>
+<li><a class="reference internal" href="#relationships" id="id25">Relationships</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id18">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Channel Entries tag is the primary tag used to show the content you create
+and edit via your Control Panel&#8217;s <span class="menuselection">Create</span> or
+<span class="menuselection">Edit</span> section. It&#8217;s the most powerful tag in ExpressionEngine,
+and the most commonly used since its main function is to retrieve and display
+your site&#8217;s content.</p>
+<p>The Channel Entries tag can display both multi-entry and single-entry content -
+that is, several entries on a page, or one specific entry. By default, Channel
+Entries will use <a class="reference internal" href="../urls/url_structure.html#entries-and-other-things"><span class="std std-ref">information in the URL</span></a>
+to retrieve the right content. By using available parameters and variables,
+Channel Entries can display content from categories, specific days, monthly
+archives, and more.</p>
+<p>Let&#8217;s look at a basic Channel Entries tag example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">body</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In the above example, everything between the opening and closing
+<code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> tags is repeated 10 times, once for each entry returned
+from the &#8220;News&#8221; channel. <code class="docutils literal"><span class="pre">{title}</span></code> is replaced with the Title of each entry,
+and <code class="docutils literal"><span class="pre">{body}</span></code> is replaced with the content from the &#8220;Body&#8221; field
+of each entry.</p>
+</div>
+<div class="section" id="parameters">
+<span id="channel-entries-parameters"></span><h2><a class="toc-backref" href="#id19">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#author-id" id="id26">author_id=</a></li>
+<li><a class="reference internal" href="#backspace" id="id27">backspace=</a></li>
+<li><a class="reference internal" href="#cache-refresh" id="id28">cache=, refresh=</a></li>
+<li><a class="reference internal" href="#cat-limit" id="id29">cat_limit=</a></li>
+<li><a class="reference internal" href="#category" id="id30">category=</a></li>
+<li><a class="reference internal" href="#category-group" id="id31">category_group=</a></li>
+<li><a class="reference internal" href="#channel" id="id32">channel=</a></li>
+<li><a class="reference internal" href="#disable" id="id33">disable=</a></li>
+<li><a class="reference internal" href="#display-by" id="id34">display_by=</a></li>
+<li><a class="reference internal" href="#dynamic" id="id35">dynamic=</a></li>
+<li><a class="reference internal" href="#dynamic-parameters" id="id36">dynamic_parameters=</a></li>
+<li><a class="reference internal" href="#dynamic-start" id="id37">dynamic_start=</a></li>
+<li><a class="reference internal" href="#entry-id" id="id38">entry_id=</a></li>
+<li><a class="reference internal" href="#entry-id-from" id="id39">entry_id_from=</a></li>
+<li><a class="reference internal" href="#entry-id-to" id="id40">entry_id_to=</a></li>
+<li><a class="reference internal" href="#fixed-order" id="id41">fixed_order=</a></li>
+<li><a class="reference internal" href="#group-id" id="id42">group_id=</a></li>
+<li><a class="reference internal" href="#limit" id="id43">limit=</a></li>
+<li><a class="reference internal" href="#month-limit" id="id44">month_limit=</a></li>
+<li><a class="reference internal" href="#offset" id="id45">offset=</a></li>
+<li><a class="reference internal" href="#orderby" id="id46">orderby=</a></li>
+<li><a class="reference internal" href="#paginate" id="id47">paginate=</a></li>
+<li><a class="reference internal" href="#paginate-base" id="id48">paginate_base=</a></li>
+<li><a class="reference internal" href="#paginate-type" id="id49">paginate_type=</a></li>
+<li><a class="reference internal" href="#related-categories-mode" id="id50">related_categories_mode=</a></li>
+<li><a class="reference internal" href="#relaxed-categories" id="id51">relaxed_categories=</a></li>
+<li><a class="reference internal" href="#require-entry" id="id52">require_entry=</a></li>
+<li><a class="reference internal" href="#search-field-name" id="id53">search:field_name=</a></li>
+<li><a class="reference internal" href="#show-current-week" id="id54">show_current_week=</a></li>
+<li><a class="reference internal" href="#show-expired" id="id55">show_expired=</a></li>
+<li><a class="reference internal" href="#show-future-entries" id="id56">show_future_entries=</a></li>
+<li><a class="reference internal" href="#show-pages" id="id57">show_pages=</a></li>
+<li><a class="reference internal" href="#sort" id="id58">sort=</a></li>
+<li><a class="reference internal" href="#start-day" id="id59">start_day=</a></li>
+<li><a class="reference internal" href="#start-on" id="id60">start_on=</a></li>
+<li><a class="reference internal" href="#status" id="id61">status=</a></li>
+<li><a class="reference internal" href="#stop-before" id="id62">stop_before=</a></li>
+<li><a class="reference internal" href="#sticky" id="id63">sticky=</a></li>
+<li><a class="reference internal" href="#track-views" id="id64">track_views=</a></li>
+<li><a class="reference internal" href="#channel-entries-uncategorized-entries" id="id65">uncategorized_entries=</a></li>
+<li><a class="reference internal" href="#url-title" id="id66">url_title=</a></li>
+<li><a class="reference internal" href="#username" id="id67">username=</a></li>
+<li><a class="reference internal" href="#week-sort" id="id68">week_sort=</a></li>
+<li><a class="reference internal" href="#year-month-day" id="id69">year=, month=, day=</a></li>
+</ul>
+</div>
+<div class="section" id="author-id">
+<h3><a class="toc-backref" href="#id26">author_id=</a><a class="headerlink" href="#author-id" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">author_id=</span></code> parameter will limit the returned entries to the specified
+Member ID:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;1&quot;
+</pre></div>
+</div>
+<p>Use the pipe delimiter to specify multiple Member IDs:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;1|2|3&quot;
+</pre></div>
+</div>
+<p>Modify the parameter value using <code class="docutils literal"><span class="pre">not</span></code> to exclude Member IDs:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;not 1|2|3&quot;
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal"><span class="pre">CURRENT_USER</span></code> constant to limit entries to the
+currently logged-in user:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;CURRENT_USER&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">CURRENT_USER</span></code> will limit Channel Entries to return entries authored
+by the currently logged-in user. Users who are not logged-in will not see any
+output.</p>
+</div>
+<p>Use the <code class="docutils literal"><span class="pre">NOT_CURRENT_USER</span></code> constant to limit entries <strong>excluding</strong> the currently
+logged in user:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_id=&quot;NOT_CURRENT_USER&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="backspace">
+<h3><a class="toc-backref" href="#id27">backspace=</a><a class="headerlink" href="#backspace" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">backspace=</span></code> parameter will remove characters, including spaces and line
+breaks, from the last iteration of the tag pair:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>backspace=&quot;7&quot;
+</pre></div>
+</div>
+<p>For example, if you use a <code class="docutils literal"><span class="pre">&lt;br</span> <span class="pre">/&gt;</span></code> element after each entry, Channel Entries
+will output this markup:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Entry 1<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Entry 2<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Entry 3<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>However, you may not want the <code class="docutils literal"><span class="pre">&lt;br</span> <span class="pre">/&gt;</span></code> element after the last entry. Count the
+number of characters, including spaces and line breaks and use the result as the
+value for the parameter. The example <code class="docutils literal"><span class="pre">&lt;br</span> <span class="pre">/&gt;</span></code> element includes 6 characters and
+a line break, for a total of 7:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">backspace</span><span class="p">=</span><span class="s2">&quot;7&quot;</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">title</span><span class="p">}&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal"><span class="pre">backspace=</span></code>, Channel Entries will output this markup:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Entry 1<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Entry 2<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+Entry 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache-refresh">
+<h3><a class="toc-backref" href="#id28">cache=, refresh=</a><a class="headerlink" href="#cache-refresh" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>cache=&quot;yes&quot; refresh=&quot;60&quot;
+</pre></div>
+</div>
+<p>This parameter enables tag caching. Refresh is the number of minutes
+between cache refreshes.</p>
+</div>
+<div class="section" id="cat-limit">
+<h3><a class="toc-backref" href="#id29">cat_limit=</a><a class="headerlink" href="#cat-limit" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>cat_limit=&quot;30&quot;
+</pre></div>
+</div>
+<p>This parameter lets you set a different limit for the category display
+than the regular display. For example, let&#8217;s say you normally only want
+10 entries on your main channel page, but you want 100 entries shown
+when viewing a specific category. For that, you could do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">cat_limit</span><span class="p">=</span><span class="s2">&quot;100&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="category">
+<h3><a class="toc-backref" href="#id30">category=</a><a class="headerlink" href="#category" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category=&quot;2&quot;
+</pre></div>
+</div>
+<p>Categories are specified by ID number (the ID number of each
+<a class="reference internal" href="../cp/channel/cat/form-cat.html"><span class="doc">category</span></a> is displayed in the
+Control Panel). The reason we use the ID is because categories can be
+called anything (with spaces, quotes, etc.), and also renamed. It would
+be much more difficult to have to update the tag parameters every time
+you updated a category name. Further, you can have multiple categories
+with the same name either in different Category Groups or in different
+parts of the hierarchy within the same Category Group.</p>
+<p>And as with some of the other parameters, you can stack categories to
+get entries with any of those categories</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category=&quot;2|45|4|9&quot;
+</pre></div>
+</div>
+<p>Or use &#8220;not&#8221; to exclude categories</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category=&quot;not 4|5|7&quot;
+</pre></div>
+</div>
+<p>And, you can use an inclusive stack to only get entries with <em>all</em> of
+the categories</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>category=&quot;3&amp;7&amp;8&quot;
+</pre></div>
+</div>
+<p>Or you can negate the inclusive stack and get entries that do not of
+<em>all</em> of those categories</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>category=&quot;not 3&amp;5&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you use the <code class="docutils literal"><span class="pre">category=&quot;3|4&quot;</span></code> parameter (not excluding), you
+are implicitly telling ExpressionEngine to only deal with entries that have
+been assigned one or more categories. If you have entries that haven&#8217;t been
+categorized then they will be ignored and not included in the results.
+However, if you are using exclusion (<code class="docutils literal"><span class="pre">category=&quot;not</span> <span class="pre">3|4&quot;</span></code>), then you will
+be shown all entries without those categories <em>including</em> those without any
+categories assigned. To change this behavior when excluding categories use
+the <a class="reference external" href="#uncategorized-entries">uncategorized_entries</a> parameter.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using exclusion (<code class="docutils literal"><span class="pre">category=&quot;not</span> <span class="pre">3|4&quot;</span></code>) and an entry is
+in a category that is not excluded, the entry will be returned even if it
+also belongs to an excluded category.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using this parameter will automatically cause ExpressionEngine to
+<em>ignore</em> any category information specified via the URL. For instance, if
+you are on a &#8220;category page&#8221; (e.g. a <code class="docutils literal"><span class="pre">/C13/</span></code> segment in the URL) that
+will be completely ignored in favor of whatever you have specified via the
+parameter.</p>
+</div>
+</div>
+<div class="section" id="category-group">
+<h3><a class="toc-backref" href="#id31">category_group=</a><a class="headerlink" href="#category-group" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category_group=&quot;2&quot;
+</pre></div>
+</div>
+<p>Category Groups are specified by ID number (the ID number of each
+<a class="reference internal" href="../cp/channel/cat/index.html"><span class="doc">category group</span></a> is
+displayed in the Control Panel). The reason we use the ID is because
+category groups can be called anything (with spaces, quotes, etc.), and
+also renamed. It would be much more difficult to have to update the tag
+parameters every time you updated a category name.</p>
+<p>And as with some of the other parameters, you can stack category groups</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category_group=&quot;1|2|4&quot;
+</pre></div>
+</div>
+<p>Or use &#8220;not&#8221; to exclude categories</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category_group=&quot;not 2&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using this parameter will automatically cause ExpressionEngine
+to <em>ignore</em> any category information specified via the URL. For
+instance, if you are on a &#8220;category page&#8221; (e.g. a <code class="docutils literal"><span class="pre">/C13/</span></code> segment
+in the URL) that will be completely ignored in favor of whatever you
+have specified via the parameter.</p>
+</div>
+</div>
+<div class="section" id="channel">
+<h3><a class="toc-backref" href="#id32">channel=</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;news&quot;
+</pre></div>
+</div>
+<p>From which <a class="reference internal" href="../cp/channel/index.html"><span class="doc">channel</span></a> to
+show the entries (will show all channels if no channel is specified).
+Additionally, you can use the pipe character to separate multiple
+channels:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;channel1|channel2|channel3&quot;
+</pre></div>
+</div>
+<p>Or you can add the word &#8220;not&#8221; (with a space after it) to exclude
+channels:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;not channel1|channel2|channel3&quot;
+</pre></div>
+</div>
+<p>You must specify this parameter if you use the <a class="reference internal" href="../cp/settings/content-design.html"><span class="doc">category name in
+URL</span></a> feature.</p>
+</div>
+<div class="section" id="disable">
+<h3><a class="toc-backref" href="#id33">disable=</a><a class="headerlink" href="#disable" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>disable=&quot;categories&quot;
+</pre></div>
+</div>
+<p>The disable= parameter allows you to turn off aspects of the tag that
+you might not be using in order to improve performance. The channel tag
+is designed to fetch a lot of information by default: Categories,
+channel fields, member data, etc. Depending on how you use the tag, some
+of this data may not be needed. Through the use of the &#8220;disable&#8221;
+parameter you can turn off aspects of the tag in order to make it more
+lightweight.</p>
+<p>The syntax for the disable parameter is this: <code class="docutils literal"><span class="pre">disable=&quot;ITEM</span> <span class="pre">YOU</span> <span class="pre">WANT</span> <span class="pre">TO</span>
+<span class="pre">DISABLE&quot;</span></code>. The following items can be turned off:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">categories</span></code></li>
+<li><code class="docutils literal"><span class="pre">category_fields</span></code></li>
+<li><code class="docutils literal"><span class="pre">custom_fields</span></code></li>
+<li><code class="docutils literal"><span class="pre">member_data</span></code></li>
+<li><code class="docutils literal"><span class="pre">pagination</span></code></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you disable categories, category fields will automatically
+be disabled.</p>
+</div>
+<p>You may specify multiple items to disable by separating them with the
+pipe character:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>disable=&quot;categories|member_data&quot;
+</pre></div>
+</div>
+<p>The best approach is to examine the data you are showing in each
+instance of the tag. If there is a type of data you are not utilizing,
+turn it off.</p>
+<p>For example, let&#8217;s say you are using an instance of your channel tag to
+show your 10 most recent entry titles:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">orderby</span><span class="p">=</span><span class="s2">&quot;date&quot;</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;desc&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">title_permalink</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example you are only showing the title of your entries and
+nothing else; yet, the channel tag automatically fetches categories and
+other data. Using the disable= parameter you can turn off the unneeded
+features from being queried. In this case, you don&#8217;t need any of the
+features that can be disabled.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">orderby</span><span class="p">=</span><span class="s2">&quot;date&quot;</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;desc&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">disable</span><span class="p">=</span><span class="s2">&quot;categories|custom_fields|member_data|pagination&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">title_permalink</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="display-by">
+<h3><a class="toc-backref" href="#id34">display_by=</a><a class="headerlink" href="#display-by" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;month&quot;
+</pre></div>
+</div>
+<p>There are three optional &#8220;display types&#8221; that let you limit the display
+of your entries. If you <strong>do not</strong> use these parameters the default
+grouping is by &#8220;number&#8221;.</p>
+<p>These parameters interact with the &#8220;limit&#8221; parameter to tailor the
+number of entries per page. For example, if you want to show only the
+last month that contains entries you&#8217;ll do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;month&quot; limit=&quot;1&quot;
+</pre></div>
+</div>
+<p>At 12 AM on the first day of the month, based on your server time, the
+previous month will no longer be visible. If you want to show three
+months you&#8217;ll do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;month&quot; limit=&quot;3&quot;
+</pre></div>
+</div>
+<p>If you want to show only one day you&#8217;ll do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;day&quot; limit=&quot;1&quot;
+</pre></div>
+</div>
+<p>If you want to show 14 days you&#8217;ll do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;day&quot; limit=&quot;14&quot;
+</pre></div>
+</div>
+<p>These are all optional. If you do not use this parameter your entries
+will be limited by number. In other words:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>limit=&quot;20&quot;
+</pre></div>
+</div>
+<p>Will show 20 entries.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;week&quot;
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">display_by=&quot;week&quot;</span></code> parameter allows the displaying of entries by
+week. To simply show the last week that contains entries, you can use
+this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;week&quot; limit=&quot;1&quot;
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">display_by=&quot;week&quot;</span></code> parameter can be used with other parameters like
+<a class="reference internal" href="#show-current-week">show_current_week=</a>, <a class="reference internal" href="#start-day">start_day=</a> and <a class="reference internal" href="#week-sort">week_sort=</a> to give more control
+over how the weeks are displayed and used with pagination.</p>
+<p>For example, if you want to display the current week by default but also
+show entries in future weeks with pagination, you can use this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>display_by=&quot;week&quot; limit=&quot;1&quot; show_future_entries=&quot;yes&quot; show_current_week=&quot;yes&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The display_by parameter uses the last unit of time provided that
+has entries. If you <code class="docutils literal"><span class="pre">display_by=&quot;day&quot;</span></code> then it will show the last day that
+has entries. If you <code class="docutils literal"><span class="pre">display_by=&quot;month&quot;</span></code> combined with <code class="docutils literal"><span class="pre">limit=&quot;3&quot;</span></code> then
+it will show the last 3 months with entries, even if these months are not
+consecutive.</p>
+</div>
+<p>This parameter uses UTC/GMT time and is not localized to the server or
+logged in user.</p>
+</div>
+<div class="section" id="dynamic">
+<h3><a class="toc-backref" href="#id35">dynamic=</a><a class="headerlink" href="#dynamic" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>dynamic=&quot;no&quot;
+</pre></div>
+</div>
+<p>The channel display engine sets some parameters dynamically, based on
+what is in the URL. There are times, however, where you do not want the
+parameters affected by what the URL contains. To override the dynamic
+nature of the channel tag, use <code class="docutils literal"><span class="pre">dynamic=&quot;no&quot;</span></code>.</p>
+<p>This is often useful if you want to list entries in a &#8220;sidebar&#8221; on your
+site and have them always be the same ones regardless of which page on
+your site you visit (main page, archives, comments, etc.). By setting
+<code class="docutils literal"><span class="pre">dynamic=&quot;no&quot;</span></code> you will ensure that the list is not affected by anything
+passed in the URL.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may allow the tag to be sensitive to pagination data in
+the url by including the <a class="reference internal" href="#paginate">paginate=</a> parameter. If that tag
+is used in conjunction with the dynamic parameter, the tag will act
+dynamically for pagination data only.</p>
+</div>
+</div>
+<div class="section" id="dynamic-parameters">
+<h3><a class="toc-backref" href="#id36">dynamic_parameters=</a><a class="headerlink" href="#dynamic-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>dynamic_parameters=&quot;orderby|limit|sort&quot;
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="dynamic_parameters.html"><span class="doc">Dynamic Parameters</span></a> feature permits a
+{exp:channel:entries} tag&#8217;s parameters to be set &#8220;on the fly&#8221; using POST
+data submitted via a form. A practical use for this is to create some
+display options in a form on your page that your visitors can use to
+select their preferred page view.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This feature will only work if page caching is turned OFF for
+the template in which it is being used.</p>
+</div>
+<p>Every Parameter available to the channel tag can be set dynamically.</p>
+</div>
+<div class="section" id="dynamic-start">
+<span id="channel-entries-dynamic-start"></span><h3><a class="toc-backref" href="#id37">dynamic_start=</a><a class="headerlink" href="#dynamic-start" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>dynamic_start=&quot;yes&quot;
+</pre></div>
+</div>
+<p>This parameter is only used in the tag when used in an RSS/Atom feed. It
+will not do anything in any other circumstance. The default value is
+&#8220;no&#8221;, so you must specify this parameter in order to take advantage of
+the feature.</p>
+<p>When used in an RSS/Atom feed, this parameter allows ExpressionEngine to
+dynamically provide a starting date for the feed. This is used to allow
+EE to serve only <em>new</em> content when it is requested by the feed via a
+RFC3229-compliant request (<a class="reference external" href="http://tools.ietf.org/rfc/rfc3229.txt">RFC3229
+info</a>).</p>
+</div>
+<div class="section" id="entry-id">
+<h3><a class="toc-backref" href="#id38">entry_id=</a><a class="headerlink" href="#entry-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;147&quot;
+</pre></div>
+</div>
+<p>You can hard code the channel tag to show a specific channel entry. You
+may also specify multiple entries by separating them with the pipe
+character:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;13|42|147&quot; Or use &quot;not&quot; to exclude entries::
+
+entry_id=&quot;not 45|534|807&quot;
+</pre></div>
+</div>
+<p>If you set the entry_id parameter to no value, the parameter will be ignored.</p>
+</div>
+<div class="section" id="entry-id-from">
+<h3><a class="toc-backref" href="#id39">entry_id_from=</a><a class="headerlink" href="#entry-id-from" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id_from=&quot;20&quot;
+</pre></div>
+</div>
+<p>This parameter is used together with
+<a class="reference internal" href="#entry-id-to">entry_id_to=</a> to designate a range of entries to
+display. This parameter indicates the beginning of the range. With the
+example above, the tag would begin displaying entries starting with
+entry ID 20.</p>
+</div>
+<div class="section" id="entry-id-to">
+<h3><a class="toc-backref" href="#id40">entry_id_to=</a><a class="headerlink" href="#entry-id-to" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id_to=&quot;40&quot;
+</pre></div>
+</div>
+<p>This parameter is used together with
+<a class="reference internal" href="#entry-id-from">entry_id_from=</a> to designate a range of entries
+to display. This parameter indicates the end of the range. With the
+example above, the tag would stop displaying entries at entry ID 40.</p>
+</div>
+<div class="section" id="fixed-order">
+<h3><a class="toc-backref" href="#id41">fixed_order=</a><a class="headerlink" href="#fixed-order" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>fixed_order=&quot;3|7|1&quot;
+</pre></div>
+</div>
+<p>You can hard code the channel entries tag to show entries in a specific
+order based on their entry ids. Entries will be displayed in the order
+specified in the pipe delimited list. In the example above, the three
+entries with id&#8217;s 3, 7, and 1 would be displayed in that order.</p>
+<p>If you wish, you can also cause the entries to be displayed in the
+<em>reverse</em> of the order you specified. To do this, use the sort= param,
+setting it to &#8216;desc&#8217;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>fixed_order=&quot;3|7|1&quot; sort=&quot;desc&quot;
+</pre></div>
+</div>
+<p>In the above example, three entries would be displayed, in the order: 1,
+7, and then 3.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using this parameter will automatically constrain the entries
+tag to the entry id&#8217;s you specify, effectively setting the
+<a class="reference internal" href="#entry-id">entry_id=</a> parameter to the same id&#8217;s given to the
+<code class="docutils literal"><span class="pre">fixed_order=</span></code> parameter.</p>
+</div>
+</div>
+<div class="section" id="group-id">
+<h3><a class="toc-backref" href="#id42">group_id=</a><a class="headerlink" href="#group-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>group_id=&quot;4&quot;
+</pre></div>
+</div>
+<p>You can decide from which Member Groups (by specifying the group ID) you
+wish entries to be shown. If you choose &#8220;4&#8221;, then only entries created
+by members of the Member Group with the ID of 4 will be shown. You can
+choose multiple Member Groups using a pipe:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>group_id=&quot;2|3|4&quot;
+</pre></div>
+</div>
+<p>Or exclude groups using &#8220;not&#8221;</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>group_id=&quot;not 2|3|4&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="limit">
+<span id="channel-entries-limit"></span><h3><a class="toc-backref" href="#id43">limit=</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>limit=&quot;12&quot;
+</pre></div>
+</div>
+<p>This parameter limits the number of entries on any given page. The limit
+will default to 100 entries if a value is not specified. If you are
+using <a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> then this will determine
+the number of entries shown per page.</p>
+</div>
+<div class="section" id="month-limit">
+<h3><a class="toc-backref" href="#id44">month_limit=</a><a class="headerlink" href="#month-limit" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>month_limit=&quot;30&quot;
+</pre></div>
+</div>
+<p>This parameter lets you set a different limit for the month display than
+the regular display. For example, let&#8217;s say you normally only want 10
+entries on your main channel page, but you want 100 entries shown when
+viewing a specific month. For that, you could do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;10&quot;</span> <span class="na">month_limit</span><span class="p">=</span><span class="s2">&quot;100&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="offset">
+<h3><a class="toc-backref" href="#id45">offset=</a><a class="headerlink" href="#offset" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>offset=&quot;1&quot;
+</pre></div>
+</div>
+<p>This parameter offsets the display by X number of entries. For example,
+if you want to show all entries except the three latest ones, you would
+do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>offset=&quot;3&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderby">
+<span id="channel-entries-orderby"></span><h3><a class="toc-backref" href="#id46">orderby=</a><a class="headerlink" href="#orderby" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;date&quot;
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">orderby</span></code> parameter sets the display order of the entries. Setting
+options for this parameter include:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">orderby=&quot;comment_total&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;date&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;edit_date&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;entry_id&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;expiration_date&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;most_recent_comment&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;random&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;screen_name&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;status&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;title&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;url_title&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;username&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;view_count_one&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;view_count_two&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;view_count_three&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">orderby=&quot;view_count_four&quot;</span></code></li>
+</ul>
+<p>In addition you can order by a <a class="reference internal" href="../cp/channel/fields/groups/index.html"><span class="doc">channel field</span></a>. Use the &#8220;short_name&#8221; of
+the field:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;name_of_field&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ordering by a Relationship field will cause entries to appear
+in the order the relationships were made, not based on any content
+from the related entries.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When ordering by &#8220;random&#8221;, entries that have been marked as
+&#8220;sticky&#8221; will not appear first; they will appear randomly with all
+other entries.</p>
+</div>
+<p><strong>Multiple Orders and Sorts</strong></p>
+<p>The <a class="reference internal" href="#orderby">orderby=</a> and <a class="reference internal" href="#sort">sort=</a> parameters can accept multiple
+values using the pipe character. This allows you to have multiple levels
+of ordering and then specify the sort rules for those levels.</p>
+<p>For example, if you wish to order by <strong>screen_name</strong> <em>alphabetically</em>
+and then have the <strong>most recent entries</strong> <em>first</em>, you would use the
+following parameters:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;screen_name|date&quot; sort=&quot;asc|desc&quot;
+</pre></div>
+</div>
+<p><strong>Multiple Site Manager and orderby=</strong></p>
+<p>The orderby= parameter can accept a site short-name in the namespace.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;default_site:body|second_site:summary&quot;
+</pre></div>
+</div>
+<p>When ordering by multiple fields from multiple Sites, remember that
+entries from another site will have no data for that field, and the
+entries will be ordered as such. This results in ordering entries by
+Site and then Field(s):</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;default_site:body|second_site:summary&quot;
+</pre></div>
+</div>
+<p>Will result in:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Default Site - Entry One - Albert
+Default Site - Entry Two - Bobby
+Second Site    - Entry One - Alligator
+Second Site    - Entry Two - Buffalo
+</pre></div>
+</div>
+<p>If you have multiple Sites where each site has a field with the same
+exact short name, then you can specify that short name (without the site
+specified) and ExpressionEngine will treat those two fields as the same
+value and be able to order them as if they were the same field:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;body&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Default Site - Entry One - Albert
+Second Site    - Entry One - Alligator
+Default Site - Entry Two - Bobby
+Second Site    - Entry Two - Buffalo
+</pre></div>
+</div>
+<p>Thus, the output will then be ordered by the body, regardless of the
+originating site.</p>
+</div>
+<div class="section" id="paginate">
+<h3><a class="toc-backref" href="#id47">paginate=</a><a class="headerlink" href="#paginate" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate=&quot;top&quot;
+</pre></div>
+</div>
+<p>This parameter is for use with entry <a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a>
+and determines where the pagination
+code will appear for your channel entries:</p>
+<ol class="arabic simple">
+<li><strong>top</strong>: The navigation text and links will appear <em>above</em> your list
+of entries.</li>
+<li><strong>bottom</strong>: The navigation text and links will appear <em>below</em> your
+list of entries.</li>
+<li><strong>both</strong>: The navigation text and links will appear both above and
+below your list of entries.</li>
+</ol>
+<p>If no parameter is specified, the navigation block will default to the
+&#8220;bottom&#8221; behavior.</p>
+</div>
+<div class="section" id="paginate-base">
+<h3><a class="toc-backref" href="#id48">paginate_base=</a><a class="headerlink" href="#paginate-base" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate_base=&quot;site/index&quot;
+</pre></div>
+</div>
+<p>This tells ExpressionEngine to override the normal
+<a class="reference internal" href="../templates/pagination.html"><span class="doc">pagination</span></a> link locations and point instead to
+the explicitly stated template group and template.</p>
+</div>
+<div class="section" id="paginate-type">
+<h3><a class="toc-backref" href="#id49">paginate_type=</a><a class="headerlink" href="#paginate-type" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>paginate_type=&quot;field&quot;
+</pre></div>
+</div>
+<p>This tells ExpressionEngine to function in &#8220;pagination&#8221; mode for your
+channel entry fields so that you can automatically have an entry span
+multiple pages. See the <a class="reference internal" href="pagination_spanning.html"><span class="doc">Spanning a Channel Entry Across Multiple
+Pages</span></a> page.</p>
+</div>
+<div class="section" id="related-categories-mode">
+<span id="id2"></span><h3><a class="toc-backref" href="#id50">related_categories_mode=</a><a class="headerlink" href="#related-categories-mode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>related_categories_mode=&quot;no&quot; related_categories_mode=&quot;yes&quot;
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This parameter is intended for use <strong>only</strong> when you
+are using the channel tag within &#8220;single entry&#8221; pages. Single entry
+pages are ones that show only a single entry, specified by the ID number
+or URL Title in the URL.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using Template Routes, you may need to use the <code class="docutils literal"><span class="pre">url_title=</span></code> or <code class="docutils literal"><span class="pre">entry_id=</span></code> parameters in this tag to instruct it as to which segment the entry identifier is in the URL.</p>
+</div>
+<p>When enabled, this parameter alters the behavior of the
+{exp:channel:entries} tag, causing it to ignore the entry ID or URL
+title found in the URL, and <em>instead</em> show a list of entries that are in
+the same category as the entry specified in the URL. This lets you
+create a list of entries that are &#8220;related&#8221; to the primary one specified
+by the URL.</p>
+<p>The default limit when enabling related_categories_mode is 10
+entries, and can be overridden with the addition of the
+<a class="reference internal" href="#channel-entries-limit"><span class="std std-ref">limit=</span></a> parameter.</p>
+<p>When the <code class="docutils literal"><span class="pre">related_categories_mode=&quot;&quot;</span></code> parameter is set to &#8220;yes&#8221;, there
+are two additional parameters available to the Channel Entries tag:
+<code class="docutils literal"><span class="pre">custom_fields=&quot;yes&quot;</span></code> and <code class="docutils literal"><span class="pre">member_data=&quot;yes&quot;</span></code>, which will allow the
+displaying of field data and member data respectively. By default, those
+two parameters are both set to &#8220;no&#8221; to reduce load. Below is a
+simplified example with both optional parameters enabled:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">related_categories_mode</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span> <span class="na">custom_fields</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span> <span class="na">member_data</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">body</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;posted&quot;</span><span class="p">&gt;</span>Posted by <span class="p">{</span><span class="nf">author</span><span class="p">}</span> on <span class="p">{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s1">&#39;%m/%d&#39;</span><span class="p">}</span> at <span class="p">{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s1">&#39;%h:%i %A&#39;</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Relationships, Reverse Relationships, Pagination, and
+Categories are not available when Related Category Mode is enabled.</p>
+</div>
+</div>
+<div class="section" id="relaxed-categories">
+<h3><a class="toc-backref" href="#id51">relaxed_categories=</a><a class="headerlink" href="#relaxed-categories" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>relaxed_categories=&quot;yes&quot;
+</pre></div>
+</div>
+<p>This parameter allows you to use the category indicator in your URLs
+with an entries tag specifying multiple channels that do <strong>not</strong> share
+category groups.</p>
+</div>
+<div class="section" id="require-entry">
+<span id="channel-entries-require-entry"></span><h3><a class="toc-backref" href="#id52">require_entry=</a><a class="headerlink" href="#require-entry" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>require_entry=&quot;yes&quot;
+</pre></div>
+</div>
+<p>This parameter tells the channel tag that it should expect the URL to
+contain a valid entry ID or a valid URL title. If an ID is not found in
+the URL, the tag will not display any data. Normally, the channel tag
+will show something, even if the URL doesn&#8217;t point to a particular
+entry. For example, your main channel page will typically show several
+of your most recent entries. Whereas your &#8220;single entry&#8221; pages, like
+your comment page, will show a single entry based on information in the
+URL. However, if one of your single entry pages is requested, but it
+doesn&#8217;t contain a valid ID, this parameter will tell the tag that you do
+not wish the template to display anything.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will often use this parameter in conjunction with the
+<a class="reference internal" href="#if-no-results">if no_results</a> conditional.</p>
+</div>
+</div>
+<div class="section" id="search-field-name">
+<span id="search-parameter"></span><h3><a class="toc-backref" href="#id53">search:field_name=</a><a class="headerlink" href="#search-field-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;pickles&quot;
+</pre></div>
+</div>
+<p>The &#8220;search:&#8221; parameter allows you to constrain Channel Entries output
+based on content within your fields. You specify which field to search
+by using the field&#8217;s short name immediately after &#8220;search:&#8221;. You can
+search based on whether a field is an exact match to your provided term
+or whether or not a field simply contains your term.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only fields of the type &#8220;Text Input&#8221;, &#8220;Textarea&#8221;, &#8220;Rich Text Editor&#8221;,
+&#8220;File&#8221;, &#8220;Email Address&#8221;, &#8220;Date&#8221;, &#8220;URL&#8221;, &#8220;Toggle&#8221;, &#8220;Select Dropdown&#8221;,
+&#8220;Multi Select&#8221;, &#8220;Checkboxes&#8221;, &#8220;Radio Buttons&#8221; are searched with this
+parameter.</p>
+</div>
+<div class="section" id="exact-matching">
+<h4>&#8220;Exact&#8221; Matching<a class="headerlink" href="#exact-matching" title="Permalink to this headline">¶</a></h4>
+<p>Use &#8220;Exact&#8221; matching when you only want entries whose fields match your
+terms exactly. To trigger &#8220;Exact&#8221; matching, precede your search terms
+with an equal sign (=). You may provide a pipe-delimited list of terms.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;=pickles|shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries where the &#8216;body&#8217; field was either
+&#8216;pickles&#8217; or &#8216;shoes&#8217;.</p>
+<p>Or you can use &#8220;not&#8221; to exclude entries:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;=not pickles|shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries where the &#8216;body&#8217; field was
+<strong>neither</strong> &#8216;pickles&#8217; <strong>nor</strong> &#8216;shoes&#8217;. Note that the equal sign precedes
+the keyword &#8220;not&#8221;.</p>
+</div>
+<div class="section" id="contains-matching">
+<h4>&#8220;Contains&#8221; Matching<a class="headerlink" href="#contains-matching" title="Permalink to this headline">¶</a></h4>
+<p>Use &#8220;Contains&#8221; matching when you are interested only if a field contains
+your terms, anywhere in the field.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;pickles|shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries that contained the term &#8220;pickles&#8221;
+or contained the term &#8220;shoes&#8221;.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;not pickles|shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries that contained <strong>neither</strong> the
+term &#8220;pickles&#8221; <strong>nor</strong> contained the term &#8220;shoes&#8221;.</p>
+<p>&#8220;Contains&#8221; matching also lets you use an inclusive set of terms. Instead
+of separating the terms with a pipe symbol, you would separate them with
+double ampersands (so that single ampersands may still be used as part
+of search terms).</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>search:body=&quot;pickles&amp;&amp;shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries that contained <strong>both</strong> the term
+&#8220;pickles&#8221; <strong>and</strong> the term &#8220;shoes&#8221;.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>search:body=&quot;not pickles&amp;&amp;shoes&quot;
+</pre></div>
+</div>
+<p>This example would return all entries that <strong>do not</strong> contain <strong>both</strong>
+the term &#8220;pickles&#8221; <strong>and</strong> the term &#8220;shoes&#8221;. It would still display
+entries that contain the word &#8220;pickles&#8221;, so long as the field did not
+<em>also</em> contain the word &#8220;shoes&#8221;.</p>
+<p>When doing a &#8220;Contains&#8221; search, ExpressionEngine is literally just
+looking for matches on the combination of letters given. For instance
+using &#8220;cat&#8221; in a &#8220;Contains&#8221; search would match entries with &#8220;cat&#8221;,
+&#8220;cats&#8221;, &#8220;category&#8221;, &#8220;vocation&#8221;, etc. If you need &#8220;Contains&#8221; matching,
+but only want entries that include the term as a whole word on its own,
+you can add the special trigger \W after the term.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;cat\W&quot;
+</pre></div>
+</div>
+<p>The above example will return all entries that contain the whole word &#8220;cat&#8221;.
+It will not match entries where the phrase &#8220;cat&#8221; only lies within another word.</p>
+</div>
+<div class="section" id="numeric-matching">
+<h4>Numeric Matching<a class="headerlink" href="#numeric-matching" title="Permalink to this headline">¶</a></h4>
+<p>If you have a field containing numeric data, you may use greater-than
+or less-than operators to search through them.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>search:numeric_field=&quot;&lt;20&quot;
+
+search:numeric_field=&quot;&gt;20&quot;
+
+search:numeric_field=&quot;&lt;=20&quot;
+
+search:numeric_field=&quot;&gt;=20&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="including-excluding-empty-fields">
+<h4>Including / Excluding Empty Fields<a class="headerlink" href="#including-excluding-empty-fields" title="Permalink to this headline">¶</a></h4>
+<p>If you wish to only display entries that have (or do not have) content,
+use the special search constant IS_EMPTY.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;IS_EMPTY&quot;
+</pre></div>
+</div>
+<p>This example would return all results where the body field is empty.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;not IS_EMPTY&quot;
+</pre></div>
+</div>
+<p>This example would return all results where the body field is <strong>not</strong>
+empty, i.e. only entries where the body field had content.</p>
+<p>The IS_EMPTY search constant can also be used in conjunction with other
+search terms, for both &#8220;Exact&#8221; and &#8220;Contains&#8221; type matching.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;=IS_EMPTY|sandwich&quot;
+</pre></div>
+</div>
+<p>Since it is prefixed with =, this example is an &#8220;Exact&#8221; match and would
+return all results where the body is empty or is &#8220;sandwich&#8221;.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;IS_EMPTY|sandwich&quot;
+</pre></div>
+</div>
+<p>This example is a &#8220;Contains&#8221; match and would return all results where
+the body is empty <strong>or</strong> contains the word &#8220;sandwich&#8221;.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>search:body=&quot;not IS_EMPTY|sandwich|salad&quot;
+</pre></div>
+</div>
+<p>This example returns only entries that have content, but <strong>not</strong> those
+that contain &#8220;sandwich&#8221; <strong>nor</strong> those that contain the word &#8220;salad&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You may use multiple search: parameters in a channel entries
+tag, as long as each one is searching a different field. e.g.:</p>
+<div class="last highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">search:style</span><span class="p">=</span><span class="s2">&quot;=ale&quot;</span> <span class="na">search:region</span><span class="p">=</span><span class="s2">&quot;germany|belgium&quot;</span> <span class="na">search:rating</span><span class="p">=</span><span class="s2">&quot;=3|4|5&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>When using multiple search parameters, all search parameters must be matched in
+order for an entry to be included.  The above example would pull back only those
+entries where the style is &#8216;ale&#8217;, the region is &#8216;germany&#8217; or &#8216;belgium&#8217; and the
+rating is 1, 2 or 3.</p>
+</div>
+</div>
+<div class="section" id="show-current-week">
+<h3><a class="toc-backref" href="#id54">show_current_week=</a><a class="headerlink" href="#show-current-week" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_current_week=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Requires use of the
+<a class="reference internal" href="#display-by">display_by=</a> &#8220;week&#8221; parameter. When
+set to &#8220;yes&#8221;, it displays the current week by default (i.e. no
+pagination in the URL) and automatically adjusts the pagination links to
+indicate the correct page for that week.</p>
+</div>
+<div class="section" id="show-expired">
+<h3><a class="toc-backref" href="#id55">show_expired=</a><a class="headerlink" href="#show-expired" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_expired=&quot;yes&quot;
+</pre></div>
+</div>
+<p>You can determine whether you wish for entries that have &#8220;expired&#8221; to be
+included.</p>
+</div>
+<div class="section" id="show-future-entries">
+<span id="channel-entries-show-future-entries"></span><h3><a class="toc-backref" href="#id56">show_future_entries=</a><a class="headerlink" href="#show-future-entries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_future_entries=&quot;yes&quot;
+</pre></div>
+</div>
+<p>You can determine whether you wish for entries dated in the &#8220;future&#8221; to
+be included. This option is useful when doing things like creating a
+list of events, some of which have not occurred yet. Note that EE will
+still display past entries; this parameter simply instructs EE to also
+include entries from the future.</p>
+</div>
+<div class="section" id="show-pages">
+<span id="channel-entries-show-pages"></span><h3><a class="toc-backref" href="#id57">show_pages=</a><a class="headerlink" href="#show-pages" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_pages=&quot;only&quot; show_pages=&quot;no&quot;
+</pre></div>
+</div>
+<p>Allows you to tell the Channel module whether to show those entries that
+have been used to create pages with the Pages module. You can also set
+it to &#8220;only&#8221; and <em>only</em> show those entries that have had Pages assigned
+to them. The default is &#8220;yes&#8221; and it will treat entries with assigned
+Pages no different from any other entries.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last"><code class="docutils literal"><span class="pre">show_pages=&quot;only&quot;</span></code> acts in the same manner as <code class="docutils literal"><span class="pre">dynamic=&quot;no&quot;</span></code>.
+<code class="docutils literal"><span class="pre">show_pages=&quot;only&quot;</span></code> aids in building persistent menus based off existing
+Pages.</p>
+</div>
+</div>
+<div class="section" id="sort">
+<h3><a class="toc-backref" href="#id58">sort=</a><a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>sort=&quot;asc&quot; sort=&quot;desc&quot;
+</pre></div>
+</div>
+<p>The sort order can be ascending or descending. The order will default to
+&#8220;descending&#8221; if nothing is specified.</p>
+<p><strong>Multiple Orders and Sorts</strong></p>
+<p>Along with the <a class="reference internal" href="#orderby">orderby=</a> parameter
+this parameter can accept multiple values using the pipe character so
+that you can have multiple levels of ordering and set the sort for those
+levels. For example, if you wish to order by screen_name alphabetically
+and then have the most recent entries first, you would use the following
+parameters:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>orderby=&quot;screen_name|date&quot; sort=&quot;asc|desc&quot;
+</pre></div>
+</div>
+<p>If no sort value or an incorrect value is specified for an order, then
+the default will be &#8220;descending&#8221;.</p>
+</div>
+<div class="section" id="start-day">
+<h3><a class="toc-backref" href="#id59">start_day=</a><a class="headerlink" href="#start-day" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>start_day=&quot;Monday&quot;
+</pre></div>
+</div>
+<p>Requires use of the
+<a class="reference internal" href="#display-by">display_by=</a> &#8220;week&#8221; parameter. Allows
+you to choose whether the week starts on Monday or Sunday. Sunday is the
+default.</p>
+</div>
+<div class="section" id="start-on">
+<h3><a class="toc-backref" href="#id60">start_on=</a><a class="headerlink" href="#start-on" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>start_on=&quot;2004-06-05 20:00&quot;
+</pre></div>
+</div>
+<p>You can specify a particular date/time on which to start the entries.
+Only entries that are on or after this date will be included in the
+display. This parameter is often used together with the
+<a class="reference internal" href="#stop-before">stop_before=</a> parameter for limiting the entry
+display to a specific date range.</p>
+<div class="section" id="format">
+<h4>Format<a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference internal" href="#start-on">start_on=</a> parameter accepts any input that an ExpressionEngine
+Date field would accept. This means you have a wide variety of options:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>start_on=&quot;October 21st, 2015 4:30 PM&quot;
+start_on=&quot;today&quot;
+start_on=&quot;yesterday&quot;
+start_on=&quot;last Monday&quot;
+start_on=&quot;-2 months&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-uses">
+<h4>Common Uses<a class="headerlink" href="#common-uses" title="Permalink to this headline">¶</a></h4>
+<p>This parameter can be used in conjunction with <a class="reference internal" href="../templates/globals/single_variables.html#global-current-time"><span class="std std-ref">current_time</span></a>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;{my_weblog}&quot;</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;desc&quot;</span> <span class="na">start_on</span><span class="p">=</span><span class="s2">&quot;{current_time}&quot;</span> <span class="na">show_future_entries</span><span class="p">=</span><span class="s2">&quot;yes&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The above would display future entries starting from the current time.</p>
+<p>To display up to 5 entries with entry dates that fall within the
+previous 24 hours:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;{my_weblog}&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;5&quot;</span> <span class="na">sort</span><span class="p">=</span><span class="s2">&quot;desc&quot;</span> <span class="na">start_on</span><span class="p">=</span><span class="s2">&quot;-24 hours&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="status">
+<h3><a class="toc-backref" href="#id61">status=</a><a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;open&quot;
+</pre></div>
+</div>
+<p>You may restrict to entries with a particular <a class="reference internal" href="../cp/channel/status/index.html"><span class="doc">status</span></a>. The two statuses &#8220;open&#8221; and &#8220;closed&#8221; are
+default statuses that are always available, so you can always specify
+those if needed. If no status parameter is specified, only open status entries
+will be returned.  You can choose multiple statuses using a pipe:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;draft|reviewed|published|closed&quot;
+</pre></div>
+</div>
+<p>Or exclude statuses using &#8220;not&#8221;</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>status=&quot;not submitted|processing&quot;
+</pre></div>
+</div>
+<p>Note that closed status entries will not be included in the results when using
+&#8220;not&#8221; regardless of whether it is in the piped list.</p>
+</div>
+<div class="section" id="stop-before">
+<h3><a class="toc-backref" href="#id62">stop_before=</a><a class="headerlink" href="#stop-before" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>stop_before=&quot;2004-06-12 20:00&quot;
+</pre></div>
+</div>
+<p>You can specify a particular date/time on which to end the entries. Only
+entries that are before this date will be included in the display
+(entries exactly on this date/time will not be included). This parameter
+is often used together with the <a class="reference internal" href="#start-on">start_on=</a> parameter
+for limiting the entry display to a specific date range.</p>
+<p>This parameter accepts the same date formats as the <a class="reference internal" href="#start-on">start_on=</a>
+parameter.</p>
+</div>
+<div class="section" id="sticky">
+<h3><a class="toc-backref" href="#id63">sticky=</a><a class="headerlink" href="#sticky" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>sticky=&quot;no&quot;
+</pre></div>
+</div>
+<p>By default, sticky topics always remain at the top of the page. You can
+manually turn off stickies by using the above parameter.</p>
+</div>
+<div class="section" id="track-views">
+<span id="channel-entries-track-views"></span><h3><a class="toc-backref" href="#id64">track_views=</a><a class="headerlink" href="#track-views" title="Permalink to this headline">¶</a></h3>
+<p>ExpressionEngine lets you track how many times a channel entry has been
+&#8220;viewed&#8221; on a particular page. The view tracking counter will ONLY
+increment on pages that show a single entry using the
+{exp:channel:entries} tag, and only when the feature is enabled by using
+this parameter in the tag you want tracked. Up to four different
+instances of the view counter can be used (each in a different tag on a
+different page).</p>
+<p>To enable the view counter you will use one of these four parameters in
+the tag located in the page you want tracked.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>track_views=&quot;one&quot; track_views=&quot;two&quot; track_views=&quot;three&quot; track_views=&quot;four&quot;
+</pre></div>
+</div>
+<p>Each of the above four parameters corresponds to these variables, which
+can be shown within any tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">view_count_one</span><span class="p">}{</span><span class="nf">view_count_two</span><span class="p">}{</span><span class="nf">view_count_three</span><span class="p">}{</span><span class="nf">view_count_four</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="channel-entries-uncategorized-entries">
+<span id="id3"></span><h3><a class="toc-backref" href="#id65">uncategorized_entries=</a><a class="headerlink" href="#channel-entries-uncategorized-entries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>uncategorized_entries=&quot;no&quot;
+</pre></div>
+</div>
+<p>By default, when specifying the <a class="reference internal" href="#category">category=</a> parameter with &#8216;not &#8216; at the
+beginning , ExpressionEngine will show all entries without those
+categories <em>including</em> any entries without categories assigned. If you
+would prefer that ExpressionEngine not show these uncategorized entries,
+then set this parameter to &#8220;no&#8221; and they will be ignored.</p>
+</div>
+<div class="section" id="url-title">
+<h3><a class="toc-backref" href="#id66">url_title=</a><a class="headerlink" href="#url-title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;my_wedding&quot;
+</pre></div>
+</div>
+<p>This parameter limits the query by an entry&#8217;s url_title. You can use
+the pipe character to query by multiple url_titles:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;my_wedding|my_honeymoon|my_kids&quot;
+</pre></div>
+</div>
+<p>Or you can add &#8220;not&#8221; to exclude url_titles:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;not my_in_laws&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is strongly suggested you use the <code class="docutils literal"><span class="pre">channel=&quot;&quot;</span></code> parameter when
+using the <code class="docutils literal"><span class="pre">url_title=&quot;&quot;</span></code> parameter as ExpressionEngine can be set up to
+allow the same url_title for two different channels.</p>
+</div>
+</div>
+<div class="section" id="username">
+<h3><a class="toc-backref" href="#id67">username=</a><a class="headerlink" href="#username" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>username=&quot;petunia&quot;
+</pre></div>
+</div>
+<p>This parameter limits the query by username. You can use the pipe
+character to query by multiple usernames:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>username=&quot;tom|dick|harry&quot;
+</pre></div>
+</div>
+<p>Or you can add &#8220;not&#8221; to exclude usernames</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>username=&quot;not tom|dick|harry|fred&quot;
+</pre></div>
+</div>
+<p>You can also use the constant <code class="docutils literal"><span class="pre">&quot;CURRENT_USER&quot;</span></code> to show entries from only the currently logged in user.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>username=&quot;CURRENT_USER&quot;
+</pre></div>
+</div>
+<p>This allow each logged-in user to get only their entries. Users who are
+not logged in won&#8217;t see anything. Alternatively, you can use the
+constant <code class="docutils literal"><span class="pre">&quot;NOT_CURRENT_USER&quot;</span></code> to show entries <strong>except</strong> from the
+currently logged in user.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>username=&quot;NOT_CURRENT_USER&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="week-sort">
+<h3><a class="toc-backref" href="#id68">week_sort=</a><a class="headerlink" href="#week-sort" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>week_sort=&quot;asc&quot;
+</pre></div>
+</div>
+<p>Requires the <a class="reference internal" href="#display-by">display_by=</a> &#8220;week&#8221;
+parameter. Changes the sort order of the weeks so that you can either
+have the weeks displayed by most recent first or oldest first. Separate
+from the <code class="docutils literal"><span class="pre">sort=&quot;&quot;</span></code> parameter, which will only affect the sorting of
+entries within the weeks, not the weeks themselves.</p>
+</div>
+<div class="section" id="year-month-day">
+<h3><a class="toc-backref" href="#id69">year=, month=, day=</a><a class="headerlink" href="#year-month-day" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>year=&quot;2003&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>month=&quot;12&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>day=&quot;23&quot;
+</pre></div>
+</div>
+<p>You can limit queries by year, month, or day. For example, to show all
+of year 2002 you&#8217;ll use only:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>year=&quot;2002&quot;
+</pre></div>
+</div>
+<p>To show only the month of December in 2003 you&#8217;ll do this</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>year=&quot;2003&quot;
+</pre></div>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>month=&quot;12&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Don&#8217;t combine these parameters with the <code class="docutils literal"><span class="pre">display_by</span></code> parameter
+discussed previously, as these take precedence over that parameter. In
+addition, the three parameters must be applied &#8220;in order&#8221;, meaning that you
+must specify the year if you specify the month and you must specify both
+month and year to use day.</p>
+</div>
+</div>
+</div>
+<div class="section" id="single-variables">
+<span id="channel-entries-single-variables"></span><h2><a class="toc-backref" href="#id20">Single Variables</a><a class="headerlink" href="#single-variables" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id4">
+<ul class="simple">
+<li><a class="reference internal" href="#absolute-count" id="id70">absolute_count</a></li>
+<li><a class="reference internal" href="#absolute-results" id="id71">absolute_results</a></li>
+<li><a class="reference internal" href="#absolute-reverse-count" id="id72">absolute_reverse_count</a></li>
+<li><a class="reference internal" href="#author" id="id73">author</a></li>
+<li><a class="reference internal" href="#id5" id="id74">author_id</a></li>
+<li><a class="reference internal" href="#avatar-image-height" id="id75">avatar_image_height</a></li>
+<li><a class="reference internal" href="#avatar-image-width" id="id76">avatar_image_width</a></li>
+<li><a class="reference internal" href="#avatar-url" id="id77">avatar_url</a></li>
+<li><a class="reference internal" href="#id6" id="id78">channel</a></li>
+<li><a class="reference internal" href="#channel-id" id="id79">channel_id</a></li>
+<li><a class="reference internal" href="#channel-short-name" id="id80">channel_short_name</a></li>
+<li><a class="reference internal" href="#comment-auto-path" id="id81">comment_auto_path</a></li>
+<li><a class="reference internal" href="#comment-entry-id-auto-path" id="id82">comment_entry_id_auto_path</a></li>
+<li><a class="reference internal" href="#comment-subscriber-total" id="id83">comment_subscriber_total</a></li>
+<li><a class="reference internal" href="#comment-total" id="id84">comment_total</a></li>
+<li><a class="reference internal" href="#comment-url-title-auto-path" id="id85">comment_url_title_auto_path</a></li>
+<li><a class="reference internal" href="#count" id="id86">count</a></li>
+<li><a class="reference internal" href="#cp-edit-entry-url" id="id87">cp_edit_entry_url</a></li>
+<li><a class="reference internal" href="#edit-date" id="id88">edit_date</a></li>
+<li><a class="reference internal" href="#email" id="id89">email</a></li>
+<li><a class="reference internal" href="#entry-date" id="id90">entry_date</a></li>
+<li><a class="reference internal" href="#id7" id="id91">entry_id</a></li>
+<li><a class="reference internal" href="#entry-id-path" id="id92">entry_id_path</a></li>
+<li><a class="reference internal" href="#entry-site-id" id="id93">entry_site_id</a></li>
+<li><a class="reference internal" href="#expiration-date" id="id94">expiration_date</a></li>
+<li><a class="reference internal" href="#forum-topic-id" id="id95">forum_topic_id</a></li>
+<li><a class="reference internal" href="#gmt-entry-date" id="id96">gmt_entry_date</a></li>
+<li><a class="reference internal" href="#gmt-edit-date" id="id97">gmt_edit_date</a></li>
+<li><a class="reference internal" href="#ip-address" id="id98">ip_address</a></li>
+<li><a class="reference internal" href="#member-search-path" id="id99">member_search_path</a></li>
+<li><a class="reference internal" href="#page-uri" id="id100">page_uri</a></li>
+<li><a class="reference internal" href="#page-url" id="id101">page_url</a></li>
+<li><a class="reference internal" href="#permalink" id="id102">permalink</a></li>
+<li><a class="reference internal" href="#photo-url" id="id103">photo_url</a></li>
+<li><a class="reference internal" href="#photo-image-height" id="id104">photo_image_height</a></li>
+<li><a class="reference internal" href="#photo-image-width" id="id105">photo_image_width</a></li>
+<li><a class="reference internal" href="#profile-path" id="id106">profile_path</a></li>
+<li><a class="reference internal" href="#recent-comment-date" id="id107">recent_comment_date</a></li>
+<li><a class="reference internal" href="#relative-url" id="id108">relative_url</a></li>
+<li><a class="reference internal" href="#relative-date" id="id109">relative_date</a></li>
+<li><a class="reference internal" href="#reverse-count" id="id110">reverse_count</a></li>
+<li><a class="reference internal" href="#screen-name" id="id111">screen_name</a></li>
+<li><a class="reference internal" href="#signature" id="id112">signature</a></li>
+<li><a class="reference internal" href="#signature-image-height" id="id113">signature_image_height</a></li>
+<li><a class="reference internal" href="#signature-image-url" id="id114">signature_image_url</a></li>
+<li><a class="reference internal" href="#signature-image-width" id="id115">signature_image_width</a></li>
+<li><a class="reference internal" href="#id8" id="id116">status</a></li>
+<li><a class="reference internal" href="#switch" id="id117">switch=</a></li>
+<li><a class="reference internal" href="#title" id="id118">title</a></li>
+<li><a class="reference internal" href="#title-permalink" id="id119">title_permalink</a></li>
+<li><a class="reference internal" href="#total-results" id="id120">total_results</a></li>
+<li><a class="reference internal" href="#trimmed-url" id="id121">trimmed_url</a></li>
+<li><a class="reference internal" href="#id9" id="id122">url_title</a></li>
+<li><a class="reference internal" href="#url-title-path" id="id123">url_title_path</a></li>
+<li><a class="reference internal" href="#id10" id="id124">username</a></li>
+<li><a class="reference internal" href="#week-date" id="id125">week_date</a></li>
+</ul>
+</div>
+<div class="section" id="absolute-count">
+<h3><a class="toc-backref" href="#id70">absolute_count</a><a class="headerlink" href="#absolute-count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">absolute_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The absolute &#8220;count&#8221; out of the current entries being displayed by the
+tag, including those entries on previous pages (if using pagination).</p>
+<p>If five entries are being displayed per page, then for the fourth entry
+on the second page the {absolute_count} variable would have a value of
+&#8220;9&#8221;</p>
+<p><strong>BONUS:</strong> Since the Search module utilizes channel variables,
+{absolute_count} is also available to the Search Results tag.</p>
+</div>
+<div class="section" id="absolute-results">
+<h3><a class="toc-backref" href="#id71">absolute_results</a><a class="headerlink" href="#absolute-results" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">absolute_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will always display the absolute total number of results
+that are returned by the tag, regardless of pagination.</p>
+</div>
+<div class="section" id="absolute-reverse-count">
+<h3><a class="toc-backref" href="#id72">absolute_reverse_count</a><a class="headerlink" href="#absolute-reverse-count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">absolute_reverse_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <em>opposite</em> of <code class="docutils literal"><span class="pre">{absolute_count}</span></code>, in that it displays the entry count position counting backwards from the absolute total. Works across pagination, so the fifth entry in a list of fifteen entries would display &#8220;10&#8221;.</p>
+</div>
+<div class="section" id="author">
+<h3><a class="toc-backref" href="#id73">author</a><a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s screen name, if it exists; otherwise, this variable will
+display the username.</p>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id74">author_id</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">author_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The member ID of the author.</p>
+</div>
+<div class="section" id="avatar-image-height">
+<h3><a class="toc-backref" href="#id75">avatar_image_height</a><a class="headerlink" href="#avatar-image-height" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The height of the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avatar-image-width">
+<h3><a class="toc-backref" href="#id76">avatar_image_width</a><a class="headerlink" href="#avatar-image-width" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The width of the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avatar-url">
+<h3><a class="toc-backref" href="#id77">avatar_url</a><a class="headerlink" href="#avatar-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the avatar image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id78">channel</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the channel that the currently displayed entry is assigned
+to.</p>
+</div>
+<div class="section" id="channel-id">
+<h3><a class="toc-backref" href="#id79">channel_id</a><a class="headerlink" href="#channel-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID number of the actual channel (not the <em>entry</em>.)</p>
+</div>
+<div class="section" id="channel-short-name">
+<h3><a class="toc-backref" href="#id80">channel_short_name</a><a class="headerlink" href="#channel-short-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_short_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The short name of the channel of the currently displayed entry.</p>
+</div>
+<div class="section" id="comment-auto-path">
+<h3><a class="toc-backref" href="#id81">comment_auto_path</a><a class="headerlink" href="#comment-auto-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong>
+preference under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. No entry
+id, URL Title, or other information is included; this is the exact URL
+from the preference.</p>
+</div>
+<div class="section" id="comment-entry-id-auto-path">
+<h3><a class="toc-backref" href="#id82">comment_entry_id_auto_path</a><a class="headerlink" href="#comment-entry-id-auto-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_entry_id_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong>
+preference under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. The ID
+number of the entry will be automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_entry_id_auto_path</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/234&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comment-subscriber-total">
+<h3><a class="toc-backref" href="#id83">comment_subscriber_total</a><a class="headerlink" href="#comment-subscriber-total" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_subscriber_total</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Total number of subscribers to comments for a particular entry.</p>
+</div>
+<div class="section" id="comment-total">
+<h3><a class="toc-backref" href="#id84">comment_total</a><a class="headerlink" href="#comment-total" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_total</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of comments for a particular entry.</p>
+</div>
+<div class="section" id="comment-url-title-auto-path">
+<h3><a class="toc-backref" href="#id85">comment_url_title_auto_path</a><a class="headerlink" href="#comment-url-title-auto-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">comment_url_title_auto_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by the URL set in the <strong>Comment Page URL</strong>
+preference under <span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>. The URL
+Title of the entry will be automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_url_title_auto_path</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/comments/ice_cream/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="count">
+<h3><a class="toc-backref" href="#id86">count</a><a class="headerlink" href="#count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8220;count&#8221; out of the current entries being displayed. If five entries
+are being displayed, then for the fourth entry the {count} variable
+would have a value of &#8220;4&#8221;.</p>
+</div>
+<div class="section" id="cp-edit-entry-url">
+<h3><a class="toc-backref" href="#id87">cp_edit_entry_url</a><a class="headerlink" href="#cp-edit-entry-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">logged_in</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">cp_edit_entry_url</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Edit Entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL of the entry form in the control panel where this entry can be
+edited. It is recommended you wrap this variable in an
+<code class="docutils literal"><span class="pre">{if</span> <span class="pre">logged_in}</span></code> conditional to hide your control panel&#8217;s URL from
+regular site visitors. If you are running a membership based site, hide
+it behind an appropriate <code class="docutils literal"><span class="pre">logged_in_group_id</span></code> conditional. For
+example, to hide this link from everyone but Super Admins:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">logged_in_group_id</span> <span class="o">==</span> <span class="m">1</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">cp_edit_entry_url</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Edit Entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-date">
+<h3><a class="toc-backref" href="#id88">edit_date</a><a class="headerlink" href="#edit-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">edit_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date on which the entry was last edited. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable
+Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="email">
+<h3><a class="toc-backref" href="#id89">email</a><a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s raw email address.</p>
+</div>
+<div class="section" id="entry-date">
+<h3><a class="toc-backref" href="#id90">entry_date</a><a class="headerlink" href="#entry-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date the entry was submitted. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id91">entry_id</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The ID number of the channel entry.</p>
+</div>
+<div class="section" id="entry-id-path">
+<span id="channel-entries-entry-id-path"></span><h3><a class="toc-backref" href="#id92">entry_id_path</a><a class="headerlink" href="#entry-id-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;channel/archives&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the specified template. The ID number of the entry will be
+automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_id_path</span><span class="p">=</span><span class="s1">&#39;channel/archives&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/archives/234/&quot;</span><span class="p">&gt;</span>my entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="entry-site-id">
+<h3><a class="toc-backref" href="#id93">entry_site_id</a><a class="headerlink" href="#entry-site-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">entry_site_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Site ID of the channel entry.</p>
+</div>
+<div class="section" id="expiration-date">
+<h3><a class="toc-backref" href="#id94">expiration_date</a><a class="headerlink" href="#expiration-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">expiration_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The expiration date of the entry. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="forum-topic-id">
+<span id="channel-entries-forum-topic-id"></span><h3><a class="toc-backref" href="#id95">forum_topic_id</a><a class="headerlink" href="#forum-topic-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">forum_topic_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have the Discussion Forum Module installed and if you have
+associated a forum thread with a channel entry (via the &#8220;Forum&#8221; section
+of the Publish tab), this is the ID number of the forum thread. It will
+typically be used like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">forum_topic</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;forums/viewthread&#39;</span><span class="p">}{</span><span class="nf">forum_topic_id</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Discuss this in our forums<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gmt-entry-date">
+<span id="channel-entries-gmt-entry-date"></span><h3><a class="toc-backref" href="#id96">gmt_entry_date</a><a class="headerlink" href="#gmt-entry-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">gmt_entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date the entry was submitted in GMT. This variable is <strong>not</strong>
+localized for each user&#8217;s date settings. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable
+Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="gmt-edit-date">
+<h3><a class="toc-backref" href="#id97">gmt_edit_date</a><a class="headerlink" href="#gmt-edit-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">gmt_edit_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date on which the entry was last edited in GMT. This variable is
+<strong>not</strong> localized for each user&#8217;s date settings. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable
+Formatting</span></a> for more information.</p>
+</div>
+<div class="section" id="ip-address">
+<h3><a class="toc-backref" href="#id98">ip_address</a><a class="headerlink" href="#ip-address" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">ip_address</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The IP address of the author when they posted the entry.</p>
+</div>
+<div class="section" id="member-search-path">
+<h3><a class="toc-backref" href="#id99">member_search_path</a><a class="headerlink" href="#member-search-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_search_path</span><span class="p">=</span><span class="s1">&#39;search/results&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is replaced by a URL that passes the author&#8217;s member name
+to your search results Template. In this way, you can display all
+entries made by the author. You should specify the
+Template_Group/Template that you use to display search results. For
+example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">member_search_path</span><span class="p">=</span><span class="s1">&#39;search/results&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>View entries by this member<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="page-uri">
+<span id="channel-entries-page-uri"></span><h3><a class="toc-backref" href="#id100">page_uri</a><a class="headerlink" href="#page-uri" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">page_uri</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have the Pages Module installed and if you have associated a
+static page with a channel entry (via the &#8220;Pages&#8221; section of the Publish
+tab), this is the page uri for the page. It will typically be used like
+so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">page_uri</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">page_uri</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>View this page<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="page-url">
+<span id="channel-entries-page-url"></span><h3><a class="toc-backref" href="#id101">page_url</a><a class="headerlink" href="#page-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">page_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have the Pages Module installed and if you have associated a
+static page with a channel entry (via the &#8220;Pages&#8221; section of the Publish
+tab), this is the page url for the page (the site URL + the page URI).
+It will typically be used like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">page_url</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">page_url</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>View this page<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="permalink">
+<h3><a class="toc-backref" href="#id102">permalink</a><a class="headerlink" href="#permalink" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">permalink</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable defaults to site index with entry ID number:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/index.php/235/
+</pre></div>
+</div>
+<p>In addition, you can specify a template group/template and the entry ID
+will automatically be added:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">permalink</span><span class="p">=</span><span class="s2">&quot;channel/archives&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Will render as:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/index.php/channel/archives/235/
+</pre></div>
+</div>
+</div>
+<div class="section" id="photo-url">
+<h3><a class="toc-backref" href="#id103">photo_url</a><a class="headerlink" href="#photo-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the URL to the member photo (if you have that
+option enabled and the member has uploaded their photo). It is intended
+for use in an image tag.</p>
+</div>
+<div class="section" id="photo-image-height">
+<h3><a class="toc-backref" href="#id104">photo_image_height</a><a class="headerlink" href="#photo-image-height" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the height of the member photo. It is intended
+for use in an image tag.</p>
+</div>
+<div class="section" id="photo-image-width">
+<h3><a class="toc-backref" href="#id105">photo_image_width</a><a class="headerlink" href="#photo-image-width" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">photo_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable supplies the width of the member photo. It is intended for
+use in an image tag.</p>
+</div>
+<div class="section" id="profile-path">
+<h3><a class="toc-backref" href="#id106">profile_path</a><a class="headerlink" href="#profile-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">profile_path</span><span class="p">=</span><span class="s1">&#39;member&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the author of the current entry. The ID number of the author
+will be automatically added. Used in a link:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">profile_path</span><span class="p">=</span><span class="s1">&#39;member&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">author</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="recent-comment-date">
+<h3><a class="toc-backref" href="#id107">recent_comment_date</a><a class="headerlink" href="#recent-comment-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">recent_comment_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date of the most recent comment associated with the entry. See
+<a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a>
+for more information.</p>
+</div>
+<div class="section" id="relative-url">
+<h3><a class="toc-backref" href="#id108">relative_url</a><a class="headerlink" href="#relative-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relative_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL stored in your Channel URL setting under Channel Management,
+with the domain information removed. For example, if your setting is
+<a class="reference external" href="http://example.com/index.php/site/index/">http://example.com/index.php/site/index/</a> the variable will output
+/index.php/site/index/. Typically only used in the Atom feed Template.</p>
+</div>
+<div class="section" id="relative-date">
+<h3><a class="toc-backref" href="#id109">relative_date</a><a class="headerlink" href="#relative-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relative_date</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The amount of time that has passed between when the entry was submitted
+and the current time. The output is displayed in the format 1 day, 3
+hours, 45 minutes. This variable is useful for displaying something such
+as &#8220;This entry was posted 1 day, 3 hours, 45 minutes ago.&#8221;</p>
+</div>
+<div class="section" id="reverse-count">
+<h3><a class="toc-backref" href="#id110">reverse_count</a><a class="headerlink" href="#reverse-count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">reverse_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <em>opposite</em> of <code class="docutils literal"><span class="pre">{count}</span></code>, in that it displays the entry count position counting backwards from the total. Like <code class="docutils literal"><span class="pre">{count}</span></code>, this is relative to the number of entries the tag is currently displaying. If you want the counts to include paginated results, you may want <code class="docutils literal"><span class="pre">{absolute_reverse_count}</span></code>.</p>
+</div>
+<div class="section" id="screen-name">
+<h3><a class="toc-backref" href="#id111">screen_name</a><a class="headerlink" href="#screen-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">screen_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s screen name, if it exists. This variable will not return
+anything if the author does not have a screen name defined.</p>
+</div>
+<div class="section" id="signature">
+<h3><a class="toc-backref" href="#id112">signature</a><a class="headerlink" href="#signature" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The signature associated with the entry&#8217;s author. Typically used as
+such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">signature</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-height">
+<h3><a class="toc-backref" href="#id113">signature_image_height</a><a class="headerlink" href="#signature-image-height" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The height of the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-url">
+<h3><a class="toc-backref" href="#id114">signature_image_url</a><a class="headerlink" href="#signature-image-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="signature-image-width">
+<h3><a class="toc-backref" href="#id115">signature_image_width</a><a class="headerlink" href="#signature-image-width" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The width of the signature image associated with the entry&#8217;s author.
+Typically used as such:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id116">status</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">status</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The status of the entry (open, closed, etc.)</p>
+</div>
+<div class="section" id="switch">
+<span id="switch-variable"></span><h3><a class="toc-backref" href="#id117">switch=</a><a class="headerlink" href="#switch" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">switch</span><span class="p">=</span><span class="s1">&#39;option_one|option_two|option_three&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable permits you to rotate through any number of values as the
+entries are displayed. The first entry will use &#8220;option_one&#8221;, the
+second will use &#8220;option_two&#8221;, the third &#8220;option_three&#8221;, the fourth
+&#8220;option_one&#8221;, and so on.</p>
+<p>The most straightforward use for this would be to alternate colors. It
+could be used like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;yourchannel&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">switch</span><span class="p">=</span><span class="s1">&#39;one|two&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">body</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The entries would then alternate between <code class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">class=&quot;one&quot;&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;div</span>
+<span class="pre">class=&quot;two&quot;&gt;</span></code>.</p>
+<p>Multiple instances of the <code class="docutils literal"><span class="pre">{switch=}</span></code> tag may be used and the system will
+intelligently keep track of each one.</p>
+</div>
+<div class="section" id="title">
+<h3><a class="toc-backref" href="#id118">title</a><a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The title of the entry</p>
+</div>
+<div class="section" id="title-permalink">
+<h3><a class="toc-backref" href="#id119">title_permalink</a><a class="headerlink" href="#title-permalink" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">title_permalink</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable uses the &#8220;url title&#8221; as the link. It defaults to the site
+index with the &#8220;url title&#8221;:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/index.php/my_ugly_boyfriend/
+</pre></div>
+</div>
+<p>In addition, you can specify a specific template group/template and the
+&#8220;url title&#8221; will automatically be added:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">title_permalink</span><span class="p">=</span><span class="s2">&quot;channel/archives&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Will render as:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>http://example.com/index.php/channel/archives/my_ugly_boyfriend/
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When creating a new entry, if you don&#8217;t supply the &#8220;url title&#8221;
+then it will be automatically created from the actual entry title.
+Spaces are turned into underscores and quotes are removed. For
+example, &#8220;Joe&#8217;s night out&#8221; becomes &#8220;joes_night_out&#8221;.</p>
+</div>
+</div>
+<div class="section" id="total-results">
+<h3><a class="toc-backref" href="#id120">total_results</a><a class="headerlink" href="#total-results" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">total_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of entries being displayed.</p>
+</div>
+<div class="section" id="trimmed-url">
+<h3><a class="toc-backref" href="#id121">trimmed_url</a><a class="headerlink" href="#trimmed-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">trimmed_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The domain name for your site, trimmed of any subdomains. For instance,
+example.com becomes example.com. Typically only used in the Atom feed
+Template.</p>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id122">url_title</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The human readable title used in the URL as a permalink.</p>
+</div>
+<div class="section" id="url-title-path">
+<span id="channel-entries-url-title-path"></span><h3><a class="toc-backref" href="#id123">url_title_path</a><a class="headerlink" href="#url-title-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;channel/archives&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the specified template. The &#8220;url title&#8221; of the entry will be
+automatically added. For example, this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title_path</span><span class="p">=</span><span class="s1">&#39;channel/archives&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>permalink<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Would be rendered like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/channel/archives/ice_cream/&quot;</span><span class="p">&gt;</span>permalink<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id124">username</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">username</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The author&#8217;s username.</p>
+</div>
+<div class="section" id="week-date">
+<h3><a class="toc-backref" href="#id125">week_date</a><a class="headerlink" href="#week-date" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">week_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date that the week of the currently displayed entry started on, most
+commonly used in &#8220;weekly&#8221; scenarios with the <a class="reference internal" href="#date-heading">date_heading</a> variable
+pair.</p>
+<p>This variable is affected by the <a class="reference internal" href="#start-day">start_day=</a> parameter. By default,
+the week date will fall on Sunday for the week of the entry. When
+<code class="docutils literal"><span class="pre">start_day=&quot;Monday&quot;</span></code> is used, the week date will fall on Monday for
+the week of the entry. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a> for more information.</p>
+</div>
+</div>
+<div class="section" id="conditional-tags">
+<span id="channel-entries-conditional-variables"></span><h2><a class="toc-backref" href="#id21">Conditional Tags</a><a class="headerlink" href="#conditional-tags" title="Permalink to this headline">¶</a></h2>
+<p>Conditionals allow you to more precisely control your content.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A more complete explanation of conditional control structures
+and operators can be found on the <a class="reference internal" href="../templates/conditionals.html"><span class="doc">Conditional Tags</span></a> page.</p>
+</div>
+<p>Here is an example that tests for the &#8220;summary&#8221; field being not empty</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">summary</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+    The summary is not empty!
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>An alternate, shorthand syntax can accomplish the same thing</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">summary</span><span class="p">}</span>
+    The summary is not empty!
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If only the variable name is in the conditional statement it tests for
+&#8220;not empty&#8221;.</p>
+<p>Many of the single variables can be used in a conditional. You may
+always use the short name of one of your custom entry fields in a
+conditional. In addition, there are several unique conditionals.</p>
+<div class="contents local topic" id="id11">
+<ul class="simple">
+<li><a class="reference internal" href="#if-allow-comments" id="id126">if allow_comments</a></li>
+<li><a class="reference internal" href="#if-avatar" id="id127">if avatar</a></li>
+<li><a class="reference internal" href="#if-category-request" id="id128">if category_request</a></li>
+<li><a class="reference internal" href="#if-count" id="id129">if count</a></li>
+<li><a class="reference internal" href="#if-forum-topic" id="id130">if forum_topic</a></li>
+<li><a class="reference internal" href="#if-has-categories" id="id131">if has_categories</a></li>
+<li><a class="reference internal" href="#if-no-results" id="id132">if no_results</a></li>
+<li><a class="reference internal" href="#if-not-category-request" id="id133">if not_category_request</a></li>
+<li><a class="reference internal" href="#if-not-forum-topic" id="id134">if not_forum_topic</a></li>
+<li><a class="reference internal" href="#if-photo" id="id135">if photo</a></li>
+<li><a class="reference internal" href="#if-signature-image" id="id136">if signature_image</a></li>
+<li><a class="reference internal" href="#if-sticky" id="id137">if sticky</a></li>
+</ul>
+</div>
+<div class="section" id="if-allow-comments">
+<h3><a class="toc-backref" href="#id126">if allow_comments</a><a class="headerlink" href="#if-allow-comments" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">allow_comments</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry is set to allow comments. This conditional will return
+FALSE if commenting has expired.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">allow_comments</span><span class="p">}</span>
+        (<span class="p">{</span><span class="nf">comment_total</span><span class="p">}</span>) <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_path</span><span class="p">=</span><span class="s1">&#39;channel/comments&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Comments<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you can display content if commenting is disabled:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">allow_comments</span> <span class="o">==</span> <span class="kp">FALSE</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-avatar">
+<h3><a class="toc-backref" href="#id127">if avatar</a><a class="headerlink" href="#if-avatar" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry&#8217;s author has an avatar image specified.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">avatar</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">avatar_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s avatar&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-category-request">
+<h3><a class="toc-backref" href="#id128">if category_request</a><a class="headerlink" href="#if-category-request" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">category_request</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current tag is being displayed based on a category specified in the URL.
+For instance, if the URL being viewed were
+<a class="reference external" href="http://example.com/index.php/channel/archives/C13/">http://example.com/index.php/channel/archives/C13/</a> that could trigger
+this conditional.</p>
+</div>
+<div class="section" id="if-count">
+<h3><a class="toc-backref" href="#id129">if count</a><a class="headerlink" href="#if-count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">count</span> <span class="o">&gt;</span> <span class="m">5</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This conditional allows you to test against which number entry is being
+displayed. You could use this to apply different styles to the first
+entry or have the last 5 entries out of 10 be formatted differently.</p>
+</div>
+<div class="section" id="if-forum-topic">
+<h3><a class="toc-backref" href="#id130">if forum_topic</a><a class="headerlink" href="#if-forum-topic" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">forum_topic</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional for displaying content when a forum topic
+has been associated with a channel entry. That option is only available
+if the Discussion Forum Module is installed. It will typically be used
+like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">forum_topic</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;forums/viewthread&#39;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">forum_topic_id</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>Discuss this in our forums<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-has-categories">
+<span id="channel-entries-if-no-results"></span><h3><a class="toc-backref" href="#id131">if has_categories</a><a class="headerlink" href="#if-has-categories" title="Permalink to this headline">¶</a></h3>
+<p>Handy conditional for displaying markup or content based on whether or not the entry has been assigned any categories.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">has_categories</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Categories<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;categories&quot;</span><span class="p">&gt;</span>
+                <span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+                        ...
+                <span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-no-results">
+<h3><a class="toc-backref" href="#id132">if no_results</a><a class="headerlink" href="#if-no-results" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional for displaying a message in the case when
+no entries are returned. The contents inside of the conditional will be
+displayed in cases where there are no results returned for the tag.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>There are no entries available.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Further, you may specify that another Template be shown in a case when
+there are no results. In order to do that, you must use the redirect=
+variable</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span> <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s2">&quot;channel/noresult&quot;</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Lastly, if you want to simply display your 404 page (with 404 headers)
+when no entries are returned, simply use &#8220;404&#8221; as the template name.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">no_results</span><span class="p">}</span> <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s2">&quot;404&quot;</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-not-category-request">
+<h3><a class="toc-backref" href="#id133">if not_category_request</a><a class="headerlink" href="#if-not-category-request" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">not_category_request</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current tag is <em>not</em> being displayed based on a category specified in
+the URL. For instance, if the URL being viewed were
+<a class="reference external" href="http://example.com/index.php/channel/archives/C13/">http://example.com/index.php/channel/archives/C13/</a> that would not
+trigger this conditional.</p>
+</div>
+<div class="section" id="if-not-forum-topic">
+<h3><a class="toc-backref" href="#id134">if not_forum_topic</a><a class="headerlink" href="#if-not-forum-topic" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">not_forum_topic</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional for displaying content when <em>no</em> forum
+topic has been associated with a channel entry. That option is only
+available if the Discussion Forum Module is installed. It will typically
+be used like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">not_forum_topic</span><span class="p">}</span> There is no forum discussion available. <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-photo">
+<h3><a class="toc-backref" href="#id135">if photo</a><a class="headerlink" href="#if-photo" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">photo</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry&#8217;s author has a photo image specified.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">photo</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">photo_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">photo_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">photo_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s photo&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-signature-image">
+<h3><a class="toc-backref" href="#id136">if signature_image</a><a class="headerlink" href="#if-signature-image" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This special conditional lets you conditionally display content if the
+current entry&#8217;s author has a signature image specified.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">signature_image</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_url</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_width</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">signature_image_height</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">author</span><span class="p">}</span><span class="s">&#39;s signature&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="if-sticky">
+<h3><a class="toc-backref" href="#id137">if sticky</a><a class="headerlink" href="#if-sticky" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">sticky</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may test whether an entry is set to be &#8220;sticky&#8221;. You may also test
+whether it is not &#8220;sticky&#8221;.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">sticky</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">}</span> content <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="variable-pairs">
+<h2><a class="toc-backref" href="#id22">Variable Pairs</a><a class="headerlink" href="#variable-pairs" title="Permalink to this headline">¶</a></h2>
+<p>Variable pairs contain an opening and closing tag as well as content
+in-between. Example:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_heading</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/date_heading</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The reason variable pairs have an opening and closing pair is because
+the information between the pairs can be shown or not shown if the
+criteria for each tag is met.</p>
+<p>In the case of the &#8220;date_heading&#8221; pair, for example, it only appears at
+a certain interval that you set (hourly, daily, weekly, monthly, etc.).
+By using a pair of variables you can put HTML formatting between them
+that only gets shown when the interval is met. Otherwise, the chunk is
+not displayed.</p>
+<div class="section" id="date-footer">
+<h3>date_footer<a class="headerlink" href="#date-footer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_footer</span> <span class="na">display</span><span class="p">=</span><span class="s2">&quot;daily&quot;</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>That&#39;s all from today!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/date_footer</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date footer can be used to show a footer at certain intervals. The
+interval can be set to show hourly, daily, weekly, monthly, or yearly.
+An optional &#8220;display&#8221; parameter can be used to set the display interval:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_footer</span> <span class="na">display</span><span class="p">=</span><span class="s2">&quot;daily&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Choices for the &#8220;display&#8221; parameter are:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">{date_footer</span> <span class="pre">display=&quot;hourly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_footer</span> <span class="pre">display=&quot;daily&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_footer</span> <span class="pre">display=&quot;weekly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_footer</span> <span class="pre">display=&quot;monthly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_footer</span> <span class="pre">display=&quot;yearly&quot;}</span></code></li>
+</ul>
+<p>If no parameter is specified it will default to &#8220;daily&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can use as many date_footers as you want in the same tag.
+There is a bit of a performance hit, however, since date parsing is the
+most processor intensive. Read the caching section for information on
+improving performance.</p>
+</div>
+</div>
+<div class="section" id="date-heading">
+<h3>date_heading<a class="headerlink" href="#date-heading" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_heading</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">entry_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/date_heading</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The date heading can be used to show a heading at certain intervals. The
+interval can be set to show hourly, daily, weekly, monthly, or yearly.</p>
+<p>When using weekly intervals, the <a class="reference internal" href="#week-date">week_date</a> variable would typically be used.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_heading</span> <span class="na">display</span><span class="p">=</span><span class="s2">&quot;weekly&quot;</span><span class="p">}</span>Week of <span class="p">{</span><span class="nf">week_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d&quot;</span><span class="p">}{</span><span class="nf">/date_heading</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>An optional &#8220;display&#8221; parameter can be used to set the display interval:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">date_heading</span> <span class="na">display</span><span class="p">=</span><span class="s2">&quot;daily&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Choices for the &#8220;display&#8221; parameter are:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">{date_heading</span> <span class="pre">display=&quot;hourly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_heading</span> <span class="pre">display=&quot;daily&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_heading</span> <span class="pre">display=&quot;weekly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_heading</span> <span class="pre">display=&quot;monthly&quot;}</span></code></li>
+<li><code class="docutils literal"><span class="pre">{date_heading</span> <span class="pre">display=&quot;yearly&quot;}</span></code></li>
+</ul>
+<p>If no parameter is specified it will default to &#8220;daily&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can use as many date_footers as you want in the same tag.
+There is a bit of a performance hit, however, since date parsing is the
+most processor intensive. Read the caching section for information on
+improving performance.</p>
+</div>
+</div>
+<div class="section" id="categories">
+<h3>categories<a class="headerlink" href="#categories" title="Permalink to this headline">¶</a></h3>
+<p>Categories are unique in that they are a &#8220;looping pair&#8221;. Since you can
+have multiple categories per entry, we need a mechanism to show as many
+categories as exist for each entry.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">category_image</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;channel/index&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="contents local topic" id="id12">
+<ul class="simple">
+<li><a class="reference internal" href="#categories-tag-pair-parameters" id="id138">Categories Tag Pair Parameters</a></li>
+<li><a class="reference internal" href="#categories-tag-pair-variables" id="id139">Categories Tag Pair Variables</a></li>
+<li><a class="reference internal" href="#custom-category-fields" id="id140">Custom Category Fields</a></li>
+</ul>
+</div>
+<div class="section" id="categories-tag-pair-parameters">
+<h4><a class="toc-backref" href="#id138">Categories Tag Pair Parameters</a><a class="headerlink" href="#categories-tag-pair-parameters" title="Permalink to this headline">¶</a></h4>
+<div class="contents local topic" id="id13">
+<ul class="simple">
+<li><a class="reference internal" href="#id14" id="id141">backspace=</a></li>
+<li><a class="reference internal" href="#id15" id="id142">limit=</a></li>
+<li><a class="reference internal" href="#show" id="id143">show=</a></li>
+<li><a class="reference internal" href="#show-group" id="id144">show_group=</a></li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h5><a class="toc-backref" href="#id141">backspace=</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">backspace</span><span class="p">=</span><span class="s2">&quot;5&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Backspacing removes characters (including spaces and line breaks) from
+the last iteration of the loop. For example, if you put a &lt;br&gt; tag
+after each category you&#8217;ll have this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Local News<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+Health News<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+Science News<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You might, however, not want the &lt;br&gt; tag after the final item. Simply
+count the number of characters (including spaces and line breaks) you
+want to remove and add the backspace parameter to the tag. The &lt;br&gt;
+tag has 4 characters plus a new line character, so you would do this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">backspace</span><span class="p">=</span><span class="s2">&quot;5&quot;</span><span class="p">}</span>
+        <span class="p">{</span><span class="nf">category_name</span><span class="p">}&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>That will produce code like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Local News<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+Health News<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+Science News
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h5><a class="toc-backref" href="#id142">limit=</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This parameter limits the number of categories output by this variable
+pair. When in use, it will limit the output to the number provided,
+using the specified order in the Category Management page to determine
+which categories get shown.</p>
+</div>
+<div class="section" id="show">
+<h5><a class="toc-backref" href="#id143">show=</a><a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show</span><span class="p">=</span><span class="s2">&quot;4|7&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>With this parameter, you can specify which categories can be included
+when listing them with the {categories} variable pair. For instance, if
+you had entries that belonged to several categories, you could use this
+parameter to limit the display to only those categories you specified.
+While the entries may actually belong to more categories, only those you
+specify would be shown. Category IDs are separated by the pipe character
+to specify more than one category.</p>
+<p>You may alternatively specify which categories to not show:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show</span><span class="p">=</span><span class="s2">&quot;not 3|6|8&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-group">
+<h5><a class="toc-backref" href="#id144">show_group=</a><a class="headerlink" href="#show-group" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show_group</span><span class="p">=</span><span class="s2">&quot;1|3&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>With this parameter, you can specify which category groups can be
+included when listing categories with the {categories} variable pair.
+For instance, if you had entries in a channel that had multiple category
+groups but only wanted to show the categories for one of those groups,
+you could specify that category group&#8217;s ID number with this parameter.
+Category Group IDs are separated by the pipe character to specify more
+than one category group.</p>
+<p>You may alternatively specify which category groups to not show:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show_group</span><span class="p">=</span><span class="s2">&quot;not 2|4&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="categories-tag-pair-variables">
+<h4><a class="toc-backref" href="#id139">Categories Tag Pair Variables</a><a class="headerlink" href="#categories-tag-pair-variables" title="Permalink to this headline">¶</a></h4>
+<div class="contents local topic" id="id16">
+<ul class="simple">
+<li><a class="reference internal" href="#active" id="id145">active</a></li>
+<li><a class="reference internal" href="#category-count" id="id146">category_count</a></li>
+<li><a class="reference internal" href="#category-description" id="id147">category_description</a></li>
+<li><a class="reference internal" href="#id17" id="id148">category_group</a></li>
+<li><a class="reference internal" href="#category-id" id="id149">category_id</a></li>
+<li><a class="reference internal" href="#category-image" id="id150">category_image</a></li>
+<li><a class="reference internal" href="#category-name" id="id151">category_name</a></li>
+<li><a class="reference internal" href="#category-reverse-count" id="id152">category_reverse_count</a></li>
+<li><a class="reference internal" href="#category-total-results" id="id153">category_total_results</a></li>
+<li><a class="reference internal" href="#category-url-title" id="id154">category_url_title</a></li>
+<li><a class="reference internal" href="#parent-id" id="id155">parent_id</a></li>
+<li><a class="reference internal" href="#path" id="id156">path=</a></li>
+</ul>
+</div>
+<div class="section" id="active">
+<h5><a class="toc-backref" href="#id145">active</a><a class="headerlink" href="#active" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">active</span><span class="p">}</span> This category is active <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may use this conditional to test whether the category shown is the
+active category or not, based on the dynamic URI segment.</p>
+</div>
+<div class="section" id="category-count">
+<h5><a class="toc-backref" href="#id146">category_count</a><a class="headerlink" href="#category-count" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8220;count&#8221; out of the current categories being displayed. If five categories
+are being displayed, then for the fourth category the {category_count} variable
+would have a value of &#8220;4&#8221;.</p>
+</div>
+<div class="section" id="category-description">
+<h5><a class="toc-backref" href="#id147">category_description</a><a class="headerlink" href="#category-description" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_description</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The description associated with the category.</p>
+</div>
+<div class="section" id="id17">
+<h5><a class="toc-backref" href="#id148">category_group</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_group</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The category group ID of the category.</p>
+</div>
+<div class="section" id="category-id">
+<h5><a class="toc-backref" href="#id149">category_id</a><a class="headerlink" href="#category-id" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The category ID associated with the category.</p>
+</div>
+<div class="section" id="category-image">
+<h5><a class="toc-backref" href="#id150">category_image</a><a class="headerlink" href="#category-image" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_image</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The image link (or other information) you can optionally store with each
+category within the Control Panel.</p>
+</div>
+<div class="section" id="category-name">
+<h5><a class="toc-backref" href="#id151">category_name</a><a class="headerlink" href="#category-name" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This displays the name of the category.</p>
+</div>
+<div class="section" id="category-reverse-count">
+<h5><a class="toc-backref" href="#id152">category_reverse_count</a><a class="headerlink" href="#category-reverse-count" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_reverse_count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <em>opposite</em> of <code class="docutils literal"><span class="pre">{category_count}</span></code>, in that it displays the category count position counting backwards from the total. Countdown all the things!</p>
+</div>
+<div class="section" id="category-total-results">
+<h5><a class="toc-backref" href="#id153">category_total_results</a><a class="headerlink" href="#category-total-results" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_total_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of categories being displayed.</p>
+</div>
+<div class="section" id="category-url-title">
+<h5><a class="toc-backref" href="#id154">category_url_title</a><a class="headerlink" href="#category-url-title" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_url_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable displays the URL title of the category</p>
+</div>
+<div class="section" id="parent-id">
+<h5><a class="toc-backref" href="#id155">parent_id</a><a class="headerlink" href="#parent-id" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">parent_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The category ID associated with the category&#8217;s parent (or 0 in the case
+of a top level category).</p>
+</div>
+<div class="section" id="path">
+<h5><a class="toc-backref" href="#id156">path=</a><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;channel/index&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be replaced by a URL to the specifies Template
+Group/Template. The category designation information will automatically
+be added to the end of the URL so that the target page will know which
+category to display.</p>
+<p>If you want the category links to point to your site index instead of a
+particular template group/template you can use SITE_INDEX instead:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span><span class="p">}</span>  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>  <span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="custom-category-fields">
+<h4><a class="toc-backref" href="#id140">Custom Category Fields</a><a class="headerlink" href="#custom-category-fields" title="Permalink to this headline">¶</a></h4>
+<p>All custom fields assigned to a category can be accessed using the
+&#8220;short name&#8221; of the field:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">class</span><span class="p">}</span> <span class="p">{</span><span class="nf">extended_description</span><span class="p">}</span> <span class="p">{</span><span class="nf">category_name_fr</span><span class="p">}</span> etc..
+</pre></div>
+</div>
+<p>These are totally dynamic in that any field you create for your category
+will automatically be available by its &#8220;short name&#8221; as a variable.</p>
+</div>
+</div>
+</div>
+<div class="section" id="pagination">
+<h2><a class="toc-backref" href="#id23">Pagination</a><a class="headerlink" href="#pagination" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../templates/pagination.html"><span class="doc">Pagination</span></a> feature allows you to create
+&#8220;next&#8221; and &#8220;previous&#8221; links between pages of entries.</p>
+<p>You can also span a single entry <a class="reference internal" href="pagination_spanning.html"><span class="doc">across multiple
+pages</span></a>, like online magazines do.</p>
+</div>
+<div class="section" id="entry-views-tracking">
+<h2><a class="toc-backref" href="#id24">Entry &#8220;Views&#8221; Tracking</a><a class="headerlink" href="#entry-views-tracking" title="Permalink to this headline">¶</a></h2>
+<p>The Channel Entries tag also has a <a class="reference internal" href="entry_tracking.html"><span class="doc">Views
+Tracking</span></a> feature that lets you track the number
+of times an entry has been viewed.</p>
+</div>
+<div class="section" id="relationships">
+<h2><a class="toc-backref" href="#id25">Relationships</a><a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h2>
+<p>The Channel Module supports a powerful <a class="reference internal" href="../fieldtypes/relationships.html"><span class="doc">Relationship</span></a>
+feature that lets you associate one entry to another.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Channel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="archive_month_links.html">Archive Month Links Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calendar.html">Calendar Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="categories.html">Channel Categories Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="category_archive.html">Channel Category Archive Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="category_heading.html">Channel Category Heading Tag</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Channel Entries Tag</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="channel_info.html">Channel Information Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dynamic_parameters.html">Dynamic Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entry_linking.html">Next/Previous Entry Linking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entry_tracking.html">Entry &#8220;Views&#8221; Tracking Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination_spanning.html">Spanning a Channel Entry Across Multiple Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sets.html">Channel Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_form/index.html">Channel Form</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

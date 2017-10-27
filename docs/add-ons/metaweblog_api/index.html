@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Metaweblog API / Movable Type &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Add-Ons" href="../index.html" />
+	    <link rel="next" title="Moblog" href="../moblog/index.html" />
+	    <link rel="prev" title="jQuery" href="../jquery/index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Add-Ons</a></li>
+								<li class="last">Metaweblog API / Movable Type</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="metaweblog-api-movable-type">
+<h1>Metaweblog API / Movable Type<a class="headerlink" href="#metaweblog-api-movable-type" title="Permalink to this headline">¶</a></h1>
+<p class="cp-path"><strong>Control Panel Location:</strong> <span class="menuselection">Developer Tools ‣ Add-On Manager ‣ Metaweblog API</span></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
+<li><a class="reference internal" href="#configuration" id="id2">Configuration</a><ul>
+<li><a class="reference internal" href="#name" id="id3">Name</a></li>
+<li><a class="reference internal" href="#use-default-text-formatting-preferences" id="id4">Use default text formatting preferences?</a></li>
+<li><a class="reference internal" href="#status" id="id5">Status</a></li>
+<li><a class="reference internal" href="#channel" id="id6">Channel</a></li>
+<li><a class="reference internal" href="#excerpt" id="id7">Excerpt</a></li>
+<li><a class="reference internal" href="#content" id="id8">Content</a></li>
+<li><a class="reference internal" href="#more" id="id9">More</a></li>
+<li><a class="reference internal" href="#keywords" id="id10">Keywords</a></li>
+<li><a class="reference internal" href="#allowed-directory" id="id11">Allowed directory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connecting-with-a-metaweblog-api-compatible-program" id="id12">Connecting with a Metaweblog API Compatible Program</a><ul>
+<li><a class="reference internal" href="#marsedit" id="id13">MarsEdit</a></li>
+<li><a class="reference internal" href="#ecto" id="id14">Ecto</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Metaweblog API (Application Programming Interface) is an interface
+or &#8220;protocol&#8221; that allows other programs to interact with ExpressionEngine.
+In practical terms, it allows you to post and edit entries using a Metaweblog
+API-compatible program of your choosing instead of the ExpressionEngine
+Control Panel.</p>
+<p>ExpressionEngine supports the Metaweblog API as well as an extension to
+it known as the Movable Type API. It is important to understand that the
+Metaweblog API was originally designed for posting to one Channel Field, and does
+not support comments, etc. Thus, it is typically only used for simple entry
+posting purposes. The Movable Type API is slightly more flexible in that it
+supports posting content to up to four Channel Fields.</p>
+</div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Metaweblog API Control Panel is accessed via
+<span class="menuselection">Developer Tools ‣ Add-On Manager ‣ Metaweblog API</span> in the Control Panel.
+This page lists all of your existing configurations as well as the URL to be
+used for connecting to that configuration with your Metaweblog API-compatible
+software.</p>
+<p>Click on a configuration&#8217;s name to edit it. The following options are available:</p>
+<div class="section" id="name">
+<h3><a class="toc-backref" href="#id3">Name</a><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<p>The name of this configuration.</p>
+</div>
+<div class="section" id="use-default-text-formatting-preferences">
+<h3><a class="toc-backref" href="#id4">Use default text formatting preferences?</a><a class="headerlink" href="#use-default-text-formatting-preferences" title="Permalink to this headline">¶</a></h3>
+<p>If Yes, the Channel Fields&#8217; content will be sent as if they are being displayed
+on a webpage, with the field&#8217;s Text Formatting preference respected. If No, the
+fields&#8217; content will be sent untouched.</p>
+<p>The &#8220;No&#8221; setting is useful when you want to publish and edit content in its &#8220;raw&#8221;
+state with your software, regardless of how it will actually appear on the site.</p>
+</div>
+<div class="section" id="status">
+<h3><a class="toc-backref" href="#id5">Status</a><a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h3>
+<p>Choose the Entry Status for all entries submitted using this
+Configuration. If you choose the &#8216;Do Not Set Status&#8217; option, then
+whatever the Client sends for status (open or closed) will be accepted.</p>
+</div>
+<div class="section" id="channel">
+<h3><a class="toc-backref" href="#id6">Channel</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h3>
+<p>Here you choose the Channel to use for this Configuration. This
+choice determines which fields are available for selection in the
+following preferences.</p>
+</div>
+<div class="section" id="excerpt">
+<h3><a class="toc-backref" href="#id7">Excerpt</a><a class="headerlink" href="#excerpt" title="Permalink to this headline">¶</a></h3>
+<p>Here you determine which field from your Field Group corresponds to the
+&#8220;Excerpt Field&#8221; in your Metaweblog API-compatible program. Only
+text-type fields are available for selection. This field is only
+available when using the Movable Type API.</p>
+</div>
+<div class="section" id="content">
+<h3><a class="toc-backref" href="#id8">Content</a><a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h3>
+<p>Here you determine which field from your Field Group corresponds to the
+&#8220;Content Field&#8221; in your Metaweblog API-compatible program. Only
+text-type fields are available for selection.</p>
+</div>
+<div class="section" id="more">
+<h3><a class="toc-backref" href="#id9">More</a><a class="headerlink" href="#more" title="Permalink to this headline">¶</a></h3>
+<p>Here you determine which field from your Field Group corresponds to the
+&#8220;More Field&#8221; in your Metaweblog API-compatible program. Only text-type
+fields are available for selection. This field is only available
+when using the Movable Type API.</p>
+</div>
+<div class="section" id="keywords">
+<h3><a class="toc-backref" href="#id10">Keywords</a><a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+<p>Here you determine which field from your Field Group corresponds to the
+&#8220;Keywords Field&#8221; in your Metaweblog API-compatible program. Only
+text-type fields are available for selection. This field is only
+available when using the Movable Type API.</p>
+</div>
+<div class="section" id="allowed-directory">
+<h3><a class="toc-backref" href="#id11">Allowed directory</a><a class="headerlink" href="#allowed-directory" title="Permalink to this headline">¶</a></h3>
+<p>If your Metaweblog API-compatible program allows you to upload files,
+you may specify into which folder you want files uploaded. Your
+choices are determined by what you have set up at
+<span class="menuselection">Files ‣ Upload Directories</span>.</p>
+<p>The user sending the files via the Metaweblog API must have permission to
+upload to that folder. If you do not wish to allow uploads via the Metaweblog API,
+select &#8220;None&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using an upload folder with the MetaWeblog API, make sure to use
+absolute paths.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Many Metaweblog API-compatible programs do not support a file upload
+feature. You may also encounter issues when uploading very large files.</p>
+</div>
+</div>
+</div>
+<div class="section" id="connecting-with-a-metaweblog-api-compatible-program">
+<h2><a class="toc-backref" href="#id12">Connecting with a Metaweblog API Compatible Program</a><a class="headerlink" href="#connecting-with-a-metaweblog-api-compatible-program" title="Permalink to this headline">¶</a></h2>
+<p>In general, you will use the URL of your desired configuration as shown
+on the Metaweblog API Control Panel page at <span class="menuselection">Developer Tools ‣ Add-On Manager ‣ Metaweblog API</span> to connect with your program. Below is
+information specific to some common programs.</p>
+<div class="section" id="marsedit">
+<h3><a class="toc-backref" href="#id13">MarsEdit</a><a class="headerlink" href="#marsedit" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a New Blog in MarsEdit.</li>
+<li>Name it anything you wish, enter the URL of your site&#8217;s homepage, and
+click <strong>Finish</strong>.</li>
+<li>Click <strong>Edit Settings</strong> on the next dialog that appears.</li>
+<li>For <em>System Name</em>, choose <strong>ExpressionEngine</strong>.</li>
+<li>For <em>System API</em>, ensure <strong>Movable Type API</strong> is selected.</li>
+<li>For <em>API Endpoint URL</em>, enter the URL of your desired configuration
+as shown on the Metaweblog API Control Panel page at <span class="menuselection">Developer Tools ‣ Add-On Manager ‣ Metaweblog API</span>.</li>
+<li>For <em>Blog ID</em>, enter the <strong>Channel ID</strong> of the Channel you&#8217;ll
+be posting to.</li>
+<li>Click <strong>OK</strong>, then right-click on the newly created Blog in the
+MarsEdit sidebar and choose <strong>Enter Password...</strong></li>
+<li>Enter the <strong>username</strong> and <strong>password</strong> for your ExpressionEngine
+account.</li>
+<li>You should now be able to edit and post entries using MarsEdit.</li>
+</ol>
+</div>
+<div class="section" id="ecto">
+<h3><a class="toc-backref" href="#id14">Ecto</a><a class="headerlink" href="#ecto" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click <strong>New Account</strong>.</li>
+<li>For <em>System</em>, choose <strong>ExpressionEngine</strong> or <strong>MovableType</strong>.</li>
+<li>For <em>Access Point</em>, enter the URL of your desired configuration
+as shown on the Metaweblog API Control Panel page at <span class="menuselection">Developer Tools ‣ Add-On Manager ‣ Metaweblog API</span>.</li>
+<li>Enter the <strong>username</strong> and <strong>password</strong> for your ExpressionEngine
+account.</li>
+<li>At first, ecto will show the existing entries from all Channels
+you have access to. In the sidebar on the left side of ecto&#8217;s main
+screen, click the triangle next to your ExpressionEngine site and
+click the Channel that corresponds to the <strong>Channel Field Group</strong>
+you selected for this configuration in ExpressionEngine&#8217;s
+Metaweblog API Control Panel page. Attempting to publish to or
+edit entries from other Channels may result in unexpected behavior.</li>
+<li>You should now be able to edit and post entries using ecto.</li>
+</ol>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../forum/index.html">Discussion Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Metaweblog API / Movable Type</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

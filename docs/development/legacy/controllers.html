@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Controllers &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Legacy Reference" href="index.html" />
+	    <link rel="next" title="Drivers" href="drivers.html" />
+	    <link rel="prev" title="Views" href="views.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Legacy Reference</a></li>
+								<li class="last">Controllers</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="controllers">
+<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h1>
+<p>Controllers are the heart of your application, as they determine how HTTP requests should be handled.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-a-controller" id="id1">What is a Controller?</a></li>
+<li><a class="reference internal" href="#let-s-try-it" id="id2">Let&#8217;s try it</a></li>
+<li><a class="reference internal" href="#methods" id="id3">Methods</a></li>
+<li><a class="reference internal" href="#passing-uri-segments-to-your-methods" id="id4">Passing URI Segments to your methods</a></li>
+<li><a class="reference internal" href="#remapping-method-calls" id="id5">Remapping Method Calls</a></li>
+<li><a class="reference internal" href="#private-methods" id="id6">Private methods</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-a-controller">
+<h2><a class="toc-backref" href="#id1">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this headline">¶</a></h2>
+<p><strong>A Controller is simply a class file that is named in a way that can be associated with a URI.</strong> ExpressionEngine uses Controllers for all of its Control Panel pages. An <code class="docutils literal"><span class="pre">mcp</span></code> file within a module is a controller as well and typically what you&#8217;ll be dealing with.</p>
+<p>Consider this URI:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?/</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span>
+</pre></div>
+</div>
+<p>In the above example, ExpressionEngine would attempt to find a controller named <code class="docutils literal"><span class="pre">mcp.my_addon.php</span></code> within the <code class="docutils literal"><span class="pre">system/ee/user/addons/my_addon/</span></code> directory and load it.</p>
+</div>
+<div class="section" id="let-s-try-it">
+<h2><a class="toc-backref" href="#id2">Let&#8217;s try it</a><a class="headerlink" href="#let-s-try-it" title="Permalink to this headline">¶</a></h2>
+<p>First, ensure that your add-on has <code class="docutils literal"><span class="pre">settings_exist</span></code> set to true in its <a class="reference internal" href="../addon_setup_php_file.html"><span class="doc">addon.setup.php file</span></a>. Then create a simple module control panel so you can see it in action. Using your text editor, create a file called <code class="docutils literal"><span class="pre">mcp.my_addon.php</span></code>, and put the following code in it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">My_addon_mcp</span> <span class="p">{</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then save the file to your <code class="docutils literal"><span class="pre">system/ee/user/addons/my_addon/</span></code> directory.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The file must be called <code class="docutils literal"><span class="pre">mcp.my_addon.php</span></code> and be placed in the <code class="docutils literal"><span class="pre">system/ee/user/addons/my_addon/</span></code> directory. You can change <code class="docutils literal"><span class="pre">my_addon</span></code> to whatever you want, but both the directory and file must match.</p>
+</div>
+<p>Now visit the Add-on Manager and click on the cog next to your add-on&#8217;s name. If you did it right, you should see:</p>
+<blockquote>
+<div>Hello World!</div></blockquote>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Class names must start with an uppercase letter.</p>
+</div>
+<p>This is valid:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">My_addon_mcp</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>This is <strong>not</strong> valid:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">my_addon_rte</span> <span class="p">{</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="methods">
+<h2><a class="toc-backref" href="#id3">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>In the above example the method name is <code class="docutils literal"><span class="pre">index()</span></code>. The &#8220;index&#8221; method is always loaded by default if there is no segment after your add-on&#8217;s name. Another way to show your &#8220;Hello World&#8221; message would be this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?/</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span><span class="o">/</span><span class="nx">index</span>
+</pre></div>
+</div>
+<p><strong>The second segment of the URI determines which method in the controller gets called.</strong></p>
+<p>Let&#8217;s try it. Add a new method to your controller:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">My_addon_mcp</span> <span class="p">{</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">comments</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="s1">&#39;Look at this!&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now load the following URL to see the comment method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?/</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span><span class="o">/</span><span class="nx">comments</span>
+</pre></div>
+</div>
+<p>You should see your new message.</p>
+</div>
+<div class="section" id="passing-uri-segments-to-your-methods">
+<h2><a class="toc-backref" href="#id4">Passing URI Segments to your methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline">¶</a></h2>
+<p>You can pass additional URI segments to your methods when <a class="reference internal" href="../services/url.html"><span class="doc">creating URLs</span></a> like so:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="nx">asc</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+</div>
+<p>Then back in your controller:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">comments</span><span class="p">(</span><span class="nv">$direction</span> <span class="o">=</span> <span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="nv">$limit</span> <span class="o">=</span> <span class="s1">&#39;25&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>If you want to use this functionality for the <code class="docutils literal"><span class="pre">index()</span></code> method, be sure to specify <code class="docutils literal"><span class="pre">index</span></code> in your URLs:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span><span class="o">/</span><span class="nx">index</span><span class="o">/</span><span class="nx">asc</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remapping-method-calls">
+<h2><a class="toc-backref" href="#id5">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline">¶</a></h2>
+<p>As noted above, the second segment of the URI typically determines which method in the controller gets called. ExpressionEngine permits you to override this behavior through the use of the <code class="docutils literal"><span class="pre">_remap()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="c1">// Some code here...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If your controller contains a method named <code class="docutils literal"><span class="pre">_remap()</span></code>, it will <strong>always</strong> get called regardless of what your URI contains. It overrides the normal behavior in which the URI determines which method is called, allowing you to define your own method routing rules.</p>
+</div>
+<p>The overridden method call (typically the second segment of the URI) will be passed as a parameter to the <code class="docutils literal"><span class="pre">_remap()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$method</span> <span class="o">===</span> <span class="s1">&#39;some_method&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$method</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+                <span class="nx">returtn</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default_method</span><span class="p">();</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Any extra segments after the method name are passed into <code class="docutils literal"><span class="pre">_remap()</span></code> as an optional second parameter. This array can be used in combination with PHP&#8217;s <a class="reference external" href="http://php.net/call_user_func_array">call_user_func_array()</a> to emulate ExpressionEngine&#8217;s default behavior.</p>
+<p>Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="nv">$method</span> <span class="o">=</span> <span class="s1">&#39;process_&#39;</span><span class="o">.</span><span class="nv">$method</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">method_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$method</span><span class="p">))</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">call_user_func_array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$method</span><span class="p">),</span> <span class="nv">$params</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">show_404</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="private-methods">
+<h2><a class="toc-backref" href="#id6">Private methods</a><a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<p>In some cases you may want certain methods hidden from public access. In order to achieve this, simply declare the method as being private or protected and it will not be served via a URL request. For example, if you were to have a method like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="k">function</span> <span class="nf">utility</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="c1">// some code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Trying to access it via the URL, like this, will not work:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nb">system</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?/</span><span class="nx">cp</span><span class="o">/</span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">my_addon</span><span class="o">/</span><span class="nx">utility</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="database/index.html">Database Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="libraries/index.html">Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="views.html">Views</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Controllers</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

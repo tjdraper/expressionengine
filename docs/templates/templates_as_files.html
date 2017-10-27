@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Saving Templates as Text Files &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Template Language Overview" href="index.html" />
+	    <link rel="next" title="Variable Modifiers" href="variable_modifiers.html" />
+	    <link rel="prev" title="The Template Engine" href="template_engine.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Template Language Overview</a></li>
+								<li class="last">Saving Templates as Text Files</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="saving-templates-as-text-files">
+<h1>Saving Templates as Text Files<a class="headerlink" href="#saving-templates-as-text-files" title="Permalink to this headline">¶</a></h1>
+<p>ExpressionEngine supports saving Template Groups, Templates, Global Variable, and
+Template Partials as regular folders and files on your server, so that you can
+use your preferred text editor (e.g. Dreamweaver, Coda, BBEdit, etc.) to edit
+Templates and then FTP the changes to the server.</p>
+<ul class="simple">
+<li>Template Group folder names must end with <em>.group</em> and the preceding
+name must be URL safe (contain only letters, numbers, dashes,
+underscores and dots).</li>
+<li>Template Files must be in an appropriately named group folder. They
+must end with an approved extension and must be URL safe. Approved
+extensions and the associated template type they will result in are:<ul>
+<li><em>.html</em> creates a &#8216;webpage&#8217; template type</li>
+<li><em>.feed</em> creates an &#8216;rss&#8217; template type</li>
+<li><em>.css</em> creates a &#8216;css&#8217; template type</li>
+<li><em>.js</em> creates a &#8216;js&#8217; template type</li>
+<li><em>.xml</em> creates an &#8216;xml&#8217; template type</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="enabling-saving-templates-as-files">
+<h2>Enabling Saving Templates as Files<a class="headerlink" href="#enabling-saving-templates-as-files" title="Permalink to this headline">¶</a></h2>
+<p>All templates will be saved to the <code class="docutils literal"><span class="pre">system/user/templates</span></code> directory.</p>
+<div class="section" id="set-folder-permissions">
+<h3>1. Set folder permissions<a class="headerlink" href="#set-folder-permissions" title="Permalink to this headline">¶</a></h3>
+<p>Make the <code class="docutils literal"><span class="pre">system/user/templates</span></code> folder writable so that ExpressionEngine will be allowed to save the files as well as recreate your Template_Group/Template structure. See <a class="reference internal" href="../troubleshooting/general/file_permissions.html"><span class="doc">File Permissions</span></a> for details.</p>
+</div>
+<div class="section" id="set-template-preferences">
+<h3>2. Set Template Preferences<a class="headerlink" href="#set-template-preferences" title="Permalink to this headline">¶</a></h3>
+<p>From the Control Panel, go to <span class="menuselection">Settings ‣ Template Settings</span>.</p>
+<ol class="arabic simple">
+<li>Set <strong>Allow templates to be saved as files?</strong> to <em>Yes</em>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="creating-and-synchronizing-templates-and-files">
+<h2>Creating and Synchronizing Templates and Files<a class="headerlink" href="#creating-and-synchronizing-templates-and-files" title="Permalink to this headline">¶</a></h2>
+<p>Once your site is set up to save templates as text files, the files and the
+database will be kept in sync automatically. An edited or newly created template
+file is synced when it is used in any way; this includes loading it on the frontend
+or opening it in the Template Editor.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The templates are kept in sync based on their edit date. If the
+flat file has been edited more recently than the database, then its contents
+will be copied to the database. Similarly, if the database version is newer
+than the file, or a file does not exist, then the file will be written from
+the information in the database.</p>
+</div>
+<div class="section" id="deleting-templates-saved-as-files">
+<h3>Deleting Templates Saved as Files<a class="headerlink" href="#deleting-templates-saved-as-files" title="Permalink to this headline">¶</a></h3>
+<p>Templates can only be deleted in the <a class="reference internal" href="../cp/design/index.html"><span class="doc">Template Manager</span></a>.
+Deleting a template file will not remove it from the database and the file will
+be recreated the next time that database entry is seen.</p>
+</div>
+</div>
+<div class="section" id="saved-templates-and-the-multiple-site-manager">
+<h2>Saved Templates and the Multiple Site Manager<a class="headerlink" href="#saved-templates-and-the-multiple-site-manager" title="Permalink to this headline">¶</a></h2>
+<p>Sites under the Multiple Site Manager have their own preferences for
+saving templates as text files. As such, when setting up a new Site
+under the Multiple Site Manager, you must set up a new location for
+saving those templates.</p>
+<p>When importing or duplicating to a new Site in the Multiple Site
+Manager, if you wish to use existing templates which are saved as text
+files, then the template directory must be manually copied to the
+directory for the new Site.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Template Language Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="comments.html">Commenting Template Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conditionals.html">Conditional Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="date_variable_formatting.html">Date Variable Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding Templates within Other Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hidden_templates.html">Hidden Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hit_counter.html">Hit Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layouts.html">DRY: Template Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php.html">PHP in Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Using Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template_engine.html">The Template Engine</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Saving Templates as Text Files</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="variable_modifiers.html">Variable Modifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="globals/index.html">Global Template Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

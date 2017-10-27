@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Functions Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Image Manipulation Class" href="image_lib.html" />
+	    <link rel="prev" title="Form Validation Class" href="form_validation.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Functions Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="functions-class">
+<h1>Functions Class<a class="headerlink" href="#functions-class" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Functions">
+<em class="property">class </em><code class="descname">Functions</code><a class="headerlink" href="#Functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Functions class contains commonly required functions used throughout
+ExpressionEngine&#8217;s scripts.</p>
+</dd></dl>
+
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#fetch-site-index" id="id3">fetch_site_index</a></li>
+<li><a class="reference internal" href="#create-url" id="id4">create_url</a></li>
+<li><a class="reference internal" href="#fetch-current-uri" id="id5">fetch_current_uri</a></li>
+<li><a class="reference internal" href="#remove-double-slashes" id="id6">remove_double_slashes</a></li>
+<li><a class="reference internal" href="#extract-path" id="id7">extract_path</a></li>
+<li><a class="reference internal" href="#var-swap" id="id8">var_swap</a></li>
+<li><a class="reference internal" href="#redirect" id="id9">redirect</a></li>
+<li><a class="reference internal" href="#random" id="id10">random</a></li>
+<li><a class="reference internal" href="#form-declaration" id="id11">form_declaration</a></li>
+<li><a class="reference internal" href="#form-backtrack" id="id12">form_backtrack</a></li>
+<li><a class="reference internal" href="#evaluate" id="id13">evaluate</a></li>
+<li><a class="reference internal" href="#char-limiter" id="id14">char_limiter</a></li>
+<li><a class="reference internal" href="#word-limiter" id="id15">word_limiter</a></li>
+<li><a class="reference internal" href="#fetch-email-template" id="id16">fetch_email_template</a></li>
+<li><a class="reference internal" href="#language-pack-names" id="id17">language_pack_names</a></li>
+<li><a class="reference internal" href="#clear-caching" id="id18">clear_caching</a></li>
+<li><a class="reference internal" href="#delete-directory" id="id19">delete_directory</a></li>
+<li><a class="reference internal" href="#fetch-assigned-channels" id="id20">fetch_assigned_channels</a></li>
+<li><a class="reference internal" href="#fetch-action-id" id="id21">fetch_action_id</a></li>
+<li><a class="reference internal" href="#create-captcha" id="id22">create_captcha</a></li>
+<li><a class="reference internal" href="#sql-andor-string" id="id23">sql_andor_string</a></li>
+<li><a class="reference internal" href="#assign-variables" id="id24">assign_variables</a></li>
+<li><a class="reference internal" href="#fetch-date-variables" id="id25">fetch_date_variables</a></li>
+<li><a class="reference internal" href="#assign-parameters" id="id26">assign_parameters</a></li>
+<li><a class="reference internal" href="#prep-conditionals" id="id27">prep_conditionals</a></li>
+</ul>
+</div>
+<div class="section" id="fetch-site-index">
+<h2><a class="toc-backref" href="#id3">fetch_site_index</a><a class="headerlink" href="#fetch-site-index" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_site_index">
+<code class="descclassname">Functions::</code><code class="descname">fetch_site_index</code><span class="sig-paren">(</span><span class="optional">[</span><em>$add_slash = FALSE</em><span class="optional">[</span>, <em>$sess_id = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_site_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the url of the main site index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$add_slash</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">TRUE</span></code> to add a slash to the end
+of the return value</li>
+<li><strong>$sess_id</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to exclude the session id</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Site index URL</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-url">
+<h2><a class="toc-backref" href="#id4">create_url</a><a class="headerlink" href="#create-url" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::create_url">
+<code class="descclassname">Functions::</code><code class="descname">create_url</code><span class="sig-paren">(</span><em>$segment</em><span class="optional">[</span>, <em>$sess_id = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::create_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>The segment passed to this function is parsed and added to the full
+site URL to create a full URL/URI.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$memberlist_url</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">create_url</span><span class="p">(</span><span class="s1">&#39;member/memberlist&#39;</span><span class="p">);</span>
+<span class="c1">// returns &quot;http://example.com/index.php/member/memberlist/&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$segment</strong> (<em>string</em>) &#8211; The desired URL&#8217;s URI</li>
+<li><strong>$sess_id</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">FALSE</span></code>, session_id will not be
+included</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Full site URL pointing to <code class="docutils literal"><span class="pre">$segment</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fetch-current-uri">
+<h2><a class="toc-backref" href="#id5">fetch_current_uri</a><a class="headerlink" href="#fetch-current-uri" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_current_uri">
+<code class="descclassname">Functions::</code><code class="descname">fetch_current_uri</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_current_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns uri for current page.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current URI</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="remove-double-slashes">
+<h2><a class="toc-backref" href="#id6">remove_double_slashes</a><a class="headerlink" href="#remove-double-slashes" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::remove_double_slashes">
+<code class="descclassname">Functions::</code><code class="descname">remove_double_slashes</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::remove_double_slashes" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 2.6: </span>Use String helper&#8217;s <code class="docutils literal"><span class="pre">reduce_double_slashes()</span></code> instead.</p>
+</div>
+<p>Removes all double slashes (<code class="docutils literal"><span class="pre">//</span></code>) from <code class="docutils literal"><span class="pre">$str</span></code> and returns the
+string. Useful for cleaning up URLs. The double slashes in <code class="docutils literal"><span class="pre">http://</span></code>
+are preserved.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to remove double slashes from</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Cleaned up <code class="docutils literal"><span class="pre">$str</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="extract-path">
+<h2><a class="toc-backref" href="#id7">extract_path</a><a class="headerlink" href="#extract-path" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::extract_path">
+<code class="descclassname">Functions::</code><code class="descname">extract_path</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::extract_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the template group/template name from <code class="docutils literal"><span class="pre">$str</span></code>, like
+<code class="docutils literal"><span class="pre">{some_var</span> <span class="pre">path='channel/index'}</span></code>, and returns just the path.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Parse permalink path</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="s1">&#39;{permalink path=&#39;</span><span class="nx">channel</span><span class="o">/</span><span class="nx">details</span><span class="s1">&#39;}&#39;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">extract_path</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">extract_path</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;SITE_INDEX&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$path</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">extract_path</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;entry_id&#39;</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="c1">// function returns &#39;channel/details&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to extract the path from</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Template group/name pair</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="var-swap">
+<h2><a class="toc-backref" href="#id8">var_swap</a><a class="headerlink" href="#var-swap" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::var_swap">
+<code class="descclassname">Functions::</code><code class="descname">var_swap</code><span class="sig-paren">(</span><em>$str</em>, <em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::var_swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace array of variables in string:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;Rick and Paul ate {meal} while sitting around the {item}&quot;</span><span class="p">;</span>
+<span class="nv">$swap</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;meal&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Skittles&quot;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;computer&quot;</span><span class="p">);</span>
+<span class="nv">$msg</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">var_swap</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$swap</span><span class="p">);</span>
+<span class="c1">// returns &quot;Rick and Paul ate Skittles while sitting around the computer&quot;;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to parse</li>
+<li><strong>$data</strong> (<em>array</em>) &#8211; Associative array of keys to replace with values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">$str</span></code> parsed with <code class="docutils literal"><span class="pre">$data</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="redirect">
+<h2><a class="toc-backref" href="#id9">redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::redirect">
+<code class="descclassname">Functions::</code><code class="descname">redirect</code><span class="sig-paren">(</span><em>$location</em><span class="optional">[</span>, <em>$method = FALSE</em><span class="optional">[</span>, <em>$status_code = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirect to location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$location</strong> (<em>string</em>) &#8211; URL to redirect to</li>
+<li><strong>$method</strong> (<em>string</em>) &#8211; Optionally choose a method to redirect with
+(can use <code class="docutils literal"><span class="pre">refresh</span></code>, otherwise defaults to using <code class="docutils literal"><span class="pre">Location</span></code>
+header)</li>
+<li><strong>$status_code</strong> (<em>integer</em>) &#8211; Status code in the 300 block</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="random">
+<h2><a class="toc-backref" href="#id10">random</a><a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::random">
+<code class="descclassname">Functions::</code><code class="descname">random</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'encrypt'</em><span class="optional">[</span>, <em>$len = 8</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Random number/password generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$type</strong> (<em>string</em>) &#8211; <p>There are four possible values:</p>
+<ul>
+<li><code class="docutils literal"><span class="pre">basic</span></code> - just a random number</li>
+<li><code class="docutils literal"><span class="pre">alpha</span></code> - string with length of length using only letters (upper
+and lower case) of the alphabet</li>
+<li><code class="docutils literal"><span class="pre">numeric</span></code> - string with length of length using only numbers</li>
+<li><code class="docutils literal"><span class="pre">nozero</span></code> - string with length of length using all numbers except
+zero</li>
+<li><code class="docutils literal"><span class="pre">md5</span></code> - string of a random number that has been <code class="docutils literal"><span class="pre">md5</span></code>&#8216;ed</li>
+<li><code class="docutils literal"><span class="pre">encrypt</span></code> - string of a random number that has been hash&#8217;ed</li>
+</ul>
+</li>
+<li><strong>$len</strong> (<em>integer</em>) &#8211; Length of the string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Random string of characters</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="form-declaration">
+<span id="id1"></span><h2><a class="toc-backref" href="#id11">form_declaration</a><a class="headerlink" href="#form-declaration" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::form_declaration">
+<code class="descclassname">Functions::</code><code class="descname">form_declaration</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::form_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates opening form tag and hidden variables.</p>
+<p>Any form will accept the <code class="docutils literal"><span class="pre">form_class</span></code> and <code class="docutils literal"><span class="pre">form_id</span></code> parameters.
+Access the values with TMPL class properties of <code class="docutils literal"><span class="pre">form_id</span></code> and
+<code class="docutils literal"><span class="pre">form_class</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$form_details</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;action&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;upload&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>              <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">form_id</span><span class="p">,</span>
+    <span class="s1">&#39;class&#39;</span>           <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">form_class</span><span class="p">,</span>
+    <span class="s1">&#39;hidden_fields&#39;</span>   <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;new&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;secure&#39;</span>          <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+    <span class="s1">&#39;onsubmit&#39;</span>        <span class="o">=&gt;</span> <span class="s2">&quot;validate_form(); return false;&quot;</span>
+<span class="p">);</span>
+
+<span class="nv">$r</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">form_declaration</span><span class="p">(</span><span class="nv">$form_details</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Associative array of data (see above for example)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Opening form tag and hidden fields</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="form-backtrack">
+<h2><a class="toc-backref" href="#id12">form_backtrack</a><a class="headerlink" href="#form-backtrack" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::form_backtrack">
+<code class="descclassname">Functions::</code><code class="descname">form_backtrack</code><span class="sig-paren">(</span><span class="optional">[</span><em>$offset = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::form_backtrack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a URL that allows us to return a user to a previously visited
+page after submitting a form. ExpressionEngine keeps track of the last
+five pages viewed by a visitor, and the page returned is determined by
+the value of offset.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Information Accepted&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thank you&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thank you for the locale information&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;link&#39;</span>    <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">form_backtrack</span><span class="p">(</span><span class="s1">&#39;-2&#39;</span><span class="p">),</span> <span class="s1">&#39;Return to entry&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">output</span><span class="o">-&gt;</span><span class="na">show_message</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$offset</strong> (<em>integer</em>) &#8211; How many pages you want to backtrack: <code class="docutils literal"><span class="pre">0</span></code> is
+the current page, <code class="docutils literal"><span class="pre">-1</span></code> would be the form page, and <code class="docutils literal"><span class="pre">-2</span></code> would be
+the page prior to the form page.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Previous URL</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="evaluate">
+<h2><a class="toc-backref" href="#id13">evaluate</a><a class="headerlink" href="#evaluate" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::evaluate">
+<code class="descclassname">Functions::</code><code class="descname">evaluate</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates a string as PHP:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;echo 3*4;&quot;</span><span class="p">;</span>
+
+<span class="nb">ob_start</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">evaluate</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span>
+<span class="nv">$value</span> <span class="o">=</span> <span class="nb">ob_get_contents</span><span class="p">();</span>
+
+<span class="nb">ob_end_clean</span><span class="p">();</span>
+
+<span class="c1">// $value is now equal to 12, since that is what would be outputted by the PHP.</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to evaluate as PHP</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Resulting value</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="char-limiter">
+<h2><a class="toc-backref" href="#id14">char_limiter</a><a class="headerlink" href="#char-limiter" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::char_limiter">
+<code class="descclassname">Functions::</code><code class="descname">char_limiter</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$num = 500</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::char_limiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns section of a string limited to a certain amount of characters
+but rounds the string up to the nearest word.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to limit</li>
+<li><strong>$num</strong> (<em>interger</em>) &#8211; Characters to limit to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Limited string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="word-limiter">
+<h2><a class="toc-backref" href="#id15">word_limiter</a><a class="headerlink" href="#word-limiter" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::word_limiter">
+<code class="descclassname">Functions::</code><code class="descname">word_limiter</code><span class="sig-paren">(</span><em>$str</em><span class="optional">[</span>, <em>$num = 100</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::word_limiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns section of a string based on number of words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to limit</li>
+<li><strong>$num</strong> (<em>interger</em>) &#8211; Words to limit to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Limited string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fetch-email-template">
+<h2><a class="toc-backref" href="#id16">fetch_email_template</a><a class="headerlink" href="#fetch-email-template" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_email_template">
+<code class="descclassname">Functions::</code><code class="descname">fetch_email_template</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_email_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of the email template requested based on the
+language settings of the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; Name of the email template</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Email template parsed with the user&#8217;s language</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="language-pack-names">
+<h2><a class="toc-backref" href="#id17">language_pack_names</a><a class="headerlink" href="#language-pack-names" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::language_pack_names">
+<code class="descclassname">Functions::</code><code class="descname">language_pack_names</code><span class="sig-paren">(</span><em>$default</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::language_pack_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns form select menu of available language packs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$default</strong> (<em>string</em>) &#8211; Currently selected or default language</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Div tag with a select tag that contains the listing of
+languages</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="clear-caching">
+<h2><a class="toc-backref" href="#id18">clear_caching</a><a class="headerlink" href="#clear-caching" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::clear_caching">
+<code class="descclassname">Functions::</code><code class="descname">clear_caching</code><span class="sig-paren">(</span><em>$which</em><span class="optional">[</span>, <em>$sub_dir = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::clear_caching" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears one or all of the main cache folders</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$which</strong> (<em>string</em>) &#8211; <code class="docutils literal"><span class="pre">'page'</span></code>, <code class="docutils literal"><span class="pre">'tag'</span></code>, <code class="docutils literal"><span class="pre">'db'</span></code>, <code class="docutils literal"><span class="pre">'sql'</span></code>,
+<code class="docutils literal"><span class="pre">'relationships'</span></code>, <code class="docutils literal"><span class="pre">'all'</span></code></li>
+<li><strong>$sub_dir</strong> (<em>string</em>) &#8211; Define a specific folder or file in the cache
+directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="delete-directory">
+<h2><a class="toc-backref" href="#id19">delete_directory</a><a class="headerlink" href="#delete-directory" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::delete_directory">
+<code class="descclassname">Functions::</code><code class="descname">delete_directory</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$del_root = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::delete_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties a directory of any files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path</strong> (<em>string</em>) &#8211; Absolute path of the directory you wish to empty;
+remember to use the path constants to make this easier</li>
+<li><strong>$del_root</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">TRUE</span></code> to delete the directory as
+well</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fetch-assigned-channels">
+<h2><a class="toc-backref" href="#id20">fetch_assigned_channels</a><a class="headerlink" href="#fetch-assigned-channels" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_assigned_channels">
+<code class="descclassname">Functions::</code><code class="descname">fetch_assigned_channels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_assigned_channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns array of channels accessible by current user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Array of channels accessible by current user</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fetch-action-id">
+<span id="id2"></span><h2><a class="toc-backref" href="#id21">fetch_action_id</a><a class="headerlink" href="#fetch-action-id" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_action_id">
+<code class="descclassname">Functions::</code><code class="descname">fetch_action_id</code><span class="sig-paren">(</span><em>$class</em>, <em>$method</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_action_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tag in the format <code class="docutils literal"><span class="pre">{AID:class:method}</span></code> for use in the
+frontend. (See also <a class="reference internal" href="cp.html"><span class="doc">EE-&gt;cp-&gt;fetch_action_id</span></a>).</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$action_id</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">fetch_action_id</span><span class="p">(</span><span class="s1">&#39;Comment&#39;</span><span class="p">,</span> <span class="s1">&#39;insert_new_comment&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$class</strong> (<em>string</em>) &#8211; Class that contains the <code class="docutils literal"><span class="pre">$method</span></code></li>
+<li><strong>$method</strong> (<em>string</em>) &#8211; Name of the method that has an action ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Valid action ID tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-captcha">
+<h2><a class="toc-backref" href="#id22">create_captcha</a><a class="headerlink" href="#create-captcha" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::create_captcha">
+<code class="descclassname">Functions::</code><code class="descname">create_captcha</code><span class="sig-paren">(</span><em>$old_world = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::create_captcha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using a random word chosen from the array stored in the
+<code class="docutils literal"><span class="pre">config/captcha.php</span></code> file, this function will create a captcha image
+and then store that word and the IP address of the current user in the
+database. You can then put the returned <code class="docutils literal"><span class="pre">&lt;img&gt;</span></code> tag in your form
+along with a text input field for the user submitted word. When the
+form is submitted you can check the submitted word against the
+database for the user&#8217;s IP. If it matches, you continue processing the
+form data. If it does not, then the form should fail. This is used to
+prevent automated spamming tools from submitting spam.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$old_word</strong> (<em>string</em>) &#8211; Can specify the word to appear as a captcha</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">&lt;img&gt;</span></code> tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="sql-andor-string">
+<h2><a class="toc-backref" href="#id23">sql_andor_string</a><a class="headerlink" href="#sql-andor-string" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::sql_andor_string">
+<code class="descclassname">Functions::</code><code class="descname">sql_andor_string</code><span class="sig-paren">(</span><em>$str</em>, <em>$field</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">[</span>, <em>$null = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::sql_andor_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Certain tag parameters have the option to be in the form of
+<code class="docutils literal"><span class="pre">'value1|value2'</span></code> or <code class="docutils literal"><span class="pre">'not</span> <span class="pre">value1|value2'</span></code>, which allows the
+acceptance of multiple values. This function takes that parameter as
+<code class="docutils literal"><span class="pre">$str</span></code> and the <code class="docutils literal"><span class="pre">$field</span></code> to check, along with the (optional)
+<code class="docutils literal"><span class="pre">$prefix</span></code> of the table containing the field, and returns the query
+string required:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span>  <span class="o">=</span> <span class="s1">&#39;channel|news|sports&#39;</span><span class="p">;</span>
+<span class="nv">$sql</span>  <span class="o">=</span> <span class="s2">&quot;SELECT * FROM exp_channels WHERE site_id = 1 &quot;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">.=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">sql_andor_string</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="s1">&#39;channel_name&#39;</span><span class="p">);</span>
+<span class="c1">// $sql equals:</span>
+<span class="c1">// SELECT * FROM exp_channels WHERE site_id = 1</span>
+<span class="c1">// AND channel_name = &#39;channel&#39; OR channel_name = &#39;news&#39; OR channel_name = &#39;sports&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; Pipe delimited string from the tag parameter</li>
+<li><strong>$field</strong> (<em>string</em>) &#8211; Name of the database field</li>
+<li><strong>$prefix</strong> (<em>string</em>) &#8211; Field prefix, used when working with multiple
+tables to define the table (e.g. <code class="docutils literal"><span class="pre">database_table_name.field_name</span></code>)</li>
+<li><strong>$null</strong> (<em>boolean</em>) &#8211; Allow for null values in the <code class="docutils literal"><span class="pre">$field</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Partial query string containing some of the <code class="docutils literal"><span class="pre">WHERE</span></code> clause</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="assign-variables">
+<h2><a class="toc-backref" href="#id24">assign_variables</a><a class="headerlink" href="#assign-variables" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::assign_variables">
+<code class="descclassname">Functions::</code><code class="descname">assign_variables</code><span class="sig-paren">(</span><span class="optional">[</span><em>$str = ''</em><span class="optional">[</span>, <em>$slash = '/'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::assign_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function extracts the variables contained within the current tag
+being parsed and assigns them to one of two arrays which are returned
+to you: <code class="docutils literal"><span class="pre">var_single</span></code> or <code class="docutils literal"><span class="pre">var_pair</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String to parse</li>
+<li><strong>$slash</strong> (<em>string</em>) &#8211; What kind of backslash is in the string (<code class="docutils literal"><span class="pre">/</span></code>
+or <code class="docutils literal"><span class="pre">&amp;#47;</span></code>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Associative array containing both <code class="docutils literal"><span class="pre">var_single</span></code> and
+<code class="docutils literal"><span class="pre">var_pair</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="fetch-date-variables">
+<h2><a class="toc-backref" href="#id25">fetch_date_variables</a><a class="headerlink" href="#fetch-date-variables" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::fetch_date_variables">
+<code class="descclassname">Functions::</code><code class="descname">fetch_date_variables</code><span class="sig-paren">(</span><em>$datestr</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::fetch_date_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the date format (e.g. <code class="docutils literal"><span class="pre">%Y</span> <span class="pre">%m</span> <span class="pre">%d</span></code>) from a date variable (e.g.
+<code class="docutils literal"><span class="pre">{date</span> <span class="pre">format=&quot;%Y</span> <span class="pre">%m</span> <span class="pre">%d&quot;}</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$datestr</strong> (<em>string</em>) &#8211; The string to look for a single date format in</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Date format string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="assign-parameters">
+<h2><a class="toc-backref" href="#id26">assign_parameters</a><a class="headerlink" href="#assign-parameters" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::assign_parameters">
+<code class="descclassname">Functions::</code><code class="descname">assign_parameters</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#Functions::assign_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch parameters for tag</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; String containing tag parameters directly from the
+<a class="reference internal" href="template.html#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Associative array containing the tag parameters</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="prep-conditionals">
+<h2><a class="toc-backref" href="#id27">prep_conditionals</a><a class="headerlink" href="#prep-conditionals" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="Functions::prep_conditionals">
+<code class="descclassname">Functions::</code><code class="descname">prep_conditionals</code><span class="sig-paren">(</span><em>$str</em>, <em>$vars</em><span class="optional">[</span>, <em>$safety = 'n'</em><span class="optional">[</span>, <em>$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Functions::prep_conditionals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses conditionals and preps conditional for evaluation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; Template <a class="reference internal" href="template.html#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a> to parse</li>
+<li><strong>$vars</strong> (<em>array</em>) &#8211; Associative array of conditionals to parse</li>
+<li><strong>$safety</strong> (<em>string</em>) &#8211; Set to <code class="docutils literal"><span class="pre">'y'</span></code> to ensure that some safety
+checks are performed to make sure conditionals are well formed</li>
+<li><strong>$prefix</strong> (<em>string</em>) &#8211; Used when your variables have a prefix, parses
+both prefixed and non-prefixed variables</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">$str</span></code> with the conditionals from <code class="docutils literal"><span class="pre">$var</span></code> parsed</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Functions Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

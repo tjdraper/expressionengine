@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Publish;
 
@@ -9,27 +16,7 @@ use EllisLab\ExpressionEngine\Controller\Publish\AbstractPublish as AbstractPubl
 use EllisLab\ExpressionEngine\Service\Validation\Result as ValidationResult;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Publish/Edit Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Publish/Edit Controller
  */
 class Edit extends AbstractPublishController {
 
@@ -71,7 +58,7 @@ class Edit extends AbstractPublishController {
 			$entries->filter('author_id', ee()->session->userdata('member_id'));
 		}
 
-		$count = $entries->count();
+		$count = $entry_listing->getEntryCount();
 
 		if ( ! empty(ee()->view->search_value))
 		{
@@ -127,16 +114,16 @@ class Edit extends AbstractPublishController {
 		$table->setColumns($columns);
 		$table->setNoResultsText(lang('no_entries_exist'));
 
+		$show_new_button = TRUE;
 		if ($channel_id)
 		{
-			$channel = ee('Model')->get('Channel', $channel_id)->first();
-			$vars['create_button'] = '<a class="btn tn action" href="'.ee('CP/URL', 'publish/create/' . $channel_id).'">'.sprintf(lang('btn_create_new_entry_in_channel'), $channel->channel_title).'</a>';
+			$channel = $entry_listing->getChannelModelFromFilter();
 
 			// Have we reached the max entries limit for this channel?
 			if ($channel->max_entries != 0 && $count >= $channel->max_entries)
 			{
-				// Don't show create button
-				$vars['create_button'] = '';
+				// Don't show New button
+				$show_new_button = FALSE;
 
 				$desc_key = ($channel->max_entries == 1)
 					? 'entry_limit_reached_one_desc' : 'entry_limit_reached_desc';
@@ -146,10 +133,6 @@ class Edit extends AbstractPublishController {
 					->addToBody(sprintf(lang($desc_key), $channel->max_entries))
 					->now();
 			}
-		}
-		else
-		{
-			$vars['create_button'] = ee('View')->make('publish/partials/create_new_menu')->render(array('button_text' => lang('btn_create_new')));
 		}
 
 		$page = ((int) ee()->input->get('page')) ?: 1;
@@ -163,9 +146,7 @@ class Edit extends AbstractPublishController {
 
 		$entry_id = ee()->session->flashdata('entry_id');
 
-		$statuses = ee('Model')->get('Status')
-			->filter('site_id', ee()->config->item('site_id'))
-			->all();
+		$statuses = ee('Model')->get('Status')->all()->indexBy('status');
 
 		foreach ($entries->all() as $entry)
 		{
@@ -227,7 +208,7 @@ class Edit extends AbstractPublishController {
 
 			$toolbar = array();
 
-			$live_look_template = $entry->getChannel()->getLiveLookTemplate();
+			$live_look_template = $entry->Channel->LiveLookTemplate;
 
 			if ($live_look_template)
 			{
@@ -263,9 +244,7 @@ class Edit extends AbstractPublishController {
 			$disabled_checkbox = ! $can_delete;
 
 			// Display status highlight if one exists
-			$status = $statuses->filter('group_id', $entry->Channel->status_group)
-				->filter('status', $entry->status)
-				->first();
+			$status = isset($statuses[$entry->status]) ? $statuses[$entry->status] : NULL;
 
 			if ($status)
 			{
@@ -330,10 +309,20 @@ class Edit extends AbstractPublishController {
 		$vars['table'] = $table->viewData($base_url);
 		$vars['form_url'] = $vars['table']['base_url'];
 
+		$menu = ee()->menu->generate_menu();
+		$choices = [];
+		foreach ($menu['channels']['create'] as $text => $link) {
+			$choices[$link->compile()] = $text;
+		}
+
 		ee()->view->header = array(
 			'title' => lang('entry_manager'),
-			'form_url' => $vars['form_url'],
-			'search_button_value' => lang('btn_search_entries')
+			'action_button' => ee()->cp->allowed_group('can_create_entries') && $show_new_button ? [
+				'text' => lang('new'),
+				'href' => ee('CP/URL', 'publish/create/' . $channel_id)->compile(),
+				'filter_placeholder' => lang('filter_channels'),
+				'choices' => $channel_id ? NULL : $choices
+			] : NULL
 		);
 
 		$vars['pagination'] = ee('CP/Pagination', $count)
@@ -426,15 +415,31 @@ class Edit extends AbstractPublishController {
 		ee()->view->cp_page_title = sprintf(lang('edit_entry_with_title'), htmlentities($entry->title, ENT_QUOTES, 'UTF-8'));
 
 		$form_attributes = array(
-			'class' => 'settings ajax-validate',
+			'class' => 'ajax-validate',
 		);
 
 		$vars = array(
 			'form_url' => ee('CP/URL')->make('publish/edit/entry/' . $id),
 			'form_attributes' => $form_attributes,
 			'errors' => new \EllisLab\ExpressionEngine\Service\Validation\Result,
-			'button_text' => lang('btn_publish'),
-			'extra_publish_controls' => $entry->Channel->extra_publish_controls
+			'autosaves' => $this->getAutosavesTable($entry, $autosave_id),
+			'extra_publish_controls' => $entry->Channel->extra_publish_controls,
+			'buttons' => [
+				[
+					'name' => 'submit',
+					'type' => 'submit',
+					'value' => 'save',
+					'text' => 'save',
+					'working' => 'btn_saving'
+				],
+				[
+					'name' => 'submit',
+					'type' => 'submit',
+					'value' => 'save_and_new',
+					'text' => 'save_and_new',
+					'working' => 'btn_saving'
+				]
+			]
 		);
 
 		$version_id = ee()->input->get('version');
@@ -500,11 +505,6 @@ class Edit extends AbstractPublishController {
 		ee()->view->cp_breadcrumbs = array(
 			ee('CP/URL')->make('publish/edit', array('filter_by_channel' => $entry->channel_id))->compile() => $entry->Channel->channel_title,
 		);
-
-		if ($entry->Channel->CategoryGroups)
-		{
-			ee('Category')->addCategoryModals();
-		}
 
 		ee()->cp->render('publish/entry', $vars);
 	}

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Plugins &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="Modules" href="modules.html" />
+	    <link rel="prev" title="Constants Reference" href="constants.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Plugins</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="plugins">
+<h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tag-construction">
+<h2>Tag Construction<a class="headerlink" href="#tag-construction" title="Permalink to this headline">¶</a></h2>
+<p>A typical ExpressionEngine tag looks like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">channel</span><span class="o">:</span><span class="nx">entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The first segment is the tag identifier: {exp:. It tells the template
+engine that it has just encountered a tag.</p>
+<p>The second segment is the &#8220;family&#8221; name: <code class="docutils literal"><span class="pre">{exp:channel</span></code>. There are
+different families of tags: channel, comments, members, email, stats,
+etc. In programming terms, the second segment is the name of the &#8216;class&#8217;
+that is instantiated by the tag.</p>
+<p>The above example would tell the template engine to dynamically
+instantiate the &#8220;channel&#8221; class.</p>
+<p>The third segment indicates the &#8216;function&#8217; from within a particular
+family of tags: <code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code>. This example would tell
+ExpressionEngine you want to use the &#8220;entries&#8221; function in the &#8220;channel&#8221;
+class. To be more precise, the third segment is the &#8220;method&#8221; or
+&#8220;function&#8221; name within a given class.</p>
+<p>A tag, therefore, mirrors an object oriented approach:
+<code class="docutils literal"><span class="pre">Class-&gt;function</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">class_name</span><span class="o">:</span><span class="nx">function_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Tags are not always required to have three segments. If your
+plugin is very simple you might opt to only use the class
+constructor. In this case you can get by only using two segments:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">class_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="two-kinds-of-tags">
+<h3>Two Kinds of Tags<a class="headerlink" href="#two-kinds-of-tags" title="Permalink to this headline">¶</a></h3>
+<p>There are two kinds of tags: Single tags and tag pairs. A single tag
+does not have a closing tag:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">randomizer</span><span class="o">:</span><span class="nx">set_one</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Single tags are designed to return a single value. Tag pairs look like
+this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">xml_encode</span><span class="p">}</span>
+    <span class="nx">Stuff</span> <span class="nx">between</span> <span class="nx">the</span> <span class="nx">tags</span>
+<span class="p">{</span><span class="o">/</span><span class="nb">exp</span><span class="o">:</span><span class="nx">xml_encode</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Tag pairs allow you to process the information contained between the
+tags. In the above example, the text between the pairs would be encoded
+with XML entities.</p>
+</div>
+</div>
+<div class="section" id="anatomy-of-a-plugin">
+<h2>Anatomy of a Plugin<a class="headerlink" href="#anatomy-of-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>A plugin consists of a class and at least one function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
+
+<span class="k">class</span> <span class="nc">Plugin_name</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* End of file pi.plugin_name.php */</span>
+<span class="cm">/* Location: ./system/user/addons/plugin_name/pi.plugin_name.php */</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Always deny direct access to your script by checking for the
+<code class="docutils literal"><span class="pre">BASEPATH</span></code> constant.</p>
+</div>
+<p>In addition, you should add some information that is displayed in the
+Plugin Manager section of the Control Panel. This is covered in the
+<a class="reference internal" href="#control-panel-information">Control Panel Information</a> section.</p>
+</div>
+<div class="section" id="creating-a-plugin">
+<h2>Creating a Plugin<a class="headerlink" href="#creating-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>The best way to learn how a plugin is created is to walk you through the
+process of creating one. For this example, we will create a plugin that
+prints &#8220;Hello World&#8221;. Our example plugin will have this syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You will be able to use this plugin anywhere in a Template.</p>
+</div>
+<div class="section" id="creating-the-plugin-file">
+<h2>Creating the Plugin File<a class="headerlink" href="#creating-the-plugin-file" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve decided on a name for your plugin you will create a text
+file for it. The file name must be the same as the class name and it
+must have <code class="docutils literal"><span class="pre">pi.</span></code> as the prefix. We will name our file:
+<code class="docutils literal"><span class="pre">pi.hello_world.php</span></code>.</p>
+<p>Plugin file names are always lower case and they must be identical to
+the name of the second segment of the tag:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-class">
+<h2>Creating the Class<a class="headerlink" href="#creating-the-class" title="Permalink to this headline">¶</a></h2>
+<p>In the new file you&#8217;ve created add this class and constructor:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hello_world</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Class name must always be capitalized. This is the one
+exception to the rule. Tag names and file names are always
+lowercase, while the class name is capitalized.</p>
+</div>
+<div class="section" id="returning-a-value">
+<h3>Returning a Value<a class="headerlink" href="#returning-a-value" title="Permalink to this headline">¶</a></h3>
+<p>Your new class is useless unless it can return a value. There are two
+ways to return a value depending on whether your tag has three segments
+or two.</p>
+</div>
+<div class="section" id="two-segments">
+<h3>Two Segments<a class="headerlink" href="#two-segments" title="Permalink to this headline">¶</a></h3>
+<p>The above tag only has two segments therefore it only utilizes a
+constructor. Since constructors cannot return a value directly, we will
+assign it to a variable called: <code class="docutils literal"><span class="pre">$return_data</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hello_world</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;Hello World&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="three-segments">
+<h3>Three Segments<a class="headerlink" href="#three-segments" title="Permalink to this headline">¶</a></h3>
+<p>With tags that utilize three segments you can return directly. Consider
+a tag with this syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="o">:</span><span class="nx">bold</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The third segment represents a function called bold, which can return a
+value directly:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hello_world</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">bold</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;b&gt;Hello World&lt;/b&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You could create a class with several functions this way:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hello_world</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">normal</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;Hello World&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">bold</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;b&gt;Hello World&lt;/b&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">italic</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;i&gt;Hello World&lt;/i&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Each function would be accessible using these tags:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="o">:</span><span class="nx">normal</span><span class="p">}</span>
+<span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="o">:</span><span class="nx">bold</span><span class="p">}</span>
+<span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">hello_world</span><span class="o">:</span><span class="nx">italic</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="processing-data-within-tag-pairs">
+<h3>Processing Data Within Tag Pairs<a class="headerlink" href="#processing-data-within-tag-pairs" title="Permalink to this headline">¶</a></h3>
+<p>Often you will want to process data contained between a pair of tags.
+Let&#8217;s create a simple tag that makes text bold to illustrate how this is
+done. Our example plugin will have this syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">bold</span><span class="p">}</span>
+    <span class="nx">Some</span> <span class="nx">text</span> <span class="nx">we</span> <span class="nx">want</span> <span class="nx">to</span> <span class="nx">process</span><span class="o">.</span>
+<span class="p">{</span><span class="o">/</span><span class="nb">exp</span><span class="o">:</span><span class="nx">bold</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You will be able to use this plugin anywhere in a Template. You can even
+put this tag within another tag in order to affect a variable:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">channel</span><span class="o">:</span><span class="nx">entries</span><span class="p">}</span>
+    <span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">bold</span><span class="p">}{</span><span class="nx">title</span><span class="p">}{</span><span class="o">/</span><span class="nb">exp</span><span class="o">:</span><span class="nx">bold</span><span class="p">}</span>
+<span class="p">{</span><span class="o">/</span><span class="nb">exp</span><span class="o">:</span><span class="nx">channel</span><span class="o">:</span><span class="nx">entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In following our naming rules, we will create a plugin file named:
+<code class="docutils literal"><span class="pre">pi.bold.php</span></code>. And we will create a class with this syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bold</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So how do we fetch the data contained within the tag pairs? Using the
+following variable:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is how the variable is used:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bold</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Of course you&#8217;ll want to do something with the data before you return
+it, so let&#8217;s make it bold:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bold</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;&lt;b&gt;&quot;</span><span class="o">.</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="o">.</span><span class="s2">&quot;&lt;/b&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<p>Since tags will often have parameters, the template engine makes it easy
+to fetch them using the following variable:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;param_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To see how this is used, let&#8217;s create a plugin that lets you format text
+based on the parameter. Our new plugin will have this syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">format</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;uppercase&quot;</span><span class="p">}</span>
+    <span class="nx">Some</span> <span class="nx">text</span> <span class="nx">to</span> <span class="nx">process</span><span class="o">.</span>
+<span class="p">{</span><span class="o">/</span><span class="nb">exp</span><span class="o">:</span><span class="nx">format</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We will allow the following parameter choices:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">type=&quot;uppercase&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">type=&quot;lowercase&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">type=&quot;bold&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">type=&quot;italic&quot;</span></code></li>
+</ul>
+<p>Create a plugin file named pi.format.php and in it put this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Format</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$parameter</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">);</span>
+
+        <span class="k">switch</span> <span class="p">(</span><span class="nv">$parameter</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">case</span> <span class="s2">&quot;uppercase&quot;</span><span class="o">:</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="nb">strtoupper</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;lowercase&quot;</span><span class="o">:</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="nb">strtolower</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;bold&quot;</span> <span class="o">:</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;&lt;b&gt;&quot;</span><span class="o">.</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="o">.</span><span class="s2">&quot;&lt;/b&gt;&quot;</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;italic&quot;</span><span class="o">:</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;&lt;i&gt;&quot;</span><span class="o">.</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="o">.</span><span class="s2">&quot;&lt;/i&gt;&quot;</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="passing-data-directly">
+<h3>Passing Data Directly<a class="headerlink" href="#passing-data-directly" title="Permalink to this headline">¶</a></h3>
+<p>ExpressionEngine allows any plugin to be assigned as a text formatting
+choice in the Publish page of the Control Panel. In order to allow a
+plugin to be used this way it needs to be able to accept data directly.
+This is how it&#8217;s done.</p>
+<p>Add a parameter to the function. It&#8217;s best to make the parameter
+conditional so it will know whether it&#8217;s being used in a template or
+directly as a formatting choice:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bold</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$str</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$str</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="nv">$str</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;&lt;b&gt;&quot;</span><span class="o">.</span><span class="nv">$str</span><span class="o">.</span><span class="s2">&quot;&lt;/b&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The above tag can then be assigned in the Publish page, allowing you to
+run your channel entries through it.</p>
+</div>
+</div>
+<div class="section" id="database-access">
+<h2>Database Access<a class="headerlink" href="#database-access" title="Permalink to this headline">¶</a></h2>
+<p>ExpressionEngine makes it easy to access the database using the provided
+database class. To run a query you will use <a class="reference external" href="https://ellislab.com/codeigniter/user-guide/database/active_record.html">active record</a> syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: SELECT * FROM mytable</span>
+</pre></div>
+</div>
+<p>To show the result of a query you will generally use the
+<code class="docutils literal"><span class="pre">result_array</span></code> array. This is an associative array provided by the
+database class that contains the query result. Let&#8217;s use a real example
+to show how this is used.</p>
+<p>We will run a query that shows a list of members. For this we will
+create a plugin called <code class="docutils literal"><span class="pre">pi.memberlist.php</span></code>. The tag syntax will be
+this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nb">exp</span><span class="o">:</span><span class="nx">memberlist</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is the class syntax:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Memberlist</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s2">&quot;screen_name&quot;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+
+        <span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">.=</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">screen_name</span><span class="o">.</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here are some additional variables available in the database class:</p>
+<div class="section" id="query-row">
+<h3>$query-&gt;row()<a class="headerlink" href="#query-row" title="Permalink to this headline">¶</a></h3>
+<p>If your query only returns one row you can use this variable like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="k">return</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="query-num-rows">
+<h3>$query-&gt;num_rows()<a class="headerlink" href="#query-num-rows" title="Permalink to this headline">¶</a></h3>
+<p>The number of rows returned by the query. This is a handy variable that
+can be used like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;url !=&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_rows</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">=</span> <span class="s2">&quot;Sorry, no results&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">.=</span> <span class="nb">sprintf</span><span class="p">(</span>
+        <span class="s1">&#39;Total Results: %s&lt;br&gt;&#39;</span><span class="p">,</span>
+        <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_rows</span><span class="p">()</span>
+    <span class="p">);</span>
+
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">.=</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">screen_name</span><span class="o">.</span><span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="control-panel-information">
+<h2>Control Panel Information<a class="headerlink" href="#control-panel-information" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the class and function, you should also add some
+information that will display in the Plugin Manager section of the
+Control Panel. There are two parts to this information.</p>
+<div class="section" id="plugin-information">
+<h3>Plugin Information<a class="headerlink" href="#plugin-information" title="Permalink to this headline">¶</a></h3>
+<p>Your plugin can describe itself in a little more detail by using a series of
+public static properties:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="nv">$name</span>         <span class="o">=</span> <span class="s1">&#39;Member List&#39;</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$version</span>      <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$author</span>       <span class="o">=</span> <span class="s1">&#39;Jane Doe&#39;</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$author_url</span>   <span class="o">=</span> <span class="s1">&#39;http://example.com/&#39;</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$description</span>  <span class="o">=</span> <span class="s1">&#39;Returns a list of site members&#39;</span><span class="p">;</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$typography</span>   <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The information is as follows:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">$name</span></code>: The display name of the Plugin</li>
+<li><code class="docutils literal"><span class="pre">$version</span></code>: The Plugin version number</li>
+<li><code class="docutils literal"><span class="pre">$author</span></code>: The name of the Plugin author</li>
+<li><code class="docutils literal"><span class="pre">$author_url</span></code>: The URL associated with the author (or a URL to
+a page about the Plugin)</li>
+<li><code class="docutils literal"><span class="pre">$description</span></code>: A short description of the purpose of the Plugin</li>
+<li><code class="docutils literal"><span class="pre">$typography</span></code>: A boolean indicating if this plugin is used for text conversion</li>
+</ul>
+</div>
+<div class="section" id="usage-function">
+<h3>usage() function<a class="headerlink" href="#usage-function" title="Permalink to this headline">¶</a></h3>
+<p>The &#8220;usage&#8221; function is designed to easily allow you to give a
+description of how to use your new Plugin, including giving example
+ExpressionEngine code.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Memberlist Class</span>
+<span class="sd"> *</span>
+<span class="sd"> * @package     ExpressionEngine</span>
+<span class="sd"> * @category        Plugin</span>
+<span class="sd"> * @author      Jane Doe</span>
+<span class="sd"> * @copyright       Copyright (c) 2010, Jane Doe</span>
+<span class="sd"> * @link        http://example.com/memberlist/</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Memberlist</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$name</span>         <span class="o">=</span> <span class="s1">&#39;Member List&#39;</span><span class="p">;</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$version</span>      <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$author</span>       <span class="o">=</span> <span class="s1">&#39;Jane Doe&#39;</span><span class="p">;</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$author_url</span>   <span class="o">=</span> <span class="s1">&#39;http://example.com/&#39;</span><span class="p">;</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$description</span>  <span class="o">=</span> <span class="s1">&#39;Returns a list of site members&#39;</span><span class="p">;</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="nv">$typography</span>   <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+
+  <span class="k">public</span> <span class="nv">$return_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+  <span class="c1">// --------------------------------------------------------------------</span>
+
+  <span class="sd">/**</span>
+<span class="sd">   * Memberlist</span>
+<span class="sd">   *</span>
+<span class="sd">   * This function returns a list of members</span>
+<span class="sd">   *</span>
+<span class="sd">   * @access  public</span>
+<span class="sd">   * @return  string</span>
+<span class="sd">   */</span>
+  <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;screen_name&#39;</span><span class="p">)</span>
+      <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result_array</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">.=</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;screen_name&#39;</span><span class="p">];</span>
+      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">return_data</span> <span class="o">.=</span> <span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// --------------------------------------------------------------------</span>
+
+  <span class="sd">/**</span>
+<span class="sd">   * Usage</span>
+<span class="sd">   *</span>
+<span class="sd">   * This function describes how the plugin is used.</span>
+<span class="sd">   *</span>
+<span class="sd">   * @access  public</span>
+<span class="sd">   * @return  string</span>
+<span class="sd">   */</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">usage</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="nb">ob_start</span><span class="p">();</span>  <span class="cp">?&gt;</span><span class="x"></span>
+
+<span class="x">  The Memberlist Plugin simply outputs a</span>
+<span class="x">  list of 15 members of your site.</span>
+
+<span class="x">  {exp:memberlist}</span>
+
+<span class="x">  This is an incredibly simple Plugin.</span>
+
+
+<span class="x">  </span><span class="cp">&lt;?php</span>
+      <span class="nv">$buffer</span> <span class="o">=</span> <span class="nb">ob_get_contents</span><span class="p">();</span>
+      <span class="nb">ob_end_clean</span><span class="p">();</span>
+
+      <span class="k">return</span> <span class="nv">$buffer</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Plugins</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

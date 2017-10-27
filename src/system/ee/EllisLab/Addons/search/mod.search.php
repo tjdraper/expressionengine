@@ -1,28 +1,15 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /**
- * ExpressionEngine - by EllisLab
+ * ExpressionEngine (https://expressionengine.com)
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
- * @filesource
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
  */
 
-// ------------------------------------------------------------------------
-
 /**
- * ExpressionEngine Search Module
- *
- * @package		ExpressionEngine
- * @subpackage	Modules
- * @category	Modules
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Search Module
  */
-
 class Search {
 
 	var	$min_length		= 3;			// Minimum length of search keywords
@@ -306,8 +293,6 @@ class Search {
 		return ee()->functions->redirect($path);
 	}
 
-	// ------------------------------------------------------------------------
-
 	/**
 	 * Build Meta Array
 	 *
@@ -335,8 +320,6 @@ class Search {
 
 		return ee('Encrypt')->encode($meta, ee()->config->item('session_crypt_key'));
 	}
-
-	// ------------------------------------------------------------------------
 
 	/**
 	 * get Meta vars
@@ -371,8 +354,6 @@ class Search {
 				$this->_meta['where'] = 'all';
 		}
 	}
-
-	// ------------------------------------------------------------------------
 
 	/** ---------------------------------------
 	/**  Create the search query
@@ -529,47 +510,28 @@ class Search {
 		// no need to do this unless there are keywords to search
 		if (trim($this->keywords) != '')
 		{
-			$xql = "SELECT DISTINCT(field_group) FROM exp_channels WHERE site_id IN ('".implode("','", $this->_meta['site_ids'])."')";
+            $channels = ee('Model')->get('Channel')
+                ->filter('site_id', 'IN', $this->_meta['site_ids'])
+                ->all();
 
-			if ($id_query != '')
-			{
-				$xql .= $id_query.' ';
-				$xql = str_replace('exp_channel_titles.', '', $xql);
-			}
+            if ($channels)
+            {
+    			$custom_fields = array();
+    			foreach ($channels as $channel)
+    			{
+    				$custom_fields = array_merge($custom_fields, $channel->getAllCustomFields());
+    			}
 
-			$query = ee()->db->query($xql);
+                foreach ($custom_fields as $field)
+                {
+                    if ($field->field_search)
+                    {
+                        $fields[] = $field->field_id;
+                    }
 
-			if ($query->num_rows() > 0)
-			{
-				ee()->db->select('field_id, field_name, field_search');
-
-				// Build array of field groups
-				$field_groups = array();
-				foreach ($query->result_array() as $row)
-				{
-					$field_groups[] = $row['field_group'];
-				}
-
-				if (count($field_groups) > 0)
-				{
-					ee()->db->where_in('group_id', $field_groups);
-				}
-
-				$field_query = ee()->db->get('channel_fields');
-
-				if ($field_query->num_rows() > 0)
-				{
-					foreach ($field_query->result_array() as $row)
-					{
-						if ($row['field_search'] == 'y')
-						{
-							$fields[] = $row['field_id'];
-						}
-
-						$this->fields[$row['field_name']] = array($row['field_id'], $row['field_search']);
-					}
-				}
-			}
+					$this->fields[$field->field_name] = array($field->field_id, $field->field_search);
+                }
+            }
 		}
 
 
@@ -1089,7 +1051,7 @@ class Search {
 
 		$sql = "SELECT DISTINCT(t.entry_id), t.entry_id, t.channel_id, t.forum_topic_id, t.author_id, t.ip_address, t.title, t.url_title, t.status, t.view_count_one, t.view_count_two, t.view_count_three, t.view_count_four, t.allow_comments, t.comment_expiration_date, t.sticky, t.entry_date, t.year, t.month, t.day, t.entry_date, t.edit_date, t.expiration_date, t.recent_comment_date, t.comment_total, t.site_id as entry_site_id,
 				w.channel_title, w.channel_name, w.search_results_url, w.search_excerpt, w.channel_url, w.comment_url, w.comment_moderate, w.channel_html_formatting, w.channel_allow_img_urls, w.channel_auto_link_urls, w.comment_system_enabled,
-				m.username, m.email, m.url, m.screen_name, m.location, m.occupation, m.interests, m.aol_im, m.yahoo_im, m.msn_im, m.icq, m.signature, m.sig_img_filename, m.sig_img_width, m.sig_img_height, m.avatar_filename, m.avatar_width, m.avatar_height, m.photo_filename, m.photo_width, m.photo_height, m.group_id, m.member_id, m.bday_d, m.bday_m, m.bday_y, m.bio,
+				m.username, m.email, m.screen_name, m.signature, m.sig_img_filename, m.sig_img_width, m.sig_img_height, m.avatar_filename, m.avatar_width, m.avatar_height, m.photo_filename, m.photo_width, m.photo_height, m.group_id, m.member_id,
 				md.*,
 				wd.*
 			FROM exp_channel_titles		AS t
@@ -1108,8 +1070,6 @@ class Search {
 
 		return $sql;
 	}
-
-	// ------------------------------------------------------------------------
 
 	/** ----------------------------------------
 	/**  Total search results
@@ -1372,8 +1332,6 @@ class Search {
 		return ee()->TMPL->tagdata;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Callback called by Channel Entries parser so we can parse search results
 	 * tags
@@ -1473,8 +1431,6 @@ class Search {
 		return $tagdata;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Retrieve the Member Path tags for a set of tagdata
 	 *
@@ -1506,8 +1462,6 @@ class Search {
 		return $this->m_paths;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Get the number of tags in a given tagdata
 	 * @param  String $tag_name The name of the tag to look for
@@ -1520,8 +1474,6 @@ class Search {
 		return substr_count($tagdata, LD.$tag_name.RD);
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * For when preg_quote is too much, we just need to escape replacement patterns
 	 * @param  string	String to escape
@@ -1531,8 +1483,6 @@ class Search {
 	{
 		return strtr($string, array('\\' => '\\\\', '$' => '\$'));
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Simple Search Form

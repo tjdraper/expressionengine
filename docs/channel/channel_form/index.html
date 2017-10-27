@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Channel Form &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Channel" href="../index.html" />
+	    <link rel="next" title="Channel Form Development" href="development.html" />
+	    <link rel="prev" title="Channel Sets" href="../sets.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Channel</a></li>
+								<li class="last">Channel Form</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="channel-form">
+<h1>Channel Form<a class="headerlink" href="#channel-form" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id10">Introduction</a></li>
+<li><a class="reference internal" href="#using-channel-form" id="id11">Using Channel Form</a><ul>
+<li><a class="reference internal" href="#including-assets" id="id12">Including Assets</a></li>
+<li><a class="reference internal" href="#form-inputs" id="id13">Form Inputs</a></li>
+<li><a class="reference internal" href="#parameters" id="id14">Parameters</a></li>
+<li><a class="reference internal" href="#variables" id="id15">Variables</a></li>
+<li><a class="reference internal" href="#form-validation" id="id16">Form Validation</a></li>
+<li><a class="reference internal" href="#allowing-guests-to-post-entries" id="id17">Allowing Guests to Post Entries</a></li>
+<li><a class="reference internal" href="#manually-constructed-input-fields" id="id18">Manually Constructed Input Fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples" id="id19">Examples</a></li>
+<li><a class="reference internal" href="#development" id="id20">Development</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id10">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Channel Form makes it possible to add and edit entries from outside
+of the Control Panel using a regular form inside a template. Thank you
+to <a class="reference external" href="http://barrettnewton.com/">Barrett Newton</a> for developing the
+original (under the name of SafeCracker) and working with EllisLab to
+provide it to the ExpressionEngine community.</p>
+<ul class="simple">
+<li>Allows guest (logged out) users to use the entry form, with optional
+CAPTCHA support.</li>
+<li>Edit existing entries, and only edit the fields you need. Fields not
+in your form will be left intact.</li>
+<li>Adds or edits entries based on the presence of an entry_id and/or
+url_title.</li>
+<li>Allows use of the entry_id or url_title in your return URL, so that
+you may redirect to the entry that was just created. Useful for
+multi-page forms.</li>
+<li>Specify a default status, or set forms to override default statuses.</li>
+<li>Specify different return URLs for different member groups by the
+group_id. Send visitors to one page, and admins to another.</li>
+<li>Server-side form validation using the <a class="reference external" href="https://ellislab.com/codeigniter/user-guide/libraries/form_validation.html">CodeIgniter Form
+Validation class</a>.</li>
+<li>Handles AJAX requests and can output responses in JSON.</li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 2.7: </span>naming, additions, and removals</p>
+<ul class="simple">
+<li><em>SafeCracker</em> is now <em>Channel Form</em>.</li>
+<li>The <em>File</em> fieldtype is now compatible with <em>Channel Form</em>.</li>
+<li><em>Stand-Alone Entry Form</em> has been removed.</li>
+<li><em>SafeCracker File</em> has been removed.</li>
+<li>The stylesheet path has changed from <code class="docutils literal"><span class="pre">{path=css/_ee_saef_css}</span></code> to
+<code class="docutils literal"><span class="pre">{path=css/_ee_channel_form_css}</span></code>.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-channel-form">
+<h2><a class="toc-backref" href="#id11">Using Channel Form</a><a class="headerlink" href="#using-channel-form" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you&#8217;ll need is a <code class="docutils literal"><span class="pre">{exp:channel:form}</span></code> tag pair, along
+with a few <a class="reference internal" href="#parameters">parameters</a> to determine where to submit the entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:form</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;news&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:form</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="including-assets">
+<h3><a class="toc-backref" href="#id12">Including Assets</a><a class="headerlink" href="#including-assets" title="Permalink to this headline">¶</a></h3>
+<p>If you plan on using the formatting buttons or the <a class="reference internal" href="../../fieldtypes/grid.html"><span class="doc">Grid</span></a>, <a class="reference internal" href="../../fieldtypes/relationships.html"><span class="doc">Relationships</span></a>, <a class="reference internal" href="../../add-ons/rte/index.html"><span class="doc">Rich Text Editor</span></a>, Date, or File fieldtypes, include a link to the
+Channel Form stylesheet in your template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;css/_ee_channel_form_css&#39;</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media</span><span class="o">=</span><span class="s">&quot;screen&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The Channel Form tag will automatically load jQuery for you. If you
+prefer to include your own version of jQuery, use the <a class="reference internal" href="#include-jquery">include_jquery=</a>
+parameter.</p>
+</div>
+<div class="section" id="form-inputs">
+<h3><a class="toc-backref" href="#id13">Form Inputs</a><a class="headerlink" href="#form-inputs" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#title" id="id21">Title</a></li>
+<li><a class="reference internal" href="#url-title" id="id22">URL Title</a></li>
+<li><a class="reference internal" href="#entry-date" id="id23">Entry Date</a></li>
+<li><a class="reference internal" href="#expiration-date" id="id24">Expiration Date</a></li>
+<li><a class="reference internal" href="#comment-expiration-date" id="id25">Comment Expiration Date</a></li>
+<li><a class="reference internal" href="#make-entry-sticky" id="id26">Make Entry Sticky</a></li>
+<li><a class="reference internal" href="#categories" id="id27">Categories</a></li>
+<li><a class="reference internal" href="#categories-tag-pair-parameters" id="id28">Categories Tag Pair Parameters</a><ul>
+<li><a class="reference internal" href="#backspace" id="id29">backspace=</a></li>
+<li><a class="reference internal" href="#limit" id="id30">limit=</a></li>
+<li><a class="reference internal" href="#show" id="id31">show=</a></li>
+<li><a class="reference internal" href="#show-group" id="id32">show_group=</a></li>
+<li><a class="reference internal" href="#category-id" id="id33">{category_id}</a></li>
+<li><a class="reference internal" href="#category-name" id="id34">{category_name}</a></li>
+<li><a class="reference internal" href="#category-group-id" id="id35">{category_group_id}</a></li>
+<li><a class="reference internal" href="#category-group" id="id36">{category_group}</a></li>
+<li><a class="reference internal" href="#category-parent" id="id37">{category_parent}</a></li>
+<li><a class="reference internal" href="#category-depth" id="id38">{category_depth}</a></li>
+<li><a class="reference internal" href="#selected" id="id39">{selected}</a></li>
+<li><a class="reference internal" href="#checked" id="id40">{checked}</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#status" id="id41">Status</a></li>
+<li><a class="reference internal" href="#other-channel-fields" id="id42">Other Channel Fields</a></li>
+</ul>
+</div>
+<p>Most Channel Fields are available to use via input fields, including:</p>
+<div class="section" id="title">
+<h4><a class="toc-backref" href="#id21">Title</a><a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h4>
+<p>Set the title of the entry. This is a <strong>required</strong> parameter.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">title</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="na">onkeyup</span><span class="o">=</span><span class="s">&quot;liveUrlTitle(event);&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-title">
+<h4><a class="toc-backref" href="#id22">URL Title</a><a class="headerlink" href="#url-title" title="Permalink to this headline">¶</a></h4>
+<p>Set the URL title of the entry.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;url_title&quot;</span><span class="p">&gt;</span>URL Title<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;url_title&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;url_title&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">url_title</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;75&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="entry-date">
+<h4><a class="toc-backref" href="#id23">Entry Date</a><a class="headerlink" href="#entry-date" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All date formats should match what the user has defined in
+localization settings. The date fields will autmatically use that format and
+validate against it.</p>
+</div>
+<p>Set the date of the entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Date <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;entry_date&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">entry_date</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;23&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;25&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expiration-date">
+<h4><a class="toc-backref" href="#id24">Expiration Date</a><a class="headerlink" href="#expiration-date" title="Permalink to this headline">¶</a></h4>
+<p>Set the expiration date of the entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Expiration Date <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;expiration_date&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">expiration_date</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;23&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;25&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comment-expiration-date">
+<h4><a class="toc-backref" href="#id25">Comment Expiration Date</a><a class="headerlink" href="#comment-expiration-date" title="Permalink to this headline">¶</a></h4>
+<p>Set the comment expiration date if desired:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Comment Expiration Date <span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;comment_expiration_date&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">comment_expiration_date</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;23&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;25&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="make-entry-sticky">
+<h4><a class="toc-backref" href="#id26">Make Entry Sticky</a><a class="headerlink" href="#make-entry-sticky" title="Permalink to this headline">¶</a></h4>
+<p>Set the entry as &#8220;sticky&#8221; or not.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;sticky&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;y&quot;</span>  <span class="p">{</span><span class="nf">sticky</span><span class="p">}</span> <span class="p">/&gt;</span> Make Entry Sticky<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="categories">
+<h4><a class="toc-backref" href="#id27">Categories</a><a class="headerlink" href="#categories" title="Permalink to this headline">¶</a></h4>
+<p>Set the entry&#8217;s categories.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">category_menu</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;categories&quot;</span><span class="p">&gt;</span>Categories<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;category[]&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;categories&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;4&quot;</span> <span class="na">multiple</span><span class="o">=</span><span class="s">&quot;multiple&quot;</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">select_options</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/category_menu</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or use the alternative syntax.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;categories&quot;</span><span class="p">&gt;</span>Categories<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;category[]&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;categories&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;4&quot;</span> <span class="na">multiple</span><span class="o">=</span><span class="s">&quot;multiple&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">category_id</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="categories-tag-pair-parameters">
+<h4><a class="toc-backref" href="#id28">Categories Tag Pair Parameters</a><a class="headerlink" href="#categories-tag-pair-parameters" title="Permalink to this headline">¶</a></h4>
+<p>All of the category tag pair parameters available in the channel entries tag are available in the form:</p>
+<div class="section" id="backspace">
+<h5><a class="toc-backref" href="#id29">backspace=</a><a class="headerlink" href="#backspace" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">backspace</span><span class="p">=</span><span class="s2">&quot;5&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="limit">
+<h5><a class="toc-backref" href="#id30">limit=</a><a class="headerlink" href="#limit" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show">
+<h5><a class="toc-backref" href="#id31">show=</a><a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show</span><span class="p">=</span><span class="s2">&quot;4|7&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may alternatively specify which categories to not show:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show</span><span class="p">=</span><span class="s2">&quot;not 3|6|8&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-group">
+<h5><a class="toc-backref" href="#id32">show_group=</a><a class="headerlink" href="#show-group" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show_group</span><span class="p">=</span><span class="s2">&quot;1|3&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You may alternatively specify which category groups to not show:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">categories</span> <span class="na">show_group</span><span class="p">=</span><span class="s2">&quot;not 2|4&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The following variables are available inside the Category Menu and Categories
+tag pairs:</p>
+</div>
+<div class="section" id="category-id">
+<h5><a class="toc-backref" href="#id33">{category_id}</a><a class="headerlink" href="#category-id" title="Permalink to this headline">¶</a></h5>
+<p>The category id number.</p>
+</div>
+<div class="section" id="category-name">
+<h5><a class="toc-backref" href="#id34">{category_name}</a><a class="headerlink" href="#category-name" title="Permalink to this headline">¶</a></h5>
+<p>The category name.</p>
+</div>
+<div class="section" id="category-group-id">
+<h5><a class="toc-backref" href="#id35">{category_group_id}</a><a class="headerlink" href="#category-group-id" title="Permalink to this headline">¶</a></h5>
+<p>The category group id number.</p>
+</div>
+<div class="section" id="category-group">
+<h5><a class="toc-backref" href="#id36">{category_group}</a><a class="headerlink" href="#category-group" title="Permalink to this headline">¶</a></h5>
+<p>The category group name.</p>
+</div>
+<div class="section" id="category-parent">
+<h5><a class="toc-backref" href="#id37">{category_parent}</a><a class="headerlink" href="#category-parent" title="Permalink to this headline">¶</a></h5>
+<p>The name of the category parent if it exists, indented according to the
+category depth.</p>
+</div>
+<div class="section" id="category-depth">
+<h5><a class="toc-backref" href="#id38">{category_depth}</a><a class="headerlink" href="#category-depth" title="Permalink to this headline">¶</a></h5>
+<p>The level of nesting assigned to the category.  The depth of a top level
+category is 1.</p>
+</div>
+<div class="section" id="selected">
+<h5><a class="toc-backref" href="#id39">{selected}</a><a class="headerlink" href="#selected" title="Permalink to this headline">¶</a></h5>
+<p>An indicator of whether the category has been selected or not.  Is blank if not,
+selected=&#8221;selected&#8221; otherwise.</p>
+</div>
+<div class="section" id="checked">
+<h5><a class="toc-backref" href="#id40">{checked}</a><a class="headerlink" href="#checked" title="Permalink to this headline">¶</a></h5>
+<p>An indicator of whether the category has been selected or not.  Is blank if not,
+checked=&#8221;checked&#8221; otherwise.</p>
+</div>
+</div>
+<div class="section" id="status">
+<h4><a class="toc-backref" href="#id41">Status</a><a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h4>
+<p>Set the entry&#8217;s status.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">status_menu</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Status<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">select_options</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/status_menu</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or use the alternative syntax.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>Status<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;status&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">statuses</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">status</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">status</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/statuses</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-channel-fields">
+<h4><a class="toc-backref" href="#id42">Other Channel Fields</a><a class="headerlink" href="#other-channel-fields" title="Permalink to this headline">¶</a></h4>
+<p>For all of the other channel fields, you have several options for outputting
+the form field.</p>
+<p>The Custom fields tag pair loops through all of the custom fields, outputting custom fields with the minimum number of tags but also a limited amount of design flexibility.</p>
+<p>To output a single field, the <code class="docutils literal"><span class="pre">{field:...}</span></code> tag is available:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">field:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <cite>field tag</cite> should output all of the required html needed for either a new entry or an edit.</p>
+<p>If you need to further customize input fields, most can be manually constructed using the field shortname.</p>
+</div>
+</div>
+<div class="section" id="parameters">
+<h3><a class="toc-backref" href="#id14">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><a class="reference internal" href="#allow-comments" id="id43">allow_comments=</a></li>
+<li><a class="reference internal" href="#author-only" id="id44">author_only=</a></li>
+<li><a class="reference internal" href="#category" id="id45">category=</a></li>
+<li><a class="reference internal" href="#channel" id="id46">channel=</a></li>
+<li><a class="reference internal" href="#class" id="id47">class=</a></li>
+<li><a class="reference internal" href="#datepicker" id="id48">datepicker=</a></li>
+<li><a class="reference internal" href="#dynamic-title" id="id49">dynamic_title=</a></li>
+<li><a class="reference internal" href="#entry-id" id="id50">entry_id=</a></li>
+<li><a class="reference internal" href="#error-handling" id="id51">error_handling=</a></li>
+<li><a class="reference internal" href="#id" id="id52">id=</a></li>
+<li><a class="reference internal" href="#include-assets" id="id53">include_assets=</a></li>
+<li><a class="reference internal" href="#include-jquery" id="id54">include_jquery=</a></li>
+<li><a class="reference internal" href="#json" id="id55">json=</a></li>
+<li><a class="reference internal" href="#logged-out-member-id" id="id56">logged_out_member_id=</a></li>
+<li><a class="reference internal" href="#require-entry" id="id57">require_entry=</a></li>
+<li><a class="reference internal" href="#return" id="id58">return=</a></li>
+<li><a class="reference internal" href="#return-x" id="id59">return_X=</a></li>
+<li><a class="reference internal" href="#rules-my-field-name" id="id60">rules:my_field_name=</a></li>
+<li><a class="reference internal" href="#rte-selector" id="id61">rte_selector=</a></li>
+<li><a class="reference internal" href="#rte-toolset-id" id="id62">rte_toolset_id=</a></li>
+<li><a class="reference internal" href="#secure-action" id="id63">secure_action=</a></li>
+<li><a class="reference internal" href="#secure-return" id="id64">secure_return=</a></li>
+<li><a class="reference internal" href="#site" id="id65">site=</a></li>
+<li><a class="reference internal" href="#show-fields" id="id66">show_fields=</a></li>
+<li><a class="reference internal" href="#unique-url-title" id="id67">unique_url_title=</a></li>
+<li><a class="reference internal" href="#id3" id="id68">url_title=</a></li>
+<li><a class="reference internal" href="#use-live-url" id="id69">use_live_url=</a></li>
+</ul>
+</div>
+<div class="section" id="allow-comments">
+<h4><a class="toc-backref" href="#id43">allow_comments=</a><a class="headerlink" href="#allow-comments" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>allow_comments=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Force the allow comments value for the submitted entry, for both new entries and edits. If set, form fields will not affect the entry&#8217;s allow comments setting.
+In addition to the channel entry allow comments setting, the Channel&#8217;s <a class="reference internal" href="../../cp/channel/form-settings.html#channel-prefs-allow-comments"><span class="std std-ref">Allow comments?</span></a> preference must also be set to yes in order to allow comments on any entries in that channel.</p>
+</div>
+<div class="section" id="author-only">
+<h4><a class="toc-backref" href="#id44">author_only=</a><a class="headerlink" href="#author-only" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>author_only=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Only allow the author of the entry to edit the entry. Defaults to &#8220;no&#8221;.</p>
+</div>
+<div class="section" id="category">
+<h4><a class="toc-backref" href="#id45">category=</a><a class="headerlink" href="#category" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category=&quot;7|13&quot;
+</pre></div>
+</div>
+<p>If you don&#8217;t wish to include the form option on the page then you can
+set any categories that you wish to assign the entry to via this
+parameter. Specify the category by Category ID. You may specify multiple
+categories by separating the Category ID with the pipe character:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>category=&quot;3|7|13|42&quot;
+</pre></div>
+</div>
+<p>This parameter only applies to new entries and will be ignored for edits.</p>
+</div>
+<div class="section" id="channel">
+<h4><a class="toc-backref" href="#id46">channel=</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>channel=&quot;news&quot;
+</pre></div>
+</div>
+<p>The short name of the channel. This is a <strong>required</strong> parameter.</p>
+</div>
+<div class="section" id="class">
+<h4><a class="toc-backref" href="#id47">class=</a><a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>class=&quot;channel_form&quot;
+</pre></div>
+</div>
+<p>Specify the CSS class.</p>
+</div>
+<div class="section" id="datepicker">
+<h4><a class="toc-backref" href="#id48">datepicker=</a><a class="headerlink" href="#datepicker" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>datepicker=&quot;no&quot;
+</pre></div>
+</div>
+<p>Adds the datepicker to your date fields. Defaults to &#8220;yes&#8221;.</p>
+</div>
+<div class="section" id="dynamic-title">
+<h4><a class="toc-backref" href="#id49">dynamic_title=</a><a class="headerlink" href="#dynamic-title" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>dynamic_title=&quot;[your_custom_field] Submission&quot;
+</pre></div>
+</div>
+<p>Dynamically set the title of your entry based on your entry&#8217;s data. Use
+brackets [ ] instead of the standard curly braces.</p>
+</div>
+<div class="section" id="entry-id">
+<h4><a class="toc-backref" href="#id50">entry_id=</a><a class="headerlink" href="#entry-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>entry_id=&quot;<span class="p">{</span><span class="nf">segment_3</span><span class="p">}</span>&quot;
+</pre></div>
+</div>
+<p>The entry_id of the channel entry you wish to edit. If both this and
+url_title are empty, the entry form will add a new entry.</p>
+</div>
+<div class="section" id="error-handling">
+<h4><a class="toc-backref" href="#id51">error_handling=</a><a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>error_handling=&quot;inline&quot;
+</pre></div>
+</div>
+<p>Choose to display error messages inline (see <a class="reference external" href="#error-my-field-name">Error
+Messages</a>). By default, errors are displayed with the user
+message template.</p>
+</div>
+<div class="section" id="id">
+<h4><a class="toc-backref" href="#id52">id=</a><a class="headerlink" href="#id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>id=&quot;channel_form&quot;
+</pre></div>
+</div>
+<p>Specify the CSS id.</p>
+</div>
+<div class="section" id="include-assets">
+<h4><a class="toc-backref" href="#id53">include_assets=</a><a class="headerlink" href="#include-assets" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>include_assets=&quot;no&quot;
+</pre></div>
+</div>
+<p>Adds necessary Javascript and CSS to your form. If you do not require the
+Javascript functionality or reset CSS, set to &#8220;no&#8221;. Defaults to &#8220;yes&#8221;.</p>
+</div>
+<div class="section" id="include-jquery">
+<h4><a class="toc-backref" href="#id54">include_jquery=</a><a class="headerlink" href="#include-jquery" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>include_jquery=&quot;no&quot;
+</pre></div>
+</div>
+<p>Includes jQuery automatically. Defaults to &#8220;yes&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using your own copy of jQuery you will need to load
+it <strong>before</strong> the form.</p>
+</div>
+</div>
+<div class="section" id="json">
+<h4><a class="toc-backref" href="#id55">json=</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>json=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Output your results in JSON format, instead of performing a redirect.</p>
+</div>
+<div class="section" id="logged-out-member-id">
+<h4><a class="toc-backref" href="#id56">logged_out_member_id=</a><a class="headerlink" href="#logged-out-member-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>logged_out_member_id=&quot;3&quot;
+</pre></div>
+</div>
+<p>In order to allow logged out users to use the entry form, you must
+specify a member_id which will be used as the author of the entry.</p>
+</div>
+<div class="section" id="require-entry">
+<h4><a class="toc-backref" href="#id57">require_entry=</a><a class="headerlink" href="#require-entry" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>require_entry=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Require an entry to edit via the entry_id or url_title parameters.
+Disables new entries. Defaults to &#8220;no&#8221;.</p>
+</div>
+<div class="section" id="return">
+<h4><a class="toc-backref" href="#id58">return=</a><a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return=&quot;site/ENTRY_ID&quot;
+</pre></div>
+</div>
+<p>Specify a path to redirect the user to after an entry submission. You
+may use the constants ENTRY_ID and URL_TITLE, which will be replaced
+with the entry&#8217;s entry_id or url_title, respectively. This is a
+<strong>required</strong> parameter.</p>
+</div>
+<div class="section" id="return-x">
+<h4><a class="toc-backref" href="#id59">return_X=</a><a class="headerlink" href="#return-x" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>return_X=&quot;site/thanks&quot;
+</pre></div>
+</div>
+<p>Specify a path to redirect the user to after an entry submission, based
+on the user&#8217;s member group. Replace X with the group_id of the member
+group.</p>
+</div>
+<div class="section" id="rules-my-field-name">
+<h4><a class="toc-backref" href="#id60">rules:my_field_name=</a><a class="headerlink" href="#rules-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>rules:my_field_name=&quot;required|min_length[5]&quot;
+</pre></div>
+</div>
+<p>Add additional validation rules to your fields. Separate multiple rules
+with the pipe | character. You may use the native <a class="reference external" href="https://ellislab.com/codeigniter/user-guide/libraries/form_validation.html#rulereference">CodeIgniter
+rules</a>
+(required, matches, min_length, max_length, exact_length, alpha,
+alpha_numeric, alpha_dash, numeric, integer, is_natural,
+is_natural_no_zero, valid_email, valid_emails, valid_ip,
+valid_base64), and these additional ExpressionEngine-specific rules:
+valid_ee_date.</p>
+</div>
+<div class="section" id="rte-selector">
+<span id="channel-form-rte-selector"></span><h4><a class="toc-backref" href="#id61">rte_selector=</a><a class="headerlink" href="#rte-selector" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>rte_selector=&quot;.my-custom-class&quot;
+</pre></div>
+</div>
+<p>This parameter will automatically load ExpressionEngine&#8217;s <a class="reference internal" href="../../add-ons/rte/index.html"><span class="doc">Rich Text Editor</span></a>
+and apply it to the element(s) matching the jQuery selector you specify.
+Any valid jQuery selector is acceptable.</p>
+<p>The RTE will use the Toolset preference of the currently logged-in user as chosen
+in <a class="reference internal" href="../../cp/members/profile/publishing.html#my-account-rte-prefs"><span class="std std-ref">RTE tool set</span></a>. If the user has not chosen a Toolset or is not
+logged in, the site&#8217;s <a class="reference internal" href="../../add-ons/rte/control_panel/index.html#rte-mcp-default-toolset"><span class="std std-ref">Default Tool Sets</span></a> will be used.</p>
+<p>You can optionally force a particular toolset ID to use (see below).</p>
+</div>
+<div class="section" id="rte-toolset-id">
+<span id="channel-form-rte-toolset-id"></span><h4><a class="toc-backref" href="#id62">rte_toolset_id=</a><a class="headerlink" href="#rte-toolset-id" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>rte_toolset_id=&quot;1&quot;
+</pre></div>
+</div>
+<p>The ID of the Rich Text Editor toolset to use. Toolset IDs are listed on the
+<a class="reference internal" href="../../add-ons/rte/control_panel/index.html"><span class="doc">Rich Text Editor Module Control Panel</span></a> page.</p>
+</div>
+<div class="section" id="secure-action">
+<h4><a class="toc-backref" href="#id63">secure_action=</a><a class="headerlink" href="#secure-action" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>secure_action=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Forces the form to use https as its action.. Defaults to &#8220;no&#8221;.</p>
+</div>
+<div class="section" id="secure-return">
+<h4><a class="toc-backref" href="#id64">secure_return=</a><a class="headerlink" href="#secure-return" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>secure_return=&quot;yes&quot;
+</pre></div>
+</div>
+<p>Force the form to return to https. Defaults to &#8220;no&#8221;.</p>
+</div>
+<div class="section" id="site">
+<h4><a class="toc-backref" href="#id65">site=</a><a class="headerlink" href="#site" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>site=&quot;your_site_name&quot;
+</pre></div>
+</div>
+<p>Specify the site short name of another site on your MSM installation to
+add/edit entries for that site.</p>
+</div>
+<div class="section" id="show-fields">
+<h4><a class="toc-backref" href="#id66">show_fields=</a><a class="headerlink" href="#show-fields" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_fields=&quot;body|extended&quot;
+</pre></div>
+</div>
+<p>Specify which entry fields to display in the custom field loop, by
+specifying a pipe separated list of field short names.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_fields=&quot;body|extended|full_image&quot;
+</pre></div>
+</div>
+<p>You may exclude fields by placing the word &#8220;not&#8221; in front of the list:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>show_fields=&quot;not image_thumbnail|source|rating&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="unique-url-title">
+<h4><a class="toc-backref" href="#id67">unique_url_title=</a><a class="headerlink" href="#unique-url-title" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>unique_url_title=&quot;yes&quot;
+</pre></div>
+</div>
+<p>When set to &#8220;yes&#8221;, will ensure the URL title of the entry will be unique so
+there is no risk of creating an entry with a duplicate URL title.</p>
+</div>
+<div class="section" id="id3">
+<h4><a class="toc-backref" href="#id68">url_title=</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>url_title=&quot;<span class="p">{</span><span class="nf">segment_3</span><span class="p">}</span>&quot;
+</pre></div>
+</div>
+<p>The url_title of the channel entry you wish to edit. If both this and
+entry_id are empty, the entry form will add a new entry.</p>
+</div>
+<div class="section" id="use-live-url">
+<h4><a class="toc-backref" href="#id69">use_live_url=</a><a class="headerlink" href="#use-live-url" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>use_live_url=&quot;no&quot;
+</pre></div>
+</div>
+<p>This will disable the url_title from being created automatically based on the
+title. Use this when you&#8217;ve opted to disable channel_form_assets. Defaults to
+yes.</p>
+</div>
+</div>
+<div class="section" id="variables">
+<h3><a class="toc-backref" href="#id15">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id4">
+<ul class="simple">
+<li><a class="reference internal" href="#custom-field-single-tag" id="id70">Custom Field Single Tag</a></li>
+<li><a class="reference internal" href="#custom-field-tag-pair" id="id71">Custom Field Tag Pair</a></li>
+<li><a class="reference internal" href="#field-my-field-name" id="id72">field:my_field_name</a></li>
+<li><a class="reference internal" href="#error-my-field-name" id="id73">error:my_field_name</a></li>
+<li><a class="reference internal" href="#label-my-field-name" id="id74">label:my_field_name</a></li>
+<li><a class="reference internal" href="#instructions-my-field-name" id="id75">instructions:my_field_name</a></li>
+<li><a class="reference internal" href="#selected-option-my-field-name" id="id76">selected_option:my_field_name</a></li>
+<li><a class="reference internal" href="#selected-option-my-field-name-label" id="id77">selected_option:my_field_name:label</a></li>
+<li><a class="reference internal" href="#options-my-field-name" id="id78">options:my_field_name</a></li>
+<li><a class="reference internal" href="#custom-fields" id="id79">custom_fields</a></li>
+<li><a class="reference internal" href="#captcha" id="id80">captcha</a></li>
+<li><a class="reference internal" href="#channel-form-assets" id="id81">channel_form_assets</a></li>
+<li><a class="reference internal" href="#global-errors" id="id82">global_errors</a></li>
+<li><a class="reference internal" href="#global-errors-count" id="id83">global_errors:count</a></li>
+<li><a class="reference internal" href="#field-errors" id="id84">field_errors</a></li>
+<li><a class="reference internal" href="#field-errors-count" id="id85">field_errors:count</a></li>
+</ul>
+</div>
+<div class="section" id="custom-field-single-tag">
+<h4><a class="toc-backref" href="#id70">Custom Field Single Tag</a><a class="headerlink" href="#custom-field-single-tag" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Display a custom field&#8217;s data</p>
+</div>
+<div class="section" id="custom-field-tag-pair">
+<h4><a class="toc-backref" href="#id71">Custom Field Tag Pair</a><a class="headerlink" href="#custom-field-tag-pair" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">my_field_name</span><span class="p">}{</span><span class="nf">/my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Display a custom field&#8217;s data using the Fieldtype API&#8217;s replace_tag
+method. Useful for fieldtypes with complex data, such as a grid field.</p>
+</div>
+<div class="section" id="field-my-field-name">
+<h4><a class="toc-backref" href="#id72">field:my_field_name</a><a class="headerlink" href="#field-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">field:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Display a custom field using the Fieldtype API&#8217;s display_field method.
+Useful for fieldtypes that use complex markup, for instance a relationship
+fieldtype.</p>
+</div>
+<div class="section" id="error-my-field-name">
+<h4><a class="toc-backref" href="#id73">error:my_field_name</a><a class="headerlink" href="#error-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">error:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have chosen <a class="reference external" href="#error-handling">inline error handling</a>, you
+can display the error for the specified field. You may also use this
+syntax for non-custom fields, like title and url_title.</p>
+</div>
+<div class="section" id="label-my-field-name">
+<h4><a class="toc-backref" href="#id74">label:my_field_name</a><a class="headerlink" href="#label-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">label:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Display a custom field&#8217;s label.</p>
+</div>
+<div class="section" id="instructions-my-field-name">
+<h4><a class="toc-backref" href="#id75">instructions:my_field_name</a><a class="headerlink" href="#instructions-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">instructions:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Display a custom field&#8217;s instructions.</p>
+</div>
+<div class="section" id="selected-option-my-field-name">
+<h4><a class="toc-backref" href="#id76">selected_option:my_field_name</a><a class="headerlink" href="#selected-option-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">selected_option:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In an edit form, display the selected option for the specified custom
+field.</p>
+</div>
+<div class="section" id="selected-option-my-field-name-label">
+<h4><a class="toc-backref" href="#id77">selected_option:my_field_name:label</a><a class="headerlink" href="#selected-option-my-field-name-label" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">selected_option:my_field_name:label</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In an edit form, display the label of the selected option for the
+specified custom field.</p>
+</div>
+<div class="section" id="options-my-field-name">
+<h4><a class="toc-backref" href="#id78">options:my_field_name</a><a class="headerlink" href="#options-my-field-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>If using a field with options, such as Checkboxes or Dropdown, you can
+display the options in a loop, to give you more control over the markup.
+You have the four following sub-variables: {option_value},
+{option_name}, {selected} and {checked}.</p>
+</div>
+<div class="section" id="custom-fields">
+<span id="channel-form-examples-custom-field-loop"></span><h4><a class="toc-backref" href="#id79">custom_fields</a><a class="headerlink" href="#custom-fields" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">custom_fields</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="k">if</span> <span class="nv">required</span><span class="p">}</span>* <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}{</span><span class="nf">field_label</span><span class="p">}&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">field_instructions</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">formatting_buttons</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">error</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">&gt;{</span><span class="nf">error</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">textarea</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">dir</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">text_direction</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">rows</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">field_data</span><span class="p">}&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">rte</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">dir</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">text_direction</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">rows</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;WysiHat-field&quot;</span><span class="p">&gt;{</span><span class="nf">field_data</span><span class="p">}&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">text</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">dir</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">text_direction</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_data</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">maxlength</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">select</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">options</span><span class="p">}&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;{</span><span class="nf">/options</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">date</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_data</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">checkbox</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span><span class="p">&gt;{</span><span class="nf">option_value</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">[]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">checked</span><span class="p">}&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">radio</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span><span class="p">&gt;{</span><span class="nf">option_value</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">checked</span><span class="p">}&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">file</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">display_field</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">relationships</span><span class="p">}</span>
+    <span class="p">{</span><span class="k">if</span> <span class="nv">allow_multiple</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;list-style: none&quot;</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">[sort][]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_order</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 25px&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">[data][]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">checked</span><span class="p">}&gt;</span> <span class="p">{</span><span class="nf">option_name</span><span class="p">}</span>
+          <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+      <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="k">if:else</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">[data][]&quot;</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+          <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">grid</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">display_field</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="k">if</span> <span class="nv">multiselect</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span><span class="s">[]&quot;</span> <span class="na">multiple</span><span class="o">=</span><span class="s">&quot;multiple&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/custom_fields</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The template parsing for the custom_fields loop is weak, and we know
+it. To get it to work we recommend removing fieldtype conditionals for
+fieldtypes that are not installed or are not applicable to the selected
+channel.</p>
+<p>Loop through the custom fields for the selected channel. Use
+conditionals based on the field type to control the display of your
+custom fields. To simply print out the field, you can use
+{display_field} within your field type conditional. The extension
+settings page contains a list of your fieldtypes and their short names
+for reference.</p>
+<p>Within this loop, you have the following single variables:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">field_name</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">field_label</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">field_id</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">error</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">field_instructions</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">formatting_buttons</span><span class="p">}</span> - Shows the EE formatting buttons if have that option selected for that field
+<span class="p">{</span><span class="nf">display_field</span><span class="p">}</span> - Displays the field as it appears in the CP (using the fieldtype API display_field method)
+<span class="p">{</span><span class="nf">text_direction</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">rows</span><span class="p">}</span> - For textareas
+<span class="p">{</span><span class="nf">field_data</span><span class="p">}</span> - If used in an edit form, the custom field data for that entry.
+<span class="p">{</span><span class="nf">maxlength</span><span class="p">}</span> - For text inputs
+</pre></div>
+</div>
+<p>You also have the options tag pair for fields with options:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">options</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/options</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And the following conditionals:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">required</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="k">if</span> <span class="nv">your_field_type</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+<span class="p">{</span><span class="k">if</span> <span class="nv">error</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="captcha">
+<h4><a class="toc-backref" href="#id80">captcha</a><a class="headerlink" href="#captcha" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">captcha</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span><span class="p">&gt;</span>Please enter the word you see in the image below:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">captcha</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;captcha&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">captcha_word</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;20&quot;</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="channel-form-assets">
+<h4><a class="toc-backref" href="#id81">channel_form_assets</a><a class="headerlink" href="#channel-form-assets" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">channel_form_assets</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Many custom fields require additional css and/or javascript. This
+additional markup is automatically added to the end of your form, unless
+you use this variable to display it elsewhere.</p>
+</div>
+<div class="section" id="global-errors">
+<h4><a class="toc-backref" href="#id82">global_errors</a><a class="headerlink" href="#global-errors" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">global_errors</span><span class="p">}{</span><span class="nf">error</span><span class="p">}{</span><span class="nf">/global_errors</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have chosen <a class="reference external" href="#error-handling">inline error handling</a>, you
+can display global entry submission errors.</p>
+</div>
+<div class="section" id="global-errors-count">
+<h4><a class="toc-backref" href="#id83">global_errors:count</a><a class="headerlink" href="#global-errors-count" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">global_errors:count</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have chosen <a class="reference external" href="#error-handling">inline error handling</a>, you
+can display the number global entry submission errors.</p>
+</div>
+<div class="section" id="field-errors">
+<h4><a class="toc-backref" href="#id84">field_errors</a><a class="headerlink" href="#field-errors" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">field_errors</span><span class="p">}{</span><span class="nf">error</span><span class="p">}{</span><span class="nf">/field_errors</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have chosen <a class="reference external" href="#error-handling">inline error handling</a>, you
+can display field-related entry submission errors.</p>
+</div>
+<div class="section" id="field-errors-count">
+<h4><a class="toc-backref" href="#id85">field_errors:count</a><a class="headerlink" href="#field-errors-count" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">field_errors:count</span><span class="p">}{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have chosen <a class="reference external" href="#error-handling">inline error handling</a>, you
+can display the number field-related entry submission errors.</p>
+</div>
+</div>
+<div class="section" id="form-validation">
+<h3><a class="toc-backref" href="#id16">Form Validation</a><a class="headerlink" href="#form-validation" title="Permalink to this headline">¶</a></h3>
+<p>Channel Form uses the CodeIgniter Form Validation class. You can create
+field-by-field <a class="reference external" href="#rules-my-field-name">validation rules</a>. By default,
+validaiton errors will be displayed using the ExpressionEngine user
+message template. If you prefer, you can also use <a class="reference external" href="#error-handling">inline error handling</a> to display form validation errors in the
+context of your form.</p>
+</div>
+<div class="section" id="allowing-guests-to-post-entries">
+<h3><a class="toc-backref" href="#id17">Allowing Guests to Post Entries</a><a class="headerlink" href="#allowing-guests-to-post-entries" title="Permalink to this headline">¶</a></h3>
+<p>Allowing guest posts is controlled in the Channel Form settings at
+<span class="menuselection">Developer Tools ‣ Channel Manager ‣ Settings</span>.</p>
+<p>To allow guests to post in a certain channel, locate the options for
+&#8220;Allow Guest Posts&#8221; next to the channel you want to allow guest posts
+for, and choose &#8220;Yes&#8221;.</p>
+<p>You can optionally require the guest to pass a captcha before they
+submit the Channel Form by choosing &#8220;Yes&#8221; under &#8220;Guest Captcha&#8221;.</p>
+<p>Finally, you can optionally choose an author that entries entered as
+guests appear as authored by under Guest Author.</p>
+</div>
+<div class="section" id="manually-constructed-input-fields">
+<h3><a class="toc-backref" href="#id18">Manually Constructed Input Fields</a><a class="headerlink" href="#manually-constructed-input-fields" title="Permalink to this headline">¶</a></h3>
+<p>In rare cases, the field tag may not be flexible enough for the desired output.  In that case, most native fields can be manually coded.</p>
+<div class="section" id="checkbox-field">
+<h4>Checkbox field<a class="headerlink" href="#checkbox-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name[]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span>
+    <span class="p">{</span><span class="nf">checked</span><span class="p">}&gt;</span>  <span class="p">{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>See the {options:my_field_name} tag pair.</p>
+</div>
+<div class="section" id="date-field">
+<h4>Date field<a class="headerlink" href="#date-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span>
+  <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">my_field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">inclusion of the localization select field is not currently supported, whether constructing the field manually or using variables.</p>
+</div>
+</div>
+<div class="section" id="file-field">
+<h4>File field<a class="headerlink" href="#file-field" title="Permalink to this headline">¶</a></h4>
+<p>There are several additional inputs that may be specified when manually constructing a file field:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">my_field_name_directory</span></code> - the file directory the image is assigned to.</dt>
+<dd><p class="first last">This field is required if submitting a file.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">my_field_name_hidden_directory</span></code> - if specified, this will take precedence
+over <code class="docutils literal"><span class="pre">my_field_name_directory</span></code> and can be used to allow editing.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">my_field_name_hidden_file</span></code> - the name of an existing, uploaded file.  If
+specified, this will take precedence over <code class="docutils literal"><span class="pre">my_field_name</span></code> and can be used
+to allow editing.</p>
+</li>
+</ul>
+<p>If editing entries, you will need to specify the existing directory and file
+name or the file content will be lost</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name_directory&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;1&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name_hidden_file&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">my_field_name</span><span class="p">}{</span><span class="nf">file_name</span><span class="p">}{</span><span class="nf">/my_field_name</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For the <code class="docutils literal"><span class="pre">hidden_file</span></code> input, use the <a class="reference internal" href="../../fieldtypes/file.html#channel-entry-file-field-pair"><span class="std std-ref">variable pair</span></a> to pull in <em>only</em> the <code class="docutils literal"><span class="pre">{file_name}</span></code> since we&#8217;re already providing the directory above.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to allow users to change the file associated with the
+entry when editing, you will need to provide a way (typically Javascript)
+to reset the my_field_name_hidden_file to empty.</p>
+</div>
+</div>
+<div class="section" id="grid-field">
+<h4>Grid field<a class="headerlink" href="#grid-field" title="Permalink to this headline">¶</a></h4>
+<p>Manual construction of grid type fields is not supported.  Most customization
+of grid fields can be done by overriding the CSS.</p>
+</div>
+<div class="section" id="multi-select-field">
+<h4>Multi Select field<a class="headerlink" href="#multi-select-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name[]&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">multiple</span> <span class="na">size</span><span class="o">=</span><span class="s">&quot;2&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>See <code class="docutils literal"><span class="pre">{options:my_field_name}</span></code> tag pair.</p>
+</div>
+<div class="section" id="radio-field">
+<h4>Radio field<a class="headerlink" href="#radio-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">{</span><span class="nf">checked</span><span class="p">}&gt;</span>
+    <span class="p">{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>See <code class="docutils literal"><span class="pre">{options:my_field_name}</span></code> tag pair.</p>
+</div>
+<div class="section" id="relationship-field">
+<h4>Relationship field<a class="headerlink" href="#relationship-field" title="Permalink to this headline">¶</a></h4>
+<p>Simple relationship fields with only 1 relationship allowed are very similar
+in format to Multi Select fields, though note the slight variation in name:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name[data][]&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>For relationship fields that allow multiple selections, you may also set the sort order:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+            Order: <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name[sort][]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_order</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">/&gt;</span>        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name[data][]&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">{</span><span class="nf">checked</span><span class="p">}/&gt;</span> <span class="p">{</span><span class="nf">option_name</span><span class="p">}&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-field">
+<h4>Select field<a class="headerlink" href="#select-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">options:my_field_name</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">option_value</span><span class="p">}</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">selected</span><span class="p">}&gt;{</span><span class="nf">option_name</span><span class="p">}&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/options:my_field_name</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>See <code class="docutils literal"><span class="pre">{options:my_field_name}</span></code> tag pair.</p>
+</div>
+<div class="section" id="text-input-field">
+<h4>Text Input field<a class="headerlink" href="#text-input-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">my_field_name</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="textarea-field">
+<h4>Textarea field<a class="headerlink" href="#textarea-field" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;my_field_name&quot;</span> <span class="na">cols</span><span class="o">=</span><span class="s">&quot;90&quot;</span> <span class="na">rows</span><span class="o">=</span><span class="s">&quot;10&quot;</span><span class="p">&gt;{</span><span class="nf">my_field_name</span><span class="p">}&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id19">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="examples.html"><span class="doc">Channel Form Examples</span></a> for more complete examples of
+Channel Form usage.</p>
+</div>
+<div class="section" id="development">
+<h2><a class="toc-backref" href="#id20">Development</a><a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="development.html#channel-form-development-fieldtype"><span class="std std-ref">Getting your custom fieldtype to work with the Channel Form</span></a></li>
+<li><a class="reference internal" href="development.html#channel-form-development-hooks"><span class="std std-ref">Extension Hooks</span></a></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Channel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../archive_month_links.html">Archive Month Links Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calendar.html">Calendar Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../categories.html">Channel Categories Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../category_archive.html">Channel Category Archive Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../category_heading.html">Channel Category Heading Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../channel_entries.html">Channel Entries Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../channel_info.html">Channel Information Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dynamic_parameters.html">Dynamic Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../entry_linking.html">Next/Previous Entry Linking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../entry_tracking.html">Entry &#8220;Views&#8221; Tracking Tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pagination_spanning.html">Spanning a Channel Entry Across Multiple Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sets.html">Channel Sets</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Channel Form</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="development.html">Channel Form Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Channel Form Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

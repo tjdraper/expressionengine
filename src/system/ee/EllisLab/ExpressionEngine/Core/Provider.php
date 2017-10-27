@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Core;
 
@@ -7,15 +14,18 @@ use EllisLab\ExpressionEngine\Library\Filesystem\Filesystem;
 use EllisLab\ExpressionEngine\Service\Dependency\ServiceProvider;
 use EllisLab\ExpressionEngine\Service\Dependency\InjectionBindingDecorator;
 
+/**
+ * Core Provider
+ */
 class Provider extends InjectionBindingDecorator {
 
 	/**
-	 * @var array The setup file data
+	 * @var Array The setup file data
 	 */
 	protected $data;
 
 	/**
-	 * @var string The root directory for this provider
+	 * @var String The root directory for this provider
 	 */
 	protected $path;
 
@@ -30,19 +40,19 @@ class Provider extends InjectionBindingDecorator {
 	protected $autoloader;
 
 	/**
-	 * @var string Path to the config directory
+	 * @var Path to the config directory
 	 */
 	protected $config_path;
 
 	/**
-	 * @var array of cached config file instances
+	 * @var Array of cached config file instances
 	 */
 	protected $config_files = array();
 
 	/**
 	 * @param ServiceProvider $delegate The root dependencies object
 	 * @param String $path Core namespace path
-	 * @param array $data The setup file contents
+	 * @param Array $data The setup file contents
 	 */
 	public function __construct(ServiceProvider $delegate, $path, array $data)
 	{
@@ -68,7 +78,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the default config path
 	 *
-	 * @return string Path to the config directory
+	 * @return String Path to the config directory
 	 */
 	public function getConfigPath()
 	{
@@ -79,7 +89,6 @@ class Provider extends InjectionBindingDecorator {
 	 * Set the prefix in use for this provider
 	 *
 	 * @param String $prefix Prefix this was registered under
-	 * @throws \Exception
 	 */
 	public function setPrefix($prefix)
 	{
@@ -107,7 +116,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the registered path
 	 *
-	 * @return string Path in use
+	 * @return String Path in use
 	 */
 	public function getPath()
 	{
@@ -117,7 +126,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the registered prefix
 	 *
-	 * @return string Prefix in use
+	 * @return String Prefix in use
 	 */
 	public function getPrefix()
 	{
@@ -127,7 +136,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'author' key
 	 *
-	 * @return string vendor name
+	 * @return String vendor name
 	 */
 	public function getAuthor()
 	{
@@ -137,7 +146,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'name' key
 	 *
-	 * @return string product name
+	 * @return String product name
 	 */
 	public function getName()
 	{
@@ -147,7 +156,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'version' key
 	 *
-	 * @return string version number
+	 * @return String version number
 	 */
 	public function getVersion()
 	{
@@ -157,7 +166,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'namespace' key
 	 *
-	 * @return string namespace name
+	 * @return String namespace name
 	 */
 	public function getNamespace()
 	{
@@ -167,7 +176,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'services' key
 	 *
-	 * @return array [name => closure]
+	 * @return Array [name => closure]
 	 */
 	public function getServices()
 	{
@@ -177,7 +186,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'services.singletons' key
 	 *
-	 * @return array [name => closure]
+	 * @return Array [name => closure]
 	 */
 	public function getSingletons()
 	{
@@ -187,7 +196,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'models' key
 	 *
-	 * @return array [name => class-name-in-namespace]
+	 * @return Array [name => class-name-in-namespace]
 	 */
 	public function getModels()
 	{
@@ -208,7 +217,7 @@ class Provider extends InjectionBindingDecorator {
 	/**
 	 * Get the 'models.dependencies' key
 	 *
-	 * @return array [model => [ee:foo, ee:bar]]
+	 * @return Array [model => [ee:foo, ee:bar]]
 	 */
 	public function getModelDependencies()
 	{
@@ -252,7 +261,6 @@ class Provider extends InjectionBindingDecorator {
 	 * Register this provider's services
 	 *
 	 * @param String $prefix The service prefix to use
-	 * @throws \Exception
 	 */
 	protected function registerServices($prefix)
 	{

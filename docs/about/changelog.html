@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>ExpressionEngine 4.x Change Log &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="prev" title="Bugs and Security Reports" href="../bugs_and_security_reports/index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li class="last">ExpressionEngine 4.x Change Log</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="expressionengine-4-x-change-log">
+<h1>ExpressionEngine 4.x Change Log<a class="headerlink" href="#expressionengine-4-x-change-log" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#version-4-0-0" id="id1">Version 4.0.0</a></li>
+<li><a class="reference internal" href="#version-3-5-11" id="id2">Version 3.5.11</a></li>
+<li><a class="reference internal" href="#version-3-5-10" id="id3">Version 3.5.10</a></li>
+<li><a class="reference internal" href="#version-3-5-9" id="id4">Version 3.5.9</a></li>
+<li><a class="reference internal" href="#version-3-5-8" id="id5">Version 3.5.8</a></li>
+<li><a class="reference internal" href="#version-3-5-7" id="id6">Version 3.5.7</a></li>
+<li><a class="reference internal" href="#version-3-5-6" id="id7">Version 3.5.6</a></li>
+<li><a class="reference internal" href="#version-3-5-5" id="id8">Version 3.5.5</a></li>
+<li><a class="reference internal" href="#version-3-5-4" id="id9">Version 3.5.4</a></li>
+<li><a class="reference internal" href="#version-3-5-3" id="id10">Version 3.5.3</a></li>
+<li><a class="reference internal" href="#version-3-5-2" id="id11">Version 3.5.2</a></li>
+<li><a class="reference internal" href="#version-3-5-1" id="id12">Version 3.5.1</a></li>
+<li><a class="reference internal" href="#version-3-5-0" id="id13">Version 3.5.0</a></li>
+<li><a class="reference internal" href="#version-3-4-7" id="id14">Version 3.4.7</a></li>
+<li><a class="reference internal" href="#version-3-4-6" id="id15">Version 3.4.6</a></li>
+<li><a class="reference internal" href="#version-3-4-5" id="id16">Version 3.4.5</a></li>
+<li><a class="reference internal" href="#version-3-4-4" id="id17">Version 3.4.4</a></li>
+<li><a class="reference internal" href="#version-3-4-3" id="id18">Version 3.4.3</a></li>
+<li><a class="reference internal" href="#version-3-4-2" id="id19">Version 3.4.2</a></li>
+<li><a class="reference internal" href="#version-3-4-1" id="id20">Version 3.4.1</a></li>
+<li><a class="reference internal" href="#version-3-4-0" id="id21">Version 3.4.0</a></li>
+<li><a class="reference internal" href="#version-3-3-4" id="id22">Version 3.3.4</a></li>
+<li><a class="reference internal" href="#version-3-3-3" id="id23">Version 3.3.3</a></li>
+<li><a class="reference internal" href="#version-3-3-2" id="id24">Version 3.3.2</a></li>
+<li><a class="reference internal" href="#version-3-3-1" id="id25">Version 3.3.1</a></li>
+<li><a class="reference internal" href="#version-3-3-0" id="id26">Version 3.3.0</a></li>
+<li><a class="reference internal" href="#version-3-2-1" id="id27">Version 3.2.1</a></li>
+<li><a class="reference internal" href="#version-3-2-0" id="id28">Version 3.2.0</a></li>
+<li><a class="reference internal" href="#version-3-1-4" id="id29">Version 3.1.4</a></li>
+<li><a class="reference internal" href="#version-3-1-3" id="id30">Version 3.1.3</a></li>
+<li><a class="reference internal" href="#version-3-1-2" id="id31">Version 3.1.2</a></li>
+<li><a class="reference internal" href="#version-3-1-1" id="id32">Version 3.1.1</a></li>
+<li><a class="reference internal" href="#version-3-1-0" id="id33">Version 3.1.0</a></li>
+<li><a class="reference internal" href="#version-3-0-6" id="id34">Version 3.0.6</a></li>
+<li><a class="reference internal" href="#version-3-0-5" id="id35">Version 3.0.5</a></li>
+<li><a class="reference internal" href="#version-3-0-4" id="id36">Version 3.0.4</a></li>
+<li><a class="reference internal" href="#version-3-0-3" id="id37">Version 3.0.3</a></li>
+<li><a class="reference internal" href="#version-3-0-2" id="id38">Version 3.0.2</a></li>
+<li><a class="reference internal" href="#version-3-0-1" id="id39">Version 3.0.1</a></li>
+<li><a class="reference internal" href="#version-3-0-0" id="id40">Version 3.0.0</a></li>
+</ul>
+</div>
+<div class="section" id="version-4-0-0">
+<h2><a class="toc-backref" href="#id1">Version 4.0.0</a><a class="headerlink" href="#version-4-0-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: October 24, 2017</p>
+<ul class="simple">
+<li>TBD</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-11">
+<h2><a class="toc-backref" href="#id2">Version 3.5.11</a><a class="headerlink" href="#version-3-5-11" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: August 24, 2017</p>
+<ul class="simple">
+<li>Optimized the entry manager for speed.</li>
+<li>Restored check for banned email addresses when registering/updating a member record.</li>
+<li>Added per page filter to a number of tables in the control panel.</li>
+<li>Altered the AJAX response headers to accomidate IE&#8217;s JSON ignorance.</li>
+<li>Fixed a bug where clearing out a File field may fire off numerous form validation AJAX requests.</li>
+<li>Fixed a bug (#23171) where the template parser got overwhelemd with really large templates and found a happy place instead of doing work.</li>
+<li>Fixed a bug where trying to automatically resize SVG files would throw an error.</li>
+<li>Fixed a display issue with abstracted Extension settings when there are many checkboxes/multi-select options.</li>
+<li>Fixed a bug where abstracted Extension settings items could not have field instructions.</li>
+<li>Fixed a bug (#23174) where Simple Commerce emails did not respect the Mail Format email preference, preventing it from being able to send HTML emails.</li>
+<li>Fixed a bug where setting PHP memory in gigabytes setting could result in memory errors when uploading.</li>
+<li>Fixed a bug (#22741) in the installer where the superadmin user created during installation was assumed to have a member_id of 1.  We all know what they say about assumptions, don&#8217;t we?</li>
+<li>Fixed a bug where the list of addons in the member group permissions included some non-addons.</li>
+<li>Fixed a bug (#23183) where the template create button did not show on the template manager page for some member groups with permission to create templates.</li>
+<li>Fixed a bug where saving templates when caching was disabled caused an error.</li>
+<li>Fixed a bug where thumbnails were not removed when deleting a file record with a missing file.</li>
+<li>Fixed a bug (#23181) where it was not possible to delete the last row in a grid field when editing via the channel entry form.</li>
+<li>Fixed a bug (#23195) where third party fieldtypes could not be uninstalled if the file name wasn&#8217;t standard issue.</li>
+<li>Fixed a bug in the forum settings where you couldn&#8217;t manage moderator notifications.</li>
+<li>Developers:<ul>
+<li>Fixed a bug (#21702) where the legacy file model&#8217;s <code class="docutils literal"><span class="pre">ee()-&gt;file_model-&gt;delete_files($Id);</span></code> would show a system error if deleting a record that has a missing image file and fail to delete any stray thumbnails.</li>
+<li>Fixed a bug (#23207) where the legacy form validation error for too short passwords didn&#8217;t display the required password length properly.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-10">
+<h2><a class="toc-backref" href="#id3">Version 3.5.10</a><a class="headerlink" href="#version-3-5-10" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: June 27, 2017</p>
+<ul class="simple">
+<li>Security Fixes<ul>
+<li>Fixed a potential reflected XSS issue.</li>
+<li>Fixed a potential issue that could lead to arbitrary execution of ExpressionEngine tags.</li>
+</ul>
+</li>
+<li>Optimized Relationship control panel display query.</li>
+<li>Fixed a missing language key in the member module.</li>
+<li>Fixed a bug (#23133) where images could not be resized proportionally in the File Manager.</li>
+<li>Fixed a bug (#23157) where saving a channel entry may attempt to assign categories twice.</li>
+<li>Fixed a bug (#23160) where member groups without member deletion permissions may see an error in the control panel.</li>
+<li>Fixed a bug where <code class="docutils literal"><span class="pre">{current_url}</span></code> and <code class="docutils literal"><span class="pre">{current_path}</span></code> were entirely unencoded.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-9">
+<h2><a class="toc-backref" href="#id4">Version 3.5.9</a><a class="headerlink" href="#version-3-5-9" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: June 16, 2017</p>
+<ul class="simple">
+<li>Improved the display of long filenames in grid fields.</li>
+<li>Fixed a bug (#23153) where manually-sorted multi-relationship fields may not appear sorted correctly on the front-end.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-8">
+<h2><a class="toc-backref" href="#id5">Version 3.5.8</a><a class="headerlink" href="#version-3-5-8" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: June 15, 2017</p>
+<ul class="simple">
+<li>Security Fixes (thanks again to Mustafa Hasan from HackerOne!):<ul>
+<li>Eliminated a couple areas that could disclose the full server path.</li>
+<li>Fixed a potential remote code execution issue (identified by Erik McClements).</li>
+<li>Improved XSS protection in a few areas of the control panel.</li>
+<li>Tightened off-site redirect protection / warning.</li>
+</ul>
+</li>
+<li>Optimized entry saving on installations with large numbers of categories.</li>
+<li>Optimized <cite>{category_menu}</cite> tag parsing in the channel entry form.</li>
+<li>Modified upload filename sanitization so that numeric segments are no longer suffixed with an underscore.</li>
+<li>Channel Form&#8217;s Grid CSS jumped the starting block. It has been reset and issued a warning.</li>
+<li>Fixed a syntax error in compressed Channel Form JavaScript introduced in 3.5.7.</li>
+<li>Added a crossing guard to prevent PHP errors from entering traffic when the Pages module references non-existent entries.</li>
+<li>Added some extra no cache headers for Chrome so it would stop trying to server the CSRF token from cache.</li>
+<li>Fixed a bug (#23125) where the Pages module did not have a nested view.</li>
+<li>Fixed a bug (#23119) where the Relationship field filter would not work unless the member has access to the Relationship module.</li>
+<li>Fixed a bug (#23098) where sticky entries were not sticky in Relationship field output.</li>
+<li>Fixed a bug (#23111) where permissions to send email to member groups and to view the email cache could not be set.</li>
+<li>Fixed a bug (#23106) where the date picker may appear blank in Firefox.</li>
+<li>Fixed a bug (#23108) where selecting a category for an entry in Channel Form would not automatically assign its parents to the entry.</li>
+<li>Fixed a bug (#23097) where third-party RTE tools would not be loaded.</li>
+<li>Fixed a bug (#23136) where the maximum file size field description incorrectly said megabytes instead of kilobytes.</li>
+<li>Fixed a bug (#23132) where value/label pairs could not be used in member fields.</li>
+<li>Fixed a bug (#23131) where templates could not be deleted from the template manager search results screen.</li>
+<li>Fixed a bug (#23148) with grid column widths; some wanted a percentage!</li>
+<li>Fixed a bug (#23118) where the 3.1.0 updater was checking if a variable exists after using it. Impulse control!</li>
+<li>(#23115) Open/Closed statuses now respect your language pack&#8217;s translation in the Entry Manager.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-7">
+<h2><a class="toc-backref" href="#id6">Version 3.5.7</a><a class="headerlink" href="#version-3-5-7" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: May 18, 2017</p>
+<ul class="simple">
+<li>Fixed a bug (#23080) where the File Manager may have performance problems for non-super admins when many member groups and upload folders are present.</li>
+<li>Fixed a bug (#23076) where slashes could not be saved in extension settings.</li>
+<li>Fixed a bug (#23053) where <code class="docutils literal"><span class="pre">liveUrlTitle()</span></code> may not work when multiple Channel Forms are present.</li>
+<li>Fixed a bug where the template parser would be unable to parse a large number of global variables.</li>
+<li>Fixed a bug where an entry&#8217;s year, month and day fields could be saved as 0 when using dd/mm/yyyy localization.</li>
+<li>If a Channel is limited to 1 entry, and 1 entry already exists, the Edit menu will take you straight to edit that entry for simplicity. Automated tests for the win.</li>
+<li>Grid fields now respect assigned column widths.</li>
+<li>Simplified a query in the RSS module that was necessary in versions &lt; 1.4.0. No typo.</li>
+<li>Fixed a bug where comment expiration date field was visible when a channel allows comments, but comments are disabled at the system level.</li>
+<li>Fixed a bug (#23090) where the edit category modal on the Publish page would not properly close and reflect a successful edit.</li>
+<li>Fixed a bug where member accept and decline notifications did not always respect the control panel settings.</li>
+<li>Fixed a bug where the frontend member profile email console pop-up did not display properly.</li>
+<li>Fixed a bug where the control panel login could improperly redirect if a custom homepage was set but no URL was entered.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-6">
+<h2><a class="toc-backref" href="#id7">Version 3.5.6</a><a class="headerlink" href="#version-3-5-6" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: April 13, 2017</p>
+<ul class="simple">
+<li>Fixed a bug where floating point numbers could not be used in queries.</li>
+<li>Fixed a bug where the Rich Text Editor field did not honor the required setting.</li>
+<li>Fixed an issue where enabling Gzip compression would prevent front-end pages with PHP errors from rendering in most browsers.</li>
+<li>Improved memory footprint of the control panel homepage when a site has thousands of Banned members.</li>
+<li><code class="docutils literal"><span class="pre">&lt;cite&gt;</span></code> is now allowed in Channel Entry titles.</li>
+<li>Fixed an issue in the control panel where the banned member page and pending member page searches included all members.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-5">
+<h2><a class="toc-backref" href="#id8">Version 3.5.5</a><a class="headerlink" href="#version-3-5-5" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: April 10, 2017</p>
+<ul class="simple">
+<li>Security Fixes:<ul>
+<li>Mitigated a potential remote code execution vulnerability.</li>
+<li>Improved cryptographic security when pseudo-random numbers are used.</li>
+<li>Further hardened protections against SQL injection.</li>
+</ul>
+</li>
+<li>Option fields (select, multiselect, radio, and checkboxes) can now have one blank value.</li>
+<li>Channels who have no more room for entries will not show under the Create menu.</li>
+<li>The uncommon &#8220;Disallowed Key Characters&#8221; error will now reveal which input key was blocked when <code class="docutils literal"><span class="pre">$debug</span></code> is set to <code class="docutils literal"><span class="pre">1</span></code> in your <code class="docutils literal"><span class="pre">index.php</span></code> and <code class="docutils literal"><span class="pre">admin.php</span></code> files.</li>
+<li>Improved performance of categories in Channel Form new entry forms when massive numbers of categories are involved.</li>
+<li>Fixed a bug (#23040) causing a Notice-level PHP error in Channels with Versioning enabled on first-save.</li>
+<li>Fixed a bug where an Ajax call was being made to update the order of categories when it should not have.</li>
+<li>Fixed a bug (#22894) where removing a category group from a channel may cause category groups not to be reorderable in the layout editor.</li>
+<li>Fixed a bug (#23021) where avatar upload and selection might not work on some multi-site installs.</li>
+<li>Fixed a bug (#23020) where visiting the control panel with no URI segments upon already being logged in would not redirect you to your preferred homepage.</li>
+<li>Fixed a bug (#23029) where using a Relationship shortcut tag inside a Grid tag pair would not parse when it was the only Relationship field in the channel.</li>
+<li>Fixed a bug where the <code class="docutils literal"><span class="pre">{date_header}</span></code> and <code class="docutils literal"><span class="pre">{date_footer}</span></code> template variables did not work inside Relationships.</li>
+<li>Fixed a bug (#22389) where multiple Channel Forms on single page may not work.</li>
+<li>Fixed a bug (#23044) where an &#8220;Unable to load the requested file&#8221; error may appear when editing a custom field.</li>
+<li>Fixed a bug in the forum templates where editing your member profile preferences was not allowed on the frontend.  See the <a class="reference internal" href="../installation/version_notes_3.5.5.html"><span class="doc">version notes</span></a> for details.</li>
+<li>Developers:<ul>
+<li>Fixed a bug where the Curl service could not send parameters along with POST requests.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-4">
+<h2><a class="toc-backref" href="#id9">Version 3.5.4</a><a class="headerlink" href="#version-3-5-4" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: March 16, 2017</p>
+<ul class="simple">
+<li>Important:<ul>
+<li>🗑🔒‼️ Fixed a potential data loss issue when deleting admins who have edited templates.</li>
+</ul>
+</li>
+<li>Browsers will (mostly) now be tricked into not autofilling password setting fields (e.g. SMTP username &amp; password) in the control panel with your password, even if the browser&#8217;s autofill is enabled. Commence fist shaking at browser vendors for their algorithms that try to guess those fields and not providing a reliable way to prevent it. <strong>Developers:</strong> If you are using the <a class="reference internal" href="../development/shared_form_view.html"><span class="doc">Shared Form View</span></a>, your inputs with <code class="docutils literal"><span class="pre">type=&quot;password&quot;</span></code> will automatically benefit.</li>
+<li>Improved the clarity of an error message if something goes wrong with your site preferences in the database.</li>
+<li>Improved breadcrumb clarity when editing fields in the Channel Manager.</li>
+<li>Made the Status Groups UI consistent with other areas of the Channel Manager.</li>
+<li>Modified the Redirect library that handles links from the control panel to external sites to be ok with URLs with query string parameters.</li>
+<li>Fixed a bug where parsing category fields may show a PHP error.</li>
+<li>Fixed a bug (#22993) where the RTE field may not show underlined text properly in the publish field.</li>
+<li>Fixed a bug (#23005) where Relationship field filtering on the publish may not work if editing an MSM site with a different domain than the control panel.</li>
+<li>Fixed a bug (#22419) where the <code class="docutils literal"><span class="pre">:total_results</span></code> shortcut relationship variable would return the wrong count when used inside Grid.</li>
+<li>Fixed a bug (#22789) where deleting a channel entry with a comment would trigger PHP errors.</li>
+<li>Fixed a bug where children were overlooked while some deeply nested relationships were partying with grids.</li>
+<li>The new View Activity won&#8217;t try to hoodwink you into thinking other members are stalking you, or that so many significant events occurred at the start of the Unix Epoch.</li>
+<li>Fixed a PHP error that would occur when trying to destructively overwrite non-image files on upload.</li>
+<li>Trying to edit a field group that doesn&#8217;t exist now 404s instead of complaining in an unhelpful manner with PHP warnings.</li>
+<li>Fixed a bug where default HTML buttons were not always added to the correct site when adding new buttons.</li>
+<li>Fixed a bug where entry revisions could be duplicated and entry revision pruning did not obey the max revision setting.</li>
+<li>Fixed a bug where pagination limits weren&#8217;t applied to banned and pending memeber pages in the control panel.</li>
+<li>Developers:<ul>
+<li>Fixed a bug in the <code class="docutils literal"><span class="pre">cp_js_end</span></code> hook where you could not use the CP/URL Service.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-3">
+<h2><a class="toc-backref" href="#id10">Version 3.5.3</a><a class="headerlink" href="#version-3-5-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: March 1, 2017</p>
+<ul class="simple">
+<li>Security<ul>
+<li>Eliminated a timing attack opportunity.</li>
+</ul>
+</li>
+<li>Added &#8220;View Activity&#8221; section to Member Profile administration page, along with prominent email and IP address.</li>
+<li>Added more helpful error message for when an add-on hasn&#8217;t specified a namespace (bug #22948).</li>
+<li>Importing a Channel Set with an uninstalled fieldtype will alert you to install it before the set can be imported.</li>
+<li>Improved file uploads to allow for overwriting of files!</li>
+<li>Really added a search_id parameter to the search module tags.</li>
+<li>The URL title generated by <code class="docutils literal"><span class="pre">unique_url_title=</span></code> in Channel Form will have the unique ID separated by the URL separator and will trim the URL title length to 200 characters.</li>
+<li>Tweaked legacy view file loader to ignore the php.ini <cite>short_open_tag</cite> setting for PHP 5.4+.</li>
+<li>Fixed a bug (#20783) where saving a Grid field with searchable data would show an error in third-party content types.</li>
+<li>Fixed a bug (#21778) where the statistics module did not return data when hit tracking was disabled.</li>
+<li>Fixed a bug (#22936) where outputting image manipulation heights and widths in a template could output a decimal number for certain image dimensions.</li>
+<li>Fixed a bug (#22950) where the a Select All checkbox on a multi-select-style field would not work.</li>
+<li>Fixed a bug (#22956) where saving a Grid option fieldtype column with no value/label pairs set may show an error on the publish form.</li>
+<li>Fixed a bug (#22959) where there was no validation for channel field short name length.</li>
+<li>Fixed a bug (#22960) where a file field associated with a non-existent upload directory would show PHP errors.</li>
+<li>Fixed a bug (#22961) where saving an entry while the Manage Category controls were activated would cause the entry to lose Category associations.</li>
+<li>Fixed a bug (#22964) where you could only 100 entries could be deleted at a time from the entries listing.</li>
+<li>Fixed a bug (#22967) where Toggle fields in Grids were not respecting their default value.</li>
+<li>Fixed a bug (#22969) where the file field would not show thumbnails for SVG files.</li>
+<li>Fixed a bug (#22975) where URLs added to the menu via the <code class="docutils literal"><span class="pre">cp_custom_menu</span></code> hook may double-up on session IDs.</li>
+<li>Fixed a bug (#22978) where SimplePie may show a PHP error when throwing an exception.</li>
+<li>Fixed a bug (#22981) where the Create New link in Relationship fields would not open the publish form in a new window.</li>
+<li>Fixed a bug (#22982) where there was a broken link to create email templates in Simple Commerce.</li>
+<li>Fixed a bug in the 3.0.1 update where a PHP error could occur if orphaned layouts existed.</li>
+<li>Fixed a bug in the 3.5.0 update routine where the new <code class="docutils literal"><span class="pre">email_newline</span></code> and <code class="docutils literal"><span class="pre">email_smtp_crypto</span></code> settings might not be copied to all sites in the Site Manager, resulting in PHP warnings until the Email settings are saved in each Site.</li>
+<li>Fixed a bug in the Simple Commerce module where saving the settings could throw a PHP error.</li>
+<li>Fixed a bug in the forum module where admin notifications for new topics were switched with the notification emails for topic replies.</li>
+<li>Fixed a bug where <code class="docutils literal"><span class="pre">show_message()</span></code> may output an unencoded URL.</li>
+<li>Fixed a bug where a PHP error could occur changing a user&#8217;s member group on the profile page on PHP &lt; 5.4.</li>
+<li>Fixed a bug where custom member and category fields allowed reserved words for their short names.</li>
+<li>Fixed a bug where one could not save existing Grid or Relationship fields in environments with improper PDO configuration.</li>
+<li>Fixed a bug where the Manage Categories would not toggle off if there was a custom Toggle field on the publish form.</li>
+<li>Fixed a bug where the View link in top navigation for MSM played favorites and only linked to Site #1.</li>
+<li>Fixed a bug where the password reset tokens could expire too soon depending on the server_offset config.</li>
+<li>Fixed a regression from 2.x where the template parser might leave markers in place with nested plugins.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-2">
+<h2><a class="toc-backref" href="#id11">Version 3.5.2</a><a class="headerlink" href="#version-3-5-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: February 2, 2017</p>
+<ul class="simple">
+<li>Fixed a security bug where some path names were not properly sanitized.</li>
+<li>Fixed a security bug involving PHP object injection.</li>
+<li>Fixed a bug (#22882) where one could not delete a forum category.</li>
+<li>Fixed a bug (#22883) where saving an existing entry would not highlight its row in the entries table.</li>
+<li>Fixed a bug (#22888) where saving a new channel field set to be hidden would not be collapsed on the publish form.</li>
+<li>Fixed a bug (#22902) where Channel Sets that contain fields with value/label pairs would not import correctly.</li>
+<li>Fixed a bug (#22901) where changing your password due to admin password requirements would not update the account&#8217;s password.</li>
+<li>Fixed a bug where fieldtypes in Grid may not parse using the configured field format.</li>
+<li>Fixed a bug (#22905) where a multi-relationship field in Channel Form would try to use the field&#8217;s control panel UI.</li>
+<li>Fixed a bug (#22908) where upgrading from a pre-2.7 installation may truncate some channel data columns if they aren&#8217;t set as <code class="docutils literal"><span class="pre">text</span></code>.</li>
+<li>Fixed a bug (#22914) where the FTP library&#8217;s <code class="docutils literal"><span class="pre">delete_dir()</span></code> may fail.</li>
+<li>Fixed a bug when decrypting old values using the default key.</li>
+<li>Removed the profiler from the CP login page.</li>
+<li>Clarified the language for the authenticate and save actions.</li>
+<li>Fixed a bug where non-ExpressionEngine cookies were run through security checks when the cookie prefix was not explicitly set.</li>
+<li>Fixed a bug where the channel form Allow Comments field did not respect the default in the channel settings.</li>
+<li>Fixed a bug where a PHP error could occur on the CP Overview page when RSS feeds contained code blocks under PHP 5.3.</li>
+<li>Developers:<ul>
+<li>Fixed a bug where the <cite>post_save_settings</cite> event could fire on a fieldtype when an entry was saved.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-1">
+<h2><a class="toc-backref" href="#id12">Version 3.5.1</a><a class="headerlink" href="#version-3-5-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: January 20, 2017</p>
+<ul class="simple">
+<li>Improved security of the Encrypt Service to protect against man-in-the-middle attacks.</li>
+<li>Value/Label pairs can now be used in custom member and category fields.</li>
+<li>Changed the file field to display directories alphabetically in the directory select dropdown on the field settings page.</li>
+<li>Removed the requirement for specifying a replacement value in the search and replace utility.</li>
+<li>Channel form URL title creation now matches the publish page behavior, creating lower case titles by default.</li>
+<li>Ever get the login modal in the CP but you were sure you checked “remember me” when you logged in? We fixed that.</li>
+<li>Fixed a bug where the Loader class may sometimes show an error about a non-numeric value under PHP 7.1.</li>
+<li>Fixed a bug where the updater may show an error if certain add-ons are installed.</li>
+<li>Fixed a bug (#22893) where new template routes could not be added.</li>
+<li>Fixed a bug (#22886) where unchecking the <code class="docutils literal"><span class="pre">sticky</span></code> or <code class="docutils literal"><span class="pre">allow_comments</span></code> checkboxes in Channel Form would not apply the change.</li>
+<li>Fixed a bug where data encrypted in older versions of ExpressionEngine would not decrypt without using the specific algorithm-method it was originally encrypted with.</li>
+<li>Fixed a bug (#22880) where Channel Sets didn&#8217;t export upload destinations for file fields in a Grid.</li>
+<li>Fixed a bug where validation could fail when adding a new member in the control panel due to a field playing hide-and-seek, but not playing fair.</li>
+<li>Fixed a display issue with the new File Field UI with long filenames/titles.</li>
+<li>Fixed a bug in the control panel where the member profile delete member confirmation modal included invalid members in the list of members to reassign entries to.</li>
+</ul>
+</div>
+<div class="section" id="version-3-5-0">
+<h2><a class="toc-backref" href="#id13">Version 3.5.0</a><a class="headerlink" href="#version-3-5-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: January 16, 2017</p>
+<ul class="simple">
+<li>Added PHP 7.1 compatibility.</li>
+<li>Added value/label option capability to <a class="reference internal" href="../fieldtypes/select.html"><span class="doc">Checkboxes, Radio Buttons, Select, Multiselect</span></a></li>
+<li>Added <code class="docutils literal"><span class="pre">{if</span> <span class="pre">has_categories}</span></code> conditional to the Channel Entries tag.</li>
+<li>Added <code class="docutils literal"><span class="pre">{category_count}</span></code>, <code class="docutils literal"><span class="pre">{category_reverse_count}</span></code>, and <code class="docutils literal"><span class="pre">{category_total_results}</span></code> variables to the Channel Entries <code class="docutils literal"><span class="pre">{categories}{/categories}</span></code> variable pair.</li>
+<li>Added <code class="docutils literal"><span class="pre">entry_id=</span></code> and <code class="docutils literal"><span class="pre">url_title=</span></code> parameters to the <a class="reference internal" href="../channel/channel_entries.html#related-categories-mode"><span class="std std-ref">Related Categories Mode</span></a> of the Channel Entries Tag, to enable this tag to function with custom template routing.</li>
+<li>The <code class="docutils literal"><span class="pre">{redirect=}</span></code> variable can now take full URLs, including external URLs instead of just path segments.</li>
+<li>Usernames and screen names now have a maximum length of 75 characters.</li>
+<li>Improved clarity and usability of File field interface.</li>
+<li>Greatly improved model query performance.</li>
+<li>The <code class="docutils literal"><span class="pre">{category_name}</span></code> variable is now run through typography parsing for pretty quotes and dashes.</li>
+<li>Updated the SimplePie parser version used by the <a class="reference internal" href="../development/legacy/libraries/rss_parser.html"><span class="doc">RSS parser</span></a> to 1.4.3.</li>
+<li>Members must verify themselves when creating a member with control panel access.</li>
+<li>Added Email Newline and Connection Type to Outgoing Email Settings, to simplify configuration with some email providers (formerly available as config overrides only, <code class="docutils literal"><span class="pre">email_newline</span></code> and <code class="docutils literal"><span class="pre">email_smtp_crypto</span></code>).</li>
+<li>Discussion Forums:<ul>
+<li>Updated code sample formatting to use the new styleable blocks. Highlight/Prism/Rainbow/etc. your code samples in forum posts.</li>
+<li>Made special forum conditionals nestable.</li>
+<li>Added <code class="docutils literal"><span class="pre">{forum_id}</span></code> variable to the Thread Rows partial.</li>
+<li>Added <code class="docutils literal"><span class="pre">{if</span> <span class="pre">is_moderator}</span></code> conditionals to Threads and Thread Rows partials.</li>
+<li>Added <code class="docutils literal"><span class="pre">{topic_date}</span></code> variable to Threads partial.</li>
+<li>Added <code class="docutils literal"><span class="pre">{topic_class}</span></code> variable to Topic Rows partial.</li>
+<li>Made Poll data available to Thread Rows, so polls can be shown inline with the author&#8217;s post.</li>
+</ul>
+</li>
+<li>Fixed a bug where models could not set NULL values.</li>
+<li>Fixed a bug where model foreign key changes did not trigger reloads.</li>
+<li>Fixed a bug (#20308) where you could only upload the same file name 99 times. Upload as many as you want!</li>
+<li>Fixed a bug on the control panel profile section&#8217;s ban members page where a MySQL error occurred when searching banned members.</li>
+<li>Fixed an Obscurum Insectum when <code class="docutils literal"><span class="pre">mbstring.func_overload</span></code> is enabled, entry content contains multibyte characters, and there is a relationship field with no relationships set.</li>
+<li>Fixed a bug (#22864) where members registering via the Member module could not register if secure passwords were required.</li>
+<li>Fixed a bug (#22865) where if a high minimum username or password length was set, the validation error message would not show the configuration value correctly.</li>
+<li>Fixed a bug (#22867) where deleting a category from the publish screen would uncheck any existing category selections for that entry.</li>
+<li>Fixed a bug (#22872) where changing Channels fields from one type to another may destroy data.</li>
+<li>Fixed a bug (#22869) where repeated searches in the template manager may show a &#8220;Request-URI Too Large&#8221; error.</li>
+<li>Fixed a bug (#22874) where File fields may show an &#8220;Undefined index&#8221; error on the front end in rare cases.</li>
+<li>Fixed a bug (#22875) where URL titles generated by Channel Form&#8217;s <code class="docutils literal"><span class="pre">unique_url_title=</span></code> parameter did not respect the <code class="docutils literal"><span class="pre">word_separator</span></code> preference.</li>
+<li>Fixed a bug (#22876) where the wrong member was marked as the author for entry revisions.</li>
+<li>Fixed a bug (#22873) where having a <code class="docutils literal"><span class="pre">:total_rows</span></code> Grid modifier in a conditional in a template may show an error when certain add-ons are present.</li>
+<li>Fixed a bug where Channel entry titles that had a <code class="docutils literal"><span class="pre">;</span></code> show up to the party uninvited, when an <code class="docutils literal"><span class="pre">&amp;</span></code> was in the title. No longer: Channel entries titles are by invitation only.</li>
+<li>Altered frontend system message redirects to default to use a JavaScript redirect in order to accommodate a rare IE form submission quirk.</li>
+<li>Worked around a Safari bug where searching for entries in the control panel with autofill enabled on a site using SSL would repeatedly select the text in the textbox.</li>
+<li>Developers:<ul>
+<li>Added an <a class="reference internal" href="../development/services/encrypt.html"><span class="doc">Encrypt service</span></a> that uses OpenSSL for encryption, as Mcrypt has ben deprecated as of PHP 7.1.</li>
+<li>Added <code class="docutils literal"><span class="pre">core_boot</span></code> hook to run tasks on every ExpressionEngine request.</li>
+<li>Added request caching to member field model structure to eliminate duplicate queries for some operations.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-7">
+<h2><a class="toc-backref" href="#id14">Version 3.4.7</a><a class="headerlink" href="#version-3-4-7" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: December 30, 2016</p>
+<ul class="simple">
+<li>Security<ul>
+<li>Hardened security in the Email library, prevents attacks similar to PHPMailer CVE-2016-10033, CVE-2016-10045, and Swift Mailer CVE-2016-10074.</li>
+</ul>
+</li>
+<li>Optimized an inefficient query in the file model.</li>
+<li>Fixed a bug where the <code class="docutils literal"><span class="pre">unique_url_title=</span></code> title parameter was not working in Channel Form.</li>
+<li>Fixed a bug (#22838) where the HTML Button creation form would show a PHP error if no other HTML buttons existed.</li>
+<li>Fixed a bug where switching MSM sites may show a PHP error if the member is set to redirect to the publish form but no Channel is set.</li>
+<li>Fixed a bug (#22841) where deleting a member from their profile page would not give an option to reassign their entries.</li>
+<li>Fixed a bug (#22849) where deleting a member would also delete any files they had uploaded.</li>
+<li>Fixed a bug (#22842) where the author would have to focus the URL title field to validate the field despite it being autofilled by the Title field.</li>
+<li>Fixed a bug (#22013) where if saving Grid settings failed due to duplicate column labels/names, deleting the offending column would not clear the validation errors.</li>
+<li>Fixed a bug (#22858) where statuses on the publish form were not displayed in their set status order.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-6">
+<h2><a class="toc-backref" href="#id15">Version 3.4.6</a><a class="headerlink" href="#version-3-4-6" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: December 13, 2016</p>
+<ul class="simple">
+<li>Fixed a bug (#22785) where the parsing a template may show an undefined index error in rare cases.</li>
+<li>Fixed a bug (#22798) where RTE tool buttons may appear multiple times when rendered via Channel Form.</li>
+<li>Fixed a bug (#22799) where all &#8220;unauthorized&#8221; error messages came with a 500 status code instead of a 403.</li>
+<li>Fixed a bug (#22803) where an alternate MySQL port number entered in the installer would not get written to the config.php file.</li>
+<li>Fixed a bug (#22811) where there was a typo in a language key.</li>
+<li>Fixed a bug (#22813) where the <code class="docutils literal"><span class="pre">relationships_display_field_options</span></code> hook was passed invalid arguments.</li>
+<li>Fixed a bug (#22814) where deleting a member from their profile page may show a PHP error.</li>
+<li>Fixed a bug (#22816) where the Relationship fields could not be filtered when filtering from more than nine channels.</li>
+<li>Fixed a bug (#22817) where Grid and Relationship field data was not revisioned.</li>
+<li>Fixed a bug (#22818) where channel form inline errors for custom fields didn&#8217;t display.</li>
+<li>Fixed an issue where the Add-on Manager would be empty on some servers by accommodating an issue (#22819) with incorrectly typed variables from the database on environments with improper/non-standard PDO configuration.</li>
+<li>Fixed a bug where the updater may attempt to add the same database column more than once.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-5">
+<h2><a class="toc-backref" href="#id16">Version 3.4.5</a><a class="headerlink" href="#version-3-4-5" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: December 6, 2016</p>
+<ul class="simple">
+<li>Added a link to the Multiple Site Manager in the site switcher menu.</li>
+<li>Added <code class="docutils literal"><span class="pre">autocomplete=&quot;off&quot;</span></code> to all password fields in the control panel.</li>
+<li>Added clickjacking prevention to the URL redirect warning page.</li>
+<li>Improved performance of and fixed various issues filtering Relationship fields on the publish form.</li>
+<li>Improved accuracy of error message with File fields in Channel Form.</li>
+<li>Fixed a bug (#22754) where the SQL manager could not sort by table disk size.</li>
+<li>Fixed a bug (#22721) where the Redirect library may mistakenly think a protocol-relative URL was malicious.</li>
+<li>Fixed a bug (#22720) where the add-ons list in the control panel was not filtered by member access for non-Super Admins.</li>
+<li>Fixed a bug (#22736) where running the updater with templates saved as files may show an error.</li>
+<li>Fixed bugs (#22427 &amp; #22080) where Channel Form would not allow setting of certain fields, and would eat global variables.</li>
+<li>Fixed a bug (#22766) where Channels that have reached their maximum entry limit may not be able to edit existing entries.</li>
+<li>Fixed a bug (#22761) where certain settings in the member profile would appear unsaved.</li>
+<li>Fixed a bug (#22030) where entry revisions were created regardless of Channel preference.</li>
+<li>Fixed a bug (#22089) where editing checkbox fields in Channel Form that were populated by another channel field would not show their checked status.</li>
+<li>Fixed a bug (#22007) where setting the ID parameter on a Channel Form would cause the date picker not to initialize.</li>
+<li>Fixed a bug where member notification emails were always sent in plain text regardless of the mail format setting.</li>
+<li>Fixed a bug where links bound with the FilePicker may have their callback overwritten with a default callback.</li>
+<li>Fixed a bug (#22755) where editing an entry with a Relationship field may show its entry choices in the wrong order.</li>
+<li>Fixed a bug (#22756) where deselecting an entry in a single Relationship field may re-select the entry upon filtering.</li>
+<li>Fixed a bug (#22053) where saving a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> model with properties initialized in the <code class="docutils literal"><span class="pre">make()</span></code> method would show an error.</li>
+<li>Fixed a bug (#22008) where the <code class="docutils literal"><span class="pre">category=</span></code> parameter did not work in Channel Form.</li>
+<li>Fixed a bug (#21999) where setting the field group or status group to None when editing a Channel would not stick.</li>
+<li>Fixed a bug (#22777) where the settings forms with date localization settings may show an error under PHP 7.1.</li>
+<li>Fixed a bug (#22768) where rendering an empty file field with a variable pair would replace its <code class="docutils literal"><span class="pre">{url}</span></code> variable with the author&#8217;s URL.</li>
+<li>Fixed a bug (#22795) where the saving template partials may show an invalid language key on the button while saving.</li>
+<li>Fixed a bug where selecting a channel when creating a new bookmarklet would not update the channel field dropdown.</li>
+<li>Fixed a bug (#22796) bookmarklets could not set content for more than one custom field via query string manipulation.</li>
+<li>Fixed a bug (#21721) where editing a URL title in an entry to change its case would show a validation error.</li>
+<li>Fixed a bug (#22797) where deleting a quicklink sometimes would not work.</li>
+<li>Fixed a bug (#21590) where custom field variable pairs could not be parsed in Channel Form.</li>
+<li>Fixed a bug (#21492) where the <code class="docutils literal"><span class="pre">show=</span></code> parameter was not working for the <code class="docutils literal"><span class="pre">{categories}</span></code> tag pair in Channel Form.</li>
+<li>Fixed a bug (#22024) where switching to an MSM site in the control panel would not respect the member&#8217;s CP homepage setting.</li>
+<li>Fixed a bug (#22798) where the <code class="docutils literal"><span class="pre">{entry_date}</span></code> variable may always show the current date in Channel Form.</li>
+<li>Fixed a bug (#22798) where the the <code class="docutils literal"><span class="pre">use_live_url=</span></code> parameter would not work in Channel Form.</li>
+<li>Fixed a bug on the control panel profile section&#8217;s ban members page where a MySQL error occurred when searching banned members.</li>
+<li>Fixed a security issue in the Email module.</li>
+<li>Fixed a bug where Super Admins could not edit Channel Form entries authored by others when <code class="docutils literal"><span class="pre">author_only=</span></code> was used.</li>
+<li>Fixed a potential bug with Channel Form with Site Manager when sites have identically named Channels.</li>
+<li>Fixed a bug where editing the system offline and user message page templates might truncate the closing body and html tags.</li>
+<li>Fixed the template order in the Channel settings Live Look drop-down. Straighten up!</li>
+<li>Fixed a bug where editing the system offline and user message page templates might truncate the closing body and html tags.</li>
+<li>Fixed a bug where bulk email sending from the Communicate page would overzealously try to send to more recipients than existed.</li>
+<li>Fixed the sum of the Batch emails from the Communicate page. (We love you forever, Roman Moroni.)</li>
+<li>Fixed a bug where you could not change an existing Channel Field from File to third-party field types with <code class="docutils literal"><span class="pre">file</span></code> compatibility.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-4">
+<h2><a class="toc-backref" href="#id17">Version 3.4.4</a><a class="headerlink" href="#version-3-4-4" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: October 27, 2016</p>
+<ul class="simple">
+<li>Added a search_id parameter to the search module tags to allow non-standard URLs to function properly (see bug #22411).</li>
+<li>Clarified language of the &#8220;Allow multiple logins?&#8221; Security setting (including changing to &#8220;Allow multiple sessions?&#8221;).</li>
+<li>Fixed a bug (#21610) where deleting a Forum would show PHP errors.</li>
+<li>Fixed a bug (#21747) where deleting a custom field would show a PHP error in some environments.</li>
+<li>Fixed a bug (#22021) where actions could not be taken on items in the Spam module.</li>
+<li>Fixed a bug (#22026) where the legacy channel entries API was saving the <code class="docutils literal"><span class="pre">edit_date</span></code> in the wrong format.</li>
+<li>Fixed a bug (#22037) where some modules weren&#8217;t updating their version numbers upon update.</li>
+<li>Fixed a bug (#22039) where editing a menu set link would change the link&#8217;s order in the set.</li>
+<li>Fixed a bug (#22049) where changing the field group of a channel with a saved layout would append new fields to the Categories tab.</li>
+<li>Fixed a bug (#22112) where the translation utility showed the wrong value on the left.</li>
+<li>Fixed a bug (#22383) where deleting and then adding the same template route before saving could not be done.</li>
+<li>Fixed a bug (#22412) where assigned channels on member groups may be bypassed.</li>
+<li>Fixed a bug (#22421) where deleting a channel entry would call <code class="docutils literal"><span class="pre">save()</span></code> on module publish tabs.</li>
+<li>Fixed a bug (#22422) where the <cite>{base_path}</cite> variable was not being parsed in the Black/White List module.</li>
+<li>Fixed a bug (#22425) where automatic URL title generation for categories did not include the foreign characters array.</li>
+<li>Fixed a bug (#22707) where clicking the Save button after editing a form with a success alert may cause the form to shift and the button not to be clicked.</li>
+<li>Fixed a bug (#22711) where a non-existant language key was used on a control panel member profile form.</li>
+<li>Fixed a bug (#22717) where comment-editing JavaScript would not allow other events to be bound to its links.</li>
+<li>Fixed a bug (#22722) where an admin logging in as another member when &#8220;Allow multiple sessions?&#8221; is disabled would result in a PHP error.</li>
+<li>Fixed a bug (#22724) where file upload options were not always correct for non-superadmins in the file manager.</li>
+<li>Fixed a bug (#22725) where cloning a Grid column would not carry over checkbox values in some browsers.</li>
+<li>Fixed a bug (#22726) where some fieldtypes may show PHP errors when used in non-channel content types.</li>
+<li>Fixed a bug where Default Category Channel pref was not being respected in the channel entry form.</li>
+<li>Fixed a bug where Member custom fields were not available on the Memberlist member theme template.</li>
+<li>Fixed a bug where PDO was returning the wrong data types for some columns.</li>
+<li>Fixed a bug where channel forms using the site parameter did not display properly in layouts if there were no results.</li>
+<li>Fixed a bug where deleting a category group assigned to a channel that has multiple category groups would cause errors when publishing.</li>
+<li>Fixed a bug where field creation via the Member Importer would not create all necessary columns in the <code class="docutils literal"><span class="pre">member_data</span></code> table.</li>
+<li>Fixed a bug where invalid <code class="docutils literal"><span class="pre">category/category-names</span></code> in the URL did not throw <code class="docutils literal"><span class="pre">{if</span> <span class="pre">no_results}</span></code>. These requests will now 404 ftw.</li>
+<li>Fixed a bug where simple commerce could display a PHP warning.</li>
+<li>Fixed a bug where the Edit Upload Directory form would not properly reflect overridden path and URL values from the config file.</li>
+<li>Fixed a bug where the <code class="docutils literal"><span class="pre">{member_group}</span></code> global variable was playing hide-and-seek. Found it!</li>
+<li>Fixed a bug where the category filter on the Entry Manager did not respect your category orders. Line up, soldier!</li>
+<li>Fixed a bug with server response times in New Relic transaction reporting for front-end requests.</li>
+<li>Fixed a bug with the Member Importer where member field creation validaton would not work.</li>
+<li>Fixed an obscure bug (#22718) where a MySQL error could occur during installation on some environments.</li>
+<li>Fixed security bug where XSS may be injected by query string on certain control panel pages.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-3">
+<h2><a class="toc-backref" href="#id18">Version 3.4.3</a><a class="headerlink" href="#version-3-4-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: September 20, 2016</p>
+<ul class="simple">
+<li>Security<ul>
+<li>Fixed a potential PHP injection issue when redirecing within the CP. (Thanks to the folks at <a class="reference external" href="https://www.ripstech.com">https://www.ripstech.com</a> with their static code analyzer RIPS)</li>
+</ul>
+</li>
+<li>Improved metadata protection in Channel Form submissions.</li>
+<li>Optimized queries on pending/banned member tables.</li>
+<li>Namespaced add-ons now respond to the director&#8217;s call. ACTION! (Fixed a bug where ACTION requests to namespaced add-ons failed).</li>
+<li>Fixed a bug (#21855) where layouts could not expand a field that was configured to be hidden.</li>
+<li>Fixed a bug (#22028) where opening a file picker modal in thumbnail view with an empty directory selected would show a PHP error.</li>
+<li>Fixed a bug (#22029) where where the cURL library had an incorrect query string separator.</li>
+<li>Fixed a bug (#22035) where <code class="docutils literal"><span class="pre">{base_url}</span></code> was not parsed in Pages Module URLs.</li>
+<li>Fixed a bug (#22081) where several site variables were not available in conditionals.</li>
+<li>Fixed a bug (#22114) where there was an undefined variable on the Reset Password screen.</li>
+<li>Fixed a bug (#22115) where front-end member registration may not have password validation.</li>
+<li>Fixed a bug in layouts where you could not collapse/uncollapse a field after you moved it without first saving the layout.</li>
+<li>Fixed a bug in the Discussion Forum where the forum order in the front end and back end did not match.</li>
+<li>Fixed a bug where cache files may be unable to be read by EE in certain hosting environments.</li>
+<li>Fixed a bug where some layout fields were being added old skool which caused PHP errors.</li>
+<li>Fixed a bug where the IP to Nation module could not update its IP database on PHP 7.</li>
+<li>Fixed a bug where the <code class="docutils literal"><span class="pre">View</span> <span class="pre">All</span></code> link on the control panel edit submenu didn&#8217;t show when it should have.</li>
+<li>Fixed a Channel Form bug where model hooks would see the wrong author if a default Channel Form author for guest posts was set.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-2">
+<h2><a class="toc-backref" href="#id19">Version 3.4.2</a><a class="headerlink" href="#version-3-4-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: August 23, 2016</p>
+<ul class="simple">
+<li>Security<ul>
+<li>Enhanced XSS protection in the Simple Commerce control panel.</li>
+<li>Fixed a potential HTML injection (non-XSS) issue.</li>
+</ul>
+</li>
+<li>Added new Debugging &amp; Output preference: &#8220;Enable Developer Log Alerts?&#8221;</li>
+<li>Added <code class="docutils literal"><span class="pre">&lt;mark&gt;</span></code> to Safe HTML Typography and are now allowing its use in Channel Entries <code class="docutils literal"><span class="pre">{title}</span></code>.</li>
+<li>Eliminated some PHP warnings in the Forum template editor if a custom theme had nested folders that were not explicitly supported.</li>
+<li>Fixed a PHP warning on the Forum Template editor if the admin had removed the default theme.</li>
+<li>Fixed a bug where Channel Form fields would not prefill their values on submission error.</li>
+<li>Fixed a bug where Default Category Channel pref was not being respected and added some tests so that it doth not regresseth again.</li>
+<li>Fixed a bug where bulk actions in the forum were playing an endless game of hide-and-seek.</li>
+<li>Fixed a bug where caching a tag with a conditional in it would always generate a cache and never read from it.</li>
+<li>Fixed a bug where changing the commented status via the bulk action dropdown in the control panel affected unselected comments.</li>
+<li>Fixed a bug where partials created from add-ons with disallowed characters might throw a PHP error.</li>
+<li>Fixed a bug where the Email class would not load values from site config unless the developer had manually initialized it.</li>
+<li>Fixed a bug where the file picker did not have an initial sorting applied.</li>
+<li>Fixed a bug where updating a site&#8217;s Template Settings would save all partials and variables to disk, not just the current site&#8217;s.</li>
+<li>Fixed a bug (#21417) where some HTML Buttons could not be created due to overzealous validation.</li>
+<li>Fixed a bug (#21863) wherre the <code class="docutils literal"><span class="pre">{avatar_url}</span></code> tag was inaccurate when using a default avatar.</li>
+<li>Fixed a bug (#21989) where image manipulations would always save with a default site ID of 1.</li>
+<li>Fixed a bug (#21998) where date fields on the publish form would repopulate with a Unix timestamp after form validation failure.</li>
+<li>Fixed a bug (#22001) where viewing pending members sorted by join date would show an error.</li>
+<li>Fixed a bug (#22005) where the new category form may show encoded HTML entities in the parent category dropdown.</li>
+<li>Fixed a bug (#22014) where control panels under MSM might not follow a member group&#8217;s CP Homepage redirect.</li>
+<li>Fixed a bug (#22017, #21945) where toolbar buttons within Grid cells may be removed when manipulating rows.</li>
+<li>Fixed a bug (#22018) where choosing a file in the filepicker could generate multiple click events.</li>
+<li>Fixed a bug (#22019) where the <code class="docutils literal"><span class="pre">TemplateGroup</span></code> model may generate duplicate queries in the control panel.</li>
+<li>Developers:<ul>
+<li>Added a parameter to <code class="docutils literal"><span class="pre">form_dropdown()</span></code> and <code class="docutils literal"><span class="pre">form_multiselect()</span></code> turn off automatic encoding of display values.</li>
+<li>Added file and line number information to config file deprecation notices.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-1">
+<h2><a class="toc-backref" href="#id20">Version 3.4.1</a><a class="headerlink" href="#version-3-4-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: August 08, 2016</p>
+<ul class="simple">
+<li>Security<ul>
+<li>Improved XSS protection in the CP when searching.</li>
+<li>Improved XSS protection in the CP&#8217;s table filters.</li>
+<li>Additional obscuring of file system paths when displaying exceptions.</li>
+<li>Improved XSS protection in Markdown typography.</li>
+</ul>
+</li>
+<li>Long filenames now wrap in their table views in the File Manager and picker.</li>
+<li>Fixed a bug where file modals were blank if no upload directories existed.</li>
+<li>Fixed an issue where the top and bottom buttons on the publish page did not match.</li>
+<li>Fixed an issue where changes to authentication rules could show a confusing form when logging in.</li>
+<li>Fixed a bug (#21931) where the datepicker did not work consistently with non-default date formats.</li>
+<li>Fixed a bug (#21950) where the ChannelSubscription model did not have the correct relationships.</li>
+<li>Fixed a bug (#21940) where some member groups could not see template groups they created.</li>
+<li>Fixed a bug (#21951) where the conditional parser removed too much whitespace.</li>
+<li>Fixed a bug (#21982) where template partials were not parsed when inside other template partials.</li>
+<li>Fixed a bug (#21981) where the &#8220;Show news on CP homepage&#8221; always showed &#8220;no&#8221; even when saved as &#8220;yes&#8221;.</li>
+<li>Fixed a bug (#21983) where sometimes upload destinations didn&#8217;t have their <cite>{base_path}</cite> parsed.</li>
+<li>Fixed a bug where when you edited a status the preview was always grey, instead of your specified color.</li>
+<li>Fixed a bug where non-Super Admins were not presented with a Site switcher in the control panel if there are exactly two Sites.</li>
+<li>Fixed a PHP warning that could occur when publishing an entry with admin email notifications enabled.</li>
+<li>Fixed a bug where add-ons <code class="docutils literal"><span class="pre">require()</span></code>-ing native config files might throw a PHP error.</li>
+<li>Fixed a bug (#21944) where category fields were not available when editing categories on the publish page.</li>
+<li>Fixed a bug (#21864) on the member profile member list page where a MySQL error could occur when using some default sort orders.</li>
+<li>Fixed a bug (#21984) where a PHP error could occur when uploading avatars in the control panel.</li>
+<li>Fixed a bug (#21993) on the default HTML buttons settings page where the buttons were not limited to the current site.</li>
+<li>Fixed a bug (#21922) where there was no way to remove a selected file from a file field in the channel entry form.</li>
+<li>Fixed a bug (#21980) where a select field type would sometimes not validate when it should.</li>
+<li>Fixed a bug where duplicating a channel would carry over its <cite>total_records</cite> count.</li>
+<li>Fixed a bug where filling in a required File field on the publish form would not clear any associated validation error.</li>
+<li>Fixed a bug (#22010) where deleting rows with invalid cells in a Grid would not clear its validation error.</li>
+</ul>
+</div>
+<div class="section" id="version-3-4-0">
+<h2><a class="toc-backref" href="#id21">Version 3.4.0</a><a class="headerlink" href="#version-3-4-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: July 27, 2016</p>
+<ul class="simple">
+<li>Security (big thanks to security researchers at HackerOne for helping us continue to keep ExpressionEngine secure!):<ul>
+<li>Improved XSS and CSRF security in the Forum module.</li>
+<li>Improved XSS security in the Member module.</li>
+<li>Improved security by decoding IDN encoded domain names in user-submitted links.</li>
+<li>Improved clickjacking defense by defaulting all requests to SAMEORIGIN framing rules. See the new <a class="reference internal" href="../general/system_configuration_overrides.html#x-frame-options"><span class="std std-ref">x_frame_options</span></a> config override for details and header options.</li>
+</ul>
+</li>
+<li>Added a menu manager to create custom control panel menus.</li>
+<li>Added a &#8220;Maximum number of entries&#8221; setting to Channels.</li>
+<li>Added base URL and base path settings to the URL and Path Settings to make building URLs and paths easier when environments change.</li>
+<li>Added <code class="docutils literal"><span class="pre">{reverse_count}</span></code> and <code class="docutils literal"><span class="pre">{absolute_reverse_count}</span></code> variables to the Channel Entries tag, for displaying entry count &#8220;countdowns&#8221;.</li>
+<li>Added an EllisLab news feed to the homepage.</li>
+<li>Added a permission to enable/disable the news on the CP homepage.</li>
+<li>Added a colorpicker to status highlight colors.</li>
+<li>Added live preview for status color picker.</li>
+<li>Added <a class="reference internal" href="../general/system_configuration_overrides.html#code-block-wrappers"><span class="std std-ref">system overrides</span></a> <code class="docutils literal"><span class="pre">code_block_pre</span></code> and <code class="docutils literal"><span class="pre">code_block_post</span></code> to give additional control over the output of <code class="docutils literal"><span class="pre">[code]</span></code> blocks.</li>
+<li>Added the ability to override the forum theme with a parameter: <code class="docutils literal"><span class="pre">{exp:forum</span> <span class="pre">theme='my_theme'}</span></code>.</li>
+<li>When creating and editing Channel entries you now &#8220;Save&#8221; or &#8220;Save &amp; Close&#8221; the form.</li>
+<li>Files have regained their ability to be categorized.</li>
+<li>Improved the UI for Template Routes</li>
+<li>The publish form will no longer have an empty category tab, unless you have a Layout that says it should.</li>
+<li>Switching sites in the CP will take you that site&#8217;s homepage.</li>
+<li>The File Chooser for Textareas and the RTE injested some ginko biloba and will remember your filters while editing or creating an entry.</li>
+<li>Deprecation notices are back; Super Admins will see an alert in the &#8220;admin&#8221; sections of the CP.</li>
+<li>Improved search on the edit page. It now includes entry data along with titles.</li>
+<li>Improved template partial parsing time by a factor of ten.</li>
+<li>Simplified Profiler Performance tab, and broke out time spent accessing the database.</li>
+<li>Language packs saved using the translation utility are now saved in their respective <cite>system/user/language</cite> folder.</li>
+<li>Channel Sets now export and import category fields.</li>
+<li>Removed some items from the config for new installs. Existing installs can safely remove the following preferences if you&#8217;re using their default values:<ul>
+<li><code class="docutils literal"><span class="pre">debug</span></code>: <code class="docutils literal"><span class="pre">1</span></code></li>
+<li><code class="docutils literal"><span class="pre">is_system_on</span></code>: <code class="docutils literal"><span class="pre">y</span></code></li>
+<li><code class="docutils literal"><span class="pre">allow_extensions</span></code>: <code class="docutils literal"><span class="pre">y</span></code></li>
+<li><code class="docutils literal"><span class="pre">cache_driver</span></code>: <code class="docutils literal"><span class="pre">file</span></code></li>
+<li><code class="docutils literal"><span class="pre">uri_protocol</span></code>: <code class="docutils literal"><span class="pre">AUTO</span></code></li>
+<li><code class="docutils literal"><span class="pre">charset</span></code>: <code class="docutils literal"><span class="pre">UTF-8</span></code></li>
+<li><code class="docutils literal"><span class="pre">subclass_prefix</span></code>: <code class="docutils literal"><span class="pre">EE_</span></code></li>
+<li><code class="docutils literal"><span class="pre">log_threshold</span></code>: <code class="docutils literal"><span class="pre">0</span></code></li>
+<li><code class="docutils literal"><span class="pre">log_date_format</span></code>: <code class="docutils literal"><span class="pre">Y-m-d</span> <span class="pre">H:i:s</span></code></li>
+<li><code class="docutils literal"><span class="pre">rewrite_short_tags</span></code>: <code class="docutils literal"><span class="pre">TRUE</span></code></li>
+</ul>
+</li>
+<li><strong>File Improvements</strong>:<ul>
+<li>Gave parity between File field type and <code class="docutils literal"><span class="pre">{exp:file:entries}</span></code> variables.<ul>
+<li><a class="reference internal" href="../fieldtypes/file.html"><span class="doc">File</span></a> fields now have <code class="docutils literal"><span class="pre">{directory_id}</span></code>, <code class="docutils literal"><span class="pre">{directory_title}</span></code>, and <code class="docutils literal"><span class="pre">{id_path=}</span></code>.</li>
+<li>The <a class="reference internal" href="../add-ons/file/file_tag.html"><span class="doc">File Entries Tag</span></a> now has <code class="docutils literal"><span class="pre">{extension}</span></code>, <code class="docutils literal"><span class="pre">{file_id}</span></code>, <code class="docutils literal"><span class="pre">{file_name}</span></code>, <code class="docutils literal"><span class="pre">{file_size}</span></code>, <code class="docutils literal"><span class="pre">{mime_type}</span></code>, <code class="docutils literal"><span class="pre">{modified_date}</span></code>, <code class="docutils literal"><span class="pre">{path}</span></code>, <code class="docutils literal"><span class="pre">{upload_date}</span></code>, and <code class="docutils literal"><span class="pre">{url}</span></code>.</li>
+</ul>
+</li>
+<li>File size variables now have human readable modifiers.<ul>
+<li><code class="docutils literal"><span class="pre">{file_size}</span></code> display bytes as always: <code class="docutils literal"><span class="pre">295903</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">{file_size:human}</span></code> displays an intelligently abbreviated size: <code class="docutils literal"><span class="pre">289KB</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">{file_size:human_long}</span></code> displays with the long form of the byte unit: <code class="docutils literal"><span class="pre">289</span> <span class="pre">kilobytes</span></code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Fixed a bug where a File field tag may be unable to parse information about image manipulations for an upload directory belonging to another site.</li>
+<li>Fixed a bug (#21578) where a File field inside a Grid inside Channel Form would not have its data saved.</li>
+<li>Fixed a bug when saving a new Grid row that contained a Relationship field may show an error in rare cases.</li>
+<li>Fixed a bug (#21952) in the relationship field display where entries from other sites would not show up in the selectable options.</li>
+<li>Fixed a bug where radio buttons in sortable tables may lose their state after sorting.</li>
+<li>Fixed a bug (#21918) where parsing Grid fields from multiple content types could show errors in rare cases.</li>
+<li>Fixed a bug where <cite>{cp_edit_entry_url}</cite> did not specify the site ID.</li>
+<li>Fixed a bug where Channel Form would populate a DateTime object into the POST data for the <cite>recent_comment_date</cite> field.</li>
+<li>Fixed a bug where fields in a new layout tab could not be reordered until the layout was saved.</li>
+<li>Fixed a bug where Channel Sets only exported and imported the first Category Group of a Channel.</li>
+<li>Fixes a bug where MSM sites didn&#8217;t always have the Default Status Group.</li>
+<li>Fixed a pagination bug on the Member Groups page.</li>
+<li>Fixed a bug where MSM site prefs might not be updated for all sites during updates.</li>
+<li>Fixed a bug (#21832) where apostrophes in checkbox, radio and select field values could cause validation errors when selecting those values in the publish form.</li>
+<li>Developers:<ul>
+<li>Added a <cite>parse_config_variables()</cite> global function for parsing <cite>{base_url}</cite> and <cite>{base_path}</cite> variables in strings.</li>
+<li>Added a validation rule, <cite>limitHtml</cite>, for limiting the kinds of HTML tags allowed in a string.</li>
+<li>Added a <cite>placeholder</cite> key to the field definition for text fields in the shared form view.</li>
+<li>Added the ability to extend native config files.</li>
+<li>Added a <cite>cp_custom_menu</cite> hook that allows you to create custom menu items. This replaces <cite>cp_menu_array</cite> from version 2.</li>
+<li>Added a <cite>search()</cite> method to the model query builder for easy search implementations.</li>
+<li>CP/Alerts without a title, body, and a sub-alert will no longer render.</li>
+<li>Sweet new formatters, via the <a class="reference internal" href="../development/services/format.html"><span class="doc">Format Service</span></a>. Currently includes attribute prepping and formatting byte sizes. More to come, huzzah!</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-3-4">
+<h2><a class="toc-backref" href="#id22">Version 3.3.4</a><a class="headerlink" href="#version-3-3-4" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: July 7, 2016</p>
+<ul class="simple">
+<li>Security:<ul>
+<li>Fixed potential SQL and XSS injection vulnerabilities in the control panel.</li>
+</ul>
+</li>
+<li>Added an .htaccess file to the themes folder to allow the control panel font assets to be used across domains and subdomains.</li>
+<li>Publish file modal search now matches the file manager search behavior, searching in file names, file titles and by mime type (addresses bug #21912).</li>
+<li>Fixed a PHP error when sending emails from extension hooks in the Session class.</li>
+<li>Fixed a SQL error introduced in 3.3.3 when using the <code class="docutils literal"><span class="pre">orderby=&quot;random&quot;</span></code> parameter with the <code class="docutils literal"><span class="pre">{exp:file:entries}</span></code> tag.</li>
+<li>Fixed a PHP error introduced in 3.3.3 with the <code class="docutils literal"><span class="pre">{exp:file:entries}</span></code> tag in certain circumstances.</li>
+<li>Fixed a bug in the Discussion Forum that prevented errors from being thrown on some invalid post submissions.</li>
+<li>Fixed a PHP error when deleting a channel that contains entries that have comments.</li>
+<li>Fixed a bug (#21630) where multiple channel forms on the same page could result in unparsed variables.</li>
+<li>Fixed a bug (#21934) on non-default MSM sites, category custom field variables are unparsed on frontend.</li>
+<li>Developers:<ul>
+<li>Added a public <cite>build_message()</cite> method as an entrance point if needed within the <cite>email_send</cite> extension hook.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-3-3">
+<h2><a class="toc-backref" href="#id23">Version 3.3.3</a><a class="headerlink" href="#version-3-3-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: June 6, 2016</p>
+<ul class="simple">
+<li>Added back search to the file picker, addresses bug #21109.</li>
+<li>Improved SQL display in the application profiler.</li>
+<li>Fixed a bug where HTML could be rendered in the application profiler for expanded template log details.</li>
+<li>Fixed a bug where show/hide details link didn&#8217;t work in the application profiler.</li>
+<li>Altered the member group defaults so that new member groups default to unlocked (see bug #21879).</li>
+<li>Fixed a bug (#21862) where the file picker modal may not be able to paginate in list view.</li>
+<li>Fixed a bug (#21873) where loading the member fields listing would load a different language key for the Member Groups sidebar link.</li>
+<li>Fixed a bug (#21890) where category assignments could be lost if the category field was not included in the form.</li>
+<li>Fixed a bug where using the <cite>{exp:jquery:script_tag}</cite> would generate a PHP exception.</li>
+<li>Fixed a bug where deleting a member and reassigning their content missed their versioned Channel entries.</li>
+<li>Fixed a bug (#21692) where the channel filter search on the Entry Manger would sometimes not work.</li>
+<li>Fixed a bug (#21783) where HTML buttons had blank previews when they contained HTML entities.</li>
+<li>Fixed a bug (#21735) channel form entries didn&#8217;t update the edit date.</li>
+<li>Fixed a bug (#21899) where channel form would ignore custom inline error tags.</li>
+<li>Fixed a bug (#21784) where a PHP error would be shown when going to an edit entry page without an entry_id.</li>
+<li>Fixed a bug (#21391) where New Relic would not be displayed as enabled when it was enabled by default.</li>
+<li>Fixed a bug (#21485) where text fields with numeric content types would throw exceptions when saving with an empty value.</li>
+<li>Fixed a bug where private messages wouldn&#8217;t show up in the member portal.</li>
+<li>Fixed a bug (#21535) where there was as missing image for the front-end member templates.</li>
+<li>Fixed a bug (#21851) on sites using MSM where templates from one site could be erroneously copied over to all other sites.</li>
+<li>Fixed a bug (#21583) where a PHP error could occur in the channel form when specifying an invalid entry_id to edit.</li>
+<li>Fixed a bug (#21800) where setting a default template group for a new MSM site unset the default templates on all other sites.</li>
+<li>Fixed a bug where a PHP error could occur on the control panel member profile page when not on the default site.</li>
+<li>Fixed a bug (#21840) where the user language setting did not override the default language setting.</li>
+<li>Fixed a bug (#21861) in frontend member registration where a MySQL occurred if there were custom member fields included on the form.</li>
+<li>Fixed a bug where a blank status highlight color could cause an exception on the content edit page.</li>
+<li>Fixed a bug (#21421) where index.html, index.php, and index.htm would accidentally be synced to a file upload directory.</li>
+<li>Fixed a bug (#21424) where category fields were not using the appropriate field formatting (since it was never set).</li>
+<li>Fixed a bug where you couldn&#8217;t update the field formatting for a category field for all existing categories.</li>
+<li>Fixed a bug (#21877) in the 3.1.0 updater that was reaching outside of the database prefix to try to change some tables.</li>
+<li>Fixed a bug where updating your software license file would not be immediately reflected on your EllisLab.com Manage Purchases page.</li>
+<li>Fixed a bug where Developer Log items made at the same second might be sorted randomly by MySQL.</li>
+<li>Fixed a bug where Template Partial and Variable updated from the control panel were not reflected in the file system.</li>
+<li>Fixed a bug in the XML-RPC Server implementation that could cause XML parsing failures on newer versions of PHP.</li>
+</ul>
+</div>
+<div class="section" id="version-3-3-2">
+<h2><a class="toc-backref" href="#id24">Version 3.3.2</a><a class="headerlink" href="#version-3-3-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: May 20, 2016</p>
+<ul class="simple">
+<li>Saving entry revisions is now automatic so we removed the &#8220;Save Revision&#8221; button.</li>
+<li>Updated Date formatting variables to allow day of the week, ISO-8601 year number, timezone identifier, ISO-8601 date, and microseconds. See <a class="reference internal" href="../templates/date_variable_formatting.html"><span class="doc">Date Variable Formatting</span></a> for details.</li>
+<li>Optimized the create and edit template page to reduce the number of queries needed.</li>
+<li>Fixed a bug (#21227) where the images in the RTE did not have the proper overlay when hovering over them.</li>
+<li>Fixed a bug (#21288) where you may not be able to reliably paste text into an RTE field that had an image in it.</li>
+<li>Fixed a bug (#21870) where the Simple Commerce and Pages modules were missing a link to their settings.</li>
+<li>Fixed a bug where <code class="docutils literal"><span class="pre">EXPLAIN</span></code> queries could not be run in the SQL manager.</li>
+<li>Fixed a bug where relationship data was not deleted completely.</li>
+<li>Fixed a model bug where pivot table relationships were not always reversed correctly.</li>
+<li>Fixed a bug (#21443) where assigning Allowed Channels with MSM would cause other sites to lose their assignments.</li>
+<li>Fixed a bug where checking the Mime Type of a CSS file could return <code class="docutils literal"><span class="pre">&quot;text/plain&quot;</span></code> instead of <code class="docutils literal"><span class="pre">&quot;text/css&quot;</span></code>.</li>
+<li>Fixed a bug (#21663) where a raw language string would be returned if an add-on fails to install.</li>
+<li>Fixed a bug (#21731) where status permissions were not being respected.</li>
+<li>Fixed a bug (#21749) where a member group with only edit entry permissions did not have the Edit nav menu.</li>
+<li>Fixed a bug (#21797) where we provided edit and delete icons for categories and then denied access when you tried to use them. Sorry.</li>
+<li>Fixed a bug where add-ons could not specify a settings icon in the header.</li>
+<li>Fixed a bug (#21866) where Markdown <code class="docutils literal"><span class="pre">[code]</span></code> blocks were not rendering correctly.</li>
+<li>Fixed a bug where the default theme could not be installed.</li>
+<li>Fixed a bug where the category parameter on the default theme slideshow could cause an error on some servers.</li>
+<li>Fixed a bug where URLs in an add-on&#8217;s README.md file would not mask the CP url.</li>
+<li>Fixed a bug where Channel <code class="docutils literal"><span class="pre">{total_entries}</span></code> was not updated when publishing a new entry.</li>
+<li>Fixed a bug where Channel <code class="docutils literal"><span class="pre">{total_entries}</span></code> was not updated by the Statistics sync utility.</li>
+<li>Fixed a bug where disabled checkboxes sorta looked enabley.</li>
+<li>Fixed a bug where settings were not passed to Extension constructors on the Extensions settings page.</li>
+<li>Fixed a bug (#21860) where update 3.1.0 could throw a PHP error in some situations.</li>
+</ul>
+</div>
+<div class="section" id="version-3-3-1">
+<h2><a class="toc-backref" href="#id25">Version 3.3.1</a><a class="headerlink" href="#version-3-3-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: May 10th, 2016</p>
+<ul class="simple">
+<li><strong>NEW</strong>: Added additional logging when changing email address and password.</li>
+<li>Eliminated some extra, duplicate, and redundant queries when editing templates that are saved as files.</li>
+<li>Fixed a security bug where logged out users could be shown altered system messages.</li>
+<li>Fixed a bug (#21426) where status colors were not correctly shown on the Edit page.</li>
+<li>Fixed a bug (#21712) where the toggle fieldtype sometimes generated an error when used in Channel Form.</li>
+<li>Fixed a bug (#21713) where the file field on a publish form wouldn&#8217;t let go of an old file name when you replaced it. Let it go.</li>
+<li>Fixed a bug (#21775) in the Moblog module where PHP errors could occur when saving an edited moblog and multiple allowed emails were specified.</li>
+<li>Fixed a bug (#21806) where the Channel Form would inadvertently remove embed tags when editing entries.</li>
+<li>Fixed a bug (#21808) when using formatting types other than Markdown that effectively ignored a Channel&#8217;s &#8220;Render URLs and Email addresses as links?&#8221; setting.</li>
+<li>Fixed a bug (#21813) where an PHP error may show when viewing a member profile on older versions of PHP.</li>
+<li>Fixed a bug (#21816) where there was an unrendered language key in the Simple Commerce email templates listing.</li>
+<li>Fixed a bug (#21819) where the new Channel entry notifications were not working.</li>
+<li>Fixed a bug (#21820) where an unordered HTML button proudly declared itself instead of just using its icon.</li>
+<li>Fixed a bug (#21821) where email templates felt there were perfect as-is and didn&#8217;t save any edits.</li>
+<li>Fixed a bug (#21824) where dates could display improperly on the Publish and Edit pages.</li>
+<li>Fixed a bug (#21825) with Channel Set exports where exporting some field types could result in a corrupted zip file.</li>
+<li>Fixed a bug (#21833) where the Active Record class may show an error in PHP 7.</li>
+<li>Fixed a bug where a PHP error could occur when uploading files to a file field with a single directory specified.</li>
+<li>Fixed a bug where adding a new row to a grid wouldn&#8217;t register any file upload buttons for textareas.</li>
+<li>Fixed a bug where moblog settings did not properly display selected categories.</li>
+<li>Fixed a bug where some relationship fields on the publish form would not scroll.</li>
+<li>Fixed an obscure bug in channel entries where a specifying an invalid month, day and/or year in the parameters or the URI caused a MySQL error.</li>
+</ul>
+</div>
+<div class="section" id="version-3-3-0">
+<h2><a class="toc-backref" href="#id26">Version 3.3.0</a><a class="headerlink" href="#version-3-3-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: April 19, 2016</p>
+<ul class="simple">
+<li><strong>NEW</strong>: Added <a class="reference internal" href="../channel/sets.html"><span class="doc">Channel Sets</span></a>.</li>
+<li><strong>NEW</strong>: Added the default theme.</li>
+<li><strong>NEW</strong>: Added the ability to add language information to a bbcode block (e.g. <code class="docutils literal"><span class="pre">[code=&quot;php&quot;]</span></code>).</li>
+<li><strong>NEW</strong>: <code class="docutils literal"><span class="pre">{logged_in_...}</span></code> <a class="reference internal" href="../templates/globals/single_variables.html#member-variables"><span class="std std-ref">Member variables</span></a> are now parsed early.</li>
+<li><strong>NEW</strong>: Super Admins using &#8220;Login as&#8221; retain debugging information.</li>
+<li><strong>NEW</strong>: Member localization will now &#8220;stick&#8221; with the site&#8217;s preferences unless they have specified localization settings for their own account.</li>
+<li><strong>NEW</strong>: Added FontAwesome to the Control Panel.</li>
+<li><strong>NEW</strong>: Added a <code class="docutils literal"><span class="pre">{site_description}</span></code> global variable.</li>
+<li><strong>NEW</strong>: Added an unordered list button to the predefined HTML buttons.</li>
+<li><strong>NEW</strong>: Comments column on control panel entries listing will not show if comments are disabled and no comments are present on the site.</li>
+<li><strong>NEW</strong>: Added variables to the following email templates:<ul>
+<li>&#8216;User - Account declined notification&#8217; (<code class="docutils literal"><span class="pre">{username}</span></code>)</li>
+<li>&#8216;User - Account validation notification&#8217; (<code class="docutils literal"><span class="pre">{username}</span></code>, <code class="docutils literal"><span class="pre">{email}</span></code>)</li>
+</ul>
+</li>
+<li>The RTE fieldtype no longer manipulates the HTML it generates. What you save is what you get.</li>
+<li>Changed the email setting&#8217;s SMTP password field and the moblog setting&#8217;s email account password fields from plain text to password fields.</li>
+<li>Linked category group and field group names in the control panel now link to their respective category and field listings.</li>
+<li>Optimized relationship parent tag query.</li>
+<li>Updated <a class="reference external" href="https://michelf.ca/projects/php-markdown/">PHP Markdown</a> to 1.6.0.</li>
+<li>Removed code highlighting in <code class="docutils literal"><span class="pre">[code]</span></code> blocks.</li>
+<li>Removed Glyphicons from the Control Panel.</li>
+<li>Fixed a bug (#21697) where an error may show when an exception is thrown in PHP 7.</li>
+<li>Fixed a bug (#21696) where the Manage Categories toggle was unstyled.</li>
+<li>Fixed a bug (#21667) where the image formatting button on a textarea did not use the file picker.</li>
+<li>Fixed a bug (#21688) where validation errors set via AJAX on Grid fields would sometimes be unresolvable.</li>
+<li>Fixed a bug where channel form could sometimes overwrite fields that were not in the form.</li>
+<li>Fixed a bug (#21644) where the file manager did not load for users with a lot of files.</li>
+<li>Fixed a bug where grid with more than one relationship could not parse all of them.</li>
+<li>Fixed a bug where the RTE fieldtype wasn&#8217;t always installed.</li>
+<li>Fixed a bug (#21582) where layouts missing the Categories tab would generate errors on the publish page.</li>
+<li>Fixed a bug (#21733) where layouts missing the Publish tab would generate errors on the publish page.</li>
+<li>Fixed a bug (#21677) where recalcuatling statistics didn&#8217;t recalculate the comment counts.</li>
+<li>Fixed a bug (#21682) where the list for duplicating an existing template, when creating a new template, was unsorted.</li>
+<li>Fixed a bug (#21704) where Firefox wouldn&#8217;t scroll to top in the CP.</li>
+<li>Fixed a bug (#21705) where saving an entry could trigger a PHP error.</li>
+<li>Fixed a bug (#21710) where the file modal&#8217;s table did not sort.</li>
+<li>Fixed a bug (#21619) where <code class="docutils literal"><span class="pre">[code]</span></code> blocks and Markdown codeblocks did not properly add <code class="docutils literal"><span class="pre">&lt;pre&gt;</span></code> tags.</li>
+<li>Fixed a bug where the Channel Form would inadvertently remove add-on tags when editing entries.</li>
+<li>Fixed a MySQL error that would occur on invalid forum feed requests.</li>
+<li>Fixed a stray PHP 7 incompatibility in Channel Form</li>
+<li>Fixed a bug (#21711) where CSS assets were not being delivered in <code class="docutils literal"><span class="pre">{path='css/_ee_channel_form_css'}</span></code> requests.</li>
+<li>Fixed a bug where <code class="docutils literal"><span class="pre">layout:</span></code> globals were parsed in content.</li>
+<li>Fixed a bug in site settings where the HTML button form required a closing tag.</li>
+<li>Fixed a bug (#21699) where a PHP error occurred when editing an entry via the channel form if the instructions or label tags were present.</li>
+<li>Fixed a bug (#21671) where a &#8216;Disallowed Key Characters&#8217; error occurred when saving the channel_lang.php translation file.</li>
+<li>Fixed a bug (#21700) where a PHP error occurred on the member group page in the control panel when pagination was present.</li>
+<li>Fixed a bug (#21755) where there were unused language keys.</li>
+<li>Fixed a few bugs (#21756, #21757, #21758, #21761, #21760, #21762, #21759, #21774) with duplicate language keys.</li>
+<li>Fixed a bug (#21765) where some language keys had grammar issues.</li>
+<li>Fixed a few bugs (#21766, #21767) where we weren&#8217;t using language keys.</li>
+<li>Fixed a bug (#21768) where HTML button names were not being translated.</li>
+<li>Fixed a bug (#21769) where we had a small typo in new member notifications language.</li>
+<li>Fixed a bug (#21770) where a language key wasn&#8217;t getting the proper substitution.</li>
+<li>Fixed a bug (#21771) where a language key wasn&#8217;t in our language files.</li>
+<li>Fixed some langauge string bugs (#21754 and #21753).</li>
+<li>Fixed a bug (#21707) where some old auto saved entries refused to go away.</li>
+<li>Fixed a bug (#21750) where the File field could show an undefined index error if its data wasn&#8217;t pre-cached.</li>
+<li>Fixed a bug where the default CP homepage could not be saved for members other than the logged-in member.</li>
+<li>Fixed a bug (#21683) where URL titles had to be unique site-wide instead of per-Channel.</li>
+<li>Fixed a number of display bugs (#21671) in the translator.</li>
+<li>Fixed a MySQL error when recounting statistics and the Forum was installed (#21780).</li>
+<li>Fixed a bug where the comment form could show despite comments being globally disabled.</li>
+<li>Fixed a bug on the member profile page where the link to the member group form did not show for superadmins.</li>
+<li>Reduced the password reset token&#8217;s timeout. (thanks to security researcher <a class="reference external" href="https://twitter.com/Sajibekantibd" rel="nofollow">Sjibe Kanti</a>)</li>
+</ul>
+<ul class="simple">
+<li>Developers:<ul>
+<li><strong>NEW</strong>: Added <code class="docutils literal"><span class="pre">relationships_display_field_options</span></code> hook to allow additional filters on the options in the publish field.</li>
+<li><strong>NEW</strong>: Added extension hooks for CategoryField, CategoryGroup, ChannelField, ChannelFieldGroup, File, MemberField, MemberGroup, Template, TemplateGroup, TemplateRoute models.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-2-1">
+<h2><a class="toc-backref" href="#id27">Version 3.2.1</a><a class="headerlink" href="#version-3-2-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: March 16, 2016</p>
+<ul class="simple">
+<li>Fixed a bug (#21679) where the file field could lose content when saving existing entries.</li>
+<li>Fixed a bug where apostrophes were not escaped in the Translation Utility.</li>
+<li>Fixed a bug where entries without authors would generate a PHP error.</li>
+<li>Fixed a bug where using channel form with a channel that has no channel form settings would generate PHP errors.</li>
+<li>Fixed a bug (#20554) where the RTE stored full URLs instead of <code class="docutils literal"><span class="pre">{filedir_n}</span></code> tags.</li>
+<li>Fixed a bug where usage of <code class="docutils literal"><span class="pre">CI_DB_active_rec::distinct()</span></code> would cause an exception.</li>
+<li>Fixed bugs (#21544, #21353) with uploading and assigning avatars.</li>
+<li>Developers:<ul>
+<li>Added member_ids to <code class="docutils literal"><span class="pre">cp_members_validate_members</span></code> hook.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-2-0">
+<h2><a class="toc-backref" href="#id28">Version 3.2.0</a><a class="headerlink" href="#version-3-2-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: March 8, 2016</p>
+<ul class="simple">
+<li><strong>NEW:</strong> Added template tags for modified image file dimensions i.e. <code class="docutils literal"><span class="pre">{image}{width:small}{/image}</span></code>.</li>
+<li><strong>NEW:</strong> Added a Toggle Fieldtype for all your on/off and yes/no needs.</li>
+<li><strong>NEW:</strong> Added URL Field Type</li>
+<li><strong>NEW:</strong> Added Email Address Field Type</li>
+<li>The default database engine is now InnoDB</li>
+<li>Added Forum Aliases.</li>
+<li>Added the Forum Publish Tab back in.</li>
+<li>Added global template variable/conditional <code class="docutils literal"><span class="pre">is_ajax_request</span></code></li>
+<li>Yay: we deprecated the jQuery module! Boo: we made it installable so you can still use it. Really, just use their CDN and include it yourself.</li>
+<li>Added a notice to the Site Manager when the site limit has been reached.</li>
+<li>Changed the file display to use the file&#8217;s name for non-images instead of the missing image thumbnail. (Bug #21270)</li>
+<li>Changed the behavior of the &#8220;Any ...&#8221; options in the Relationship settings such that it and the specific options are mutually exclusive, i.e. &#8220;Any channel&#8221; or a specific channel, but not both. (Bug #21659)</li>
+<li>Fixed a bug (#21250) where sidebar items could not be marked inactive. Now they can.</li>
+<li>Fixed a bug where the Core version tried to use the Spam service.</li>
+<li>Fixed a bug where the comment module could throw a PHP error for guest posts.</li>
+<li>Fixed a bug (#21650) where one could not remove all rows in a Grid field.</li>
+<li>Fixed a bug (#21647) where there could be an undefined variable error on the Publish screen.</li>
+<li>Fixed a bug (#21628) where categories would not maintain their selection on the Publish form when there was a validation error.</li>
+<li>Fixed a bug (#21626) where the path for the passwords dictionary file was pointing to the wrong location.</li>
+<li>Fixed a bug where formatting buttons on textareas would not work on new Grid rows.</li>
+<li>Fixed a bug (#21638) where textareas with a file chooser available would have non-images inserted as an image tag.</li>
+<li>Fixed a bug (#21567) where sites with OPcache enabled can result in a false erorr after a fresh install.</li>
+<li>Fixed a bug (#21555) where empty tabs could not be removed from a layout.</li>
+<li>Fixed a bug (#21545) where email templates could not be edited.</li>
+<li>Fixed a bug (#21655) where template versions could sometimes generate erorrs.</li>
+<li>Fixed a bug (#21656) where Template Revisions were displayed unsorted, rather than sorted by date.</li>
+<li>Fixed a bug (#21565) where channel field text formatting could not update existing entries.</li>
+<li>Fixed a bug (#21103) where installing from https would configure the site for http instead of https.</li>
+<li>Fixed a bug (#21187) where Channel Form would sometimes be a little too strict about required fields.</li>
+<li>Fixed a bug (#21215) where updating a site with template routes from a version before 2.9.3 would generate errors.</li>
+<li>Fixed a bug (#21651) where we had a spelling mistake in an language key.</li>
+<li>Fixed a bug (#21561) where the translation utitliy would truncate some HTML when saving.</li>
+<li>Fixed a bug (#21293) where the translation utility would break the form if the translation contained a quotation mark.</li>
+<li>Fixed a bug (#21648) where the last field in a layout would sometimes refuse to move.</li>
+<li>Fixed a bug (#21587) where removing custom fields that were in a layout could break the layout.</li>
+<li>Fixed a bug (#21487) where enabling versioning after creating a layout would generate errors.</li>
+<li>Fixed a bug (#21329) where sending HTML email via the Communicate utility could add non breaking spaces.</li>
+<li>Fixed a bug (#21318) where partial translations could not be saved.</li>
+<li>Fixed a bug (#21335) where channel form couldn&#8217;t tell if an option was checked or not.</li>
+<li>Fixed a bug where Grid column clones were jealous and quietly assumed the identity of the original.</li>
+<li>Fixed a bug where you could not erase the contents of RTE field once it had been saved.</li>
+<li>Fixed a bug where commenting as a Guest generated an error.</li>
+<li>Fixed a bug (#21577) where the RTE would grow when switching from WYSIWYG to Source View.</li>
+<li>Fixed a bug where the front-end email settings page didn&#8217;t require a password when you weren&#8217;t changing your email address.</li>
+<li>Fixed a bug (#21287) where RTE fields could not be resized.</li>
+<li>Fixed a bug where database errors could sometimes not be displayed.</li>
+<li>Fixed a bug (#21601) where extension settings were only saved to the first method in the database.</li>
+<li>Fixed a bug (#21599) where the no_results conditional on nested relationship tags would have some of the initial characters cut off.</li>
+<li>Fixed a bug (#21584) where you couldn&#8217;t properly duplicate the Super Admin member group.</li>
+<li>Fixed a bug (#21627) where the comment form didn&#8217;t work when using Session or Session and Cookie front-end session types.</li>
+<li>Developers:<ul>
+<li>Added <cite>output_show_message</cite> hook for modifying the output of front-end system messages.</li>
+<li>Added an <code class="docutils literal"><span class="pre">$antipool</span></code> parameter to <code class="docutils literal"><span class="pre">random_string()</span></code> in the string helper, to blacklist characters from the alphanumeric-type pools. Uses are for unambiguous strings for humans, i.e. order numbers, coupon codes, etc: <code class="docutils literal"><span class="pre">$secret_code</span> <span class="pre">=</span> <span class="pre">strtoupper(random_string('alnum',</span> <span class="pre">8,</span> <span class="pre">'0OoDd1IiLl8Bb5Ss2Zz'));</span></code></li>
+<li>The <cite>cp_search_index</cite> table was removed.</li>
+<li>The VariableColumnModel no longer marks properties as dirty when filling.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-1-4">
+<h2><a class="toc-backref" href="#id29">Version 3.1.4</a><a class="headerlink" href="#version-3-1-4" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: February 26, 2016</p>
+<ul class="simple">
+<li>Fixed a <strong>CRITICAL</strong> bug where saving or deleting comments may cause data loss in certain areas of the associated Channel entries, caused by a change in 3.1.3. Only installations of 3.1.3 were affected.</li>
+</ul>
+</div>
+<div class="section" id="version-3-1-3">
+<h2><a class="toc-backref" href="#id30">Version 3.1.3</a><a class="headerlink" href="#version-3-1-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: February 25, 2016</p>
+<ul class="simple">
+<li>Added visual indicators to required grid columns.</li>
+<li>Grid&#8217;s data type options now use the same names as the custom field&#8217;s type options.</li>
+<li>When editing a grid column&#8217;s data type the options are now filtered based on field type compatibility.</li>
+<li>Member listing setting &#8220;Sort By&#8221; choices now match available columns.</li>
+<li>Made some parameters in some Active Record methods required.</li>
+<li>Our CodeMirror linter had an epiphany and now realizes that installed plugins can have underscores in their tag names.</li>
+<li>Tweaked Performance tab of the Profiler for clearer display.</li>
+<li>Fixed a bug (#21457) where unchecked checkboxes in a publish form didn&#8217;t stay unchecked.</li>
+<li>Fixed a bug (#21558) where some Pages module variables were empty (and potentially some other items if retrieved with <code class="docutils literal"><span class="pre">config_item()</span></code>).</li>
+<li>Fixed a bug (#21566) where the <cite>beforeSort</cite> and <cite>afterSort</cite> Grid publish form events were not working.</li>
+<li>Fixed a bug (#21569) where categories of the same name thought they were all selected when only some of them were.</li>
+<li>Fixed a bug (#21581) where a MySQL error occured on the publish page if no member groups were included in the author list.</li>
+<li>Fixed a bug (#21593) where a front-end logout link may show a warning in PHP 7.</li>
+<li>Fixed a bug (#21594) where <cite>number</cite> input types were not bound to AJAX form validation and had no styling.</li>
+<li>Fixed a bug (#21595) where categories created under another MSM site could not be assigned to an entry.</li>
+<li>Fixed a bug (#21603) where Grid&#8217;s JavaScript may try to manipulate table elements that are part of custom fieldtype markup.</li>
+<li>Fixed a bug (#21604) where relationships inside grid fields did not work consistently on MSM sites.</li>
+<li>Fixed a bug (#21605) where the documentation link for the &#8220;Suspend threshold&#8221; setting was broken.</li>
+<li>Fixed a bug (#21606) where the units used for the Lockout Time setting were not specified in the field description.</li>
+<li>Fixed a bug (#21609) where errors may appear when downloading a new blacklist under PHP 7.</li>
+<li>Fixed bugs (#21612 &amp; #21616) where entry comment counts where not updated when adding or deleting comments.</li>
+<li>Fixed a bug (#21614) where one could not delete the last image manipulation for an upload directory.</li>
+<li>Fixed a bug (#21615) where there were a few misspellings of &#8220;entries&#8221; in the CP.</li>
+<li>Fixed a bug where Relationship fields could not be filtered when using session IDs for control panel sessions.</li>
+<li>Fixed a bug where the header search box did not repopulate correctly.</li>
+<li>Fixed a bug where a control panel search in the channel section could throw a PHP error.</li>
+<li>Fixed a bug where some default avatars were no longer displayed on the frontend.</li>
+<li>Fixed a bug where accepting the core file change notice resulted in a 404.</li>
+<li>Fixed a bug where custom fields could use reserved words as their short name.</li>
+<li>Fixed a bug where a Super Admin could delete his/her own account.</li>
+<li>Fixed a bug where installing an add-on with a publish tab would break existing publish form layouts.</li>
+<li>Fixed a bug where under the right conditions a member group that should have permissions to a forum doesn&#8217;t.</li>
+<li>Fixed a bug where <cite>glob()</cite> could return <cite>FALSE</cite> and cause all manner of errors in the Add-On Manager.</li>
+<li>Fixed a bug where saving a template did not clear any of the caches.</li>
+<li>Fixed a bug where the Revisions tab on the publish entry form only showed two versions instead of all your versions.</li>
+<li>Fixed a bug where the profiler did not display the URI of the current page call.</li>
+<li>Fixed a bug on the Superadmin group edit page, where the checkboxes for including in the author list and member list were incorrect.</li>
+<li>Fixed a bug where the confirmation notice would not be shown after deleting a large number of entries.</li>
+</ul>
+</div>
+<div class="section" id="version-3-1-2">
+<h2><a class="toc-backref" href="#id31">Version 3.1.2</a><a class="headerlink" href="#version-3-1-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: January 28, 2016</p>
+<ul class="simple">
+<li>Fixed a bug (#21408) where the Show File Chooser checkbox would not save for text input fields.</li>
+<li>Fixed a bug (#21488) where updating your member password could result in a PHP error.</li>
+<li>Fixed a bug (#21493) where a &#8220;more info&#8221; link in the Security &amp; Privacy settings 404d.</li>
+<li>Fixed a bug (#21498) where using <cite>dynamic_parameters</cite> resulted in a PHP error.</li>
+<li>Fixed a bug (#21505) where the template creation form would not have its submit buttons re-enabled after a validation error.</li>
+<li>Fixed a bug (#21508) where form validation messages were not presented properly when editing a member&#8217;s profile.</li>
+<li>Fixed a bug (#21515) where the file upload modal didn&#8217;t work when opened from the Rich Text Editor or the Textarea fields.</li>
+<li>Fixed a bug (#21520) where the installer did not use the system config override for theme URL.</li>
+<li>Fixed a bug (#21521) where extension settings were not wrapped in the proper markup.</li>
+<li>Fixed a bug (#21523) where member groups listing in channel layouts table was missing a space.</li>
+<li>Fixed a bug (#21526) where an error would appear when saving a category field.</li>
+<li>Fixed a bug (#21532) where accessing some files wrongly accused you of attempting to access files outside of a directory.</li>
+<li>Fixed a bug (#21537) where PHP 5.3 didn&#8217;t like something the Pages module was doing and complained loudly.</li>
+<li>Fixed a bug (#21546) where one could not delete more than one category at a time via the category manager.</li>
+<li>Fixed a bug where the moblog settings page could run out of memory on large sites.</li>
+<li>Fixed a bug where <cite>upload_directory</cite> config overrides weren&#8217;t overriding on error display in the File Manager</li>
+<li>Fixed a bug where relationship parsing could result in conditional errors.</li>
+<li>Fixed a bug where channel form did not work without a url title field.</li>
+<li>Fixed a bug in channel form where the validation parameters could be ignored.</li>
+<li>Fixed a bug where deleting a field group didn&#8217;t delete its fields.</li>
+<li>Fixed a bug where Site filters never showed.</li>
+<li>Fixed a bug where uploading an avatar could result in an error about unlinking a directory.</li>
+<li>Fixed a bug where the installer incorrectly showed errors when moving avatars.</li>
+<li>Fixed a bug in the Channel form where non-superadmins did not always have access to all of their allowed channels.</li>
+<li>Added a warning to the File Manager when the upload directory you are browsing at is not on the file system.</li>
+</ul>
+</div>
+<div class="section" id="version-3-1-1">
+<h2><a class="toc-backref" href="#id32">Version 3.1.1</a><a class="headerlink" href="#version-3-1-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: January 20, 2016</p>
+<ul class="simple">
+<li>Fixed a bug (#21460) where interacting with a Relationship field&#8217;s filter inside a new Grid row would cause an error on entry save.</li>
+<li>Fixed a bug where the contact form could throw a PHP error.</li>
+<li>Fixed a bug (#21507) where creating template groups with save as files would throw PHP errors.</li>
+<li>Fixed a bug (#21512) where using the filepicker in the publish form could result in an &#8220;Invalid selection&#8221; error.</li>
+<li>Fixed a bug where the filepicker for file fields forgot about the default modal view setting.</li>
+<li>Fixed a bug (#21511) where the status filter on the Entry Manager ignored your selected channel.</li>
+<li>Fixed a bug where Template Variables would not automatically sync from files.</li>
+<li>Fixed a bug where the Metaweblog API errored when attempting to send or receive data.</li>
+</ul>
+</div>
+<div class="section" id="version-3-1-0">
+<h2><a class="toc-backref" href="#id33">Version 3.1.0</a><a class="headerlink" href="#version-3-1-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: January 18, 2016</p>
+<ul class="simple">
+<li>Compatible with PHP 7 and MySQL 5.7</li>
+<li>Template partials and Template variables can now be saved as files.</li>
+<li>Added the ability to manage categories from the Channel entry publish form.</li>
+<li>CodeMirror textareas (think Templates) are now resizable.</li>
+<li>Channel entries now default sort by entry date with the newest at the top.</li>
+<li>New member groups default to allowing online website access.</li>
+<li>Updated language in the installer to identify the directory that needs to be deleted if we can&#8217;t automatically rename the installer directory.</li>
+<li>Template groups can be reordered in the sidebar again.</li>
+<li>Removed duplicate queries when displaying multiple relationship fields on the publish form.</li>
+<li>Changed File listing to sort by date by default.</li>
+<li>Changed Add-on listings so the add-on name always links to the module control panel or settings if they exist.</li>
+<li>Changed wording of File field button on Publish page.</li>
+<li>Fixed a bug where the Filepicker could run out of memory.</li>
+<li>Fixed a bug where <code class="docutils literal"><span class="pre">load_package_js</span></code> did not work on fieldtype publish pages.</li>
+<li>Fixed a bug where validation did not work consistently on some numeric types.</li>
+<li>Fixed a bug (#21255) where the &#8220;Assign category parents?&#8221; setting had no effect.</li>
+<li>Fixed a bug where the JavaScript for the Rich Tech Editor could not be loaded on the front-end.</li>
+<li>Fixed a bug (#21118) where custom member fields could not be populated.</li>
+<li>Fixed a bug (#21309) where custom member fields could not be rendered in a template.</li>
+<li>Fixed a bug where a PHP error would appear in the control panel if the <cite>cp_css_end</cite> hook was active.</li>
+<li>Fixed a bug where using the <cite>logged_out_member_id=</cite> parameter on Channel Form would throw an exception for logged-out users.</li>
+<li>Fixed a bug where duplicating a template group would not reset the hit counts for those templates or copy template permissions.</li>
+<li>Fixed a bug where new installs may be tracking template hits despite the setting appearing disabled.</li>
+<li>Fixed a bug (#21157) where files sizes could not be less than 1MB.</li>
+<li>Fixed a bug where bulk action checkboxes failed to work in the Entry Manager after searching.</li>
+<li>Fixed a bug (#21104) where add-ons with mutliple fieldtypes couldn&#8217;t use their fieldtypes.</li>
+<li>Fixed a bug where the installer wouldn&#8217;t automatically rename if you still had the mailing list export in your cache.</li>
+<li>Fixed a bug (#21458) where file uploads did not work in the Channel form.</li>
+<li>Fixed a bug (#21442) in the Channel form where PHP errors occurred when editing an entry with a file.</li>
+<li>Fixed a bug in the Channel form where PHP errors could occur when submitting an entry with no category assigned.</li>
+<li>Fixed a bug where CAPTCHA was not working properly on the Channel form.</li>
+<li>Fixed a bug where ENTRY_ID was not properly replaced on return after submitting the Channel form.</li>
+<li>Fixed a bug where the default status was not being used by the Channel form.</li>
+<li>Fixed a bug where new sites could not be created via the Site Manager.</li>
+<li>Fixed a bug (#21491) where the Grid model&#8217;s cache could not be cleared on subsequent data queries.</li>
+<li>Fixed a bug (#21464) where removing a file didn&#8217;t remove it&#8217;s manipulated copies. It&#8217;s hard saying good-bye.</li>
+<li>Fixed a bug (#21482) where templates were jealous and refused to show you their previous revisions.</li>
+<li>Fixed a bug (#21472) where checkboxes, radio buttons, and multiselect fieldtypes didn&#8217;t pay attention when given their menu options on create.</li>
+<li>Fixed a bug where adding category groups to a channel that had a layout wouldn&#8217;t let you move that category group in the layout.</li>
+<li>Fixed a bug (#21490) where &#8220;Populate the menu from another channel field&#8221; option in Channel Fields forgot which field you wanted to use.</li>
+<li>Fixed some language keys.</li>
+<li>Fixed a PHP warning when editing the Developer Forum theme templates.</li>
+<li>Fixed a bug where a duplicated Grid column would create two copies when duplicated.</li>
+<li>Fixed a Markdown bug with URLs that contain spaces when using Safe HTML.</li>
+<li>Fixed a bug (#21462) for PHP 5.3 which would lead to a fatal <code class="docutils literal"><span class="pre">Using</span> <span class="pre">$this</span> <span class="pre">when</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">object</span> <span class="pre">context...</span></code> error. Time to upgrade PHP!</li>
+<li>Fixed a bug where stop word removal in the search module was not UTF-8 compatible. Zaro Ağa is no longer Zaro Ğ.</li>
+<li>Fixed an obscure URI detection bug that could lead to duplicate content duplicate content.</li>
+<li>Fixed a bug in Template Routes where it was ignoring the &#8220;Require all Segments&#8221; setting.</li>
+<li>Renamed Template Route&#8217;s &#8220;Require all Segments&#8221; setting to &#8220;Require all Variables&#8221; to match its behavior.</li>
+<li>Developers:<ul>
+<li>Changed the event emitter to trigger subscriber events before manually bound ones</li>
+<li>Model events will no longer trigger if the described event does not take place (no <code class="docutils literal"><span class="pre">onAfterSave</span></code> if save is called on an unchanged model)</li>
+<li>Added <code class="docutils literal"><span class="pre">less_than</span></code> and <code class="docutils literal"><span class="pre">greater_than</span></code> validation rules</li>
+<li><code class="docutils literal"><span class="pre">string_override</span></code> key in publish form tab definitions works again.</li>
+<li>Fixed a bug where asking a model query to return columns that didn&#8217;t include the primary key would only return one result.</li>
+<li>Class names can now be set on fieldsets via the shared form attributes array.</li>
+<li>Fixed a bug in the legacy Addons library where incorrect paths would be returned from the <cite>get_installed()</cite> method.</li>
+<li>Fixed a bug where alerts that were deferred would not carry over their manually-set close/cannot close setting.</li>
+<li>Date fields with the date picker bound to them can set a custom date format via a <cite>data-date-format</cite> parameter on the text input.</li>
+<li>The date picker can be bound to a text input using <cite>EE.cp.datePicker.bind(element)</cite>.</li>
+<li>Added <cite>comment_entries_query_result</cite> hook for modifying the query result set for <cite>{exp:comment:entries}</cite>.</li>
+<li>Added <cite>comment_entries_comment_ids_query</cite> hook for modifying the query that selects the IDs for comments to display in <cite>{exp:comment:entries}</cite>.</li>
+<li>Added the ability for Folder List sidebars to be reordered.</li>
+<li>Added a pause and resume method to the form validation JS.</li>
+<li>Added: Channel Fields can now declare their compatibility type allowing editing of the type itself (i.e. RTE to Textarea).</li>
+<li>Added a number of hooks to the following models:<ul>
+<li>Channel Entry</li>
+<li>Member</li>
+<li>Category</li>
+<li>Comment</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-6">
+<h2><a class="toc-backref" href="#id34">Version 3.0.6</a><a class="headerlink" href="#version-3-0-6" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: December 17, 2015</p>
+<ul class="simple">
+<li>Fixed a bug (#21240) where some templates rendered with errors relating to &#8220;protect_javascript&#8221;.</li>
+<li>Fixed a bug (#21310) where Channel Layouts did not allow you to reposition fields that were added after the layout was created.</li>
+<li>Fixed a bug (#21400) where the Contact Form generated errors.</li>
+<li>Fixed a bug (#21400) where the Contact Form returned a white screen when the Spam module was enabled.</li>
+<li>Fixed a bug (#21412) where some categories appeared on the Publish tab.</li>
+<li>Fixed a bug (#21420) where the Relationship field could no longer organize its related items after searching.</li>
+<li>Fixed a bug (#21436) where RTEs were named inconsistently as fields vs. Grid columns.</li>
+<li>Fixed a bug where some elseif branches in template conditionals were not pruned correctly.</li>
+<li>Fixed a bug where searching withing a Relationship field would unsort your related entries.</li>
+<li>Fixed a bug where publish forms with large Relationship fields could overflow the POST data and result in data loss.</li>
+<li>Fixed a bug where new rows added to a Grid with a Relationship column could have pre-populated Relationship fields.</li>
+<li>Fixed a bug where filtering or searching a Relationship inside a Grid caused that Relationship to ignore the selection.</li>
+<li>Fixed a bug with some overzealous Markdown parsing.</li>
+<li>Fixed a bug where the Member module would not be installed when upgrading a Core installation to Standard.</li>
+<li>Fixed the <code class="docutils literal"><span class="pre">{cp_edit_entry_url}</span></code> variable.</li>
+<li>Fixed a bug where forum previews did not fall back to using the default index template if running the forums through the templates.</li>
+<li>Adjusted sub menus to scroll when they are long.</li>
+<li>Improved New Relic transaction reporting.</li>
+<li>Pre-release versions now include a visual indication that they&#8217;re pre-release and also include the version identifier (e.g. <code class="docutils literal"><span class="pre">dp.4</span></code>) in the extended version information.</li>
+<li>The installer has been calmed down a bit and won&#8217;t skip showing you error messages when they exist.</li>
+<li>Added a check for the required PHP Fileinfo extension to the installer.</li>
+<li>Added a feature (#21418): duplicating a Template did not duplicate its allowed member groups.</li>
+<li>Added a feature (#21427): the Edit Manager&#8217;s category filter is now populated based on the channel filter.</li>
+<li>Added a feature: comments can be formatted with any formatter you have installed. EE, we have Markdown!</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-5">
+<h2><a class="toc-backref" href="#id35">Version 3.0.5</a><a class="headerlink" href="#version-3-0-5" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: December 2, 2015</p>
+<ul class="simple">
+<li>Fixed a bug (#21338) where categories with an ampersand in the title would not maintain its selection state on the entry publish form.</li>
+<li>Fixed a bug (#21300) where the RTE&#8217;s image tool may place the selected image in another RTE when there are multiple on a publish form.</li>
+<li>Fixed a bug where a PHP error would appear in the control panel if the <code class="docutils literal"><span class="pre">cp_css_end</span></code> hook was active.</li>
+<li>Fixed a bug where some Channel entry date variables would not work in conditionals without having brackets around them.</li>
+<li>Fixed a bug (#21378) where the <code class="docutils literal"><span class="pre">cp_css_end</span></code> hook was never fired.</li>
+<li>Fixed a bug (#21394) where an incorrect language key was used for the working state of some buttons in the Members section.</li>
+<li>Fixed a bug (#21395) where a PHP error may appear on some actions dealing with file thumbnails.</li>
+<li>Fixed a bug (#21389) where some OGV files would not be accepted for upload.</li>
+<li>Fixed a bug (#21388) where validation for URL titles in Channel entries would incorrectly flag periods as not allowed.</li>
+<li>Fixed a bug where global template partials could not be edited.</li>
+<li>Fixed a bug where saving entries did not clear caches if that setting was enabled.</li>
+<li>Fixed a bug where the default homepage could be set to the publish page of no channel.</li>
+<li>Fixed a bug where only super admins could edit status groups.</li>
+<li>Fixed a bug where form success messages were removed too eagerly.</li>
+<li>Fixed a bug where modals were shy and did not scroll into view when using Firefox.</li>
+<li>Fixed a bug (#21380) where logging in as another member from the control panel would show a PHP error.</li>
+<li>Fixed a bug where channel layouts did not play nicely with the profiler.</li>
+<li>Fixed a bug (#21387, #21273) where the File module was not installed.</li>
+<li>Fixed a bug (#21373) where two file fields in one Channel would not work on the Publish page.</li>
+<li>Fixed a bug (#21344) where the file modal would not restrict you to the allowed directory when switching filters.</li>
+<li>Fixing a bug where no notice was shown when deleting a newly created publish layout tab with a field in it.</li>
+<li>Fixed a bug (#21406) where the &#8220;view&#8221; link in the CP for your MSM site did not open in a new tab.</li>
+<li>Fixed a bug (#21407) where extending the Category class revealed a PHP Runtime error.</li>
+<li>Fixed a bug (#21342) where CSV exports were really Comma-and-Space Separated Values.</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-4">
+<h2><a class="toc-backref" href="#id36">Version 3.0.4</a><a class="headerlink" href="#version-3-0-4" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: November 18, 2015</p>
+<ul class="simple">
+<li>Fixed a bug that allowed <cite>.codemirror</cite> to stand on top of <cite>.sub-menu</cite></li>
+<li>Fixed a bug that prevented grid column widths from affecting the publish UI. (note: column widths will not affect grid columns with RTE, Relationships or Textarea fields)</li>
+<li>Fixed a bug where run-on sentences made the RTE puff up with pride inside grid fields, we pulled him aside and set him straight.</li>
+<li>Fixed a bug (#21099) where line breaks in member signatures were being converted to literal <code class="docutils literal"><span class="pre">\n</span></code>. Literally.</li>
+<li>Fixed a bug (#21282) where publish tabs pulled a bait and switch and saved their defaults instead of your data. They are looking at hours of community service.</li>
+<li>Fixed a bug (#21289) where some JavaScript events didn&#8217;t happen.</li>
+<li>Fixed a bug (#21295) where clicking, instead of dragging, on the move icon in Channel Layouts refreshed the page.</li>
+<li>Fixed a bug (#21305) where the button text on a Channel entry publish form would not be reset after a validation error when revisions were enabled.</li>
+<li>Fixed a bug (#21307) where LocalPath::__get generated PHP errors.</li>
+<li>Fixed a bug (#21308) where listing member groups couldn&#8217;t handle large numbers of members.</li>
+<li>Fixed a bug (#21313) where submitting forms or clicking links would occasionally result in a blank page.</li>
+<li>Fixed a bug (#21320) where a PHP error would appear when using the <cite>{member_search_path}</cite> variable inside an Channel Entries tag pair.</li>
+<li>Fixed a bug (#21321) where empty relationship fields sometimes generated errors. Sometimes you just need a little alone time.</li>
+<li>Fixed a bug (#21325) where certain add-ons refused to acknowledge their new version number after they were updated.</li>
+<li>Fixed a bug (#21326) where the template manager was insensitive toward case sensitive file systems and you could not edit Forum Templates.</li>
+<li>Fixed a bug (#21328) where we still referenced the constant SYSTEM. It&#8217;s now SYSPATH.</li>
+<li>Fixed a bug (#21332) where some template paths had double slashes (//) when saving as files.</li>
+<li>Fixed a bug (#21334) where template groups which were not the default template group bullied the default template group into renouncing its defaultness.</li>
+<li>Fixed a bug where categories could not be assigned via Channel Form.</li>
+<li>Fixed a bug where you couldn&#8217;t Communicate if you had a large number of members.</li>
+<li>Fixed a bug where the CP complained with esoteric errors when you had enough members for pagination.</li>
+<li>Fixed a bug where membership was elitist and pending members could not be approved.</li>
+<li>Fixed a bug where the Forums fibbed about the Upload Directory being a URL when really it&#8217;s a path.</li>
+<li>Fixed a bug where removing the Forum theme named &#8220;default&#8221; prevented the Template Manager from finding any Forum themes.</li>
+<li>Fixed a bug where some buttons were roguishly displaying a raw language key, rather than actual language data.</li>
+<li>Fixed a bug (#21283) where upload directory synchronization may not apply image manipulations to some files.</li>
+<li>Fixed a bug (#21259) in the Email mdoule where PHP errors were thrown after sending emails.</li>
+<li>Fixed a bug (#21274) where a member group with file access couldn&#8217;t open the file picker.</li>
+<li>Fixed a bug where avatar images where showing up in the file picker.</li>
+<li>Fixed a bug where you couldn&#8217;t upload images if the file picker only had one directory to choose from.</li>
+<li>Added site-wide yes/no settings for notifying pending members when they are approved or denied.</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-3">
+<h2><a class="toc-backref" href="#id37">Version 3.0.3</a><a class="headerlink" href="#version-3-0-3" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: November 9, 2015</p>
+<ul class="simple">
+<li>Fixed a bug (#21272) where default field formatting was not respected when publishing. Chastised the offending code.</li>
+<li>Fixed a bug (#21286) where there was a syntax error in the file picker on lower versions of PHP.</li>
+<li>Fixed a bug (#21296) where new templates were shy and wouldn&#8217;t let anyone but Super Admins view them.</li>
+<li>Fixed a bug (#21299) where a Grid-compatible fieldtype whose markup contained a table would make the Grid field behave incorrectly.</li>
+<li>Fixed a bug (#21301) where there was only one default template group per install, not per site.</li>
+<li>Fixed a bug (#21314) where the Discussion Forum front end was 404&#8217;ing. Where did it go?</li>
+<li>Fixed a bug with Discussion Forum theme image URLs</li>
+<li>Fixed a bug where some site settings did not save correctly.</li>
+<li>Added the SMTP port to the Outgoing Email settings page.</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-2">
+<h2><a class="toc-backref" href="#id38">Version 3.0.2</a><a class="headerlink" href="#version-3-0-2" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: November 2, 2015</p>
+<ul class="simple">
+<li>Fixed a bug (#21214) where ExpressionEngine Core had Phantom Template Routes Syndrome which was causing PHP errors.</li>
+<li>Fixed a bug (#21217) where the &#8220;owned by&#8221; link in the License &amp; Registration page resulted in a 404.</li>
+<li>Fixed a bug (#21222) where the CP was referencing &#8220;default.png&#8221; which retired and is on vacation in the south of France.</li>
+<li>Fixed a bug (#21223) where clicking on the sort handle in grid settings refreshed the page.</li>
+<li>Fixed a bug (#21225) where editing an entry with a file in a grid column could result in a PHP error.</li>
+<li>Fixed a bug (#21226) where field groups refused to be assigned to any site but your first one.</li>
+<li>Fixed a bug (#21228) where files could be uploaded to any upload destination via the publish form.</li>
+<li>Fixed a bug (#21236) where the Black/White List add-on generated errors when trying to download the EE Blacklist.</li>
+<li>Fixed a bug (#21239) where the IP to Nation add-on wouldn&#8217;t let you unban all countries once you&#8217;d banned at least one.</li>
+<li>Fixed a bug (#21244 &amp; #21198 &amp; #21193) where field settings had a case of amnesia.</li>
+<li>Fixed a bug (#21248) where choosing a thumbnail in the filepicker did nothing.</li>
+<li>Fixed a bug (#21249) where the path of saved translations was incorrect.</li>
+<li>Fixed a bug (#21251) where creating an entry didn&#8217;t set an <cite>edit_date</cite>.</li>
+<li>Fixed a bug (#21252) where adding a custom member field could result in an exception.</li>
+<li>Fixed a bug (#21253) where <cite>{edit_date}</cite> formatted dates incorrectly.</li>
+<li>Fixed a bug (#21264) where updating a member would sometimes cause PHP notices.</li>
+<li>Fixed a bug (#21266) where new channel entries ignored the Channel Settings for default status, category, entry title, and url title prefix.</li>
+<li>Fixed a bug (#21275) where under the right conditions a required custom field could be hidden on the Publish page.</li>
+<li>Fixed a bug (#21276) where categories had the option of setting themselves as their own parent; it was a genealogical nightmare.</li>
+<li>Fixed several bugs where certain relationship template tag combinations would result in a PHP error. You should see the therapy bill.</li>
+<li>Fixed a bug where some model validation errors tried to convert an array to a string.</li>
+<li>Fixed a bug where new sites could not be created via the Site Manager.</li>
+<li>Fixed a bug where PHP 5.3 objected to an array access in the Relationship fieldtype on the publish page.</li>
+<li>Fixed a bug where saving a custom member field wanted you to &#8220;Save Layout&#8221;.</li>
+<li>Fixed a bug where long folder list names were overlapping the toolbars.</li>
+<li>Fixed a bug where remove tools would appear without a left border.</li>
+<li>Added blockquote support to in app add on docs.</li>
+<li>Changed bg color for login screens.</li>
+</ul>
+</div>
+<div class="section" id="version-3-0-1">
+<h2><a class="toc-backref" href="#id39">Version 3.0.1</a><a class="headerlink" href="#version-3-0-1" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: October 26, 2015</p>
+<ul class="simple">
+<li>Fixed a bug (#21191) where creating a layout for a channel without categories misbehaved.</li>
+<li>Fixed a bug (#21191) where moving a field into a new tab caused it&#8217;s hidden tool to malfunction.</li>
+<li>Fixed a bug (#21196) where Core would report a PHP Notice when editing the profile of a member.</li>
+<li>Fixed a bug (#21199) where 404 pages were not seting a 404 header.</li>
+<li>Fixed a bug (#21199) where the &#8220;+ New Upload Directory&#8221; link resulted in a 404.</li>
+<li>Fixed a bug (#21204) where certain versions of PHP could not determine empty of a function.</li>
+<li>Fixed a bug (#21205) where the Filepicker wouldn&#8217;t play nice with Core.</li>
+<li>Fixed a bug (#21206) where disabling comments still displayed comment data on the Overview page.</li>
+<li>Fixed a bug (#21213) where turning on &#8220;Save Templates as Files&#8221; was a little overprotective and rewrote the index template with &#8220;Directory access is forbidden.&#8221;</li>
+<li>Fixed a bug (#21218) where Quick Links were permanent.</li>
+<li>Fixed a bug (#21219) where the template manager was too eager about keeping templates in sync across all sites instead of the current site.</li>
+<li>Fixed a bug (#21220) where moving a required field to a new tab removed the required class.</li>
+<li>Fixed a bug (#21221) where accessing the templates model during a session_start hook threw an exception.</li>
+<li>Fixed a bug (#21224) where PHP would sometimes generate a warning when it tried to delete a file.</li>
+<li>Fixed a bug (#21231) where members were being denied access to add-ons they had access to.</li>
+<li>Fixed a bug (#21233) where an empty line in the spam module caused PHP errors.</li>
+<li>Fixed a bug (#21233) where running apc_delete_file sometimes generated a warning.</li>
+<li>Fixed a bug (#21235) where static template route segments were not being included when using {route=...}</li>
+<li>Fixed a bug where creating a second layout for a channel would result in an Exception.</li>
+<li>Fixed a bug where adding and saving an empty tab to a channel layout prevented further editing of the tab.</li>
+<li>Fixed a bug where alerts were not being displayed while creating a layout and preforming unallowed actions.</li>
+<li>Fixed a bug where a required field could be dropped into a hidden tab.</li>
+<li>Fixed a bug where dismissing alerts on the Create/Edit Form Layout page refreshed the page.</li>
+<li>Fixed a bug where the thumbnail view of the filepicker was not responsive.</li>
+<li>Add-ons are no longer &#8220;Removed&#8221;, they are &#8220;Uninstalled&#8221;.</li>
+<li>Fixed a bug where &#8216;yes&#8217; and &#8216;no&#8217; weren&#8217;t localizable. Lo siento.</li>
+<li>Removed CSS that forced capitalization on <cite>.choice</cite></li>
+</ul>
+</div>
+<div class="section" id="version-3-0-0">
+<h2><a class="toc-backref" href="#id40">Version 3.0.0</a><a class="headerlink" href="#version-3-0-0" title="Permalink to this headline">¶</a></h2>
+<p>Release Date: October 13, 2015</p>
+<ul>
+<li><p class="first">Control Panel</p>
+<ul>
+<li><p class="first">General</p>
+<ul class="simple">
+<li>Responsive design is a pleasure on mobile devices.</li>
+<li>100% image free, fast and beautiful on regular and high density displays</li>
+<li>Inline error messages consistently used on all forms.</li>
+<li>The control panel navigation and logic is now based on the idea of <strong>Content Creators</strong> and <strong>Site Builders</strong>, with navigation related to content creators on the left and site builders on the right.</li>
+<li>Many application defaults have been modified to reflect how people most often use ExpressionEngine.</li>
+<li>Control Panel landing pages are customizable per member group, or even per member</li>
+<li>In-app links to the documentation, support, and bug tracker are visible to member groups of your choice.</li>
+<li>Improved contextual search in the control panel.</li>
+<li>Uses a consistent visual language across the board.</li>
+<li>Enabling/disabling CAPTCHA has been consolidated to a single site-wide setting.</li>
+<li>Unified Upload Directories: Everything that used to be a special folder (Member photos, avatars, etc..) is now available in the File Manager and can use the usual file manipulations and other upload preferences.</li>
+<li>Smart interactions (for example, if you have no channels, then clicking <strong>Create</strong> will take you to the channel manager to make one).</li>
+<li>Bulk actions don&#8217;t clutter the UI, they onlyappear only when needed.</li>
+<li>The new style guide allows both 1st and 3rd party to build awesome UX.</li>
+<li>The new design will allow simple iterative niceties in the future, such as adding some minimal color and branding for your clients.</li>
+<li>Comments are no longer a separate module. Comments can be accessed from the Overview page.</li>
+<li>Accessories no longer exist.</li>
+<li>Quicklinks and custom tabs were consolidated into only Quicklinks.</li>
+<li>Table zebra-striping JS has been removed. Zebra-striping is handled automatically by the CSS.</li>
+<li>Pre-populating the Name and URL fields of quicklinks when the ‘+ New Link’ button is clicked.</li>
+<li>Added a default modal view setting to upload destinations.</li>
+</ul>
+</li>
+<li><p class="first">Overview Page</p>
+<blockquote>
+<div><ul class="simple">
+<li>The <strong>Home Page</strong> is now the overview page.</li>
+<li>Completely rewritten to show a quick overview of your content, including  recent comments, member counts and latest entry information.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Create</p>
+<ul class="simple">
+<li>Content -&gt; Publish has moved to the top level Create tab.</li>
+<li>Improved category create modal.</li>
+<li>The Publish Layout manager has moved to its own page in the Channel  Manager.</li>
+<li>Titles can now have different labels, set in the Channel Manager.</li>
+<li>Improved behavior of entry filtering in Relationship fields on the publish form so it searches all entries.</li>
+</ul>
+</li>
+<li><p class="first">Edit</p>
+<blockquote>
+<div><ul class="simple">
+<li>Content -&gt; Edit has moved to the top level Edit tab.</li>
+<li>The search has live filtering, and you can now bookmark the results directly.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Files</p>
+<blockquote>
+<div><ul class="simple">
+<li>Content -&gt; Files has moved to the top level Edit tab.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Members</p>
+<blockquote>
+<div><ul class="simple">
+<li>Member Group permissions are now more granular.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Developer Tools</p>
+<ul class="simple">
+<li>Channel Manager<ul>
+<li>Admin -&gt; Channel Administration is now a subsection under developer tools. All Channel, Status, Category and Field settings are accessed here.</li>
+<li>Channel layouts have a dedicated form for managing the publish/edit layouts.</li>
+<li>Categories have drag and drop sorting and nesting.</li>
+</ul>
+</li>
+<li>Template Manager<ul>
+<li>Moved from Design -&gt; Templates -&gt; Template Manager</li>
+<li>Snippets were renamed <strong>Template Partials</strong></li>
+<li>Global variables were renamed <strong>Template Variables</strong></li>
+<li>Synchronization page removed as this is now fully automated.</li>
+<li>Consistency in the display of any <strong>System templates</strong> (Email, Members, Forums, etc.).</li>
+</ul>
+</li>
+<li>Site Manager<ul>
+<li>Access to the manager moved from the site title dropdown.</li>
+<li>Removed the ability to duplicate existing sites.</li>
+</ul>
+</li>
+<li>Add-On Manager<ul>
+<li>Add-ons are no longer a top level menu tab.</li>
+<li>Add-ons are all on one page.</li>
+<li>Third party plugins are grouped together.</li>
+<li>Plugins must now be installed as part of the move toward more consistent behavior.</li>
+<li>Built-in non-optional add-ons are hidden from the table</li>
+</ul>
+</li>
+<li>Utilities<ul>
+<li>Consolidated several <strong>Tools</strong> sections: Communicate, Utilities and  Data.</li>
+<li>Extension debugging section added here to allow disabling of  individual extensions.</li>
+</ul>
+</li>
+<li>Logs<ul>
+<li>Moved from Tools -&gt; Logs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first">Settings</p>
+<ul class="simple">
+<li>The new <strong>Settings</strong> page consolidates a number of settings that were scattered throughout the version 2 control panel.  Notably the <strong>Global Template</strong>, <em>Member message and avatar*</em> and <strong>Comment</strong> preferences can be found here.  That&#8217;s in addition to the other preferences that move over from the version 2 <strong>Admin</strong> tab.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first">Multiple Site Manager</p>
+<ul class="simple">
+<li>Now included with ExpressionEngine.</li>
+<li>All ExpressionEngine licenses come with one site and you only pay for additional sites, not the ability to add additional sites.</li>
+<li>When you upgrade your ExpressionEngine license, you can merge in a Multiple Site Manager license to add sites to that license.</li>
+</ul>
+</li>
+<li><p class="first">Discussion Forums</p>
+<ul class="simple">
+<li>Now included with ExpressionEngine.</li>
+</ul>
+</li>
+<li><p class="first">Spam Module</p>
+<ul class="simple">
+<li>Unified anti-spam service for first and third party code.</li>
+<li>Comes pre-trained for common spam, but can be further trained your site&#8217;s specific content.</li>
+<li>No subscription needed and all data remains on your site.</li>
+<li>Training data is exportable for sharing with others and future site builds.</li>
+</ul>
+</li>
+<li><p class="first">Installer</p>
+<ul class="simple">
+<li>One-page installation.</li>
+<li>Updating is much easier thanks to the new user servicable directory. Just replace <code class="docutils literal"><span class="pre">system/ee</span></code> and <code class="docutils literal"><span class="pre">themes/ee</span></code> and update.</li>
+<li>Third-party add-ons are no longer updated during the EE update.</li>
+</ul>
+</li>
+<li><p class="first">General Changes</p>
+<ul class="simple">
+<li>Removed Referrer module.</li>
+<li>Removed Mailing List module.</li>
+<li>Removed Wiki module.</li>
+<li>Template routes can now be set in the config file.</li>
+<li>Improved template route parsing.</li>
+<li>Improved Profiler and Debugging.</li>
+<li>Screen Names no longer have to be unique.</li>
+<li>Updated Markdown Extra to v1.5.0.</li>
+<li>Changed password maximum length to 72 characters.</li>
+<li>Added <code class="docutils literal"><span class="pre">{if</span> <span class="pre">no_results}</span></code> to <code class="docutils literal"><span class="pre">{categories}</span></code> tag pair in <code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> loop</li>
+<li>Added <code class="docutils literal"><span class="pre">{if</span> <span class="pre">no_results}</span></code> to <code class="docutils literal"><span class="pre">{exp:channel:categories}</span></code></li>
+<li>A custom database port can be specified in the database configuration array</li>
+</ul>
+</li>
+<li><p class="first">Developers</p>
+<ul class="simple">
+<li>All new <a class="reference internal" href="../development/services/model/index.html"><span class="doc">Model Service</span></a> which replaces our APIs.</li>
+<li>Added a <a class="reference internal" href="../development/core/dependencies.html"><span class="doc">Dependency Injection Container</span></a>.</li>
+<li>Channel fields, Member fields, and Category fields now all use the same API</li>
+<li>New FilePicker service for displaying file browser modals</li>
+<li>Use the <cite>require_captcha</cite> setting to determine whether to require CAPTCHA or not for your front-end forms.</li>
+<li>Module tab API has changed. See <cite>tab.pages.php</cite> for a working example. In short, the methods are now <cite>display($channel_id, $entry_id)</cite>, <cite>validate($entry, $data)</cite>, <cite>save($entry, $data)</cite>, <cite>delete($entry_ids)</cite>.</li>
+<li>Deleted:<ul>
+<li><code class="docutils literal"><span class="pre">Api_channel_entries::send_pings()</span></code></li>
+<li><code class="docutils literal"><span class="pre">DB_Cache::delete()</span></code></li>
+<li><code class="docutils literal"><span class="pre">Filemanager::frontend_filebrowser()</span></code></li>
+<li><code class="docutils literal"><span class="pre">Functions::clear_spam_hashes()</span></code></li>
+<li><code class="docutils literal"><span class="pre">Functions::set_cookie()</span></code></li>
+<li><code class="docutils literal"><span class="pre">Member_model::get_localization_default()</span></code></li>
+<li>File helper&#8217;s <cite>get_mime_by_extension()</cite></li>
+<li>Magpie plugin</li>
+<li>Version helper</li>
+<li>Channels-specific pagination hooks</li>
+<li>SafeCracker hooks</li>
+<li><code class="docutils literal"><span class="pre">edit_template_start</span></code> hook</li>
+<li><code class="docutils literal"><span class="pre">update_template_end</span></code> hook</li>
+</ul>
+</li>
+<li>Deprecated:<ul>
+<li><code class="docutils literal"><span class="pre">cp_url()</span></code> helper method, use <code class="docutils literal"><span class="pre">ee('CP/URL')</span></code> instead.</li>
+<li>Extension&#8217;s <code class="docutils literal"><span class="pre">universal_call()</span></code>, use <code class="docutils literal"><span class="pre">call()</span></code> instead.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ExpressionEngine 4.x Change Log</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

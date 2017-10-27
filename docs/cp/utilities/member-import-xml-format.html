@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Member XML Format &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Utilities" href="index.html" />
+	    <link rel="next" title="PHP Info" href="php.html" />
+	    <link rel="prev" title="Member Import" href="member-import.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >The Control Panel</a></li>
+								<li><a href="index.html" accesskey="U">Utilities</a></li>
+								<li class="last">Member XML Format</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="member-xml-format">
+<h1>Member XML Format<a class="headerlink" href="#member-xml-format" title="Permalink to this headline">¶</a></h1>
+<p>ExpressionEngine utilizes a special XML format for member data.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">members</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">member</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">username</span><span class="p">&gt;</span>brettb<span class="p">&lt;/</span><span class="nt">username</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">screen_name</span><span class="p">&gt;</span>Brett Bretterson<span class="p">&lt;/</span><span class="nt">screen_name</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">password</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;md5&quot;</span><span class="p">&gt;</span>653132ffd94b986bf2bb806b3c67d190<span class="p">&lt;/</span><span class="nt">password</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">email</span><span class="p">&gt;</span>brett@example.com<span class="p">&lt;/</span><span class="nt">email</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">member</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">member</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">username</span><span class="p">&gt;</span>robr<span class="p">&lt;/</span><span class="nt">username</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">screen_name</span><span class="p">&gt;</span>Robert Robertson<span class="p">&lt;/</span><span class="nt">screen_name</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">password</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">&gt;</span>1b4395b877794a16a7f4db5747380dbaafc7ff18<span class="p">&lt;/</span><span class="nt">password</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">email</span><span class="p">&gt;</span>robert@example.com<span class="p">&lt;/</span><span class="nt">email</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">member</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">members</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The XML tags are identical to their database field counterparts from the
+exp_members table. All fields are allowed except for &#8220;unique_id&#8221;.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The &lt;member_id&gt; tag will cause the import utility to
+overwrite any existing members with the same ID. It is generally
+recommended that you do not use a &lt;member_id&gt; tag, so when transferring
+users from one system to another, ExpressionEngine can automatically
+create new unique IDs for each member without overwriting any existing
+members.</p>
+</div>
+<div class="section" id="required-tags">
+<h2>Required Tags<a class="headerlink" href="#required-tags" title="Permalink to this headline">¶</a></h2>
+<p>There are a few tags common to every ExpressionEngine member XML file,
+as follows.</p>
+<div class="section" id="root-tag">
+<h3>Root Tag<a class="headerlink" href="#root-tag" title="Permalink to this headline">¶</a></h3>
+<p>XML documents require a root tag surrounding all of the elements. For
+the ExpressionEngine member XML format, the required root tag is
+&lt;members&gt;&lt;/members&gt;.</p>
+</div>
+<div class="section" id="element-tag">
+<h3>Element Tag<a class="headerlink" href="#element-tag" title="Permalink to this headline">¶</a></h3>
+<p>Each XML element of your member data must be contained in a
+&lt;member&gt;&lt;/member&gt; tag block.</p>
+</div>
+<div class="section" id="member-data-tags">
+<h3>Member Data Tags<a class="headerlink" href="#member-data-tags" title="Permalink to this headline">¶</a></h3>
+<p>There are three required tags to form a valid member element.</p>
+<ul class="simple">
+<li>&lt;username&gt;</li>
+<li>&lt;screen_name&gt;</li>
+<li>&lt;email&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="password-tag">
+<h2>Password Tag<a class="headerlink" href="#password-tag" title="Permalink to this headline">¶</a></h2>
+<p>The &lt;password&gt; tag has a special attribute, type. This allows you to
+provide contextual information for the password.</p>
+<div class="section" id="type">
+<h3>type=<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="text">
+<h4>&#8220;text&#8221;<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">password</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>pa55w0id<span class="p">&lt;/</span><span class="nt">password</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>&#8220;text&#8221; type passwords are plain text, unencrypted passwords. When
+importing members from an XML file, ExpressionEngine will automatically
+encrypt &#8220;text&#8221; type passwords for you before inserting them into the
+database. This allows you to keep existing passwords when importing
+member data from a third party application that does not store encrypted
+passwords.</p>
+</div>
+<div class="section" id="md5">
+<h4>&#8220;md5&#8221;<a class="headerlink" href="#md5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">password</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;md5&quot;</span><span class="p">&gt;</span>653132ffd94b986bf2bb806b3c67d190<span class="p">&lt;/</span><span class="nt">password</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>&#8220;md5&#8221; passwords are those that have been encrypted with an RSA Data
+Security, Inc. MD5 Message-Digest Algorithm (md5) hash. <a class="reference external" href="http://www.faqs.org/rfcs/rfc1321.html">[RFC
+1321]</a></p>
+</div>
+<div class="section" id="sha1">
+<h4>&#8220;sha1&#8221;<a class="headerlink" href="#sha1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">password</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">&gt;</span>1b4395b877794a16a7f4db5747380dbaafc7ff18<span class="p">&lt;/</span><span class="nt">password</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>&#8220;sha1&#8221; passwords are those that have been encrypted with a US Secure
+Hash Algorithm 1 (sha1) hash. <a class="reference external" href="http://www.faqs.org/rfcs/rfc3174.html">[RFC
+3174]</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you import encrypted passwords of one type and your
+ExpressionEngine installation was configured with a different type
+of encryption, the passwords will not work, and users will need to
+use the &#8220;Forgot Password&#8221; link to log in.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="available-member-data-tags">
+<h2>Available Member Data Tags<a class="headerlink" href="#available-member-data-tags" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>&lt;accept_admin_email&gt;</li>
+<li>&lt;accept_messages&gt;</li>
+<li>&lt;accept_user_email&gt;</li>
+<li>&lt;authcode&gt;</li>
+<li>&lt;avatar_filename&gt;</li>
+<li>&lt;avatar_height&gt;</li>
+<li>&lt;avatar_width&gt;</li>
+<li>&lt;cp_theme&gt;</li>
+<li>&lt;display_avatars&gt;</li>
+<li>&lt;display_signatures&gt;</li>
+<li>&lt;email&gt;</li>
+<li>&lt;forum_theme&gt;</li>
+<li>&lt;group_id&gt;</li>
+<li>&lt;in_authorlist&gt;</li>
+<li>&lt;ip_address&gt;</li>
+<li>&lt;join_date&gt;</li>
+<li>&lt;language&gt;</li>
+<li>&lt;last_activity&gt;</li>
+<li>&lt;last_bulletin_date&gt;</li>
+<li>&lt;last_comment_date&gt;</li>
+<li>&lt;last_email_date&gt;</li>
+<li>&lt;last_entry_date&gt;</li>
+<li>&lt;last_forum_post_date&gt;</li>
+<li>&lt;last_view_bulletins&gt;</li>
+<li>&lt;last_visit&gt;</li>
+<li>&lt;localization_is_site_default&gt;</li>
+<li>&lt;member_id&gt;</li>
+<li>&lt;notepad&gt;</li>
+<li>&lt;notepad_size&gt;</li>
+<li>&lt;notify_by_default&gt;</li>
+<li>&lt;notify_of_pm&gt;</li>
+<li>&lt;password&gt;</li>
+<li>&lt;photo_filename&gt;</li>
+<li>&lt;photo_height&gt;</li>
+<li>&lt;photo_width&gt;</li>
+<li>&lt;pmember_id&gt;</li>
+<li>&lt;private_messages&gt;</li>
+<li>&lt;profile_theme&gt;</li>
+<li>&lt;quick_links&gt;</li>
+<li>&lt;quick_tabs&gt;</li>
+<li>&lt;screen_name&gt;</li>
+<li>&lt;sig_img_filename&gt;</li>
+<li>&lt;sig_img_height&gt;</li>
+<li>&lt;sig_img_width&gt;</li>
+<li>&lt;signature&gt;</li>
+<li>&lt;smart_notifications&gt;</li>
+<li>&lt;template_size&gt;</li>
+<li>&lt;time_format&gt;</li>
+<li>&lt;timezone&gt;</li>
+<li>&lt;tmpl_group_id&gt;</li>
+<li>&lt;total_comments&gt;</li>
+<li>&lt;total_entries&gt;</li>
+<li>&lt;total_forum_posts&gt;</li>
+<li>&lt;total_forum_topics&gt;</li>
+<li>&lt;tracker&gt;</li>
+<li>&lt;upload_id&gt;</li>
+<li>&lt;username&gt;</li>
+<li>&lt;channel_id&gt;</li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The Control Panel</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/create.html">Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../publish/edit.html">Entry Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">File Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../members/index.html">Member Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../channel/index.html">Channel Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design/index.html">Template Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../msm/index.html">Site Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addons/index.html">Add-On Manager</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Utilities</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cache.html">Cache Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extensions.html">Manage Add-on Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="import-converter.html">Import File Converter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="member-import.html">Member Import</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Member XML Format</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="php.html">PHP Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="query.html">SQL Query Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sandr.html">Data Search and Replace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sql.html">SQL Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html">Manage Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="communicate/index.html">Communicate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="translate/index.html">Language Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../logs/index.html">System Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../settings/index.html">System Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../footer.html">CP Footer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">CP Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

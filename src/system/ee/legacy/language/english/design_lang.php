@@ -736,6 +736,8 @@ $lang = array(
 
 'unable_to_write_files' => 'Unable to write the files to your cache directory',
 
+'breadcrumb' => 'Breadcrumb',
+
 'undersores_allowed' => '(underscores and dashes are allowed)',
 
 'url_manager' => 'Template Route Manager',
@@ -753,6 +755,8 @@ $lang = array(
 'view' => 'View',
 
 'view_rendered_template' => 'View Rendered Template',
+
+'localization_form' => 'Localization Preferences Form',
 
 'webpage' => 'Web Page (HTML)',
 

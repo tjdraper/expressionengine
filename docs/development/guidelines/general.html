@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>General Style and Syntax &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Guidelines" href="index.html" />
+	    <link rel="next" title="In-app Documentation" href="in-app-documentation.html" />
+	    <link rel="prev" title="Developer Guidelines Checklist" href="checklist.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Guidelines</a></li>
+								<li class="last">General Style and Syntax</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="general-style-and-syntax">
+<h1>General Style and Syntax<a class="headerlink" href="#general-style-and-syntax" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#file-format" id="id1">File Format</a></li>
+<li><a class="reference internal" href="#php-closing-tag" id="id2">PHP Closing Tag</a></li>
+<li><a class="reference internal" href="#class-and-method-naming" id="id3">Class and Method Naming</a></li>
+<li><a class="reference internal" href="#namespaces-and-file-names" id="id4">Namespaces and File Names</a></li>
+<li><a class="reference internal" href="#variable-names" id="id5">Variable Names</a></li>
+<li><a class="reference internal" href="#commenting" id="id6">Commenting</a></li>
+<li><a class="reference internal" href="#constants" id="id7">Constants</a></li>
+<li><a class="reference internal" href="#true-false-and-null" id="id8">TRUE, FALSE, and NULL</a></li>
+<li><a class="reference internal" href="#logical-operators" id="id9">Logical Operators</a></li>
+<li><a class="reference internal" href="#comparing-return-values-and-typecasting" id="id10">Comparing Return Values and Typecasting</a></li>
+<li><a class="reference internal" href="#comparing-version-numbers" id="id11">Comparing Version Numbers</a></li>
+<li><a class="reference internal" href="#setting-strings-from-method-calls" id="id12">Setting Strings from Method Calls</a></li>
+<li><a class="reference internal" href="#debugging-code" id="id13">Debugging Code</a></li>
+<li><a class="reference internal" href="#whitespace-in-files" id="id14">Whitespace in Files</a></li>
+<li><a class="reference internal" href="#compatibility" id="id15">Compatibility</a></li>
+<li><a class="reference internal" href="#use-of-ee-session-cache" id="id16">Use of ee()-&gt;session-&gt;cache</a></li>
+<li><a class="reference internal" href="#class-and-file-names-using-common-words" id="id17">Class and File Names using Common Words</a></li>
+<li><a class="reference internal" href="#database-table-names" id="id18">Database Table Names</a></li>
+<li><a class="reference internal" href="#one-class-per-file" id="id19">One Class per File</a></li>
+<li><a class="reference internal" href="#whitespace" id="id20">Whitespace</a></li>
+<li><a class="reference internal" href="#line-breaks" id="id21">Line Breaks</a></li>
+<li><a class="reference internal" href="#code-indenting" id="id22">Code Indenting</a></li>
+<li><a class="reference internal" href="#bracket-and-parenthetic-spacing" id="id23">Bracket and Parenthetic Spacing</a></li>
+<li><a class="reference internal" href="#long-lines-and-indentation" id="id24">Long Lines and Indentation</a></li>
+<li><a class="reference internal" href="#localized-text-in-control-panel" id="id25">Localized Text in Control Panel</a></li>
+<li><a class="reference internal" href="#private-methods-and-variables" id="id26">Private Methods and Variables</a></li>
+<li><a class="reference internal" href="#php-errors" id="id27">PHP Errors</a></li>
+<li><a class="reference internal" href="#short-open-tags" id="id28">Short Open Tags</a></li>
+<li><a class="reference internal" href="#one-statement-per-line" id="id29">One Statement Per Line</a></li>
+<li><a class="reference internal" href="#strings" id="id30">Strings</a></li>
+<li><a class="reference internal" href="#sql-queries" id="id31">SQL Queries</a></li>
+<li><a class="reference internal" href="#mysql-table-key-naming" id="id32">MySQL Table Key Naming</a></li>
+<li><a class="reference internal" href="#default-function-arguments" id="id33">Default Function Arguments</a></li>
+<li><a class="reference internal" href="#overlapping-tag-parameters" id="id34">Overlapping Tag Parameters</a></li>
+</ul>
+</div>
+<div class="section" id="file-format">
+<h2><a class="toc-backref" href="#id1">File Format</a><a class="headerlink" href="#file-format" title="Permalink to this headline">¶</a></h2>
+<p>Files should be saved with Unicode (UTF-8) encoding. The BOM should
+<em>not</em> be used. Unlike UTF-16 and UTF-32, there&#8217;s no byte order to
+indicate in a UTF-8 encoded file, and the BOM can have a negative side
+effect in PHP of sending output, preventing the application from being
+able to set its own headers. Unix line endings should be used (LF).</p>
+</div>
+<div class="section" id="php-closing-tag">
+<h2><a class="toc-backref" href="#id2">PHP Closing Tag</a><a class="headerlink" href="#php-closing-tag" title="Permalink to this headline">¶</a></h2>
+<p>The PHP closing tag on a PHP document <code class="docutils literal"><span class="pre">?&gt;</span></code> is optional to the PHP
+parser. However, if used, any whitespace following the closing tag,
+whether introduced by the developer, user, or an FTP application, can
+cause unwanted output, PHP errors, or if the latter are suppressed,
+blank pages. For this reason, all PHP files should <strong>OMIT</strong> the
+closing PHP tag, and instead use a comment to mark the end of the file.
+This allows you to still identify a file as being complete and not
+truncated. For files that contain a single class the end comment is
+optional.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+    <span class="k">echo</span> <span class="s2">&quot;Here&#39;s my code!&quot;</span><span class="p">;</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+    <span class="k">echo</span> <span class="s2">&quot;Here&#39;s my code!&quot;</span><span class="p">;</span>
+
+<span class="c1">// EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-and-method-naming">
+<h2><a class="toc-backref" href="#id3">Class and Method Naming</a><a class="headerlink" href="#class-and-method-naming" title="Permalink to this headline">¶</a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 2.10: </span>New classes and methods should conform to the PHP standard library
+api format, which also matches the PSR-1 code standard. You will see
+old code not following the format below. &#8220;When in Rome&#8221; applies when
+editing old files.</p>
+</div>
+<p>Class names should always have their first letter uppercase, and the
+constructor method should use <code class="docutils literal"><span class="pre">__construct()</span></code>. Multiple words
+should be PascalCased, and not separated with an underscore.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">superclass</span>
+<span class="k">class</span> <span class="nc">Super_class</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SuperClass</span>
+</pre></div>
+</div>
+<p>Class methods should be camelCased, starting with a lowercased letter,
+and named to clearly indicate their function, preferably including a
+verb. Try to avoid overly long and verbose names, these may indicate
+that the method has too much responsibility and should be split up.</p>
+<p>Example of an improper and proper constructor method:</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SuperClass</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">SuperClass</span><span class="p">()</span>      <span class="c1">// does not use __construct()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SuperClass</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Examples of improper and proper method naming:</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">fileproperties</span><span class="p">()</span>       <span class="c1">// not descriptive, not camelCase</span>
+<span class="k">function</span> <span class="nf">file_properties</span><span class="p">()</span>      <span class="c1">// not descriptive and not camelCase</span>
+<span class="k">function</span> <span class="nf">get_file_properties</span><span class="p">()</span>  <span class="c1">// Better!  But still not camelCase</span>
+<span class="k">function</span> <span class="nf">getTheFilePropertiesFromTheFile</span><span class="p">()</span>  <span class="c1">// wordy</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">getFileProperties</span><span class="p">()</span>  <span class="c1">// descriptive, camelCase</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="namespaces-and-file-names">
+<h2><a class="toc-backref" href="#id4">Namespaces and File Names</a><a class="headerlink" href="#namespaces-and-file-names" title="Permalink to this headline">¶</a></h2>
+<p>Filenames should match the name of the class, including case. When using
+namespaces the entire path and namespace should match the class naming
+conventions.:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Member</span>                 <span class="c1">// Member.php</span>
+<span class="k">class</span> <span class="nc">Addon\Commerce\Gateway</span> <span class="c1">// Addon/Commerce/PaymentGateway.php</span>
+</pre></div>
+</div>
+<p>When using namespaces, the namespace declaration should be the first
+line in the code, before any comments. The namespace declaration and the
+import declarations should be separated by a blank line:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">MyAddon\Addon</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Vendor\ClassName</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Member\PrivateMessages</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Comment describing the class</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Awesome</span> <span class="p">{</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variable-names">
+<h2><a class="toc-backref" href="#id5">Variable Names</a><a class="headerlink" href="#variable-names" title="Permalink to this headline">¶</a></h2>
+<p>The guidelines for variable naming is very similar to that used for
+class methods. Namely, variables should contain only lowercase letters,
+use underscore separators, and be reasonably named to indicate their
+purpose and contents. Very short, non-word variables should only be used
+as iterators in <code class="docutils literal"><span class="pre">for()</span></code> loops.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$j</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>       <span class="c1">// single letter variables should only be used in for() loops</span>
+<span class="nv">$Str</span>              <span class="c1">// contains uppercase letters</span>
+<span class="nv">$bufferedText</span>     <span class="c1">// uses CamelCasing, and could be shortened without losing semantic meaning</span>
+<span class="nv">$groupid</span>          <span class="c1">// multiple words, needs underscore separator</span>
+<span class="nv">$name_of_last_city_used</span> <span class="c1">// too long</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$j</span><span class="o">++</span><span class="p">)</span>
+
+<span class="nv">$str</span>
+<span class="nv">$buffer</span>
+<span class="nv">$group_id</span>
+<span class="nv">$last_city</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="commenting">
+<h2><a class="toc-backref" href="#id6">Commenting</a><a class="headerlink" href="#commenting" title="Permalink to this headline">¶</a></h2>
+<p>In general, code should be commented prolifically. It not only helps
+describe the flow and intent of the code for less experienced
+programmers, but can prove invaluable when returning to your own code
+months down the line. There is not a required format for comments, but
+the following are recommended.</p>
+<p><a class="reference external" href="http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.howto.pkg.html#basics.docblock">DocBlock</a>
+style comments preceding class and method declarations so they can be
+picked up by IDEs:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd">* Super Class</span>
+<span class="sd">*</span>
+<span class="sd">* @package Package Name</span>
+<span class="sd">* @subpackage  Subpackage</span>
+<span class="sd">* @category    Category</span>
+<span class="sd">* @author  Author Name</span>
+<span class="sd">* @link    http://example.com</span>
+<span class="sd">*/</span>
+<span class="k">class</span> <span class="nc">Super_class</span> <span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">    * Encodes string for use in XML</span>
+<span class="sd">    *</span>
+<span class="sd">    * @param   string</span>
+<span class="sd">    * @return  string</span>
+<span class="sd">    */</span>
+    <span class="k">function</span> <span class="nf">xml_encode</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use single line comments within code, leaving a blank line between
+large comment blocks and code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// break up the string by newlines</span>
+<span class="nv">$parts</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">);</span>
+
+<span class="c1">// A longer comment that needs to give greater detail on what is</span>
+<span class="c1">// occurring and why can use multiple single-line comments.  Try to</span>
+<span class="c1">// keep the width reasonable, around 70 characters is the easiest to</span>
+<span class="c1">// read.  Don&#39;t hesitate to link to permanent external resources</span>
+<span class="c1">// that may provide greater detail:</span>
+<span class="c1">//</span>
+<span class="c1">// http://example.com/information_about_something/in_particular/</span>
+<span class="nv">$parts</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">foo</span><span class="p">(</span><span class="nv">$parts</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constants">
+<h2><a class="toc-backref" href="#id7">Constants</a><a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>Constants follow the same guidelines as do variables, except constants
+should always be fully uppercase. <em>Always use ExpressionEngine constants
+when appropriate, i.e. ``LD``, ``RD``, ``PATH_CACHE``, etc.</em></p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">myConstant</span>  <span class="c1">// missing underscore separator and not fully uppercase</span>
+<span class="nx">N</span>           <span class="c1">// no single-letter constants</span>
+<span class="nx">S_C_VER</span>     <span class="c1">// not descriptive</span>
+<span class="nv">$str</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;{foo}&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">);</span>   <span class="c1">// should use LD and RD constants</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">MY_CONSTANT</span>
+<span class="nx">NEWLINE</span>
+<span class="nx">SUPER_CLASS_VERSION</span>
+<span class="nv">$str</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nx">LD</span><span class="o">.</span><span class="s1">&#39;foo&#39;</span><span class="o">.</span><span class="nx">RD</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="true-false-and-null">
+<h2><a class="toc-backref" href="#id8">TRUE, FALSE, and NULL</a><a class="headerlink" href="#true-false-and-null" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">TRUE</span></code>, <code class="docutils literal"><span class="pre">FALSE</span></code>, and <code class="docutils literal"><span class="pre">NULL</span></code> keywords should always be fully
+uppercase.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">==</span> <span class="k">true</span><span class="p">)</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">==</span> <span class="k">TRUE</span><span class="p">)</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+<span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logical-operators">
+<h2><a class="toc-backref" href="#id9">Logical Operators</a><a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h2>
+<p>Use of <code class="docutils literal"><span class="pre">||</span></code> is discouraged as its clarity on some output devices is
+low (looking like the number 11 for instance). <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> is preferred over
+<code class="docutils literal"><span class="pre">AND</span></code> but either are acceptable, and a space should always precede and
+follow <code class="docutils literal"><span class="pre">!</span></code>.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">||</span> <span class="nv">$bar</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="k">AND</span> <span class="nv">$bar</span><span class="p">)</span>  <span class="c1">// okay but not recommended for common syntax highlighting applications</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$foo</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$foo</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="k">OR</span> <span class="nv">$bar</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">&amp;&amp;</span> <span class="nv">$bar</span><span class="p">)</span> <span class="c1">// recommended</span>
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$foo</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$foo</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-return-values-and-typecasting">
+<h2><a class="toc-backref" href="#id10">Comparing Return Values and Typecasting</a><a class="headerlink" href="#comparing-return-values-and-typecasting" title="Permalink to this headline">¶</a></h2>
+<p>Some PHP functions return <code class="docutils literal"><span class="pre">FALSE</span></code> on failure, but may also have a
+valid return value of <code class="docutils literal"><span class="pre">&quot;&quot;</span></code> or <code class="docutils literal"><span class="pre">0</span></code>, which would evaluate to <code class="docutils literal"><span class="pre">FALSE</span></code>
+in loose comparisons. Be explicit by comparing the variable type when
+using these return values in conditionals to ensure the return value is
+indeed what you expect, and not a value that has an equivalent loose-
+type evaluation.</p>
+<p>Use the same stringency in returning and checking your own variables.
+Use <code class="docutils literal"><span class="pre">===</span></code> and <code class="docutils literal"><span class="pre">!==</span></code> as necessary.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// If &#39;foo&#39; is at the beginning of the string, strpos will return a 0,</span>
+<span class="c1">// resulting in this conditional evaluating as TRUE</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="k">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">build_string</span><span class="p">(</span><span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$str</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>     <span class="c1">// uh-oh!  What if FALSE or the integer 0 is passed as an argument?</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">build_string</span><span class="p">(</span><span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$str</span> <span class="o">===</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>See also information regarding
+<a class="reference external" href="http://us3.php.net/manual/en/language.types.type-juggling.php#language.types.typecasting">typecasting</a>, which can be quite useful. Typecasting has a slightly
+different effect which may be desirable. When casting a variable as a
+string, for instance, <code class="docutils literal"><span class="pre">NULL</span></code> and boolean <code class="docutils literal"><span class="pre">FALSE</span></code> variables become
+empty strings, 0 (and other numbers) become strings of digits, and
+boolean <code class="docutils literal"><span class="pre">TRUE</span></code> becomes <code class="docutils literal"><span class="pre">&quot;1&quot;</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$str</span><span class="p">;</span> <span class="c1">// cast $str as a string</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When choosing return values for your own methods, prefer
+<code class="docutils literal"><span class="pre">NULL</span></code> over <code class="docutils literal"><span class="pre">FALSE</span></code> to indicate that a value does not exist.
+<code class="docutils literal"><span class="pre">FALSE</span></code> is a valid boolean value, whereas <code class="docutils literal"><span class="pre">NULL</span></code> has no value.</p>
+</div>
+</div>
+<div class="section" id="comparing-version-numbers">
+<h2><a class="toc-backref" href="#id11">Comparing Version Numbers</a><a class="headerlink" href="#comparing-version-numbers" title="Permalink to this headline">¶</a></h2>
+<p>When comparing version numbers, whether it be for comparing MySQL
+versions for compatibility with a particular feature, or for comparing
+the installed version of a module with the current version, these
+comparisons should not be made with loose typing, or even assuming that
+the version number will be entirely numeric.  Use <code class="docutils literal"><span class="pre">version_compare()</span></code>
+instead.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$current</span> <span class="o">&lt;</span> <span class="s1">&#39;2.3.1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">version_compare</span><span class="p">(</span><span class="nv">$current</span><span class="p">,</span> <span class="s1">&#39;2.3.1&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>One of the big advantages here is that this PHP function accounts for many
+standard version numbering schemes, including alpha and beta suffixes.</p>
+</div>
+<div class="section" id="setting-strings-from-method-calls">
+<h2><a class="toc-backref" href="#id12">Setting Strings from Method Calls</a><a class="headerlink" href="#setting-strings-from-method-calls" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is desirable when setting a string from a method call to
+initialize with an empty string if the method returns <code class="docutils literal"><span class="pre">FALSE</span></code>. For
+speed and code legibility, instead of a ternary operator or conditional,
+simply cast the return value as a string.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span> <span class="o">?</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">some_method</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$bar</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+
+<span class="nv">$bar</span> <span class="o">=</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">some_method</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debugging-code">
+<h2><a class="toc-backref" href="#id13">Debugging Code</a><a class="headerlink" href="#debugging-code" title="Permalink to this headline">¶</a></h2>
+<p>No debugging code can be left in place for submitted add-ons unless it
+is commented out, i.e. no <code class="docutils literal"><span class="pre">var_dump()</span></code>, <code class="docutils literal"><span class="pre">print_r()</span></code>, <code class="docutils literal"><span class="pre">die()</span></code>, and
+<code class="docutils literal"><span class="pre">exit()</span></code> calls that were used while creating the add-on, unless they
+are commented out.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// print_r($foo);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="whitespace-in-files">
+<h2><a class="toc-backref" href="#id14">Whitespace in Files</a><a class="headerlink" href="#whitespace-in-files" title="Permalink to this headline">¶</a></h2>
+<p>No whitespace can precede the opening PHP tag. ExpressionEngine output
+is buffered, so whitespace in your files can cause output to begin
+before ExpressionEngine outputs its content, leading to errors and an
+inability for ExpressionEngine to send proper headers.</p>
+<p>When aligning multiple lines (e.g. in an associative array), use spaces
+instead of tabs. This is helpful when displaying the code on the web, in
+a GitHub commit for instance.</p>
+</div>
+<div class="section" id="compatibility">
+<h2><a class="toc-backref" href="#id15">Compatibility</a><a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Unless specifically mentioned in your add-on&#8217;s documentation, all code
+must be compatible with PHP version 5.3.10+. Additionally, do not use PHP
+functions that require non-default libraries to be installed unless your
+code contains an alternative method when the function is not available,
+or you explicitly document that your add-on requires said PHP libraries.</p>
+</div>
+<div class="section" id="use-of-ee-session-cache">
+<span id="use-of-session-cache"></span><h2><a class="toc-backref" href="#id16">Use of ee()-&gt;session-&gt;cache</a><a class="headerlink" href="#use-of-ee-session-cache" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">ee()-&gt;session-&gt;cache</span></code> is an array provided for you to use for
+&#8220;flash&#8221; content, i.e. values that you would like to persist during a
+page load, helping you eliminate redundant queries and PHP processing.
+To avoid conflicts with other first and third-party use of this array,
+always access it as a multi-dimensional array, using your class name as
+the primary array name, and your variables within. Naming conventions
+should follow that of other variables: lowercase letters, underscores
+for separators between words, and meaningful names.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">cache</span><span class="p">[</span><span class="s1">&#39;admins&#39;</span><span class="p">]</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">cache</span><span class="p">[</span><span class="s1">&#39;Super_class&#39;</span><span class="p">][</span><span class="s1">&#39;admins&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">cache</span><span class="p">[</span><span class="s1">&#39;super_class&#39;</span><span class="p">][</span><span class="s1">&#39;admins&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Here is an example of how one might utilize the <code class="docutils literal"><span class="pre">$EE-&gt;session-&gt;cache</span></code>
+array. This way, no matter how many times this method is called on a
+given page load (for instance, a tag being used twice on a template, or
+within a tag that might loop, such as a plugin within the Channel
+entries tag), the query and loading of the array occurs only once:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">cache</span><span class="p">[</span><span class="s1">&#39;super_class&#39;</span><span class="p">][</span><span class="s1">&#39;admins&#39;</span><span class="p">]))</span>
+<span class="p">{</span>
+    <span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT member_id FROM exp_super_class_admins&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_rows</span><span class="p">()()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result_array</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">cache</span><span class="p">[</span><span class="s1">&#39;super_class&#39;</span><span class="p">][</span><span class="s1">&#39;admins&#39;</span><span class="p">][]</span> <span class="o">=</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;member_id&#39;</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// set a local variable from the cached</span>
+</pre></div>
+</div>
+<p>You can see an example of real-world usage of <code class="docutils literal"><span class="pre">$EE-&gt;session-&gt;cache</span></code> in
+the Channel module&#8217;s <code class="docutils literal"><span class="pre">fetch_custom_channel_fields()</span></code> and
+<code class="docutils literal"><span class="pre">next_prev_entry()</span></code> methods, and the IP to Nation module&#8217;s
+<code class="docutils literal"><span class="pre">get_country()</span></code> method.</p>
+</div>
+<div class="section" id="class-and-file-names-using-common-words">
+<h2><a class="toc-backref" href="#id17">Class and File Names using Common Words</a><a class="headerlink" href="#class-and-file-names-using-common-words" title="Permalink to this headline">¶</a></h2>
+<p>When your class or filename is a common word, or might quite likely be
+identically named in another PHP script, provide a unique prefix to help
+prevent collision. Always realize that your end users may be running
+other add-ons or third party PHP scripts. Choose a prefix that is unique
+to your identity as a developer or company.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This does not apply to namespaced classes.</p>
+</div>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Email</span>
+<span class="nb">pi</span><span class="o">.</span><span class="nx">email</span><span class="o">.</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Xml</span>
+<span class="nx">ext</span><span class="o">.</span><span class="nx">xml</span><span class="o">.</span><span class="nx">php</span>
+<span class="nx">clasimport_request_variables</span><span class="p">()</span><span class="nx">_request_variables</span><span class="p">()</span><span class="nx">rt</span>
+<span class="nx">mod</span><span class="o">.</span><span class="nx">import</span><span class="o">.</span><span class="nx">php</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pre_email</span>
+<span class="nb">pi</span><span class="o">.</span><span class="nx">pre_email</span><span class="o">.</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Pre_xml</span>
+<span class="nx">ext</span><span class="o">.</span><span class="nx">pre_xml</span><span class="o">.</span><span class="nx">php</span>
+<span class="k">class</span> <span class="nc">Pre_import</span>
+<span class="nx">mod</span><span class="o">.</span><span class="nx">pre_import</span><span class="o">.</span><span class="nx">php</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="database-table-names">
+<h2><a class="toc-backref" href="#id18">Database Table Names</a><a class="headerlink" href="#database-table-names" title="Permalink to this headline">¶</a></h2>
+<p>Any tables that your add-on might use must use the <code class="docutils literal"><span class="pre">exp_</span></code> prefix,
+followed by a prefix uniquely identifying you as the developer or
+company, and then a short descriptive table name. You do not need to be
+concerned about the database prefix being used on the user&#8217;s
+installation, as ExpressionEngine&#8217;s database class will automatically
+convert <code class="docutils literal"><span class="pre">exp_</span></code> to what is actually being used.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">email_addresses</span>     <span class="c1">// missing both prefixe</span>
+<span class="nx">pre_email_addresses</span> <span class="c1">// missing exp_ prefix</span>
+<span class="nx">exp_email_addresses</span> <span class="c1">// missing unique prefix</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">exp_pre_email_addresses</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Be mindful that MySQL has a limit of 64 characters for
+table names. This should not be an issue as table names that would
+exceed this would likely have unreasonable names. For instance, the
+following table name exceeds this limitation by one character.
+Silly, no:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="nx">exp_pre_email_addresses_of_registered_users_in_seattle_washington</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="one-class-per-file">
+<h2><a class="toc-backref" href="#id19">One Class per File</a><a class="headerlink" href="#one-class-per-file" title="Permalink to this headline">¶</a></h2>
+<p>Use separate files for each class. This makes it much easier to find
+classes.</p>
+</div>
+<div class="section" id="whitespace">
+<h2><a class="toc-backref" href="#id20">Whitespace</a><a class="headerlink" href="#whitespace" title="Permalink to this headline">¶</a></h2>
+<p>Use tabs for whitespace in your code, not spaces. This may seem like a
+small thing, but using tabs instead of whitespace allows the developer
+looking at your code to have indentation at levels that they prefer and
+customize in whatever application they use.</p>
+</div>
+<div class="section" id="line-breaks">
+<h2><a class="toc-backref" href="#id21">Line Breaks</a><a class="headerlink" href="#line-breaks" title="Permalink to this headline">¶</a></h2>
+<p>Files must be saved with Unix line breaks. This is more of an issue for
+developers who work in Windows, but in any case ensure that your text
+editor is setup to save files with Unix line breaks.</p>
+</div>
+<div class="section" id="code-indenting">
+<h2><a class="toc-backref" href="#id22">Code Indenting</a><a class="headerlink" href="#code-indenting" title="Permalink to this headline">¶</a></h2>
+<p>Use Allman style indenting. With the exception of Class declarations,
+braces are always placed on a line by themselves, and indented at the
+same level as the control statement that &#8220;owns&#8221; them.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$arr</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">==</span> <span class="nv">$bar</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$arr</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$val</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">==</span> <span class="nv">$bar</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$j</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bracket-and-parenthetic-spacing">
+<h2><a class="toc-backref" href="#id23">Bracket and Parenthetic Spacing</a><a class="headerlink" href="#bracket-and-parenthetic-spacing" title="Permalink to this headline">¶</a></h2>
+<p>In general, parenthesis and brackets should not use any additional
+spaces. The exception is that a space should always follow PHP control
+structures that accept arguments with parenthesis (<code class="docutils literal"><span class="pre">declare</span></code>, <code class="docutils literal"><span class="pre">do-</span>
+<span class="pre">while</span></code>, <code class="docutils literal"><span class="pre">elseif</span></code>, <code class="docutils literal"><span class="pre">for</span></code>, <code class="docutils literal"><span class="pre">foreach</span></code>, <code class="docutils literal"><span class="pre">if</span></code>, <code class="docutils literal"><span class="pre">switch</span></code>,
+<code class="docutils literal"><span class="pre">while</span></code>), to help distinguish them from functions and increase
+readability:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">INCORRECT</span><span class="o">:</span> <span class="nv">$arr</span><span class="p">[</span> <span class="nv">$foo</span> <span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
+<span class="nx">CORRECT</span><span class="o">:</span> <span class="nv">$arr</span><span class="p">[</span><span class="nv">$foo</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>     <span class="c1">// no spaces around array keys</span>
+
+<span class="nx">INCORRECT</span><span class="o">:</span> <span class="k">function</span> <span class="nf">foo</span> <span class="p">(</span> <span class="nv">$bar</span> <span class="p">)</span>
+<span class="nx">CORRECT</span><span class="o">:</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span><span class="p">)</span>      <span class="c1">// no spaces around parenthesis in function declarations</span>
+
+<span class="nx">INCORRECT</span><span class="o">:</span> <span class="k">foreach</span><span class="p">(</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result_array</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span> <span class="p">)</span>
+<span class="nx">CORRECT</span><span class="o">:</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result_array</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>    <span class="c1">// single space following PHP control structures, but not in interior parenthesis</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="long-lines-and-indentation">
+<h2><a class="toc-backref" href="#id24">Long Lines and Indentation</a><a class="headerlink" href="#long-lines-and-indentation" title="Permalink to this headline">¶</a></h2>
+<p>In cases where the line length is longer than 80 characters and the line
+includes method calls with multiple parameters, put individual
+parameters (including additional method calls) on separate lines:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nb">str_replace</span><span class="p">(</span>
+  <span class="nv">$match</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+  <span class="nb">preg_replace</span><span class="p">(</span>
+    <span class="s2">&quot;#href=.*?(alert\(|alert&amp;\#40;|javascript\:|livescript\:|mocha\:|charset\=|window\.|document\.|\.cookie|&lt;script|&lt;xss|base64\s*,)#si&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nv">$attributes</span>
+  <span class="p">),</span>
+  <span class="nv">$match</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Also note that long strings don&#8217;t need to be broken up and closing
+parenthesis always appear at the same indentation level as the opening
+parenthesis.</p>
+</div>
+<div class="section" id="localized-text-in-control-panel">
+<h2><a class="toc-backref" href="#id25">Localized Text in Control Panel</a><a class="headerlink" href="#localized-text-in-control-panel" title="Permalink to this headline">¶</a></h2>
+<p>Any text that is output in the control panel should use language
+variables in your module&#8217;s lang file to allow localization:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">INCORRECT</span><span class="o">:</span> <span class="k">return</span> <span class="s2">&quot;Invalid Selection&quot;</span><span class="p">;</span>
+<span class="nx">CORRECT</span><span class="o">:</span> <span class="k">return</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;invalid_selection&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="private-methods-and-variables">
+<h2><a class="toc-backref" href="#id26">Private Methods and Variables</a><a class="headerlink" href="#private-methods-and-variables" title="Permalink to this headline">¶</a></h2>
+<p>Methods and variables that are only accessed internally by your class
+should be declared as private or protected. If the methods are internal
+to the current package or namespace, it may be acceptable to follow the
+convention of marking the method or property with an underscore:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">convert_text</span><span class="p">()</span>     <span class="c1">// public method</span>
+<span class="k">private</span> <span class="k">function</span> <span class="nf">convert_text</span><span class="p">()</span>    <span class="c1">// private method</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">_convert_text</span><span class="p">()</span>    <span class="c1">// internal method (not recommended)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="php-errors">
+<h2><a class="toc-backref" href="#id27">PHP Errors</a><a class="headerlink" href="#php-errors" title="Permalink to this headline">¶</a></h2>
+<p>Code must run error free and not rely on warnings and notices to be
+hidden to meet this requirement. For instance, never access a variable
+that you did not set yourself (such as <code class="docutils literal"><span class="pre">$_POST</span></code> array keys) without
+first checking to see that it <code class="docutils literal"><span class="pre">isset()</span></code>.</p>
+<p>Make sure that while developing your add-on, error reporting is enabled
+for ALL users, and that display_errors is enabled in the PHP
+environment. You can check this setting with:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">ini_get</span><span class="p">(</span><span class="s1">&#39;display_errors&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">exit</span> <span class="s2">&quot;Enabled&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On some servers where display_errors is disabled, and you do not have
+the ability to change this in the <code class="docutils literal"><span class="pre">php.ini</span></code>, you can often enable it
+with:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;display_errors&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting the <a class="reference external" href="http://us.php.net/manual/en/ref.errorfunc.php#ini.display-errors">display_errors</a>
+setting with <code class="docutils literal"><span class="pre">ini_set()</span></code> at runtime is not identical to having it
+enabled in the PHP environment. Namely, it will not have any effect
+if the script has fatal errors</p>
+</div>
+</div>
+<div class="section" id="short-open-tags">
+<h2><a class="toc-backref" href="#id28">Short Open Tags</a><a class="headerlink" href="#short-open-tags" title="Permalink to this headline">¶</a></h2>
+<p>Always use full PHP opening tags, in case a server does not have
+<code class="docutils literal"><span class="pre">short_open_tag</span></code> enabled.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span> <span class="k">echo</span> <span class="nv">$foo</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="cp">&lt;?</span><span class="o">=</span><span class="nv">$foo</span><span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$foo</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="one-statement-per-line">
+<h2><a class="toc-backref" href="#id29">One Statement Per Line</a><a class="headerlink" href="#one-statement-per-line" title="Permalink to this headline">¶</a></h2>
+<p>Never combine statements on one line.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;this&#39;</span><span class="p">;</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">&#39;that&#39;</span><span class="p">;</span> <span class="nv">$bat</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$bag</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;this&#39;</span><span class="p">;</span>
+<span class="nv">$bar</span> <span class="o">=</span> <span class="s1">&#39;that&#39;</span><span class="p">;</span>
+<span class="nv">$bat</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$bag</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strings">
+<h2><a class="toc-backref" href="#id30">Strings</a><a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
+<p>Always use single quoted strings unless you need variables parsed,
+and in cases where you do need variables parsed, use braces to
+prevent greedy token parsing. You may also use double-quoted strings
+if the string contains single quotes, so you do not have to use
+escape characters.</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="s2">&quot;My String&quot;</span>                 <span class="c1">// no variable parsing, so no use for double quotes</span>
+<span class="s2">&quot;My string </span><span class="si">$foo</span><span class="s2">&quot;</span>            <span class="c1">// needs braces</span>
+<span class="s1">&#39;SELECT foo FROM bar WHERE baz = \&#39;bag\&#39;&#39;</span>   <span class="c1">// ugly</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="s1">&#39;My String&#39;</span>
+<span class="s2">&quot;My string </span><span class="si">{</span><span class="nv">$foo</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">&quot;SELECT foo FROM bar WHERE baz = &#39;bag&#39;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sql-queries">
+<h2><a class="toc-backref" href="#id31">SQL Queries</a><a class="headerlink" href="#sql-queries" title="Permalink to this headline">¶</a></h2>
+<p>MySQL keywords are always capitalized: <code class="docutils literal"><span class="pre">SELECT</span></code>, <code class="docutils literal"><span class="pre">INSERT</span></code>,
+<code class="docutils literal"><span class="pre">UPDATE</span></code>, <code class="docutils literal"><span class="pre">WHERE</span></code>, <code class="docutils literal"><span class="pre">AS</span></code>, <code class="docutils literal"><span class="pre">JOIN</span></code>, <code class="docutils literal"><span class="pre">ON</span></code>, <code class="docutils literal"><span class="pre">IN</span></code>, etc.</p>
+<p>Break up long queries into multiple lines for legibility, preferably
+breaking for each clause:</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// keywords are lowercase and query is too long for</span>
+<span class="c1">// a single line (... indicates continuation of line)</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;select foo, bar, baz, foofoo, foobar as raboof, foobaz from exp_pre_email_addresses where foo != &#39;oof&#39; and baz != &#39;zab&#39; order by foobaz limit 5, 100&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT foo, bar, baz, foofoo, foobar AS raboof, foobaz</span>
+<span class="s2">    FROM exp_pre_email_addresses</span>
+<span class="s2">    WHERE foo != &#39;oof&#39;</span>
+<span class="s2">    AND baz != &#39;zab&#39;</span>
+<span class="s2">    ORDER BY foobaz</span>
+<span class="s2">    LIMIT 5, 100&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mysql-table-key-naming">
+<h2><a class="toc-backref" href="#id32">MySQL Table Key Naming</a><a class="headerlink" href="#mysql-table-key-naming" title="Permalink to this headline">¶</a></h2>
+<p>Table key definitions must be explicitly named, to avoid accidental
+duplicate keys or inadvertent operations on the wrong index. Multiple
+column keys should be named distinctly, and preferably use all column
+names, separated with an underscore. (<a class="reference external" href="http://www.mysqlperformanceblog.com/2008/05/28/should-you-name-indexes-while-doing-alter-table/">Additional
+info</a>)</p>
+<p>INCORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="sb">`field_name`</span><span class="p">)</span>
+<span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="sb">`field_one`</span><span class="p">,</span> <span class="sb">`field_two`</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>CORRECT:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="sb">`field_name`</span> <span class="p">(</span><span class="sb">`field_name`</span><span class="p">)</span>
+<span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="sb">`field_one_field_two`</span> <span class="p">(</span><span class="sb">`field_one`</span><span class="p">,</span> <span class="sb">`field_two`</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-function-arguments">
+<h2><a class="toc-backref" href="#id33">Default Function Arguments</a><a class="headerlink" href="#default-function-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Whenever appropriate, provide function argument defaults, which helps
+prevent PHP errors with mistaken calls and provides common fallback
+values which can save a few lines of code. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$baz</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="overlapping-tag-parameters">
+<h2><a class="toc-backref" href="#id34">Overlapping Tag Parameters</a><a class="headerlink" href="#overlapping-tag-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Avoid multiple tag parameters that have effect on the same thing. For
+instance, instead of <code class="docutils literal"><span class="pre">include=</span></code> and <code class="docutils literal"><span class="pre">exclude=</span></code>, perhaps allow
+<code class="docutils literal"><span class="pre">include=</span></code> to handle the parameter alone, with the addition of &#8220;not&#8221;,
+e.g. <code class="docutils literal"><span class="pre">include=&quot;not</span> <span class="pre">bar&quot;</span></code>. This will prevent problems of parameters
+overlapping or having to worry about which parameter has priority over
+another.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guidelines</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Developer Guidelines Checklist</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">General Style and Syntax</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="in-app-documentation.html">In-app Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Performance Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="view_php_syntax.html">View Files and PHP Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>File Uploading Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Form Validation Class" href="form_validation.html" />
+	    <link rel="prev" title="File Field Class" href="file_field.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">File Uploading Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="file-uploading-class">
+<h1>File Uploading Class<a class="headerlink" href="#file-uploading-class" title="Permalink to this headline">¶</a></h1>
+<p>ExpressionEngine&#8217;s File Uploading Class permits files to be uploaded. You can set various preferences, restricting the type and size of the files.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#the-process" id="id1">The Process</a><ul>
+<li><a class="reference internal" href="#creating-the-upload-form" id="id2">Creating the Upload Form</a></li>
+<li><a class="reference internal" href="#the-success-page" id="id3">The Success Page</a></li>
+<li><a class="reference internal" href="#the-controller" id="id4">The Controller</a></li>
+<li><a class="reference internal" href="#the-upload-directory" id="id5">The Upload Directory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reference-guide" id="id6">Reference Guide</a><ul>
+<li><a class="reference internal" href="#initializing-the-upload-class" id="id7">Initializing the Upload Class</a></li>
+<li><a class="reference internal" href="#setting-preferences" id="id8">Setting Preferences</a></li>
+<li><a class="reference internal" href="#preferences" id="id9">Preferences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-reference" id="id10">Class Reference</a></li>
+</ul>
+</div>
+<div class="section" id="the-process">
+<h2><a class="toc-backref" href="#id1">The Process</a><a class="headerlink" href="#the-process" title="Permalink to this headline">¶</a></h2>
+<p>Uploading a file involves the following general process:</p>
+<ul class="simple">
+<li>An upload form is displayed, allowing a user to select a file and upload it.</li>
+<li>When the form is submitted, the file is uploaded to the destination you specify.</li>
+<li>Along the way, the file is validated to make sure it is allowed to be uploaded based on the preferences you set.</li>
+<li>Once uploaded, the user will be shown a success message.</li>
+</ul>
+<p>To demonstrate this process here is brief tutorial. Afterward you&#8217;ll find reference information.</p>
+<div class="section" id="creating-the-upload-form">
+<h3><a class="toc-backref" href="#id2">Creating the Upload Form</a><a class="headerlink" href="#creating-the-upload-form" title="Permalink to this headline">¶</a></h3>
+<p>Create a view called <code class="docutils literal"><span class="pre">upload_form.php</span></code>. In it, place this code and save it to your <code class="docutils literal"><span class="pre">addon/views/</span></code> directory:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span>    <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$error</span><span class="p">;</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nx">form_open_multipart</span><span class="p">(</span><span class="s1">&#39;upload/do_upload&#39;</span><span class="p">);</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">&lt;input type=&quot;file&quot; name=&quot;userfile&quot; size=&quot;20&quot; /&gt;</span>
+<span class="x">&lt;br /&gt;&lt;br /&gt;</span>
+<span class="x">&lt;input type=&quot;submit&quot; value=&quot;upload&quot; /&gt;</span>
+<span class="x">    &lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>You&#8217;ll notice we are using a form helper to create the opening form tag. File uploads require a multipart form, so the helper creates the proper syntax for you. You&#8217;ll also notice we have an <code class="docutils literal"><span class="pre">$error</span></code> variable. This is so we can show error messages in the event the user does something wrong.</p>
+</div>
+<div class="section" id="the-success-page">
+<h3><a class="toc-backref" href="#id3">The Success Page</a><a class="headerlink" href="#the-success-page" title="Permalink to this headline">¶</a></h3>
+<p>Create a view called <code class="docutils literal"><span class="pre">upload_success.php</span></code>. In it, place this code and save it to your <code class="docutils literal"><span class="pre">addon/views/</span></code> directory:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Your</span> <span class="nb">file</span> <span class="nx">was</span> <span class="nx">successfully</span> <span class="nx">uploaded</span><span class="o">!&lt;/</span><span class="nx">h3</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+<span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$upload_data</span> <span class="k">as</span> <span class="nv">$item</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span><span class="o">:</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">&lt;li&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$item</span><span class="p">;</span><span class="cp">?&gt;</span><span class="x">: </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$value</span><span class="p">;</span><span class="cp">?&gt;</span><span class="x">&lt;/li&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">&lt;/ul&gt;</span>
+
+<span class="x">&lt;p&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="s1">&#39;Upload Another File!&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-controller">
+<h3><a class="toc-backref" href="#id4">The Controller</a><a class="headerlink" href="#the-controller" title="Permalink to this headline">¶</a></h3>
+<p>Inside your controller (most likely in a <code class="docutils literal"><span class="pre">mcp.addon.php</span></code> file) you&#8217;ll need to add a few methods. First create a method to display your <code class="docutils literal"><span class="pre">upload_form.php</span></code> view:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span> <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then, you&#8217;ll need to create a method to handle the form:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span>        <span class="k">public</span> <span class="k">function</span> <span class="nf">do_upload</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;upload_path&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;./uploads/&#39;</span><span class="p">;</span>
+                <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;allowed_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gif|jpg|png&#39;</span><span class="p">;</span>
+                <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_size&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+                <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_width&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+                <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_height&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">768</span><span class="p">;</span>
+
+                <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">())</span>
+                <span class="p">{</span>
+                        <span class="nv">$error</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">());</span>
+
+                        <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$error</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                        <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;upload_data&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">());</span>
+
+                        <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Inside that method, you can see that we&#8217;re initializing the Upload library and checking to see if the upload was sucessful. If not, we kick back to the <code class="docutils literal"><span class="pre">upload_form.php</span></code> view.</p>
+</div>
+<div class="section" id="the-upload-directory">
+<h3><a class="toc-backref" href="#id5">The Upload Directory</a><a class="headerlink" href="#the-upload-directory" title="Permalink to this headline">¶</a></h3>
+<p>You&#8217;ll need a destination directory for your uploaded images, most likely created by the person installing your add-on. If you&#8217;re only using the file temporarily, you can use the <code class="docutils literal"><span class="pre">PATH_CACHE</span></code> constant.</p>
+</div>
+</div>
+<div class="section" id="reference-guide">
+<h2><a class="toc-backref" href="#id6">Reference Guide</a><a class="headerlink" href="#reference-guide" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initializing-the-upload-class">
+<h3><a class="toc-backref" href="#id7">Initializing the Upload Class</a><a class="headerlink" href="#initializing-the-upload-class" title="Permalink to this headline">¶</a></h3>
+<p>Like most other classes in ExpressionEngine, the Upload class is initialized in your controller using the <code class="docutils literal"><span class="pre">ee()-&gt;load-&gt;library()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-preferences">
+<h3><a class="toc-backref" href="#id8">Setting Preferences</a><a class="headerlink" href="#setting-preferences" title="Permalink to this headline">¶</a></h3>
+<p>Similar to other libraries, you&#8217;ll control what is allowed to be upload based on your preferences. In the controller you built above you set the following preferences:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;upload_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;./uploads/&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;allowed_types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gif|jpg|png&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_size&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="s1">&#39;100&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1024&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;max_height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;768&#39;</span><span class="p">;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+
+<span class="c1">// Alternately you can set preferences by calling the ``initialize()`` method. Useful if you auto-load the class:</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above preferences should be fairly self-explanatory. Below is a table describing all available preferences.</p>
+</div>
+<div class="section" id="preferences">
+<h3><a class="toc-backref" href="#id9">Preferences</a><a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h3>
+<p>The following preferences are available. The default value indicates what will be used if you do not specify that preference.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="12%" />
+<col width="16%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">upload_path</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The path to the directory where the upload should be placed. The
+directory must be writable and the path can be absolute or relative.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">allowed_types</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The mime types corresponding to the types of files you allow to be
+uploaded. Usually the file extension can be used as the mime type.
+Can be either an array or a pipe-separated string.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">file_name</span></code></td>
+<td>None</td>
+<td>Desired file name</td>
+<td>If set ExpressionEngine will rename the uploaded file to this name. The
+extension provided in the file name must also be an allowed file type.
+If no extension is provided in the original file_name will be used.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">file_ext_tolower</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to TRUE, the file extension will be forced to lower case</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">overwrite</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to true, if a file with the same name as the one you are
+uploading exists, it will be overwritten. If set to false, a number will
+be appended to the filename if another with the same name exists.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">max_size</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The maximum size (in kilobytes) that the file can be. Set to zero for no
+limit. Note: Most PHP installations have their own limit, as specified
+in the php.ini file. Usually 2 MB (or 2048 KB) by default.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">max_width</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The maximum width (in pixels) that the image can be. Set to zero for no
+limit.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">max_height</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The maximum height (in pixels) that the image can be. Set to zero for no
+limit.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">min_width</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The minimum width (in pixels) that the image can be. Set to zero for no
+limit.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">min_height</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The minimum height (in pixels) that the image can be. Set to zero for no
+limit.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">max_filename</span></code></td>
+<td>0</td>
+<td>None</td>
+<td>The maximum length that a file name can be. Set to zero for no limit.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">max_filename_increment</span></code></td>
+<td>100</td>
+<td>None</td>
+<td>When overwrite is set to FALSE, use this to set the maximum filename
+increment for ExpressionEngine to append to the filename.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">encrypt_name</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to TRUE the file name will be converted to a random encrypted
+string. This can be useful if you would like the file saved with a name
+that can not be discerned by the person uploading it.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">remove_spaces</span></code></td>
+<td>TRUE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to TRUE, any spaces in the file name will be converted to
+underscores. This is recommended.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">detect_mime</span></code></td>
+<td>TRUE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to TRUE, a server side detection of the file type will be
+performed to avoid code injection attacks. DO NOT disable this option
+unless you have no other option as that would cause a security risk.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">mod_mime_fix</span></code></td>
+<td>TRUE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>If set to TRUE, multiple filename extensions will be suffixed with an
+underscore in order to avoid triggering <a class="reference external" href="http://httpd.apache.org/docs/2.0/mod/mod_mime.html#multipleext">Apache mod_mime</a>.
+DO NOT turn off this option if your upload directory is public, as this
+is a security risk.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id10">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EE_Upload">
+<em class="property">class </em><code class="descname">EE_Upload</code><a class="headerlink" href="#EE_Upload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EE_Upload::initialize">
+<code class="descclassname">EE_Upload::</code><code class="descname">initialize</code><span class="sig-paren">(</span><span class="optional">[</span><em>array $config = array()</em><span class="optional">[</span>, <em>$reset = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Upload::initialize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$config</strong> (<em>array</em>) &#8211; Preferences</li>
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset preferences (that are not provided in $config) to their defaults</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">EE_Upload instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">EE_Upload</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Upload::do_upload">
+<code class="descclassname">EE_Upload::</code><code class="descname">do_upload</code><span class="sig-paren">(</span><span class="optional">[</span><em>$field = 'userfile'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Upload::do_upload" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Name of the form field</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Performs the upload based on the preferences you&#8217;ve set.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default the upload routine expects the file to come from a form field called userfile, and the form must be of type <code class="docutils literal"><span class="pre">multipart</span></code>.</p>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;some_action&quot;</span> <span class="nx">enctype</span><span class="o">=</span><span class="s2">&quot;multipart/form-data&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>If you would like to set your own field name simply pass its value to the <code class="docutils literal"><span class="pre">do_upload()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$field_name</span> <span class="o">=</span> <span class="s2">&quot;some_field_name&quot;</span><span class="p">;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">do_upload</span><span class="p">(</span><span class="nv">$field_name</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Upload::display_errors">
+<code class="descclassname">EE_Upload::</code><code class="descname">display_errors</code><span class="sig-paren">(</span><span class="optional">[</span><em>$open = '&lt;p&gt;'</em><span class="optional">[</span>, <em>$close = '&lt;/p&gt;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Upload::display_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$open</strong> (<em>string</em>) &#8211; Opening markup</li>
+<li><strong>$close</strong> (<em>string</em>) &#8211; Closing markup</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Formatted error message(s)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Retrieves any error messages if the <code class="docutils literal"><span class="pre">do_upload()</span></code> method returned false. The method does not echo automatically, it returns the data so you can assign it however you need.</p>
+<p><strong>Formatting Errors</strong></p>
+<blockquote>
+<div><p>By default the above method wraps any errors within &lt;p&gt; tags. You can set your own delimiters like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Upload::data">
+<code class="descclassname">EE_Upload::</code><code class="descname">data</code><span class="sig-paren">(</span><span class="optional">[</span><em>$index = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Upload::data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>string</em>) &#8211; Element to return instead of the full array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Information about the uploaded file</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is a helper method that returns an array containing all of the data related to the file you uploaded. Here is the array prototype:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">Array</span>
+<span class="p">(</span>
+        <span class="p">[</span><span class="nx">file_name</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="nx">mypic</span><span class="o">.</span><span class="nx">jpg</span>
+        <span class="p">[</span><span class="nx">file_type</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="nx">image</span><span class="o">/</span><span class="nx">jpeg</span>
+        <span class="p">[</span><span class="nx">file_path</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="o">/</span><span class="nx">path</span><span class="o">/</span><span class="nx">to</span><span class="o">/</span><span class="nx">your</span><span class="o">/</span><span class="nx">upload</span><span class="o">/</span>
+        <span class="p">[</span><span class="nx">full_path</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="o">/</span><span class="nx">path</span><span class="o">/</span><span class="nx">to</span><span class="o">/</span><span class="nx">your</span><span class="o">/</span><span class="nx">upload</span><span class="o">/</span><span class="nx">jpg</span><span class="o">.</span><span class="nx">jpg</span>
+        <span class="p">[</span><span class="nx">raw_name</span><span class="p">]</span>      <span class="o">=&gt;</span> <span class="nx">mypic</span>
+        <span class="p">[</span><span class="nx">orig_name</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="nx">mypic</span><span class="o">.</span><span class="nx">jpg</span>
+        <span class="p">[</span><span class="nx">client_name</span><span class="p">]</span>   <span class="o">=&gt;</span> <span class="nx">mypic</span><span class="o">.</span><span class="nx">jpg</span>
+        <span class="p">[</span><span class="nx">file_ext</span><span class="p">]</span>      <span class="o">=&gt;</span> <span class="o">.</span><span class="nx">jpg</span>
+        <span class="p">[</span><span class="nx">file_size</span><span class="p">]</span>     <span class="o">=&gt;</span> <span class="mf">22.2</span>
+        <span class="p">[</span><span class="nx">is_image</span><span class="p">]</span>      <span class="o">=&gt;</span> <span class="mi">1</span>
+        <span class="p">[</span><span class="nx">image_width</span><span class="p">]</span>   <span class="o">=&gt;</span> <span class="mi">800</span>
+        <span class="p">[</span><span class="nx">image_height</span><span class="p">]</span>  <span class="o">=&gt;</span> <span class="mi">600</span>
+        <span class="p">[</span><span class="nx">image_type</span><span class="p">]</span>    <span class="o">=&gt;</span> <span class="nx">jpeg</span>
+        <span class="p">[</span><span class="nx">image_size_str</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">width</span><span class="o">=</span><span class="s2">&quot;800&quot;</span> <span class="nx">height</span><span class="o">=</span><span class="s2">&quot;200&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To return one element from the array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">upload</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">);</span>        <span class="c1">// Returns: mypic.jpg</span>
+</pre></div>
+</div>
+<p>Here&#8217;s a table explaining the above-displayed array items:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">file_name</span></code></td>
+<td>Name of the file that was uploaded, including the filename extension</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">file_type</span></code></td>
+<td>File MIME type identifier</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">file_path</span></code></td>
+<td>Absolute server path to the file</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">full_path</span></code></td>
+<td>Absolute server path, including the file name</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">raw_name</span></code></td>
+<td>File name, without the extension</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">orig_name</span></code></td>
+<td>)riginal file name. This is only useful if you use the encrypted name option.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">client_name</span></code></td>
+<td>File name as supplied by the client user agent, prior to any file name preparation or incrementing</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">file_ext</span></code></td>
+<td>Filename extension, period included</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">file_size</span></code></td>
+<td>File size in kilobytes</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">is_image</span></code></td>
+<td>Whether the file is an image or not. <code class="docutils literal"><span class="pre">1</span></code> = image. <code class="docutils literal"><span class="pre">0</span></code> = not.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">image_width</span></code></td>
+<td>Image width</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">image_height</span></code></td>
+<td>Image height</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">image_type</span></code></td>
+<td>Image type (usually the file name extension without the period)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">image_size_str</span></code></td>
+<td>A string containing the width and height (useful to put into an image tag)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">File Uploading Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

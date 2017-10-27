@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Building your own Models &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Model Service" href="../model.html" />
+	    <link rel="next" title="Relating Models" href="relationships.html" />
+	    <link rel="prev" title="Collections" href="../model/collection.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Services</a></li>
+								<li><a href="../model.html" accesskey="U">Model Service</a></li>
+								<li class="last">Building your own Models</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="building-your-own-models">
+<h1>Building your own Models<a class="headerlink" href="#building-your-own-models" title="Permalink to this headline">¶</a></h1>
+<p>This section gives a detailed description on how to implement your own models.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please review the basic
+<a class="reference internal" href="../model/index.html"><span class="doc">Model Usage</span></a> before attempting to write your own. Creating a model does not automatically create the corresponding database tables if they do not exist; you should use DB Forge to create your add-on&#8217;s tables.</p>
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#registering-models" id="id1">Registering Models</a></li>
+<li><a class="reference internal" href="#model-skeleton" id="id2">Model Skeleton</a></li>
+<li><a class="reference internal" href="#properties" id="id3">Properties</a></li>
+<li><a class="reference internal" href="#metadata" id="id4">Metadata</a></li>
+<li><a class="reference internal" href="#internal-events" id="id5">Internal Events</a></li>
+<li><a class="reference internal" href="#relationships" id="id6">Relationships</a></li>
+<li><a class="reference internal" href="#validation" id="id7">Validation</a></li>
+<li><a class="reference internal" href="#getters-and-setters" id="id8">Getters and Setters</a></li>
+<li><a class="reference internal" href="#typed-columns" id="id9">Typed Columns</a></li>
+<li><a class="reference internal" href="#composite-types" id="id10">Composite Types</a></li>
+<li><a class="reference internal" href="#model-methods" id="id11">Model Methods</a></li>
+</ul>
+</div>
+<div class="section" id="registering-models">
+<h2><a class="toc-backref" href="#id1">Registering Models</a><a class="headerlink" href="#registering-models" title="Permalink to this headline">¶</a></h2>
+<p>All models must be registered in your <a class="reference internal" href="../../addon_setup_php_file.html"><span class="doc">addon.setup.php</span></a>
+file. They should be in an array called <code class="docutils literal"><span class="pre">models</span></code>, where the key is their name
+and the value is the class of the model relative to your namespace. By convention
+this should be inside a <code class="docutils literal"><span class="pre">Model</span></code> directory:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="s1">&#39;models&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;Author&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Model\Author&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;MyModel&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Model\MyModel&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your addon prefix will be prepended automatically.</p>
+</div>
+</div>
+<div class="section" id="model-skeleton">
+<h2><a class="toc-backref" href="#id2">Model Skeleton</a><a class="headerlink" href="#model-skeleton" title="Permalink to this headline">¶</a></h2>
+<p>All models <strong>must</strong> declare a primary key, a table name, and a set of properties.
+The basic skeleton looks as follows:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">My\Namespace\Model\MyModel\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">EllisLab\ExpressionEngine\Service\Model\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span> <span class="p">{</span>
+
+  <span class="k">protected</span> <span class="k">static</span> <span class="nv">$_primary_key</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+  <span class="k">protected</span> <span class="k">static</span> <span class="nv">$_table_name</span> <span class="o">=</span> <span class="s1">&#39;my_awesome_table&#39;</span><span class="p">;</span>
+
+  <span class="k">protected</span> <span class="nv">$id</span><span class="p">;</span>
+  <span class="k">protected</span> <span class="nv">$name</span><span class="p">;</span>
+  <span class="k">protected</span> <span class="nv">$email</span><span class="p">;</span>
+  <span class="c1">// ... more properties</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="properties">
+<h2><a class="toc-backref" href="#id3">Properties</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>The column names of the table should be reflected in the models properties.
+These <strong>must</strong> be declared as <code class="docutils literal"><span class="pre">protected</span></code>. If you require class properties for
+internal use, you should prefix them with an underscore:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// treated as table columns</span>
+<span class="k">protected</span> <span class="nv">$title</span><span class="p">;</span>
+<span class="k">protected</span> <span class="nv">$description</span><span class="p">;</span>
+
+<span class="c1">// ignored - prefixed with an underscore</span>
+<span class="k">protected</span> <span class="nv">$_cache</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="metadata">
+<h2><a class="toc-backref" href="#id4">Metadata</a><a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<p>All models have static metadata attached to them. Metadata <strong>must</strong> be declared
+as <code class="docutils literal"><span class="pre">protected</span> <span class="pre">static</span></code> and <strong>must</strong> begin with an underscore to avoid any
+potential confusion with column names. It can be retrieved with the
+<code class="docutils literal"><span class="pre">getMetadata()</span></code> method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_events</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+<span class="c1">// accessing it:</span>
+<span class="nx">MyModel</span><span class="o">::</span><span class="na">getMetaData</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+
+<span class="c1">// or on an instance</span>
+<span class="nv">$my_model_instance</span><span class="o">-&gt;</span><span class="na">getMetaData</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="internal-events">
+<h2><a class="toc-backref" href="#id5">Internal Events</a><a class="headerlink" href="#internal-events" title="Permalink to this headline">¶</a></h2>
+<p>As covered in the <a class="reference internal" href="../model/index.html"><span class="doc">usage section</span></a>, all models can emit
+events that can be subscribed to:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;boom&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$model</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">echo</span> <span class="s1">&#39;boom event happened on &#39;</span><span class="o">.</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">emit</span><span class="p">(</span><span class="s1">&#39;boom&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Unfortunately this local event behavior is not very convenient for internal
+event handling. To solve this problem, all model objects are subscribers to
+their own events. This means you can automatically bind to events and receive
+the callback on a regular method.</p>
+<p>To do so, first create a public method with the format <code class="docutils literal"><span class="pre">on&lt;EventName&gt;</span></code>, and
+then listen to the event by creating an <code class="docutils literal"><span class="pre">$_events</span></code> metadata array that lists
+the events you want to subscribe to:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_events</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;beforeSave&#39;</span><span class="p">);</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">onBeforeSave</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">echo</span> <span class="s1">&#39;about to save!&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Event names typically start with a lowercase letter, but the
+method name will have them as uppercase due to the <code class="docutils literal"><span class="pre">on</span></code> prefix.</p>
+</div>
+<div class="section" id="default-events">
+<h3>Default Events<a class="headerlink" href="#default-events" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="45%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Event Name</th>
+<th class="head">When</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>afterLoad</td>
+<td>After a model is fetched</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>beforeInsert</td>
+<td>Before saving a new model</td>
+<td>None</td>
+</tr>
+<tr class="row-even"><td>afterInsert</td>
+<td>After saving a new model</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>beforeUpdate</td>
+<td>Before saving an existing model</td>
+<td>Array of changed values</td>
+</tr>
+<tr class="row-even"><td>afterUpdate</td>
+<td>After saving an existing model</td>
+<td>Array of changed values</td>
+</tr>
+<tr class="row-odd"><td>beforeSave</td>
+<td>Before saving a model</td>
+<td>None</td>
+</tr>
+<tr class="row-even"><td>afterSave</td>
+<td>After saving a model</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>beforeValidate</td>
+<td>Before validating</td>
+<td>None</td>
+</tr>
+<tr class="row-even"><td>afterValidate</td>
+<td>After validating</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>beforeDelete</td>
+<td>Before deleting</td>
+<td>None</td>
+</tr>
+<tr class="row-even"><td>afterDelete</td>
+<td>After deleting</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="relationships">
+<h2><a class="toc-backref" href="#id6">Relationships</a><a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h2>
+<p><em>In-Depth Documentation:</em> <a class="reference internal" href="relationships.html"><span class="doc">Relating Models</span></a></p>
+<p>Models can be related to other models using just a little bit of metadata. They
+are defined on a <code class="docutils literal"><span class="pre">$_relationships</span></code> metadata array. The array keys should be
+the relationship names, and their values will be a description of the
+relationship:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_relationships</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;Author&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;model&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Member&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;BelongsTo&#39;</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">Author</span><span class="p">;</span> <span class="c1">// fetches member that created this entry</span>
+</pre></div>
+</div>
+<p>The type name is <em>required</em>, all other fields have predictable defaults. The
+<code class="docutils literal"><span class="pre">model</span></code> key will default to the relationship name. You may need to modify
+the key names that are used to match the relationship. To do so, specify a
+<code class="docutils literal"><span class="pre">from_key</span></code> and a <code class="docutils literal"><span class="pre">to_key</span></code>, where the <code class="docutils literal"><span class="pre">from_key</span></code> is a property name on
+this model, and the <code class="docutils literal"><span class="pre">to_key</span></code> is a property name on the related model:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_relationships</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;Author&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;model&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Member&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;BelongsTo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;from_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;author_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;to_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;member_id&#39;</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>The following types are available:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type</th>
+<th class="head">Default <code class="docutils literal"><span class="pre">from_key</span></code></th>
+<th class="head">Default <code class="docutils literal"><span class="pre">to_key</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>HasOne</td>
+<td>This primary key name</td>
+<td>This primary key</td>
+</tr>
+<tr class="row-odd"><td>HasMany</td>
+<td>This primary key name</td>
+<td>This primary key</td>
+</tr>
+<tr class="row-even"><td>BelongsTo</td>
+<td>Related primary key name</td>
+<td>Related primary key name</td>
+</tr>
+<tr class="row-odd"><td>HasAndBelongsToMany</td>
+<td>This primary key name</td>
+<td>Related primary key name</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="hasandbelongstomany">
+<h3>HasAndBelongsToMany<a class="headerlink" href="#hasandbelongstomany" title="Permalink to this headline">¶</a></h3>
+<p>The keys for the <code class="docutils literal"><span class="pre">HasAndBelongsToMany</span></code> relationship work slightly differently
+from the rest. This is because this relationship type requires a pivot table
+to work. The <code class="docutils literal"><span class="pre">from_key</span></code> and <code class="docutils literal"><span class="pre">to_key</span></code> still specify a property on the models,
+but there is an additional <code class="docutils literal"><span class="pre">pivot</span></code> key for the pivot table name:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_relationships</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;Editors&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;model&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Member&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;HasAndBelongsToMany&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pivot&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my_model_editors&#39;</span>
+    <span class="s1">&#39;from_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;editor_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;to_key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;member_id&#39;</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>If your pivot table key names do not match the primary key names, you can
+specify them as well, by turning the pivot item into an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="s1">&#39;pivot&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;table&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my_model_editors&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;left&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;editor_id&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;right&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;member_id&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">left</span></code> column will be matched to your <code class="docutils literal"><span class="pre">from_key</span></code> property and the
+<code class="docutils literal"><span class="pre">right</span></code> column will be matched to your <code class="docutils literal"><span class="pre">to_key</span></code> property.</p>
+</div>
+</div>
+<div class="section" id="validation">
+<h2><a class="toc-backref" href="#id7">Validation</a><a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>Validation rules are added using the same format as the <a class="reference internal" href="../validation.html"><span class="doc">Validation
+Service</span></a>. They should be added to a metadata item called
+<code class="docutils literal"><span class="pre">$_validation_rules</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_validation_rules</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|email&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also create your own local validation rules. These one-off rules can
+be added directly to the model class by creating a public method whose name
+starts with <code class="docutils literal"><span class="pre">validate</span></code>. The method will be treated as a
+<a class="reference internal" href="../validation.html#validation-service-custom-rules"><span class="std std-ref">custom validation rule</span></a>. On validation
+it will receive the property name, current value, rule parameters, and the rule
+object. The method should return <code class="docutils literal"><span class="pre">TRUE</span></code> on success, and an error string or
+language key on failure:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_validation_rules</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;even_number&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;validateMultipleOf[2]&#39;</span>
+  <span class="s1">&#39;decade&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;validateMultipleOf[10]&#39;</span>
+<span class="p">);</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">validateMultipleOf</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$params</span><span class="p">,</span> <span class="nv">$object</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$value</span> <span class="o">%</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;This field must be a multiple of &#39;</span><span class="o">.</span><span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="k">TRUE</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getters-and-setters">
+<h2><a class="toc-backref" href="#id8">Getters and Setters</a><a class="headerlink" href="#getters-and-setters" title="Permalink to this headline">¶</a></h2>
+<p>By default setting and getting of properties behaves the way it does for
+any object. However, you can create your own modifying getters and
+setters by creating methods in the format of <code class="docutils literal"><span class="pre">get__&lt;property&gt;</span></code> or
+<code class="docutils literal"><span class="pre">set__&lt;property&gt;</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$first_name</span><span class="p">;</span>
+<span class="k">protected</span> <span class="nv">$last_name</span><span class="p">;</span>
+
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">get__name</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">first_name</span><span class="o">.</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">last_name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">set__name</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">list</span><span class="p">(</span><span class="nv">$first</span><span class="p">,</span> <span class="nv">$last</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+
+  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setRawProperty</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="nv">$first</span><span class="p">);</span>
+  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setRawProperty</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="nv">$last</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">&#39;Bob Bobson&#39;</span><span class="p">;</span>
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">first_name</span><span class="p">;</span> <span class="c1">// Bob</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These methods break the camelCase naming convention in order
+to match the snake_case property names. It also serves as a clear
+indicator that these methods should not be called directly, even internally:
+always use <code class="docutils literal"><span class="pre">setProperty()</span></code>.</p>
+</div>
+<p>When setting properties manually you should take care to use
+<cite>setRawProperty</cite>, which will correctly track changes to the property.</p>
+</div>
+<div class="section" id="typed-columns">
+<h2><a class="toc-backref" href="#id9">Typed Columns</a><a class="headerlink" href="#typed-columns" title="Permalink to this headline">¶</a></h2>
+<p>Model properties can have basic type constraints set on them. These
+constraints allow for simple get/set typecasting of common values. They
+are defined in a metadata array called <code class="docutils literal"><span class="pre">$_typed_columns</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_typed_columns</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;model_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;timestamp&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">model_id</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span><span class="p">;</span> <span class="c1">// set to int 5</span>
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">model_id</span><span class="p">;</span> <span class="c1">// always returns an integer</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">created_at</span><span class="p">;</span> <span class="c1">// returns a DateTime object</span>
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;2015-01-30&#39;</span><span class="p">);</span> <span class="c1">// sets an int timestamp</span>
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="mi">1421558529</span><span class="p">;</span> <span class="c1">// also ok</span>
+</pre></div>
+</div>
+<p>The available options include:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="39%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Setting</th>
+<th class="head">Getting</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>bool</td>
+<td>Cast to boolean</td>
+<td>Cast to boolean</td>
+</tr>
+<tr class="row-odd"><td>int</td>
+<td>Cast to integer</td>
+<td>Cast to integer</td>
+</tr>
+<tr class="row-even"><td>float</td>
+<td>Cast to float</td>
+<td>Cast to float</td>
+</tr>
+<tr class="row-odd"><td>double</td>
+<td>Cast to float</td>
+<td>Cast to float</td>
+</tr>
+<tr class="row-even"><td>string</td>
+<td>Cast to string</td>
+<td>Cast to string</td>
+</tr>
+<tr class="row-odd"><td>boolString</td>
+<td>Cast to y/n</td>
+<td>Cast to boolean</td>
+</tr>
+<tr class="row-even"><td>yesNo</td>
+<td>Cast to y/n</td>
+<td>Cast to boolean</td>
+</tr>
+<tr class="row-odd"><td>timestamp</td>
+<td>Cast to timestamp</td>
+<td>Cast to DateTime</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="composite-types">
+<h2><a class="toc-backref" href="#id10">Composite Types</a><a class="headerlink" href="#composite-types" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes a database column may contain serialized data. Instead of
+treating this data merely as a string or using getters and setters,
+you can automatically turn it into an array or object. These are also
+defined in the <code class="docutils literal"><span class="pre">$_typed_columns</span></code> metadata array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">static</span> <span class="nv">$_typed_columns</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;settings&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;json&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">settings</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bob&#39;</span><span class="p">);</span> <span class="c1">// stores: {&quot;name&quot;: &quot;Bob&quot;}</span>
+<span class="nv">$my_model</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span> <span class="c1">// &#39;Bob&#39;</span>
+</pre></div>
+</div>
+<p>The following composite types are included:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Serialization</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>base64</td>
+<td>base64_encode($data)</td>
+</tr>
+<tr class="row-odd"><td>json</td>
+<td>json_encode($data)</td>
+</tr>
+<tr class="row-even"><td>serialized</td>
+<td>serialize($data)</td>
+</tr>
+<tr class="row-odd"><td>base64Serialized</td>
+<td>base64_encode(serialize($data))</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="model-methods">
+<h2><a class="toc-backref" href="#id11">Model Methods</a><a class="headerlink" href="#model-methods" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<code class="descname">EllisLab\ExpressionEngine\Service\Model\Model</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="getId">
+<code class="descname">getId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the primary key value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The primary key value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Int (or null if not yet saved)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="getName">
+<code class="descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the model alias that was registered with ExpressionEngine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The model alias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="getPrimaryKey">
+<code class="descname">getPrimaryKey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getPrimaryKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the primary key name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The primary key name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="getProperty">
+<code class="descname">getProperty</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a model property, calling any getters that were defined by
+the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the property</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the property</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="setProperty">
+<code class="descname">setProperty</code><span class="sig-paren">(</span><em>$name</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a model property and track its dirty state. Calls any setters that
+were defined by the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the property</li>
+<li><strong>$value</strong> (<em>mixed</em>) &#8211; The value to set the property to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$this</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="getRawProperty">
+<code class="descname">getRawProperty</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getRawProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a model property, <em>without</em> calling any getters that were defined
+by the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the property</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the property</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="setRawProperty">
+<code class="descname">setRawProperty</code><span class="sig-paren">(</span><em>$name</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setRawProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a model property and track its dirty state. Does not call any
+setters that were defined by the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the property</li>
+<li><strong>$value</strong> (<em>mixed</em>) &#8211; The value to set the property to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$this</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="relationships.html">Relating Models</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Services</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../addon.html">Addon Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../alert.html">CP/Alert Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config.html">Config Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../csv.html">CSV Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../encrypt.html">Encrypt Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../event.html">Event Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filepicker.html">CP/FilePicker Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filter.html">CP/Filter Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../format.html">Format Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modal.html">CP/Modal Service</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../model.html">Model Service</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../model/index.html">Using the Model Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../model/fetching.html">Fetching Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../model/relationships.html">Working with Relationships</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../model/collection.html">Collections</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Building your own Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="relationships.html">Relating Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pagination.html">CP/Pagination Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../permission.html">Permission Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sidebar.html">CP/Sidebar Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spam.html">Spam Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../table.html">CP/Table Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../url.html">CP/URL Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html">Validation Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../view.html">View Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

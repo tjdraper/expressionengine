@@ -1,29 +1,16 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 require_once SYSPATH.'ee/legacy/fieldtypes/OptionFieldtype.php';
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
- * @filesource
- */
-
-// --------------------------------------------------------------------
-
-/**
- * ExpressionEngine Radio Fieldtype Class
- *
- * @package		ExpressionEngine
- * @subpackage	Fieldtypes
- * @category	Fieldtypes
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Radio Fieldtype
  */
 class Radio_ft extends OptionFieldtype {
 
@@ -77,21 +64,15 @@ class Radio_ft extends OptionFieldtype {
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	function display_field($data)
 	{
 		return $this->_display_field($data);
 	}
 
-	// --------------------------------------------------------------------
-
 	function grid_display_field($data)
 	{
 		return $this->_display_field($data, 'grid');
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Displays the field for the CP or Frontend, and accounts for grid
@@ -108,7 +89,13 @@ class Radio_ft extends OptionFieldtype {
 			? $this->settings['field_text_direction'] : 'ltr';
 
 		$field_options = $this->_get_field_options($data);
-		$extra         = ($this->get_setting('field_disabled')) ? 'disabled' : '';
+
+		// Is this new entry?  Set a default
+		if ( ! $this->content_id AND is_null($data))
+		{
+			reset($field_options);
+			$data = key($field_options);
+		}
 
 		if (REQ == 'CP')
 		{
@@ -121,12 +108,15 @@ class Radio_ft extends OptionFieldtype {
 				$data = 'n';
 			}
 
-			return ee('View')->make('radio:publish')->render(array(
+			return ee('View')->make('ee:_shared/form/fields/select')->render([
 				'field_name' => $this->field_name,
-				'selected'   => $data,
-				'options'    => $field_options,
-				'extra'      => $extra
-			));
+				'choices'    => $field_options,
+				'value'      => $data,
+				'multi'      => FALSE,
+				'disabled'   => $this->get_setting('field_disabled'),
+				'filter_url' => $this->get_setting('filter_url', NULL),
+				'no_results' => $this->get_setting('no_results', NULL)
+			]);
 		}
 
 		$selected = $data;
@@ -154,8 +144,6 @@ class Radio_ft extends OptionFieldtype {
 
 		return $r;
 	}
-
-	// --------------------------------------------------------------------
 
 	function display_settings($data)
 	{
@@ -207,8 +195,6 @@ class Radio_ft extends OptionFieldtype {
 		return $this->replace_tag($data, $params, $tagdata);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Accept all content types.
 	 *
@@ -219,8 +205,6 @@ class Radio_ft extends OptionFieldtype {
 	{
 		return TRUE;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Update the fieldtype

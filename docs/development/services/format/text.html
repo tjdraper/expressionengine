@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Text Formatter &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Format Service" href="../format.html" />
+	    <link rel="next" title="CP/Modal Service" href="../modal.html" />
+	    <link rel="prev" title="Number Formatter" href="number.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Services</a></li>
+								<li><a href="../format.html" accesskey="U">Format Service</a></li>
+								<li class="last">Text Formatter</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="text-formatter">
+<h1>Text Formatter<a class="headerlink" href="#text-formatter" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#usage" id="id1">Usage</a><ul>
+<li><a class="reference internal" href="#accented-characters-to-ascii" id="id2">Accented Characters to Ascii</a></li>
+<li><a class="reference internal" href="#attribute-escaping" id="id3">Attribute Escaping</a></li>
+<li><a class="reference internal" href="#attribute-safe-escaping-and-other-common-utilities" id="id4">Attribute Safe (escaping and other common utilities)</a></li>
+<li><a class="reference internal" href="#censor" id="id5">Censor</a></li>
+<li><a class="reference internal" href="#convert-to-entities" id="id6">Convert to Entities</a></li>
+<li><a class="reference internal" href="#encode-expressionengine-tags" id="id7">Encode ExpressionEngine Tags</a></li>
+<li><a class="reference internal" href="#encrypt" id="id8">Encrypt</a></li>
+<li><a class="reference internal" href="#form-prep" id="id9">Form Prep</a></li>
+<li><a class="reference internal" href="#json" id="id10">JSON</a></li>
+<li><a class="reference internal" href="#length" id="id11">Length</a></li>
+<li><a class="reference internal" href="#limit-characters" id="id12">Limit Characters</a></li>
+<li><a class="reference internal" href="#replace" id="id13">Replace</a></li>
+<li><a class="reference internal" href="#url-decode" id="id14">URL Decode</a></li>
+<li><a class="reference internal" href="#url-encode" id="id15">URL Encode</a></li>
+<li><a class="reference internal" href="#url-slug" id="id16">URL Slug</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#namespace-EllisLab\ExpressionEngine\Service\Formatter\Formats" id="id17">API Reference</a></li>
+</ul>
+</div>
+<p>The String Formatter is part of the <a class="reference internal" href="../format.html"><span class="doc">Format Service</span></a> and handles many common formatting needs for text-based content.</p>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#id1">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accented-characters-to-ascii">
+<h3><a class="toc-backref" href="#id2">Accented Characters to Ascii</a><a class="headerlink" href="#accented-characters-to-ascii" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$written_check</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;über crème brûlée&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">accentsToAscii</span><span class="p">();</span>
+<span class="c1">// uber creme brulee</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="attribute-escaping">
+<h3><a class="toc-backref" href="#id3">Attribute Escaping</a><a class="headerlink" href="#attribute-escaping" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$attr</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">attributeEscape</span><span class="p">();</span>
+<span class="c1">// A discussion about &amp;quot;Wonko the Sane&amp;quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="attribute-safe-escaping-and-other-common-utilities">
+<h3><a class="toc-backref" href="#id4">Attribute Safe (escaping and other common utilities)</a><a class="headerlink" href="#attribute-safe-escaping-and-other-common-utilities" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// this is the same as attributeEscape(), but allows character limiting, unicode punctuation, etc. Note: limiting keeps whole words</span>
+<span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;A discussion about &amp;quot;Wonko the Sane&amp;quot;&#39;</span><span class="p">;</span>
+<span class="nv">$attr</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">attributeSafe</span><span class="p">([</span><span class="s1">&#39;limit&#39;</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">]);</span>
+<span class="c1">// A discussion…</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="censor">
+<h3><a class="toc-backref" href="#id5">Censor</a><a class="headerlink" href="#censor" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">censor</span><span class="p">();</span>
+<span class="c1">// A discussion about &quot;Wonko the ####&quot; (presuming &quot;sane&quot; is a configured naughty word)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="convert-to-entities">
+<h3><a class="toc-backref" href="#id6">Convert to Entities</a><a class="headerlink" href="#convert-to-entities" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;über&quot; crème brûlée&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">convertToEntities</span><span class="p">();</span>
+<span class="c1">// &amp;quot;&amp;uuml;ber&amp;quot; cr&amp;egrave;me br&amp;ucirc;l&amp;eacute;e</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encode-expressionengine-tags">
+<h3><a class="toc-backref" href="#id7">Encode ExpressionEngine Tags</a><a class="headerlink" href="#encode-expressionengine-tags" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;{exp:tag}{variable}{/exp:tag}&#39;</span><span class="p">;</span>
+<span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">encodeEETags</span><span class="p">();</span>
+<span class="c1">// &amp;#123;exp:tag&amp;#125;&amp;#123;variable&amp;#125;&amp;#123;/exp:tag&amp;#125;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encrypt">
+<h3><a class="toc-backref" href="#id8">Encrypt</a><a class="headerlink" href="#encrypt" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">;</span>
+<span class="nv">$encrypted</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">();</span>
+<span class="c1">// �1����j(QqS ���&gt;}  ��1LU�䯏�u��u�%9�E0�3���tQhFsA�w[ZÈ�</span>
+
+<span class="nv">$encrypted</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">encrypt</span><span class="p">([</span><span class="s1">&#39;encode&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]);</span>
+<span class="c1">// UKEQBOdb+8DaznDlVTW1SHbrvTd2MsVNgoSJ7OxrIhqAYtyUfhOAih6ZvXXO0DTl+eV27tIV2bSrojMRYxA+4g==</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-prep">
+<h3><a class="toc-backref" href="#id9">Form Prep</a><a class="headerlink" href="#form-prep" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$value</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">formPrep</span><span class="p">();</span>
+<span class="c1">// A discussion about &amp;quot;Wonko the Sane&amp;quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="json">
+<h3><a class="toc-backref" href="#id10">JSON</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$value</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">json</span><span class="p">();</span>
+<span class="c1">// &quot;A discussion about &amp;quot;Wonko the Sane&amp;quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="length">
+<h3><a class="toc-backref" href="#id11">Length</a><a class="headerlink" href="#length" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$length</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">length</span><span class="p">();</span>
+<span class="c1">// 35</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="limit-characters">
+<h3><a class="toc-backref" href="#id12">Limit Characters</a><a class="headerlink" href="#limit-characters" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;h1&gt;A &lt;em&gt;brief&lt;/em&gt; discussion about &quot;Wonko the Sane&quot;&lt;/h1&gt;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limitChars</span><span class="p">([</span><span class="s1">&#39;characters&#39;</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">]);</span>
+<span class="c1">// A brief discussion a&amp;#8230;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="replace">
+<h3><a class="toc-backref" href="#id13">Replace</a><a class="headerlink" href="#replace" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">;</span>
+<span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">([</span><span class="s1">&#39;find&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;about&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;aboot&#39;</span><span class="p">]);</span>
+<span class="c1">// A discussion aboot &quot;Wonko the Sane&quot;</span>
+
+<span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">([</span><span class="s1">&#39;find&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/ou?/&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;OH&#39;</span><span class="p">,</span> <span class="s1">&#39;regex&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]);</span>
+<span class="c1">// A discussiOHn abOHt &quot;WOHnkOH the Sane&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-decode">
+<h3><a class="toc-backref" href="#id14">URL Decode</a><a class="headerlink" href="#url-decode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A%20discussion%20about%20%22Wonko%20the%20Sane%22&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">urlDecode</span><span class="p">();</span>
+<span class="c1">// A discussion about &quot;Wonko the Sane&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-encode">
+<h3><a class="toc-backref" href="#id15">URL Encode</a><a class="headerlink" href="#url-encode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">;</span>
+<span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">urlEncode</span><span class="p">();</span>
+<span class="c1">// A%20discussion%20about%20%22Wonko%20the%20Sane%22</span>
+
+<span class="nv">$text</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">urlEncode</span><span class="p">([</span><span class="s1">&#39;plus_encoded_spaces&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]);</span>
+<span class="c1">// A+discussion+about+%22Wonko+the+Sane%22</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-slug">
+<h3><a class="toc-backref" href="#id16">URL Slug</a><a class="headerlink" href="#url-slug" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">urlSlug</span><span class="p">();</span>
+<span class="c1">// a-discussion-about-wonko-the-sane</span>
+
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Format&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;A discussion about &quot;Wonko the Sane&quot;&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">urlSlug</span><span class="p">([</span><span class="s1">&#39;remove_stopwords&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">]);</span>
+<span class="c1">// discussion-wonko-sane</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="namespace-EllisLab\ExpressionEngine\Service\Formatter\Formats">
+<span id="api-reference"></span><h2><a class="toc-backref" href="#id17">API Reference</a><a class="headerlink" href="#namespace-EllisLab\ExpressionEngine\Service\Formatter\Formats" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text">
+<em class="property">class </em><code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\</code><code class="descname">Text</code><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::accentsToAscii">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">accentsToAscii</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::accentsToAscii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts accented / multi-byte characters, e.g. ü, é, ß to ASCII transliterations. Uses foreign_chars.php config, either the default or user override, as a map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Formatter object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::attributeEscape">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">attributeEscape</code><span class="sig-paren">(</span><em>$double_encode = TRUE</em><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::attributeEscape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escapes a string for use in an HTML attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$double_encode</strong> (<em>bool</em>) &#8211; Whether to double encode existing HTML entities</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::attributeSafe">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">attributeSafe</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::attributeSafe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes content safe to use in an HTML attribute. In addition to escaping like attributeEscape(), it allows for character limiting, and unicode punctuation—handy for meta tags where entities may not be parsed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(bool) <strong>double_encode</strong> (default: FALSE) - whether to double encode existing entities</li>
+<li>(string) <strong>end_char</strong> (default: &amp;#8230;) - character to use when the limit terminates the string</li>
+<li>(int) <strong>limit</strong> (default: no limit) - number of characters to limit to, retains whole words</li>
+<li>(bool) <strong>unicode_punctuation</strong> (default: TRUE) - whether or not to use unicode punctuation characters instead of entities</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::censor">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">censor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::censor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Censor naughty words, respects application preferences</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Formatter object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::convertToEntities">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">convertToEntities</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::convertToEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts all applicable characters into HTML entities</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Formatter object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::encodeEETags">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">encodeEETags</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::encodeEETags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode ExpressionEngine Tags. By default encodes all curly braces so variables are also protected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(bool) <strong>encode_vars</strong> (default: TRUE) - whether or not to convert curly braces on variables along with tags</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::encrypt">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">encrypt</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::encrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypt the text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(string) <strong>key</strong> (optional encryption key, when not provided, uses the application encryption key)</li>
+<li>(bool) <strong>encode</strong> (default: TRUE) - whether or not to base64 encode the encrypted data for safe transport</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::formPrep">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">formPrep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::formPrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preps the content for use in a form field</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Formatter object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::getLength">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::getLength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the contents with the length of the string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Formatter object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::json">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">json</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode as JSON</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(bool) <strong>double_encode</strong> (default: TRUE) - whether to double encode already-encoded entities</li>
+<li>(bool) <strong>enclose with quotes</strong> (default: TRUE) - whether or not to return the JSON enclosed in double quotes</li>
+<li>(string) <strong>options</strong> Pipe-delimited list of PHP JSON bitmask constants</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::limitChars">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">limitChars</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::limitChars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to X characters, with an optional end character</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(int) <strong>characters</strong> (default: 500) - number of characters to limit to, does not preserve whole words</li>
+<li>(string) <strong>end_char</strong> (default: &amp;#8230;) - character to use when the limit terminates the string</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::replace">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">replace</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypt the text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(string) <strong>find</strong> - the text to be replaced</li>
+<li>(string) <strong>replace</strong> - the replacement text</li>
+<li>(bool) <strong>case_sensitive</strong> (default: TRUE) - whether or not the replacement is case-sensitive (has no effect if regex replacement is used, in those cases use the <code class="docutils literal"><span class="pre">i</span></code> regex flag)</li>
+<li>(bool) <strong>regex</strong> (default: FALSE) - whether the find string should be processed as a regex replacement</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlDecode">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">urlDecode</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlDecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL encode the text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(bool) <strong>plus_encoded_spaces</strong> (default: FALSE) - whether or not to decode <code class="docutils literal"><span class="pre">+</span></code> to spaces</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlEncode">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">urlEncode</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlEncode" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL encode the text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(bool) <strong>plus_encoded_spaces</strong> (default: FALSE) - whether or not to encode spaces as <code class="docutils literal"><span class="pre">+</span></code> instead of <code class="docutils literal"><span class="pre">%20</span></code></li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlSlug">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::</code><code class="descname">urlSlug</code><span class="sig-paren">(</span><em>$options =</em><span class="optional">[</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Formatter\Formats\Text::urlSlug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a URL slug from the text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$options</strong> (<em>array</em>) &#8211; <ul>
+<li>(string) <strong>separator</strong> (default: <code class="docutils literal"><span class="pre">-</span></code>) - the character used to separate words. If not specified, will respect the application preferences.</li>
+<li>(bool) <strong>lowercase</strong> (default: TRUE) - whether or not to force lowercase</li>
+<li>(bool) <strong>remove_stopwords</strong> (default: FALSE) - whether or not to remove stopwords (a, the, and, etc.)</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Formatter object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Services</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../addon.html">Addon Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../alert.html">CP/Alert Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../config.html">Config Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../csv.html">CSV Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../encrypt.html">Encrypt Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../event.html">Event Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filepicker.html">CP/FilePicker Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filter.html">CP/Filter Service</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../format.html">Format Service</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="number.html">Number Formatter</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Text Formatter</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modal.html">CP/Modal Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model.html">Model Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pagination.html">CP/Pagination Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../permission.html">Permission Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sidebar.html">CP/Sidebar Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spam.html">Spam Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../table.html">CP/Table Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../url.html">CP/URL Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../validation.html">Validation Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../view.html">View Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

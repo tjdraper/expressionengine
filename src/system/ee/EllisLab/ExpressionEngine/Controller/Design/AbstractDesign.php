@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Design;
 
@@ -13,27 +20,7 @@ use EllisLab\ExpressionEngine\Service\CP\Filter\FilterRunner;
 use EllisLab\ExpressionEngine\Service\Model\Query\Builder as QueryBuilder;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Abstract Design Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Abstract Design Controller
  */
 abstract class AbstractDesign extends CP_Controller {
 
@@ -514,7 +501,7 @@ abstract class AbstractDesign extends CP_Controller {
 
 			if (strncmp($template->template_name, $hidden_indicator, $hidden_indicator_length) == 0)
 			{
-				$template_name = '<span class="hidden">' . $template_name . '</span>';
+				$template_name = '<span class="hidden-tmp">' . $template_name . '</span>';
 			}
 
 			if ($template->template_name == 'index')

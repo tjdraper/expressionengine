@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Standard Global Variables &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Global Template Variables" href="index.html" />
+	    <link rel="next" title="Linking to Stylesheets" href="stylesheet.html" />
+	    <link rel="prev" title="Preload Text Replacements" href="preload_replacement.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Template Language Overview</a></li>
+								<li><a href="index.html" accesskey="U">Global Template Variables</a></li>
+								<li class="last">Standard Global Variables</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="standard-global-variables">
+<h1>Standard Global Variables<a class="headerlink" href="#standard-global-variables" title="Permalink to this headline">¶</a></h1>
+<p>These Global Variables can be used anywhere within your Templates. Note
+that they are subject to ExpressionEngine&#8217;s <a class="reference internal" href="../template_engine.html"><span class="doc">parsing order</span></a>, which can affect their availability when
+used inside other tags.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#variables" id="id2">Variables</a><ul>
+<li><a class="reference internal" href="#app-build" id="id3">app_build</a></li>
+<li><a class="reference internal" href="#app-version" id="id4">app_version</a></li>
+<li><a class="reference internal" href="#charset" id="id5">charset</a></li>
+<li><a class="reference internal" href="#cp-session-id" id="id6">cp_session_id</a></li>
+<li><a class="reference internal" href="#cp-url" id="id7">cp_url</a></li>
+<li><a class="reference internal" href="#csrf-token" id="id8">csrf_token</a></li>
+<li><a class="reference internal" href="#current-path" id="id9">current_path</a></li>
+<li><a class="reference internal" href="#current-time" id="id10">current_time</a></li>
+<li><a class="reference internal" href="#current-query-string" id="id11">current_query_string</a></li>
+<li><a class="reference internal" href="#current-url" id="id12">current_url</a></li>
+<li><a class="reference internal" href="#debug-mode" id="id13">debug_mode</a></li>
+<li><a class="reference internal" href="#doc-url" id="id14">doc_url</a></li>
+<li><a class="reference internal" href="#elapsed-time" id="id15">elapsed_time</a></li>
+<li><a class="reference internal" href="#embed" id="id16">embed</a></li>
+<li><a class="reference internal" href="#encode" id="id17">encode</a></li>
+<li><a class="reference internal" href="#gzip-mode" id="id18">gzip_mode</a></li>
+<li><a class="reference internal" href="#hits" id="id19">hits</a></li>
+<li><a class="reference internal" href="#homepage" id="id20">homepage</a></li>
+<li><a class="reference internal" href="#is-ajax-request" id="id21">is_ajax_request</a></li>
+<li><a class="reference internal" href="#lang" id="id22">lang</a></li>
+<li><a class="reference internal" href="#layout" id="id23">layout</a></li>
+<li><a class="reference internal" href="#member-group" id="id24">member_group</a></li>
+<li><a class="reference internal" href="#member-profile-link" id="id25">member_profile_link</a></li>
+<li><a class="reference internal" href="#password-max-length" id="id26">password_max_length</a></li>
+<li><a class="reference internal" href="#redirect" id="id27">redirect</a></li>
+<li><a class="reference internal" href="#site-description" id="id28">site_description</a></li>
+<li><a class="reference internal" href="#site-name" id="id29">site_name</a></li>
+<li><a class="reference internal" href="#site-url" id="id30">site_url</a></li>
+<li><a class="reference internal" href="#template-name" id="id31">template_name</a></li>
+<li><a class="reference internal" href="#template-group" id="id32">template_group</a></li>
+<li><a class="reference internal" href="#template-id" id="id33">template_id</a></li>
+<li><a class="reference internal" href="#template-type" id="id34">template_type</a></li>
+<li><a class="reference internal" href="#template-edit-date" id="id35">template_edit_date</a></li>
+<li><a class="reference internal" href="#theme-folder-url" id="id36">theme_folder_url</a></li>
+<li><a class="reference internal" href="#total-queries" id="id37">total_queries</a></li>
+<li><a class="reference internal" href="#webmaster-email" id="id38">webmaster_email</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#member-variables" id="id39">Member Variables</a><ul>
+<li><a class="reference internal" href="#logged-in-email" id="id40">logged_in_email</a></li>
+<li><a class="reference internal" href="#logged-in-group-description" id="id41">logged_in_group_description</a></li>
+<li><a class="reference internal" href="#logged-in-group-id" id="id42">logged_in_group_id</a></li>
+<li><a class="reference internal" href="#logged-in-group-title" id="id43">logged_in_group_title</a></li>
+<li><a class="reference internal" href="#logged-in-ip-address" id="id44">logged_in_ip_address</a></li>
+<li><a class="reference internal" href="#logged-in-location" id="id45">logged_in_location</a></li>
+<li><a class="reference internal" href="#logged-in-member-id" id="id46">logged_in_member_id</a></li>
+<li><a class="reference internal" href="#logged-in-private-messages" id="id47">logged_in_private_messages</a></li>
+<li><a class="reference internal" href="#logged-in-screen-name" id="id48">logged_in_screen_name</a></li>
+<li><a class="reference internal" href="#logged-in-total-comments" id="id49">logged_in_total_comments</a></li>
+<li><a class="reference internal" href="#logged-in-total-entries" id="id50">logged_in_total_entries</a></li>
+<li><a class="reference internal" href="#logged-in-total-forum-posts" id="id51">logged_in_total_forum_posts</a></li>
+<li><a class="reference internal" href="#logged-in-total-forum-replies" id="id52">logged_in_total_forum_replies</a></li>
+<li><a class="reference internal" href="#logged-in-total-forum-topics" id="id53">logged_in_total_forum_topics</a></li>
+<li><a class="reference internal" href="#logged-in-username" id="id54">logged_in_username</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="variables">
+<h2><a class="toc-backref" href="#id2">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="app-build">
+<h3><a class="toc-backref" href="#id3">app_build</a><a class="headerlink" href="#app-build" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">app_build</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The build date of ExpressionEngine that you are using.</p>
+</div>
+<div class="section" id="app-version">
+<h3><a class="toc-backref" href="#id4">app_version</a><a class="headerlink" href="#app-version" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">app_version</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The version of ExpressionEngine that you are using (2.2.0, 2.3.0, etc.).</p>
+</div>
+<div class="section" id="charset">
+<h3><a class="toc-backref" href="#id5">charset</a><a class="headerlink" href="#charset" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">charset</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted for the global character set (UTF-8).
+It is typically used in your META tags to indicate the character
+encoding:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html; charset=</span><span class="p">{</span><span class="nf">charset</span><span class="p">}</span><span class="s">&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cp-session-id">
+<h3><a class="toc-backref" href="#id6">cp_session_id</a><a class="headerlink" href="#cp-session-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cp_session_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The session id for the control panel. This is the value needed in the &#8220;S=&#8221;
+portion of the control panel URL. Only output for logged-in members who
+have access to the Control Panel, for instance to build a front-end URL to an add-on in the control panel:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">logged_in_group_id</span> <span class="o">==</span> <span class="m">1</span><span class="p">}</span>
+  <span class="ni">&amp;bull;</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">cp_url</span><span class="p">}</span><span class="s">?/cp/addons/settings/my_addon&amp;S=</span><span class="p">{</span><span class="nf">cp_session_id</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cp-url">
+<h3><a class="toc-backref" href="#id7">cp_url</a><a class="headerlink" href="#cp-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">cp_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to the control panel for this site. Only output for logged-in
+members who have access to the Control Panel.</p>
+</div>
+<div class="section" id="csrf-token">
+<span id="global-csrf-token"></span><h3><a class="toc-backref" href="#id8">csrf_token</a><a class="headerlink" href="#csrf-token" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">csrf_token</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is a required value for the hidden form field &#8216;csrf_token&#8217;.</p>
+</div>
+<div class="section" id="current-path">
+<h3><a class="toc-backref" href="#id9">current_path</a><a class="headerlink" href="#current-path" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_path</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable outputs the current URI path relative to your ExpressionEngine
+installation, e.g. <em>news/article/man-captures-all-the-rabbits</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If there are no URL segments, this will output a slash: <em>/</em></p>
+</div>
+</div>
+<div class="section" id="current-time">
+<span id="global-current-time"></span><h3><a class="toc-backref" href="#id10">current_time</a><a class="headerlink" href="#current-time" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_time</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable displays the current server time localized to each user&#8217;s
+particular setting. As with other date variables, you will use the
+standard <a class="reference internal" href="../date_variable_formatting.html"><span class="doc">date variable formatting</span></a>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_time</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d %H:%i:%s&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Unlike the rest of the Standard Global Variables,
+<code class="docutils literal"><span class="pre">{current_time}</span></code> is parsed very early on in the Template parser,
+which allows you to make dynamic use of it in your tags, for
+instance as a tag parameter, or in a conditional.</p>
+</div>
+</div>
+<div class="section" id="current-query-string">
+<h3><a class="toc-backref" href="#id11">current_query_string</a><a class="headerlink" href="#current-query-string" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_query_string</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable displays the current security-filtered query string, which
+can be useful to append to your path variables when you want a link to
+retain the current query string, e.g.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>gclid=1123581321
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This variable has already been URL encoded so all characters
+are transported safely and ready to append to URLs as needed.</p>
+</div>
+</div>
+<div class="section" id="current-url">
+<span id="global-variable-current-url"></span><h3><a class="toc-backref" href="#id12">current_url</a><a class="headerlink" href="#current-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">current_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable displays the full current URL.</p>
+</div>
+<div class="section" id="debug-mode">
+<h3><a class="toc-backref" href="#id13">debug_mode</a><a class="headerlink" href="#debug-mode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">debug_mode</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with either &#8220;on&#8221; or &#8220;off&#8221; based on
+your debug mode settings.</p>
+</div>
+<div class="section" id="doc-url">
+<h3><a class="toc-backref" href="#id14">doc_url</a><a class="headerlink" href="#doc-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">doc_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with the user guide URL.</p>
+</div>
+<div class="section" id="elapsed-time">
+<h3><a class="toc-backref" href="#id15">elapsed_time</a><a class="headerlink" href="#elapsed-time" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">elapsed_time</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The amount of time, in seconds, it took ExpressionEngine to render the
+current page.</p>
+</div>
+<div class="section" id="embed">
+<h3><a class="toc-backref" href="#id16">embed</a><a class="headerlink" href="#embed" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">embed</span><span class="p">=</span><span class="s1">&#39;news/local&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable allows you to embed one Template within another. Please
+see the <a class="reference internal" href="../embedding.html"><span class="doc">Embedded Templates</span></a> section.</p>
+</div>
+<div class="section" id="encode">
+<span id="global-encode"></span><h3><a class="toc-backref" href="#id17">encode</a><a class="headerlink" href="#encode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">encode</span><span class="p">=</span><span class="s2">&quot;you@example.com&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;Email Me!&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will encode the specified email address using javascript
+and HTML entities to make it more difficult for spam harvesters to grab
+an email address from your site. If you normally show your email address
+on your site you are encouraged to use this variable. The title
+parameter on the variable allows you to specify the text you want to use
+for the link.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Email Me!
+</pre></div>
+</div>
+</div>
+<div class="section" id="gzip-mode">
+<h3><a class="toc-backref" href="#id18">gzip_mode</a><a class="headerlink" href="#gzip-mode" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">gzip_mode</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with either &#8220;on&#8221; or &#8220;off&#8221; based on
+your output compression settings mode settings.</p>
+</div>
+<div class="section" id="hits">
+<h3><a class="toc-backref" href="#id19">hits</a><a class="headerlink" href="#hits" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">hits</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with the number of hits that any given
+template containing the variable has received.</p>
+</div>
+<div class="section" id="homepage">
+<h3><a class="toc-backref" href="#id20">homepage</a><a class="headerlink" href="#homepage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">homepage</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with the <strong>URL to the root directory of
+your site</strong> preference under <span class="menuselection">Settings ‣ URL and Path Settings</span>.</p>
+</div>
+<div class="section" id="is-ajax-request">
+<h3><a class="toc-backref" href="#id21">is_ajax_request</a><a class="headerlink" href="#is-ajax-request" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">is_ajax_request</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Boolean (TRUE/FALSE) variable representing whether or not the template is being accessed via an Ajax request (XMLHttpRequest header). Most commonly this would be used to prevent direct access of template stubs used as content providers for Ajax, e.g.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="o">!</span> <span class="nv">is_ajax_request</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s2">&quot;404&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+<span class="cm">{!-- ExpressionEngine tags below to define content to return --}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lang">
+<h3><a class="toc-backref" href="#id22">lang</a><a class="headerlink" href="#lang" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">lang</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted for the <strong>Default XML Language</strong>
+preference under <span class="menuselection">Settings ‣ General Settings</span>.</p>
+</div>
+<div class="section" id="layout">
+<h3><a class="toc-backref" href="#id23">layout</a><a class="headerlink" href="#layout" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">layout</span><span class="p">=</span><span class="s2">&quot;news/local&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable allows you to wrap a Template in another. Please
+see the <a class="reference internal" href="../layouts.html"><span class="doc">Template Layouts</span></a> section.</p>
+</div>
+<div class="section" id="member-group">
+<h3><a class="toc-backref" href="#id24">member_group</a><a class="headerlink" href="#member-group" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_group</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Member Group ID number for the currently logged-in user.</p>
+</div>
+<div class="section" id="member-profile-link">
+<h3><a class="toc-backref" href="#id25">member_profile_link</a><a class="headerlink" href="#member-profile-link" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">member_profile_link</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with a link to the public profile page
+for the currently logged in user. The text of the link will be the
+member&#8217;s screen name. For instance, the output might be:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com/index.php/member/1/&quot;</span><span class="p">&gt;</span>Joe Smith<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="password-max-length">
+<h3><a class="toc-backref" href="#id26">password_max_length</a><a class="headerlink" href="#password-max-length" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">password_max_length</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable is used the <code class="docutils literal"><span class="pre">maxlength</span></code> property of password inputs on
+login forms:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">password_max_length</span><span class="p">}</span><span class="s">&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&#39;off&#39;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="redirect">
+<span id="global-redirect"></span><h3><a class="toc-backref" href="#id27">redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s1">&#39;news/local&#39;</span> <span class="na">status_code</span><span class="p">=</span><span class="s2">&quot;301&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable allows you redirect the visitor to another template.
+Typically this will mean that you will be utilizing the tag within
+conditionals.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">segment_3</span> <span class="o">!=</span> <span class="s1">&#39;cookies&#39;</span><span class="p">}</span>   <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s1">&#39;bake/cookies&#39;</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You can also use the redirect variable to provide tighter control of
+your URLs, and trigger 404 pages in certain conditions. When you want to
+display your 404 page, just use &#8220;404&#8221; for the template. For instance,
+you might do this on a template group&#8217;s &#8216;index&#8217; template that you do not
+wish to be displayed if an arbitrary second URL segment exists.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="k">if</span> <span class="nv">segment_2</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>   <span class="p">{</span><span class="nf">redirect</span><span class="p">=</span><span class="s2">&quot;404&quot;</span><span class="p">}</span> <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Be careful that through your redirect variables that you do not create
+an infinite loop.</p>
+<p>The <code class="docutils literal"><span class="pre">status_code</span></code> parameter lets you optionally pass a <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#3xx_Redirection">3xx redirect
+code</a>
+(e.g. 301, 302).</p>
+</div>
+<div class="section" id="site-description">
+<h3><a class="toc-backref" href="#id28">site_description</a><a class="headerlink" href="#site-description" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">site_description</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Available to MSM sites only, this variable will be substituted with your site&#8217;s description as defined under <span class="menuselection">Developer Tools ‣ Site Manager</span>.</p>
+</div>
+<div class="section" id="site-name">
+<h3><a class="toc-backref" href="#id29">site_name</a><a class="headerlink" href="#site-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">site_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with your site name as defined under
+<span class="menuselection">Settings ‣ General Settings</span>.</p>
+</div>
+<div class="section" id="site-url">
+<span id="global-site-url"></span><h3><a class="toc-backref" href="#id30">site_url</a><a class="headerlink" href="#site-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">site_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with your site URL as defined under
+<span class="menuselection">Settings ‣ URL and Path Settings</span>.</p>
+</div>
+<div class="section" id="template-name">
+<span id="global-template-edit-date"></span><h3><a class="toc-backref" href="#id31">template_name</a><a class="headerlink" href="#template-name" title="Permalink to this headline">¶</a></h3>
+<p>This variable displays the name of the template currently being processed.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">template_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="template-group">
+<h3><a class="toc-backref" href="#id32">template_group</a><a class="headerlink" href="#template-group" title="Permalink to this headline">¶</a></h3>
+<p>This variable displays the name of the template group for the template
+currently being processed.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">template_group</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="template-id">
+<h3><a class="toc-backref" href="#id33">template_id</a><a class="headerlink" href="#template-id" title="Permalink to this headline">¶</a></h3>
+<p>This variable displays the numeric ID of the template currently being processed.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">template_id</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="template-type">
+<h3><a class="toc-backref" href="#id34">template_type</a><a class="headerlink" href="#template-type" title="Permalink to this headline">¶</a></h3>
+<p>This variable displays the <a class="reference internal" href="../../cp/design/template/edit.html#template-type"><span class="std std-ref">type</span></a> of the template
+currently being processed (e.g. &#8220;webpage&#8221;, &#8220;rss&#8221;, &#8220;xml&#8221;, etc.).:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">template_type</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="template-edit-date">
+<h3><a class="toc-backref" href="#id35">template_edit_date</a><a class="headerlink" href="#template-edit-date" title="Permalink to this headline">¶</a></h3>
+<p>This variable displays the localized time for when the template was last
+updated. As with other date variables, you will use the standard
+<a class="reference internal" href="../date_variable_formatting.html"><span class="doc">date variable formatting</span></a>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">template_edit_date</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%Y %m %d %H:%i:%s&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="theme-folder-url">
+<h3><a class="toc-backref" href="#id36">theme_folder_url</a><a class="headerlink" href="#theme-folder-url" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">theme_folder_url</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The URL to your theme folder.</p>
+</div>
+<div class="section" id="total-queries">
+<h3><a class="toc-backref" href="#id37">total_queries</a><a class="headerlink" href="#total-queries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">total_queries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of database queries used to generate the current page.</p>
+</div>
+<div class="section" id="webmaster-email">
+<h3><a class="toc-backref" href="#id38">webmaster_email</a><a class="headerlink" href="#webmaster-email" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">webmaster_email</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">encode</span><span class="p">=</span><span class="s2">&quot;{webmaster_email}&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;Contact Us&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The email address for the site, as specified in <a class="reference internal" href="../../cp/settings/email.html"><span class="doc">Email
+Configuration</span></a>.</p>
+</div>
+</div>
+<div class="section" id="member-variables">
+<span id="id1"></span><h2><a class="toc-backref" href="#id39">Member Variables</a><a class="headerlink" href="#member-variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logged-in-email">
+<h3><a class="toc-backref" href="#id40">logged_in_email</a><a class="headerlink" href="#logged-in-email" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_email</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The email address for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-group-description">
+<h3><a class="toc-backref" href="#id41">logged_in_group_description</a><a class="headerlink" href="#logged-in-group-description" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_group_description</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Member Group description for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-group-id">
+<h3><a class="toc-backref" href="#id42">logged_in_group_id</a><a class="headerlink" href="#logged-in-group-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_group_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Member Group ID number for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-group-title">
+<h3><a class="toc-backref" href="#id43">logged_in_group_title</a><a class="headerlink" href="#logged-in-group-title" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_group_title</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The title of the member group for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-ip-address">
+<h3><a class="toc-backref" href="#id44">logged_in_ip_address</a><a class="headerlink" href="#logged-in-ip-address" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_ip_address</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable will be substituted with the IP address of the currently
+logged in user.</p>
+</div>
+<div class="section" id="logged-in-location">
+<h3><a class="toc-backref" href="#id45">logged_in_location</a><a class="headerlink" href="#logged-in-location" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_location</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The location (as entered in their profile) for the currently logged-in
+user.</p>
+</div>
+<div class="section" id="logged-in-member-id">
+<h3><a class="toc-backref" href="#id46">logged_in_member_id</a><a class="headerlink" href="#logged-in-member-id" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_member_id</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Member ID for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-private-messages">
+<h3><a class="toc-backref" href="#id47">logged_in_private_messages</a><a class="headerlink" href="#logged-in-private-messages" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_private_messages</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The number of unread private messages for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-screen-name">
+<h3><a class="toc-backref" href="#id48">logged_in_screen_name</a><a class="headerlink" href="#logged-in-screen-name" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_screen_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The screen name for the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-total-comments">
+<h3><a class="toc-backref" href="#id49">logged_in_total_comments</a><a class="headerlink" href="#logged-in-total-comments" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_total_comments</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of comments posted by the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-total-entries">
+<h3><a class="toc-backref" href="#id50">logged_in_total_entries</a><a class="headerlink" href="#logged-in-total-entries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_total_entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of entries posted by the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-total-forum-posts">
+<h3><a class="toc-backref" href="#id51">logged_in_total_forum_posts</a><a class="headerlink" href="#logged-in-total-forum-posts" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_total_forum_posts</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of forum posts made by the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-total-forum-replies">
+<h3><a class="toc-backref" href="#id52">logged_in_total_forum_replies</a><a class="headerlink" href="#logged-in-total-forum-replies" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_total_forum_replies</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of replies to forum posts by the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-total-forum-topics">
+<h3><a class="toc-backref" href="#id53">logged_in_total_forum_topics</a><a class="headerlink" href="#logged-in-total-forum-topics" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_total_forum_topics</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of forum topics made by the currently logged-in user.</p>
+</div>
+<div class="section" id="logged-in-username">
+<h3><a class="toc-backref" href="#id54">logged_in_username</a><a class="headerlink" href="#logged-in-username" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">logged_in_username</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The username for the currently logged-in user.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Template Language Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../comments.html">Commenting Template Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../conditionals.html">Conditional Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../date_variable_formatting.html">Date Variable Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../embedding.html">Embedding Templates within Other Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hidden_templates.html">Hidden Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hit_counter.html">Hit Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layouts.html">DRY: Template Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../php.html">PHP in Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Using Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../template_engine.html">The Template Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates_as_files.html">Saving Templates as Text Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../variable_modifiers.html">Variable Modifiers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Global Template Variables</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="path.html">Path Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="preload_replacement.html">Preload Text Replacements</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Standard Global Variables</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="stylesheet.html">Linking to Stylesheets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template_partials.html">Template Partials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template_variable.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="url_segments.html">URL Segment Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

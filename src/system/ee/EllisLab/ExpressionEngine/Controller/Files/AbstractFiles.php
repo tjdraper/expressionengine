@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Files;
 
@@ -12,27 +19,7 @@ use EllisLab\ExpressionEngine\Model\Content\FieldFacade;
 use EllisLab\ExpressionEngine\Model\Content\Display\FieldDisplay;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Abstract Files Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Abstract Files Controller
  */
 abstract class AbstractFiles extends CP_Controller {
 
@@ -125,18 +112,56 @@ abstract class AbstractFiles extends CP_Controller {
 		));
 	}
 
-	protected function stdHeader()
+	protected function stdHeader($active = NULL)
 	{
+		if (ee()->cp->allowed_group('can_upload_new_files'))
+		{
+			$upload_destinations = ee('Model')->get('UploadDestination')
+				->with('NoAccess')
+				->fields('id', 'name')
+				->filter('site_id', ee()->config->item('site_id'))
+				->filter('module_id', 0)
+				->all();
+
+			if (ee()->session->userdata['group_id'] != 1)
+			{
+				$member_group = ee()->session->userdata['group_id'];
+				$upload_destinations = $upload_destinations->filter(function($dir) use ($member_group)
+				{
+					return $dir->memberGroupHasAccess($member_group);
+				});
+			}
+
+			$choices = [];
+			foreach ($upload_destinations as $upload)
+			{
+				$choices[ee('CP/URL')->make('files/upload/' . $upload->getId())->compile()] = $upload->name;
+			}
+		}
+
+		$toolbar_items = [
+			'export'    => [
+				'href'  => ee('CP/URL')->make('files/export'),
+				'title' => lang('export_all')
+			]
+		];
+
+		if ($active !== NULL)
+		{
+			$toolbar_items['sync'] = [
+				'href'  => ee('CP/URL')->make('files/uploads/sync/' . $active),
+				'title' => lang('sync')
+			];
+		}
+
 		ee()->view->header = array(
 			'title' => lang('file_manager'),
-			'form_url' => ee('CP/URL')->make('files'),
-			'toolbar_items' => array(
-				'download' => array(
-					'href' => ee('CP/URL')->make('files/export'),
-					'title' => lang('export_all')
-				)
-			),
-			'search_button_value' => lang('search_files')
+			'toolbar_items' => $toolbar_items,
+			'action_button' => ee()->cp->allowed_group('can_upload_new_files') ? [
+				'text' => lang('upload_file'),
+				'filter_placeholder' => lang('filter_upload_directories'),
+				'choices' => $choices
+			] : NULL
 		);
 	}
 
@@ -383,25 +408,6 @@ abstract class AbstractFiles extends CP_Controller {
 			->perPage($perpage)
 			->currentPage($page)
 			->render($base_url);
-
-		$upload_destinations = ee('Model')->get('UploadDestination')
-			->with('NoAccess')
-			->fields('id', 'name')
-			->filter('site_id', ee()->config->item('site_id'))
-			->filter('module_id', 0);
-
-		$upload_destinations = $upload_destinations->all();
-
-		if (ee()->session->userdata['group_id'] != 1)
-		{
-			$member_group = ee()->session->userdata['group_id'];
-			$upload_destinations = $upload_destinations->filter(function($dir) use ($member_group)
-			{
-				return $dir->memberGroupHasAccess($member_group);
-			});
-		}
-
-		$vars['directories'] = $upload_destinations;
 
 		ee()->javascript->set_global('file_view_url', ee('CP/URL')->make('files/file/view/###')->compile());
 		ee()->javascript->set_global('lang.remove_confirm', lang('file') . ': <b>### ' . lang('files') . '</b>');

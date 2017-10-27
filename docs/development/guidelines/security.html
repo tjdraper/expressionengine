@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Security Guidelines &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Guidelines" href="index.html" />
+	    <link rel="next" title="View Files and PHP Syntax" href="view_php_syntax.html" />
+	    <link rel="prev" title="Performance Guidelines" href="performance.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Guidelines</a></li>
+								<li class="last">Security Guidelines</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="security-guidelines">
+<h1>Security Guidelines<a class="headerlink" href="#security-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#cross-site-scripting-xss" id="id1">Cross Site Scripting (XSS)</a><ul>
+<li><a class="reference internal" href="#ee-security-xss-clean" id="id2">ee()-&gt;security-&gt;xss_clean()</a></li>
+<li><a class="reference internal" href="#sanitized-variables-on-input" id="id3">Sanitized Variables on Input</a></li>
+<li><a class="reference internal" href="#insert-and-update-queries" id="id4">INSERT and UPDATE Queries</a></li>
+<li><a class="reference internal" href="#outputting-data-to-the-page" id="id5">Outputting Data to the Page</a></li>
+<li><a class="reference internal" href="#when-in-doubt" id="id6">When In Doubt...</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sql-injection-prevention" id="id7">SQL Injection Prevention</a><ul>
+<li><a class="reference internal" href="#escaping-php-variables" id="id8">Escaping PHP Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tag-parameters" id="id9">Tag Parameters</a><ul>
+<li><a class="reference internal" href="#never-assume-tag-parameters-are-good-input" id="id10">Never Assume Tag Parameters are &#8220;Good&#8221; Input</a></li>
+<li><a class="reference internal" href="#validate-values-before-using" id="id11">Validate Values Before Using</a></li>
+<li><a class="reference internal" href="#default-values" id="id12">Default Values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-site-request-forgery" id="id13">Cross Site Request Forgery</a><ul>
+<li><a class="reference internal" href="#csrf-tokens-in-templates" id="id14">CSRF Tokens in Templates</a></li>
+<li><a class="reference internal" href="#creating-template-forms-from-add-ons" id="id15">Creating Template Forms from Add-ons</a></li>
+<li><a class="reference internal" href="#validating-form-hashes-in-your-add-on" id="id16">Validating Form Hashes in Your Add-on</a></li>
+<li><a class="reference internal" href="#forms-in-the-control-panel" id="id17">Forms in the Control Panel</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-form-submissions" id="id18">Handling Form Submissions</a><ul>
+<li><a class="reference internal" href="#outputting-form-data-to-the-screen" id="id19">Outputting Form Data to the Screen</a></li>
+<li><a class="reference internal" href="#trust-no-one" id="id20">Trust No One</a></li>
+<li><a class="reference internal" href="#use-a-logic-map-for-processing" id="id21">Use a Logic Map for Processing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filename-security" id="id22">Filename Security</a><ul>
+<li><a class="reference internal" href="#include-and-require" id="id23">include() and require()</a></li>
+<li><a class="reference internal" href="#saving-images-or-files-to-the-server" id="id24">Saving Images or Files to the Server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preferences-and-settings" id="id25">Preferences and Settings</a><ul>
+<li><a class="reference internal" href="#storage-of-settings" id="id26">Storage of Settings</a></li>
+<li><a class="reference internal" href="#use-of-settings-in-forms" id="id27">Use of Settings in Forms</a></li>
+<li><a class="reference internal" href="#yes-no-preferences" id="id28">Yes / No Preferences</a></li>
+<li><a class="reference internal" href="#follow-the-art-of-kiss" id="id29">Follow the Art of KISS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#general-security-practice" id="id30">General Security Practice</a></li>
+</ul>
+</div>
+<div class="section" id="cross-site-scripting-xss">
+<span id="dev-guidelines-xss-protection"></span><h2><a class="toc-backref" href="#id1">Cross Site Scripting (XSS)</a><a class="headerlink" href="#cross-site-scripting-xss" title="Permalink to this headline">¶</a></h2>
+<p>Cross Site Scripting is a type of security vulnerability that allows
+code injection by malicious users onto a page. You can find some
+educational reading and examples on the following site:
+<a class="reference external" href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet">http://owasp.org</a>.</p>
+<p>Cross Site Scripting should be taken very seriously as you would never
+want your add-on to be the source of an attack vector.</p>
+<div class="section" id="ee-security-xss-clean">
+<h3><a class="toc-backref" href="#id2">ee()-&gt;security-&gt;xss_clean()</a><a class="headerlink" href="#ee-security-xss-clean" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;xss_clean()</span></code> is the built in ExpressionEngine
+XSS sanitization method, which is constantly tweaked for improved
+security and performance. It accepts both a <code class="docutils literal"><span class="pre">string</span></code> and an <code class="docutils literal"><span class="pre">array</span></code>
+and will return sanitized text:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">security</span><span class="o">-&gt;</span><span class="na">xss_clean</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sanitized-variables-on-input">
+<h3><a class="toc-backref" href="#id3">Sanitized Variables on Input</a><a class="headerlink" href="#sanitized-variables-on-input" title="Permalink to this headline">¶</a></h3>
+<p>Keys are converted to UTF-8 and new lines in data are normalized
+<strong>automatically</strong> by the Input Class for the following variables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">$_GET</span></code></li>
+<li><code class="docutils literal"><span class="pre">$_COOKIE</span></code></li>
+<li><code class="docutils literal"><span class="pre">$_POST</span></code></li>
+</ul>
+<p>However, for performance reasons, data are not automatically run through
+the xss filter. If you are storing or displaying data from these
+variables, you should use the <a class="reference internal" href="../legacy/libraries/input.html"><span class="doc">Input class&#8217;s get(), post(), or
+get_post() methods</span></a> and pass <code class="docutils literal"><span class="pre">TRUE</span></code> as
+the second parameter so the value will be XSS cleaned.</p>
+<p>If the user input is in the Control Panel, such as a module&#8217;s back end,
+it is at your discretion based on the needs of the module for whether or
+not administrative input is sanitized. Always err on the side of
+caution, and never assume that your end user will only allow access to
+the back end of your module to trusted members.</p>
+</div>
+<div class="section" id="insert-and-update-queries">
+<h3><a class="toc-backref" href="#id4">INSERT and UPDATE Queries</a><a class="headerlink" href="#insert-and-update-queries" title="Permalink to this headline">¶</a></h3>
+<p>As ExpressionEngine assumes that all information in the database is
+sanitized against XSS, the responsibility for sanitization falls on
+<strong>input</strong> to the database. Active Record methods will escape your data,
+but will not XSS clean it.Therefore, all data should be run through
+either <code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;xss_clean()</span></code> or <code class="docutils literal"><span class="pre">ee()-&gt;input-&gt;get_post('key',</span>
+<span class="pre">TRUE)</span></code> before being stored in the database.</p>
+</div>
+<div class="section" id="outputting-data-to-the-page">
+<h3><a class="toc-backref" href="#id5">Outputting Data to the Page</a><a class="headerlink" href="#outputting-data-to-the-page" title="Permalink to this headline">¶</a></h3>
+<p>Use the <a class="reference internal" href="../legacy/libraries/typography.html"><span class="doc">Typography class</span></a> whenever
+outputting blocks of content from user submitted data. It is regularly
+updated to improve security and performance, saving you both time and
+energy.</p>
+<ul class="simple">
+<li>It protects against PHP and ExpressionEngine tags from being parsed</li>
+<li>BBCode is sanitized, even if Allow All HTML is enabled</li>
+<li>Using <code class="docutils literal"><span class="pre">'safe'</span></code> or <code class="docutils literal"><span class="pre">'none'</span></code> for HTML formatting further protects
+output by converting tags to entities</li>
+</ul>
+</div>
+<div class="section" id="when-in-doubt">
+<h3><a class="toc-backref" href="#id6">When In Doubt...</a><a class="headerlink" href="#when-in-doubt" title="Permalink to this headline">¶</a></h3>
+<p>If there is any doubt on the safety of a variable that you are
+outputting or inserting into the database, use XSS Clean:
+<code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;xss_clean($value)</span></code>.</p>
+</div>
+</div>
+<div class="section" id="sql-injection-prevention">
+<span id="dev-guidelines-sql-injection-prevention"></span><h2><a class="toc-backref" href="#id7">SQL Injection Prevention</a><a class="headerlink" href="#sql-injection-prevention" title="Permalink to this headline">¶</a></h2>
+<p>SQL Injection is a special type of attack in which data is used in a
+query without being properly filtered, allowing a user to execute their
+own queries on the database. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$evil</span> <span class="o">=</span> <span class="s2">&quot;brett&#39;; DELETE FROM exp_members;&quot;</span><span class="p">;</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM exp_members WHERE username=&#39;</span><span class="si">{</span><span class="nv">$evil</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For more information, you can read MySQL&#8217;s guide to SQL Injection
+security:
+<a class="reference external" href="http://dev.mysql.com/tech-resources/articles/guide-to-php-security-ch3.pdf">http://dev.mysql.com/tech-resources/articles/guide-to-php-security-ch3.pdf</a></p>
+<div class="section" id="escaping-php-variables">
+<h3><a class="toc-backref" href="#id8">Escaping PHP Variables</a><a class="headerlink" href="#escaping-php-variables" title="Permalink to this headline">¶</a></h3>
+<p>PHP variables should be escaped in queries anytime the variable is not
+explicitly set to a hard-coded value <em>within</em> the method using the
+query. This means that even variables passed as arguments to a method
+must be escaped before being used in a query.</p>
+<p>Manually written queries should use both XSS cleaned data and
+<a class="reference internal" href="../legacy/libraries/database.html"><span class="doc">ee()-&gt;db-&gt;escape_str()</span></a> on variables, even if
+you think the value is trusted:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">security</span><span class="o">-&gt;</span><span class="na">xss_clean</span><span class="p">(</span><span class="nv">$foo</span><span class="p">);</span>
+
+<span class="k">OR</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">get_post</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+
+<span class="o">...</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT field FROM table WHERE column = &#39;&quot;</span><span class="o">.</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape_str</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../legacy/libraries/database.html"><span class="doc">ee()-&gt;db-&gt;insert()</span></a> is the preferred method
+for <code class="docutils literal"><span class="pre">INSERT</span></code> queries, as values are escaped automatically in the
+supplied data array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span>
+    <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;name&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;Brett Bretterson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email_address&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;brett@example.com&#39;</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../legacy/libraries/database.html"><span class="doc">ee()-&gt;db-&gt;update()</span></a> is the preferred method
+for <code class="docutils literal"><span class="pre">UPDATE</span></code> queries, as values are escaped automatically in the
+supplied data and <code class="docutils literal"><span class="pre">where</span></code> arrays:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span>
+    <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;email_address&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;brett.bretterson@example.com&#39;</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Brett Bretterson&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you send the third argument (the <code class="docutils literal"><span class="pre">WHERE</span></code> clause) as an
+array as shown above, it will automatically be escaped. If you send
+a string, you must escape it yourself:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span>
+    <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;email_address&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;brett.bretterson@example.com&#39;</span><span class="p">),</span>
+    <span class="s2">&quot;name = &#39;&quot;</span><span class="o">.</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape_str</span><span class="p">(</span><span class="nv">$foo</span><span class="p">)</span><span class="o">.</span><span class="s2">&quot;&#39;&quot;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tag-parameters">
+<h2><a class="toc-backref" href="#id9">Tag Parameters</a><a class="headerlink" href="#tag-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="never-assume-tag-parameters-are-good-input">
+<h3><a class="toc-backref" href="#id10">Never Assume Tag Parameters are &#8220;Good&#8221; Input</a><a class="headerlink" href="#never-assume-tag-parameters-are-good-input" title="Permalink to this headline">¶</a></h3>
+<p>Do not make security exceptions for tag parameters. With PHP on Input,
+nested tags, other plugins, or variables being possible sources for
+parameter values, you cannot be sure that the data is safe.</p>
+</div>
+<div class="section" id="validate-values-before-using">
+<h3><a class="toc-backref" href="#id11">Validate Values Before Using</a><a class="headerlink" href="#validate-values-before-using" title="Permalink to this headline">¶</a></h3>
+<p>Always validate the values being supplied to a tag parameter before
+using them in your code. <code class="docutils literal"><span class="pre">switch()</span></code> statements are good for numerous
+possible values, as are arrays of possible values:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">switch</span> <span class="p">(</span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="k">case</span> <span class="s1">&#39;bar&#39;</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">&#39;baz&#39;</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s1">&#39;bag&#39;</span><span class="o">:</span>
+        <span class="c1">// value is already set, and okay, so simply break</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nv">$valid_foo</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="s1">&#39;bag&#39;</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="nv">$valid_foo</span><span class="p">))</span> <span class="o">?</span> <span class="nv">$foo</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If you cannot validate against specific values, at least validate the
+type of data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">ctype_digit</span><span class="p">(</span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)))</span>
+<span class="p">{</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">log_item</span><span class="p">(</span><span class="s1">&#39;Super Class Module error: Provided parameter &quot;foo&quot; contains non-digit characters&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">FALSE</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or even:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ctype_digit</span><span class="p">(</span><span class="nv">$foo</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)))</span> <span class="o">?</span> <span class="k">FALSE</span> <span class="o">:</span> <span class="nv">$foo</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You no doubt notice that <code class="docutils literal"><span class="pre">ctype_digit</span></code> is being used
+here to validate the parameter as a numeric value. Why?
+<a class="reference external" href="http://us3.php.net/manual/en/function.is-numeric.php">is_numeric()</a> returns
+<code class="docutils literal"><span class="pre">TRUE</span></code> for some non-integer numbers, including notation, e.g.
+&#8220;-0123.45e6&#8221;. <a class="reference external" href="http://us2.php.net/manual/en/function.is-int.php">is_int()</a> only returns
+<code class="docutils literal"><span class="pre">TRUE</span></code> on actual integer variable types, and tag parameters are
+always strings. Note that <a class="reference external" href="http://us3.php.net/manual/en/function.ctype-digit.php">ctype_digit()</a>, will
+return <code class="docutils literal"><span class="pre">TRUE</span></code> on an empty string in pre-5.1.0 versions of PHP.</p>
+</div>
+</div>
+<div class="section" id="default-values">
+<h3><a class="toc-backref" href="#id12">Default Values</a><a class="headerlink" href="#default-values" title="Permalink to this headline">¶</a></h3>
+<p>Always have default values if you plan to allow the code to execute
+without parameters being supplied, or in the case of invalid parameter
+values being provided. An empty string, <code class="docutils literal"><span class="pre">NULL</span></code>, or boolean <code class="docutils literal"><span class="pre">FALSE</span></code>
+simply needs to be tested later to accommodate defaults in your code.
+This also allows you to change the defaults all in one place in the
+script. Here is one method, that takes advantage of PHP&#8217;s <a class="reference external" href="http://us2.php.net/manual/en/language.variables.variable.php">variable
+variables</a>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$defaults</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;show_foo&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span>
+    <span class="s1">&#39;limit&#39;</span>   <span class="o">=&gt;</span> <span class="mi">5</span>
+<span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$defaults</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$val</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$$key</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$$key</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="nv">$key</span><span class="p">))</span> <span class="o">?</span> <span class="nv">$$key</span> <span class="o">:</span> <span class="nv">$val</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Results in three variables being set:</span>
+<span class="c1">// $type, $show_foo, and $limit, to their corresponding tag parameter value</span>
+<span class="c1">// or the default value if the parameter was not present</span>
+<span class="c1">// Each variable would still need to be validated as instructed above</span>
+<span class="c1">// before using them in the code.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cross-site-request-forgery">
+<span id="dev-guidelines-csrf-protection"></span><h2><a class="toc-backref" href="#id13">Cross Site Request Forgery</a><a class="headerlink" href="#cross-site-request-forgery" title="Permalink to this headline">¶</a></h2>
+<p>To help prevent spam and protect against Cross-site Request Forgery
+(CSRF), ExpressionEngine adds a random string to a hidden field on all
+forms. A copy of this string - also know as a CSRF token - is stored in
+the database along with the session id for which that form was generated.
+When the form is submitted this field is checked before any processing
+is done. If no CSRF token is present or no match is found, then the
+submission is rejected.</p>
+<div class="section" id="csrf-tokens-in-templates">
+<h3><a class="toc-backref" href="#id14">CSRF Tokens in Templates</a><a class="headerlink" href="#csrf-tokens-in-templates" title="Permalink to this headline">¶</a></h3>
+<p>If you are manually creating templates that send POST requests you must
+include the CSRF token as part of the form. This is easily done using
+the <code class="docutils literal"><span class="pre">csrf_token</span></code> <a class="reference internal" href="../../templates/globals/single_variables.html"><span class="doc">variable</span></a>
+as a value for a hidden field called <code class="docutils literal"><span class="pre">csrf_token</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;csrf_token&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;{csrf_token}&quot;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-template-forms-from-add-ons">
+<h3><a class="toc-backref" href="#id15">Creating Template Forms from Add-ons</a><a class="headerlink" href="#creating-template-forms-from-add-ons" title="Permalink to this headline">¶</a></h3>
+<p>If your add-on is creating a form for the template, you should use
+<a class="reference internal" href="../legacy/libraries/functions.html#form-declaration"><span class="std std-ref">ee()-&gt;functions-&gt;form_declaration()</span></a>. This automatically adds the CSRF token as a hidden
+input field. It also allows any extensions the site may have installed
+to modify the form before it is served, thus creating a more uniform
+experience for the end user.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">form_declaration</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;action&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+<p>If your form submits to a different site you should ensure that you are
+not leaking the user&#8217;s CSRF token. You can either do this by manually
+creating the form open tag or setting the &#8216;secure&#8217; option for the
+<code class="docutils literal"><span class="pre">form_declaration()</span></code> method to <code class="docutils literal"><span class="pre">FALSE</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">form_declaration</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;secure&#39;</span>  <span class="o">=&gt;</span> <span class="k">FALSE</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validating-form-hashes-in-your-add-on">
+<h3><a class="toc-backref" href="#id16">Validating Form Hashes in Your Add-on</a><a class="headerlink" href="#validating-form-hashes-in-your-add-on" title="Permalink to this headline">¶</a></h3>
+<p>ExpressionEngine will automatically check the CSRF token of all requests
+before handing the request off to your add-on. This means that all forms
+and requests must include the <code class="docutils literal"><span class="pre">csrf_token</span></code> field. Asynchronous
+requests that include an <cite>HTTP_REQUESTED_BY</cite> header (this is set by most
+popular libraries, such as jQuery) default to being exempt from these
+checks as they provide a good layer of intrinsic security.</p>
+<p>There are several ways in which you can control this validation behavior
+of the CSRF tokens.</p>
+<div class="section" id="disabling-the-check">
+<h4>Disabling the check<a class="headerlink" href="#disabling-the-check" title="Permalink to this headline">¶</a></h4>
+<p>For action requests you can disable all CSRF token checks. This is done
+by setting the <code class="docutils literal"><span class="pre">csrf_exempt</span></code> column in the actions table to 1 for that
+action.</p>
+<p>You should only do this for actions that do not add, delete, or
+otherwise modify data (e.g. search) or requests that are expect to be
+initiated by another site (e.g. webhooks, payment gateways, etc).</p>
+</div>
+<div class="section" id="forcing-ajax-validation">
+<h4>Forcing AJAX Validation<a class="headerlink" href="#forcing-ajax-validation" title="Permalink to this headline">¶</a></h4>
+<p>While the same origin restriction for AJAX requests provides a good
+level of security from cross-site request forgery, compromised browser
+add-ons can send these requests.</p>
+<p>If you have AJAX action requests that are performing sensitive
+operations, then you should consider forcing AJAX CSRF validation for
+your add-on. This happens on per-class basis using a marker interface.
+You simply implement the <cite>Strict_XID</cite> interface on your action receiving
+class:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">My_module</span> <span class="k">implements</span> <span class="nx">Strict_XID</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>You can still disable the check on a per-action basis.</p>
+</div>
+</div>
+<div class="section" id="forms-in-the-control-panel">
+<h3><a class="toc-backref" href="#id17">Forms in the Control Panel</a><a class="headerlink" href="#forms-in-the-control-panel" title="Permalink to this headline">¶</a></h3>
+<p>The Control Panel&#8217;s Display class automatically adds hashes to any form
+using the <cite>form_open()</cite> helper. CSRF tokens are a requirement in the
+Control Panel and as such the check cannot be disabled. The Control
+Panel includes a jQuery ajax prefilter that takes care of CSRF tokens
+on all AJAX requests and also handles periodic token refreshing for
+additional security.</p>
+<p>You should use <code class="docutils literal"><span class="pre">EE.CSRF_TOKEN</span></code> if you require the token in your
+JavaScript. Due to the ephemeral nature of CSRF tokens you should access
+this property when you need it. It should not be copied or cached.</p>
+</div>
+</div>
+<div class="section" id="handling-form-submissions">
+<h2><a class="toc-backref" href="#id18">Handling Form Submissions</a><a class="headerlink" href="#handling-form-submissions" title="Permalink to this headline">¶</a></h2>
+<p>Form submissions are the most common form of user input you will handle
+in your add-ons, so it is important to understand how to deal with them
+securely.</p>
+<div class="section" id="outputting-form-data-to-the-screen">
+<h3><a class="toc-backref" href="#id19">Outputting Form Data to the Screen</a><a class="headerlink" href="#outputting-form-data-to-the-screen" title="Permalink to this headline">¶</a></h3>
+<p><strong>Never</strong> output unfiltered incoming data directly to the screen.</p>
+</div>
+<div class="section" id="trust-no-one">
+<h3><a class="toc-backref" href="#id20">Trust No One</a><a class="headerlink" href="#trust-no-one" title="Permalink to this headline">¶</a></h3>
+<p>Treat all input as potentially dangerous, even from within the
+control panel.</p>
+</div>
+<div class="section" id="use-a-logic-map-for-processing">
+<h3><a class="toc-backref" href="#id21">Use a Logic Map for Processing</a><a class="headerlink" href="#use-a-logic-map-for-processing" title="Permalink to this headline">¶</a></h3>
+<p>In your methods that will be handling form data, create a logic map that
+you can use to ensure that you are handling all validation and security
+checks prior to performing any actions. The following list contains
+common things to use; your add-on may have fewer or additional
+requirements.</p>
+<ul class="simple">
+<li>What is validated and in what order?<ul>
+<li>Does the user need to be a logged in member?</li>
+<li>Does the user need to be in a specific member group for the
+action?</li>
+<li><a class="reference internal" href="../../security/spam_protection.html"><span class="doc">Deny Duplicate Data</span></a> Check?</li>
+</ul>
+</li>
+<li>What security checks are performed?<ul>
+<li>Secure form hashes</li>
+<li>CAPTCHA</li>
+<li>Blacklist Banning / Whitelist Overrides<ul>
+<li><code class="docutils literal"><span class="pre">ee()-&gt;blacklist-&gt;blacklisted</span> <span class="pre">==</span> <span class="pre">'y'</span></code> (blacklisted)</li>
+<li><code class="docutils literal"><span class="pre">ee()-&gt;blacklist-&gt;whitelisted</span> <span class="pre">==</span> <span class="pre">'y'</span></code> (whitelist
+override)</li>
+</ul>
+</li>
+<li>Preferences and settings checked against</li>
+</ul>
+</li>
+<li>Data Filtering and Conversion<ul>
+<li>XSS clean</li>
+<li>Number formatting: <code class="docutils literal"><span class="pre">number_format()</span></code>, <code class="docutils literal"><span class="pre">ceil()</span></code>, etc.</li>
+<li>Character set conversion</li>
+<li>XML convert</li>
+<li>Remove PHP or ExpressionEngine tags?</li>
+</ul>
+</li>
+<li>Insert Data or Update<ul>
+<li><code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;xss_clean()</span></code> on all string data even if
+there is no intent to output (don&#8217;t forget about the Query
+module!)</li>
+<li>Make sure all data is properly escaped</li>
+</ul>
+</li>
+</ul>
+<p>After processing, make sure submitted data that might be sent to the
+screen for a success or error message is the filtered and validated
+version</p>
+</div>
+</div>
+<div class="section" id="filename-security">
+<h2><a class="toc-backref" href="#id22">Filename Security</a><a class="headerlink" href="#filename-security" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="include-and-require">
+<h3><a class="toc-backref" href="#id23">include() and require()</a><a class="headerlink" href="#include-and-require" title="Permalink to this headline">¶</a></h3>
+<p>Many servers have the ability to include files from offsite or anywhere
+in the local server, so when using <code class="docutils literal"><span class="pre">include()</span></code> or <code class="docutils literal"><span class="pre">require()</span></code> with
+user submitted data you need to be extremely careful. The best practice
+is to not design your add-on in such a way that would make this
+necessary in the first place, but if you do, either:</p>
+<ul class="simple">
+<li>Validate the filename based on possible options, OR</li>
+<li>Use <code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;sanitize_filename()</span></code> to remove naughty
+characters</li>
+</ul>
+</div>
+<div class="section" id="saving-images-or-files-to-the-server">
+<h3><a class="toc-backref" href="#id24">Saving Images or Files to the Server</a><a class="headerlink" href="#saving-images-or-files-to-the-server" title="Permalink to this headline">¶</a></h3>
+<p>When saving images or files to the server, make sure and validate the
+file type (MIME) and also clean the file name to remove possible naughty
+characters.</p>
+<ul class="simple">
+<li>Sanitize file name: <code class="docutils literal"><span class="pre">ee()-&gt;security-&gt;sanitize_filename();</span></code></li>
+<li>Browser provides the MIME type, available in:
+<code class="docutils literal"><span class="pre">$_FILES['userfile']['type']</span></code></li>
+<li>Use the Upload class (<code class="docutils literal"><span class="pre">ee()-&gt;load-&gt;library('upload',</span>
+<span class="pre">$config);</span></code>) as it contains methods for validation and sanitizing</li>
+</ul>
+</div>
+</div>
+<div class="section" id="preferences-and-settings">
+<h2><a class="toc-backref" href="#id25">Preferences and Settings</a><a class="headerlink" href="#preferences-and-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="storage-of-settings">
+<h3><a class="toc-backref" href="#id26">Storage of Settings</a><a class="headerlink" href="#storage-of-settings" title="Permalink to this headline">¶</a></h3>
+<p>Security and required preference settings should be stored in the
+database or <code class="docutils literal"><span class="pre">config.php</span></code> file.</p>
+</div>
+<div class="section" id="use-of-settings-in-forms">
+<h3><a class="toc-backref" href="#id27">Use of Settings in Forms</a><a class="headerlink" href="#use-of-settings-in-forms" title="Permalink to this headline">¶</a></h3>
+<p>Never send values for preferences or settings in hidden form fields.
+HTML source is open and readable, so a malicious user could simply copy
+the HTML or use a browser plugin to alter the form data to something you
+do not expect or desire. If <em>absolutely</em> required, encode them:</p>
+<ul class="simple">
+<li>JavaScript is good against bots but not against serious hackers.</li>
+<li>Base 64 encoding is easy to break and therefore NOT recommended.</li>
+<li>If there are a limited number of <em>possible</em> values, you could use
+<code class="docutils literal"><span class="pre">md5()</span></code> or <code class="docutils literal"><span class="pre">sha1()</span></code> to encode the values and check against encoded
+<em>possible</em> values. This is not bulletproof of course, as the
+hacker needs only to know what the possible values are to be able
+to utilize them.</li>
+<li>PHP has the <a class="reference external" href="http://php.net/manual/en/book.openssl.php">OpenSSL
+library</a> and other
+PHP libraries which have encryption and decryption with a salt.</li>
+<li>ExpressionEngine has an <a class="reference internal" href="../services/encrypt.html"><span class="doc">Encryption service</span></a> available to developers that uses OpenSSL.</li>
+</ul>
+</div>
+<div class="section" id="yes-no-preferences">
+<h3><a class="toc-backref" href="#id28">Yes / No Preferences</a><a class="headerlink" href="#yes-no-preferences" title="Permalink to this headline">¶</a></h3>
+<p>If your preference setting is a simple Yes / No, use <code class="docutils literal"><span class="pre">'y'</span></code> for Yes and
+<code class="docutils literal"><span class="pre">'n'</span></code> for No in both the code and the database, to keep things simple
+and consistent.</p>
+</div>
+<div class="section" id="follow-the-art-of-kiss">
+<h3><a class="toc-backref" href="#id29">Follow the Art of KISS</a><a class="headerlink" href="#follow-the-art-of-kiss" title="Permalink to this headline">¶</a></h3>
+<p>&#8220;Keep It Simple, Stupid&#8221;. Before adding a preference, ask yourself: is a
+preference for &#8216;foo&#8217; <em>really</em> needed? Eventually with too many
+preferences, there will be interference and priority issues, and over-
+complication.</p>
+</div>
+</div>
+<div class="section" id="general-security-practice">
+<h2><a class="toc-backref" href="#id30">General Security Practice</a><a class="headerlink" href="#general-security-practice" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Super Admins&#8217; absolute power is for <em>access</em>, not security. Do not
+make security exceptions for Super Admins. &#8220;Doom, doom, doom,&#8221; as it
+were.<ul>
+<li>Imagine a Super Admin not logging out from a public terminal or
+not using an SSL connection on an open wireless network.</li>
+<li>Imagine a Super Admin using Cookies Only sessions in the control
+panel and then going to a third-party page, which automatically
+submitted a form with data to the entry submission routine in the
+control panel. Theoretically, the Super Admin would be submitting
+potentially malicious code into an entry automatically and without
+any knowledge.</li>
+</ul>
+</li>
+<li>Use built in ExpressionEngine classes and methods if they exist for
+tasks.</li>
+<li>Use good beta testers and run a tight ship to get the best results.</li>
+<li>Keep debugging on for all users on your private development / testing
+site. Refer to the <a class="reference internal" href="general.html"><span class="doc">instructions for PHP errors</span></a> in the General Syntax and Style
+section.</li>
+<li>Use an approach of Least Privilege. Start by allowing access to NO
+one, and explicitly grant access to those that qualify.</li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guidelines</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="checklist.html">Developer Guidelines Checklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="general.html">General Style and Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="in-app-documentation.html">In-app Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Performance Guidelines</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Security Guidelines</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="view_php_syntax.html">View Files and PHP Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

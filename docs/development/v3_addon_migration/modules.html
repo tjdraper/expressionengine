@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Module Changes &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="v3 Add-on Migration" href="index.html" />
+	    <link rel="next" title="Plugin Changes" href="plugins.html" />
+	    <link rel="prev" title="Fieldtype Changes" href="fieldtypes.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">v3 Add-on Migration</a></li>
+								<li class="last">Module Changes</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="module-changes">
+<h1>Module Changes<a class="headerlink" href="#module-changes" title="Permalink to this headline">¶</a></h1>
+<p>Most of the changes to modules in ExpressionEngine 3 will be in the control panel
+files. All parsing code should be backwards compatible.</p>
+<p>A fictional Fortune Cookies module is used in the following examples.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#module-overview" id="id1">3.0 Module Overview</a></li>
+<li><a class="reference internal" href="#control-panel-file-mcp-package-name-php" id="id2">Control Panel File (<code class="docutils literal"><span class="pre">mcp.package_name.php</span></code>)</a></li>
+<li><a class="reference internal" href="#publish-tab-file-tab-package-name-php" id="id3">Publish Tab File (<code class="docutils literal"><span class="pre">tab.package_name.php</span></code>)</a></li>
+<li><a class="reference internal" href="#display-tools" id="id4">Display Tools</a></li>
+</ul>
+</div>
+<div class="section" id="module-overview">
+<h2><a class="toc-backref" href="#id1">3.0 Module Overview</a><a class="headerlink" href="#module-overview" title="Permalink to this headline">¶</a></h2>
+<p>The module changes in ExpressionEngine 3 are mostly related to the control panel
+redesign. Your parsing code should remain identical, which means you can focus
+just on updating the control panel.</p>
+<div class="section" id="new-url-logic">
+<h3>New URL Logic<a class="headerlink" href="#new-url-logic" title="Permalink to this headline">¶</a></h3>
+<p>The Control Panel URLs for your module follow the pattern:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">package_name</span><span class="o">/</span><span class="nx">method_name</span><span class="o">/</span><span class="nx">arguments</span>
+</pre></div>
+</div>
+<p>For example, if we had a fortune cookie module with a method to list our cookies
+its URL might be:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">fortune_cookie</span><span class="o">/</span><span class="nx">cookies</span>
+</pre></div>
+</div>
+<p>Like 2.x the routing is automatic; all public methods in your <code class="docutils literal"><span class="pre">mcp.package_name.php</span></code>
+are automatically routed. We will also pass any arguments to your method found in the url.
+For this URL:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">addons</span><span class="o">/</span><span class="nx">settings</span><span class="o">/</span><span class="nx">fortune_cookie</span><span class="o">/</span><span class="nx">edit_cookie</span><span class="o">/</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>We would need to have the following method signature:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">edit_cookie</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="control-panel-file-mcp-package-name-php">
+<h2><a class="toc-backref" href="#id2">Control Panel File (<code class="docutils literal"><span class="pre">mcp.package_name.php</span></code>)</a><a class="headerlink" href="#control-panel-file-mcp-package-name-php" title="Permalink to this headline">¶</a></h2>
+<p>If your module does not have a control panel, you still need an blank mcp file
+in the format:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Package_name_mcp</span>
+<span class="p">{</span>
+    <span class="k">var</span> <span class="nv">$version</span> <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="control-panel-output-breadcrumbs-and-headings">
+<span id="module-mcp-output"></span><h3>Control Panel Output, Breadcrumbs, and Headings<a class="headerlink" href="#control-panel-output-breadcrumbs-and-headings" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to output your control panels. You may either return an HTML
+string, or you may return an associative array.</p>
+<p>If you return a string that data will be used in the &#8220;body&#8221; section of the
+Control Panel layout inside our Add-On Manager. The breadcrumb will default to
+<code class="docutils literal"><span class="pre">Add-On</span> <span class="pre">Manager</span> <span class="pre">/</span> <span class="pre">Your</span> <span class="pre">Add-On</span> <span class="pre">Name</span></code> and the heading will default to <code class="docutils literal"><span class="pre">Your</span>
+<span class="pre">Add-On</span> <span class="pre">Name</span> <span class="pre">Configuration</span></code>. In our fortune cookie module example we would have
+<code class="docutils literal"><span class="pre">Add-On</span> <span class="pre">Manager</span> <span class="pre">/</span> <span class="pre">Fortune</span> <span class="pre">Cookies</span></code> as the breadcrumb and <code class="docutils literal"><span class="pre">Fortune</span> <span class="pre">Cookie</span>
+<span class="pre">Configuration</span></code> as the heading.</p>
+<p>If you return an associative array it must contain the key <code class="docutils literal"><span class="pre">body</span></code> and may
+contain the keys <code class="docutils literal"><span class="pre">breadcrumb</span></code>, and <code class="docutils literal"><span class="pre">heading</span></code>. The <code class="docutils literal"><span class="pre">body</span></code> key
+should contain an HTML string which will be used in the &#8220;body&#8221; section of the
+Control Panel layout inside our Add-On Manager.
+The <code class="docutils literal"><span class="pre">breadcrumb</span></code> key should contain an associative array of URLs as
+keys and strings for the bodies. The header value will be added as the final
+segment in the breadcrumb.  The <code class="docutils literal"><span class="pre">heading</span></code> key should
+contain a string for use as the heading (i.e. <code class="docutils literal"><span class="pre">Fortune</span> <span class="pre">Cookie</span> <span class="pre">Management</span></code>).</p>
+<p>If your add-on needs a <a class="reference external" href="https://ellislab.com/style-guide/c/structure#content-box-sidebar">sidebar</a>
+use the <a class="reference internal" href="../services/sidebar.html"><span class="doc">Sidebar Service</span></a>.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;addons/settings/fortune_cookie&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">compile</span><span class="p">();</span>
+
+<span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;body&#39;</span>       <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;fortune_cookie:index&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">),</span>
+  <span class="s1">&#39;breadcrumb&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="nv">$url</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;fortune_cookie_management&#39;</span><span class="p">)</span>
+  <span class="p">),</span>
+  <span class="s1">&#39;heading&#39;</span>  <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;edit_fortune_cookie&#39;</span><span class="p">),</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="publish-tab-file-tab-package-name-php">
+<h2><a class="toc-backref" href="#id3">Publish Tab File (<code class="docutils literal"><span class="pre">tab.package_name.php</span></code>)</a><a class="headerlink" href="#publish-tab-file-tab-package-name-php" title="Permalink to this headline">¶</a></h2>
+<p>We have made a few changes to the Publish Tab API. We have renamed the methods
+we call within the class, and a few have changes to their parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">publish_tabs()</span></code> has been renamed to <code class="docutils literal"><span class="pre">display()</span></code> and now returns an
+associative array using the <code class="docutils literal"><span class="pre">field_id</span></code> as the key.</li>
+<li><code class="docutils literal"><span class="pre">validate_publish()</span></code> has been renamed to <code class="docutils literal"><span class="pre">validate()</span></code>.  It is now passed
+two arguments (in order): a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> instance and an associative
+array with field names as keys and form submission data as the value (i.e.
+<code class="docutils literal"><span class="pre">array('fortune'</span> <span class="pre">=&gt;</span> <span class="pre">'All</span> <span class="pre">your</span> <span class="pre">hard</span> <span class="pre">work</span> <span class="pre">will</span> <span class="pre">soon</span> <span class="pre">pay</span> <span class="pre">off.'))</span></code>. The keys
+are derrived from the data returned by <code class="docutils literal"><span class="pre">display()</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">publish_data_db()</span></code> has been renamed to <code class="docutils literal"><span class="pre">save()</span></code>.  It is now passed
+two arguments (in order): a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> instance and an associative
+array with field names as keys and form submission data as the value (i.e.
+<code class="docutils literal"><span class="pre">array('fortune'</span> <span class="pre">=&gt;</span> <span class="pre">'Do</span> <span class="pre">not</span> <span class="pre">make</span> <span class="pre">extra</span> <span class="pre">work</span> <span class="pre">for</span> <span class="pre">yourself.'))</span></code>. The keys
+are derrived from the data returned by <code class="docutils literal"><span class="pre">display()</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">publish_data_delete_db()</span></code> has been renamed to <code class="docutils literal"><span class="pre">delete()</span></code>. It is now
+passed an indexed array of Entry IDs that have been deleted.</li>
+</ul>
+</div></blockquote>
+<p>A tab&#8217;s <code class="docutils literal"><span class="pre">save()</span></code> method is called during a <code class="docutils literal"><span class="pre">ChannelEntry</span></code> entity&#8217;s
+<code class="docutils literal"><span class="pre">afterSave</span></code> event. Likewise a tab&#8217;s <code class="docutils literal"><span class="pre">delete()</span></code> method is called during a
+<code class="docutils literal"><span class="pre">ChannelEntry</span></code> entity&#8217;s <code class="docutils literal"><span class="pre">beforeDelete</span></code> event.</p>
+</div>
+<div class="section" id="display-tools">
+<h2><a class="toc-backref" href="#id4">Display Tools</a><a class="headerlink" href="#display-tools" title="Permalink to this headline">¶</a></h2>
+<p>We have a few display tools available that are useful when creating your output.</p>
+<div class="section" id="the-table-service">
+<h3>The Table Service<a class="headerlink" href="#the-table-service" title="Permalink to this headline">¶</a></h3>
+<p>Tables are the most common way to view and navigate data in the
+ExpressionEngine control panel. Since tables share a lot of common
+functionality, we&#8217;ve abstracted most of it out to a Table service to
+handle tasks such as displaying the table markup, and sorting and
+filtering tabular content:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Table&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;autosort&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;autosearch&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span><span class="p">,</span> <span class="s1">&#39;limit&#39;</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">));</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setColumns</span><span class="p">(</span>
+  <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;tool_set&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;status&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;manage&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="nx">Table</span><span class="o">::</span><span class="na">COL_TOOLBAR</span>
+    <span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="nx">Table</span><span class="o">::</span><span class="na">COL_CHECKBOX</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../services/table.html"><span class="doc">CP/Table Service</span></a> for full documentation.</p>
+</div>
+<div class="section" id="the-pagination-service">
+<h3>The Pagination Service<a class="headerlink" href="#the-pagination-service" title="Permalink to this headline">¶</a></h3>
+<p>Adding pagination to the control panel is a common task and we created a
+pagination service to assist. This service follows our <a class="reference external" href="https://ellislab.com/style-guide/c/listings#pagination">style-guide</a> handling all the
+mathematical calculations. All you need is the number of items you are going to
+paginate and a URL object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$base_url</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;publish/edit&#39;</span><span class="p">);</span>
+<span class="nv">$pagination</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Pagination&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="nv">$total_count</span><span class="p">)</span>
+      <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$base_url</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../services/pagination.html"><span class="doc">CP/Pagination Service</span></a> for full documentation.</p>
+</div>
+<div class="section" id="the-cp-alert-service">
+<h3>The CP/Alert Service<a class="headerlink" href="#the-cp-alert-service" title="Permalink to this headline">¶</a></h3>
+<p>Alerts are for providing feedback on an action and calling attention to
+warnings or errors. We describe, in detail, how to build different kinds
+of alerts in our <a class="reference external" href="https://ellislab.com/style-guide/c/alerts">CP style-guide</a>. We have also
+created an Alert Service for creating alerts in your code. For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Alert&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">makeInline</span><span class="p">(</span><span class="s1">&#39;fortune-cookie-form&#39;</span><span class="p">)</span>
+      <span class="o">-&gt;</span><span class="na">asIssue</span><span class="p">()</span>
+      <span class="o">-&gt;</span><span class="na">withTitle</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;fortune_cookie_save_error&#39;</span><span class="p">))</span>
+      <span class="o">-&gt;</span><span class="na">addToBody</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;fortune_cookie_save_error_desc&#39;</span><span class="p">))</span>
+      <span class="o">-&gt;</span><span class="na">now</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>And:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Alert&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;fortune-cookie-form&#39;</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../services/alert.html"><span class="doc">CP/Alert Service</span></a> for full documentation.</p>
+</div>
+<div class="section" id="the-shared-settings-form">
+<h3>The Shared Settings Form<a class="headerlink" href="#the-shared-settings-form" title="Permalink to this headline">¶</a></h3>
+<p>Forms are created by creating an array of field descriptions. This keeps the
+view code consistent and modular. Below is an example of a simple form with
+a text input and a checkbox:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+      <span class="k">array</span><span class="p">(</span>
+              <span class="k">array</span><span class="p">(</span>
+                      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;tool_set_name&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;tool_set_name_desc&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                              <span class="s1">&#39;toolset_name&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                                      <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$toolset_name</span><span class="p">,</span>
+                                      <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+                              <span class="p">)</span>
+                      <span class="p">)</span>
+              <span class="p">),</span>
+              <span class="k">array</span><span class="p">(</span>
+                      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;choose_tools&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;choose_tools_desc&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                              <span class="s1">&#39;tools&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                                      <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;checkbox&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="nv">$tools</span><span class="p">,</span>
+                                      <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$toolset</span><span class="p">[</span><span class="s1">&#39;tools&#39;</span><span class="p">],</span>
+                                      <span class="s1">&#39;wrap&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span>
+                              <span class="p">)</span>
+                      <span class="p">)</span>
+              <span class="p">)</span>
+      <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>And:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;ee:_shared/form&#39;</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../shared_form_view.html"><span class="doc">Shared Form View</span></a> for full documentation.</p>
+</div>
+<div class="section" id="modals">
+<h3>Modals<a class="headerlink" href="#modals" title="Permalink to this headline">¶</a></h3>
+<p>Under 3.0 modals belong to a specific spot in the Control Panel&#8217;s DOM, and that
+place isn&#8217;t accessible from a module&#8217;s view. To solve that we have created a
+modal service. There are two basic calls to use it within your view files,
+<code class="docutils literal"><span class="pre">ee('CP/Modal')-&gt;startModal($name);</span></code> and <code class="docutils literal"><span class="pre">ee('CP/Modal')-&gt;endModal();</span></code>.
+Everything between those two lines will be be stored in the modals block and
+output in the correct spot of the DOM.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Modal&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">startModal</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">&lt;div class=&quot;modal-wrap modal-test&quot;&gt;</span>
+<span class="x">      &lt;div class=&quot;modal&quot;&gt;</span>
+<span class="x">              &lt;div class=&quot;col-group&quot;&gt;</span>
+<span class="x">                      &lt;div class=&quot;col w-16&quot;&gt;</span>
+<span class="x">                              &lt;div class=&quot;box&quot;&gt;</span>
+<span class="x">                                      ...</span>
+<span class="x">                              &lt;/div&gt;</span>
+<span class="x">                      &lt;/div&gt;</span>
+<span class="x">              &lt;/div&gt;</span>
+<span class="x">      &lt;/div&gt;</span>
+<span class="x">&lt;/div&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Modal&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">endModal</span><span class="p">();</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../services/modal.html"><span class="doc">CP/Modal Service</span></a> for full documentation.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">v3 Add-on Migration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="extensions.html">Extension Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fieldtypes.html">Fieldtype Changes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Module Changes</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html">Plugin Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syntax.html">Syntax Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cp_styles/index.html">Control Panel Styles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

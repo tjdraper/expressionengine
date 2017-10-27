@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Fieldtypes &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="RTE Tools API" href="rte_tools.html" />
+	    <link rel="prev" title="Wiki Module Extension Hooks" href="extension_hooks/module/wiki/index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Fieldtypes</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="fieldtypes">
+<h1>Fieldtypes<a class="headerlink" href="#fieldtypes" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#basic-file-structure" id="id1">Basic File Structure</a></li>
+<li><a class="reference internal" href="#example-google-maps" id="id2">Example - Google Maps</a><ul>
+<li><a class="reference internal" href="#installation" id="id3">Installation</a></li>
+<li><a class="reference internal" href="#uninstaller" id="id4">Uninstaller</a></li>
+<li><a class="reference internal" href="#global-settings" id="id5">Global Settings</a></li>
+<li><a class="reference internal" href="#saving-global-settings" id="id6">Saving Global Settings</a></li>
+<li><a class="reference internal" href="#individual-settings" id="id7">Individual Settings</a></li>
+<li><a class="reference internal" href="#saving-individual-settings" id="id8">Saving Individual Settings</a></li>
+<li><a class="reference internal" href="#displaying-the-field-publish-page" id="id9">Displaying the Field (Publish Page)</a></li>
+<li><a class="reference internal" href="#rendering-the-tag" id="id10">Rendering the Tag</a></li>
+<li><a class="reference internal" href="#creating-multiple-rendering-options" id="id11">Creating Multiple Rendering Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-reference" id="id12">Development Reference</a><ul>
+<li><a class="reference internal" href="#class-variables" id="id13">Class Variables</a></li>
+<li><a class="reference internal" href="#function-reference" id="id14">Function Reference</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#content-type-independence" id="id15">Content Type Independence</a></li>
+<li><a class="reference internal" href="#grid-fieldtype-development" id="id16">Grid Fieldtype Development</a><ul>
+<li><a class="reference internal" href="#grid-fieldtype-events" id="id17">Grid Fieldtype Events</a></li>
+<li><a class="reference internal" href="#grid-fieldtype-settings-class-property" id="id18">Grid Fieldtype Settings Class Property</a></li>
+<li><a class="reference internal" href="#grid-javascript-events" id="id19">Grid Javascript Events</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fluid-field-fieldtype-development" id="id20">Fluid Field Fieldtype Development</a><ul>
+<li><a class="reference internal" href="#fluid-field-fieldtype-settings-class-property" id="id21">Fluid Field Fieldtype Settings Class Property</a></li>
+<li><a class="reference internal" href="#fluid-field-javascript-events" id="id22">Fluid Field Javascript Events</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="basic-file-structure">
+<h2><a class="toc-backref" href="#id1">Basic File Structure</a><a class="headerlink" href="#basic-file-structure" title="Permalink to this headline">¶</a></h2>
+<p>All fieldtypes should be placed into the <code class="docutils literal"><span class="pre">system/user/addons</span></code> folder in a
+package and be named after that package name. So in a packaged named
+google_maps the fieldtype file will be <code class="docutils literal"><span class="pre">ft.google_maps.php</span></code>. All fieldtypes
+must inherit from the <code class="docutils literal"><span class="pre">EE_Fieldtype</span></code> base class and they must provide an
+$info array with a name and version number.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
+
+<span class="k">class</span> <span class="nc">Google_maps_ft</span> <span class="k">extends</span> <span class="nx">EE_Fieldtype</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">$info</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Google Maps&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;version&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;1.0&#39;</span>
+    <span class="p">);</span>
+
+    <span class="c1">// --------------------------------------------------------------------</span>
+
+    <span class="k">function</span> <span class="nf">display_field</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">form_input</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">field_name</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">field_id</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$data</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// END Google_maps_ft class</span>
+
+<span class="cm">/* End of file ft.google_maps.php */</span>
+<span class="cm">/* Location: ./system/user/addons/google_maps/ft.google_maps.php */</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All add-ons are required to have an <a class="reference internal" href="addon_setup_php_file.html"><span class="doc">addon.setup.php file</span></a>. This is where Fieldtypes can declare their compatibility with other Fieldtypes, allowing a site builder to switch an existing field to another compatible type, e.g. <cite>text</cite> can be switched to <cite>email</cite> and vice-versa. Please see <a class="reference internal" href="addon_setup_php_file.html#fieldtype-compatibility-options"><span class="std std-ref">Fieldtype Compatibility Options</span></a> for more details.</p>
+</div>
+</div>
+<div class="section" id="example-google-maps">
+<h2><a class="toc-backref" href="#id2">Example - Google Maps</a><a class="headerlink" href="#example-google-maps" title="Permalink to this headline">¶</a></h2>
+<p>The snippets below were truncated for clarity. The full example
+fieldtype can be <a class="reference download internal" href="../_downloads/google_maps.zip" download=""><code class="xref download docutils literal"><span class="pre">downloaded</span> <span class="pre">here</span></code></a>.</p>
+<div class="section" id="installation">
+<h3><a class="toc-backref" href="#id3">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>The google maps fieldtype is going to have 3 global settings. Latitude,
+longitude, and zoom. These will determine what the default map looks
+like. By returning an array from within install we can provide a default
+set of global settings.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">install</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Somewhere in Oregon ...</span>
+    <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;latitude&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;44.06193297865348&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;longitude&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;-121.27584457397461&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;zoom&#39;</span>      <span class="o">=&gt;</span> <span class="mi">13</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uninstaller">
+<h3><a class="toc-backref" href="#id4">Uninstaller</a><a class="headerlink" href="#uninstaller" title="Permalink to this headline">¶</a></h3>
+<p>The installation method for this fieldtype does not create any
+additional tables, so no cleanup work needs to be done. The default
+<code class="docutils literal"><span class="pre">uninstall()</span></code> method provided by the EE_Fieldtype parent class will
+suffice. Most fieldtype methods have sensible defaults to help reduce
+duplicate code.</p>
+</div>
+<div class="section" id="global-settings">
+<h3><a class="toc-backref" href="#id5">Global Settings</a><a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h3>
+<p>The installer sets the default global settings, but currently there is
+no way to change these from the control panel. We can use the
+<code class="docutils literal"><span class="pre">display_global_settings()</span></code> method to return the contents of the
+settings form. Having this method also enables the global settings link
+on the overview page.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">display_global_settings</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$val</span> <span class="o">=</span> <span class="nb">array_merge</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">);</span>
+
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="nv">$val</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">])</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="s1">&#39; &#39;</span><span class="p">;</span>
+    <span class="nv">$form</span> <span class="o">.=</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="nv">$val</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">])</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="s1">&#39; &#39;</span><span class="p">;</span>
+    <span class="nv">$form</span> <span class="o">.=</span> <span class="nx">form_label</span><span class="p">(</span><span class="s1">&#39;zoom&#39;</span><span class="p">,</span> <span class="s1">&#39;zoom&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">NBS</span><span class="o">.</span><span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;zoom&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="nv">$val</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">]);</span>
+
+    <span class="k">return</span> <span class="nv">$form</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Manually entering longitudes and latitudes is inconvenient so the final
+method in the example download also adds some javascript to let the user
+choose from a map.</p>
+</div>
+<div class="section" id="saving-global-settings">
+<h3><a class="toc-backref" href="#id6">Saving Global Settings</a><a class="headerlink" href="#saving-global-settings" title="Permalink to this headline">¶</a></h3>
+<p>In most instances saving the global settings is as easy as storing the
+<code class="docutils literal"><span class="pre">$_POST</span></code> array. Remember to include existing global settings if not
+everything can be changed.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">save_global_settings</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">array_merge</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="individual-settings">
+<span id="fieldtype-settings"></span><h3><a class="toc-backref" href="#id7">Individual Settings</a><a class="headerlink" href="#individual-settings" title="Permalink to this headline">¶</a></h3>
+<p>The default map may not always be the desired choice for each map field, so on the regular settings page it will display a similar configuration screen. We will use the familiar <a class="reference internal" href="shared_form_view.html"><span class="doc">Shared Form View</span></a> format to display our settings.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">display_settings</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$latitude</span>   <span class="o">=</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">];</span>
+    <span class="nv">$longitude</span>  <span class="o">=</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">];</span>
+    <span class="nv">$zoom</span>       <span class="o">=</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">];</span>
+
+    <span class="nv">$settings</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;latitude_desc&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;latitude&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$latitude</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;longitude_desc&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;longitude&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$longitude</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;zoom&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;zoom_desc&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;zoom&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;select&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+                    <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$zoom</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;preview&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;preview_desc&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wide&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+            <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;preview&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;div style=&quot;height: 300px;&quot;&gt;&lt;div id=&quot;map_canvas&quot; style=&quot;width: 100%; height: 100%&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Map preview</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_cp_js</span><span class="p">();</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">javascript</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;$(window).load(gmaps);&#39;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;field_options_google_maps&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;field_options&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;group&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;google_maps&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;settings&#39;</span> <span class="o">=&gt;</span> <span class="nv">$settings</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-individual-settings">
+<h3><a class="toc-backref" href="#id8">Saving Individual Settings</a><a class="headerlink" href="#saving-individual-settings" title="Permalink to this headline">¶</a></h3>
+<p>Saving individual field settings works largely the same as saving global
+settings. Keep be aware that they are later merged with global settings,
+so they can override a global setting.</p>
+<p>If your fieldtype needs a wide style on the publish form, like Grid or a Textarea, then be sure to include <code class="docutils literal"><span class="pre">'field_wide'</span> <span class="pre">=&gt;</span> <span class="pre">TRUE</span></code> in your settings array.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">save_settings</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;latitude&#39;</span>  <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;longitude&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;zoom&#39;</span>      <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;zoom&#39;</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="displaying-the-field-publish-page">
+<h3><a class="toc-backref" href="#id9">Displaying the Field (Publish Page)</a><a class="headerlink" href="#displaying-the-field-publish-page" title="Permalink to this headline">¶</a></h3>
+<p>With all the settings set up, it can now be displayed on the publish
+screen. A key factor when you get to this stage is to decide in what
+format the data should be stored. Since all three available values in
+this case are numbers, this field will store them separated by pipes
+(<code class="docutils literal"><span class="pre">lang|lat|zoom</span></code>).</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">display_field</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$data_points</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;zoom&#39;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">list</span><span class="p">(</span><span class="nv">$latitude</span><span class="p">,</span> <span class="nv">$longitude</span><span class="p">,</span> <span class="nv">$zoom</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span><span class="p">(</span><span class="nv">$data_points</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nv">$$key</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="nv">$key</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nv">$zoom</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$zoom</span><span class="p">;</span>
+    <span class="nv">$options</span> <span class="o">=</span> <span class="nb">compact</span><span class="p">(</span><span class="nv">$data_points</span><span class="p">);</span>
+
+    <span class="c1">// some javascript</span>
+
+    <span class="nv">$value</span> <span class="o">=</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="nb">array_values</span><span class="p">(</span><span class="nv">$options</span><span class="p">));</span>
+    <span class="nv">$hidden_input</span> <span class="o">=</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">field_name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="s1">&#39;id=&quot;&#39;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">field_name</span><span class="o">.</span><span class="s1">&#39;&quot; style=&quot;display: none;&quot;&#39;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$hidden_input</span><span class="o">.</span><span class="s1">&#39;&lt;div style=&quot;height: 500px;&quot;&gt;&lt;div id=&quot;map_canvas&quot; style=&quot;width: 100%; height: 100%&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rendering-the-tag">
+<h3><a class="toc-backref" href="#id10">Rendering the Tag</a><a class="headerlink" href="#rendering-the-tag" title="Permalink to this headline">¶</a></h3>
+<p>Finally, the field needs a frontend display. For google maps this will
+almost exclusively be javascript.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">replace_tag</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$tagdata</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="nv">$script_on_page</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+    <span class="nv">$ret</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+    <span class="k">list</span><span class="p">(</span><span class="nv">$latitude</span><span class="p">,</span> <span class="nv">$longitude</span><span class="p">,</span> <span class="nv">$zoom</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+
+    <span class="c1">// google maps javascript ...</span>
+
+    <span class="k">return</span> <span class="nv">$ret</span><span class="o">.</span><span class="s1">&#39;&lt;div style=&quot;height: 500px;&quot;&gt;&lt;div id=&quot;map_canvas_&#39;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">field_id</span><span class="o">.</span><span class="s1">&#39;&quot; style=&quot;width: 100%; height: 100%&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-multiple-rendering-options">
+<h3><a class="toc-backref" href="#id11">Creating Multiple Rendering Options</a><a class="headerlink" href="#creating-multiple-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>Along with parameters a field can also provide tag modifiers to change
+its output. In the template these are called by adding a colon to the
+fieldname, followed by the modifier name. For example:
+<code class="docutils literal"><span class="pre">{myfield:latitude}</span></code>. The advantage that field modifiers have over
+parameters is that they can be used in conditionals.</p>
+<p>Parsing the modifiers is identical to using the regular
+<code class="docutils literal"><span class="pre">replace_tag()</span></code> function. The method name must start with <code class="docutils literal"><span class="pre">replace_</span></code>
+followed by the modifier name.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">replace_latitude</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$tagdata</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">list</span><span class="p">(</span><span class="nv">$latitude</span><span class="p">,</span> <span class="nv">$longitude</span><span class="p">,</span> <span class="nv">$zoom</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$latitude</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There is also a function to catch ALL modifiers, whose declaration
+includes the modifier name and looks like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">replace_tag_catchall</span><span class="p">(</span><span class="nv">$file_info</span><span class="p">,</span> <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$tagdata</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">,</span> <span class="nv">$modifier</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also use variable pairs to capture tag data for processing in
+your modifier function. The syntax for using modifiers on variable pairs
+in your templates is:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nx">myfield</span><span class="o">:</span><span class="nx">option</span><span class="p">}</span>
+    <span class="nx">Tag</span> <span class="nx">data</span> <span class="nx">here</span>
+<span class="p">{</span><span class="o">/</span><span class="nx">myfield</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="development-reference">
+<h2><a class="toc-backref" href="#id12">Development Reference</a><a class="headerlink" href="#development-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EE_Fieldtype">
+<em class="property">class </em><code class="descname">EE_Fieldtype</code><a class="headerlink" href="#EE_Fieldtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="class-variables">
+<h3><a class="toc-backref" href="#id13">Class Variables</a><a class="headerlink" href="#class-variables" title="Permalink to this headline">¶</a></h3>
+<p>The base class provides a handful of base variables:</p>
+<dl class="attr">
+<dt id="EE_Fieldtype::$EE">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">EE</code><a class="headerlink" href="#EE_Fieldtype::$EE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the controller instance.</p>
+</dd></dl>
+
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 2.7.0.</span></p>
+</div>
+<dl class="attr">
+<dt id="EE_Fieldtype::$id">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">id</code><a class="headerlink" href="#EE_Fieldtype::$id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field identifier (unique for the current content type).</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$name">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">name</code><a class="headerlink" href="#EE_Fieldtype::$name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field name, used for the tag names.</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$content_id">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">content_id</code><a class="headerlink" href="#EE_Fieldtype::$content_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unique id of the parent content that contains this field. Not
+available in install, settings, or other non-content environments.</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$content_type">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">content_type</code><a class="headerlink" href="#EE_Fieldtype::$content_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$settings">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">settings</code><a class="headerlink" href="#EE_Fieldtype::$settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field settings array</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$field_id">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">field_id</code><a class="headerlink" href="#EE_Fieldtype::$field_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for id</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="EE_Fieldtype::$field_name">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">field_name</code><a class="headerlink" href="#EE_Fieldtype::$field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for name</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Allowing fields to be used as tag pairs requires some extra
+processing to reduce the parsing overhead. So if you want to create
+such a field, you need to explicitly tell the parser to pre-parse
+these pairs:</p>
+<dl class="last attr">
+<dt id="EE_Fieldtype::$has_array_data">
+<em class="property">property </em><code class="descclassname">EE_Fieldtype::$</code><code class="descname">has_array_data</code><a class="headerlink" href="#EE_Fieldtype::$has_array_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">TRUE</span></code> if the field can be used as a tag pair</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function-reference">
+<h3><a class="toc-backref" href="#id14">Function Reference</a><a class="headerlink" href="#function-reference" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="EE_Fieldtype::id">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for <code class="docutils literal"><span class="pre">id</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Integer/String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::name">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for <code class="docutils literal"><span class="pre">name</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::content_id">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">content_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::content_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for <code class="docutils literal"><span class="pre">content_id</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Integer/String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::content_type">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">content_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for <code class="docutils literal"><span class="pre">content_type</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::row">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">row</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$default = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor for the current content type parent row. In the case of channel
+entries, this would be current entry row. If the key is not found, the
+value given in default is returned. Not all content types have all row
+keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">string $key: The name of the row value to retrieve</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body">mixed $default: The value to return if $key is not set</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value of the row element, or $default.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Mixed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::install">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">install</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Installs the fieldtype and sets initial global settings. Can return an
+array of global variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::uninstall">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">uninstall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::uninstall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle any cleanup needed to uninstall the fieldtype. Channel data is
+dropped automatically.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::display_field">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">display_field</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::display_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to render the publish field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Current field data, blank for new entries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The field to display on the publish page</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::validate">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">validate</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the field input</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Current field data, blank for new entries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">TRUE</span></code> if the field validates, an error message otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean/String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::save">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">save</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preps the data for saving</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Current field data, blank for new entries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Data to save to the database</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::post_save">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">post_save</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::post_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles any custom logic after an entry is saved.</p>
+<p>Called after an entry is added or updated. Available data is identical
+to save. This is a good method to implement if you need the content ID
+of the fieldtype&#8217;s newly-saved parent content type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Current field data, blank for new entries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::delete">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">delete</code><span class="sig-paren">(</span><em>$ids</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles any custom logic after an entry is deleted.</p>
+<p>Called after one or more entries are deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$ids</strong> (<em>array</em>) &#8211; IDs of deleted entries. Please note that channel
+data is removed automatically so most fieldtypes will not need this
+method.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::pre_loop">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">pre_loop</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::pre_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Before the tag is rendered on the frontend, this function is called to
+pass field data for the entire channel entries loop to the fieldtype
+for preprocessing or caching. This function is useful when your
+fieldtype needs to query the database to render its tag. Instead of
+querying with each loop of the channel entries tag, all data needed
+can be gathered up front, therefore reducing queries and loadtime
+needed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>array</em>) &#8211; contains all field data for the current channel
+entries loop, limited only to the fieldtype&#8217;s own data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::replace_tag">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">replace_tag</code><span class="sig-paren">(</span><em>$data</em><span class="optional">[</span>, <em>$params = array()</em><span class="optional">[</span>, <em>$tagdata = FALSE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::replace_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the field tag on the frontend.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; contains the field data (or prepped data, if using
+<code class="docutils literal"><span class="pre">pre_process</span></code>)</li>
+<li><strong>$params</strong> (<em>array</em>) &#8211; contains field parameters (if any)</li>
+<li><strong>$tagdata</strong> (<em>array</em>) &#8211; contains data between tag (for tag pairs)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String to replace the tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::display_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">display_settings</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::display_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the settings page.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Field settings</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An array in the <a class="reference internal" href="shared_form_view.html"><span class="doc">Shared Form View</span></a> format</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::validate_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">validate_settings</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::validate_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate fieldtype settings. In this method, you can use the
+<a class="reference internal" href="services/validation.html"><span class="doc">Validation Service</span></a> to ensure values entered in
+your settings form are valid. Here is an example from our File field:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">validate_settings</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$validator</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Validation&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;allowed_directories&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|allowedDirectories&#39;</span>
+    <span class="p">));</span>
+
+    <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">defineRule</span><span class="p">(</span><span class="s1">&#39;allowedDirectories&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="s1">&#39;_validate_file_settings&#39;</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$settings</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Callbacks may be specified as well, as you see above we are calling
+a method called <code class="docutils literal"><span class="pre">_validate_file_settings</span></code> to ensure upload
+destinations exist before creating a new file field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Submitted settings for this field</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Validation result object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::save_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">save_settings</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::save_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the fieldtype settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Submitted settings for this field</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Settings for the field</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::settings_modify_column">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">settings_modify_column</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::settings_modify_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the specification of an array of fields to be added, modified
+or dropped when fields are created, edited or deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; settings for this field as well an indicator of
+the action being performed (<code class="docutils literal"><span class="pre">$data['ee_action']</span></code> with a value of
+<code class="docutils literal"><span class="pre">delete</span></code>, <code class="docutils literal"><span class="pre">add</span></code> or <code class="docutils literal"><span class="pre">get_info</span></code>).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Fields to be created, modified or dropped when fields are
+created</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>By default, when a new field is created, 2 fields are added to the
+exp_channel_data table. The content field (<code class="docutils literal"><span class="pre">field_id_x</span></code>) is a text
+field and the format field (<code class="docutils literal"><span class="pre">field_ft_x</span></code>) is a <code class="docutils literal"><span class="pre">tinytext</span> <span class="pre">NULL</span>
+<span class="pre">default</span></code>. You may override or add to those defaults by including an
+array of fields and field formatting options in this method. For
+example, the date file type requires an additional <code class="docutils literal"><span class="pre">field_dt_x</span></code>
+field and different content field type:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">settings_modify_column</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$fields</span><span class="p">[</span><span class="s1">&#39;field_id_&#39;</span><span class="o">.</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;field_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;type&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>    <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s1">&#39;default&#39;</span>   <span class="o">=&gt;</span> <span class="mi">0</span>
+        <span class="p">);</span>
+
+    <span class="nv">$fields</span><span class="p">[</span><span class="s1">&#39;field_dt_&#39;</span><span class="o">.</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;field_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;type&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span>    <span class="o">=&gt;</span> <span class="mi">8</span>
+        <span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$fields</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::post_save_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">post_save_settings</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::post_save_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do additional processing after the field is created/modified.</p>
+<p><code class="docutils literal"><span class="pre">$this-&gt;settings</span></code> is fully available at this stage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; submitted settings for this field</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::display_global_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">display_global_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::display_global_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a global settings page. The current available global settings
+are in <code class="docutils literal"><span class="pre">$this-&gt;settings</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Global settings form</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::save_global_settings">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">save_global_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::save_global_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the global settings. Return an array of global settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Global settings</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Fieldtype::pre_process">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">pre_process</code><span class="sig-paren">(</span><em>$data</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::pre_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preprocess the data on the frontend. Multiple tag pairs in the same
+weblog tag will cause <code class="docutils literal"><span class="pre">replace_tag</span></code> to be called multiple times. To
+reduce the processing required to extract the original data structure
+from the string (i.e. unserializing), the <code class="docutils literal"><span class="pre">pre_process</span></code> function is
+called first.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>array</em>) &#8211; Field data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Prepped <code class="docutils literal"><span class="pre">$data</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="content-type-independence">
+<h2><a class="toc-backref" href="#id15">Content Type Independence</a><a class="headerlink" href="#content-type-independence" title="Permalink to this headline">¶</a></h2>
+<p>Fieldtypes can be used to describe fields in many different types of
+content. For most fieldtypes adding support simply means overriding the
+<a class="reference internal" href="#EE_Fieldtype::accepts_content_type" title="EE_Fieldtype::accepts_content_type"><code class="xref php php-meth docutils literal"><span class="pre">accepts_content_type</span></code></a> method to always return TRUE.</p>
+<dl class="method">
+<dt id="EE_Fieldtype::accepts_content_type">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">accepts_content_type</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::accepts_content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns TRUE or FALSE based on whether or not the content type is
+supported. By default all fieldtypes support the <cite>channel</cite> content type.:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">accepts_content_type</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nv">$name</span> <span class="o">==</span> <span class="s1">&#39;channel&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the content type</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Supports the given content type?</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>However, if your fieldtype stores its own data, then you must make sure
+to clearly separate the data by content type. You can do this by accessing
+the current content type with the <a class="reference internal" href="#EE_Fieldtype::content_type" title="EE_Fieldtype::content_type"><code class="xref php php-meth docutils literal"><span class="pre">content_type</span></code></a> getter
+method, and using it as an additional parameter everywhere you store or retrieve data.</p>
+<p>You must also handle the complete out removal of a content type.</p>
+<dl class="method">
+<dt id="EE_Fieldtype::unregister_content_type">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">unregister_content_type</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::unregister_content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a content type from the current fieldtype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; Name of the content type to remove.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>If your fieldtype creates columns or tables dynamically, you may also
+want to implement the opposite case of when a fieldtype is added.</p>
+<dl class="method">
+<dt id="EE_Fieldtype::register_content_type">
+<code class="descclassname">EE_Fieldtype::</code><code class="descname">register_content_type</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#EE_Fieldtype::register_content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a content type from the current fieldtype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; Name of the content type to add.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="grid-fieldtype-development">
+<h2><a class="toc-backref" href="#id16">Grid Fieldtype Development</a><a class="headerlink" href="#grid-fieldtype-development" title="Permalink to this headline">¶</a></h2>
+<p>In order to make your fieldtypes compatible with Grid, a few more
+methods as well as Javascript callbacks are available.</p>
+<p>To make your fieldtype recognized by Grid as a Grid-compatible
+fieldtype, you need to modify your implementation of
+<a class="reference internal" href="#EE_Fieldtype::accepts_content_type" title="EE_Fieldtype::accepts_content_type"><code class="xref php php-meth docutils literal"><span class="pre">accepts_content_type</span></code></a> to accept the <code class="docutils literal"><span class="pre">grid</span></code>
+content type. For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">accepts_content_type</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nv">$name</span> <span class="o">==</span> <span class="s1">&#39;channel&#39;</span> <span class="o">||</span> <span class="nv">$name</span> <span class="o">==</span> <span class="s1">&#39;grid&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Once that&#8217;s done, your fieldtype will show up in the list
+of fieldtypes available for use when setting up a new Grid column.å</p>
+<div class="section" id="grid-fieldtype-events">
+<h3><a class="toc-backref" href="#id17">Grid Fieldtype Events</a><a class="headerlink" href="#grid-fieldtype-events" title="Permalink to this headline">¶</a></h3>
+<p>All of the regular fieldtype methods (<code class="docutils literal"><span class="pre">display_field()</span></code>,
+<code class="docutils literal"><span class="pre">replace_tag()</span></code>, etc.) are available prefixed with &#8220;grid_&#8221; for
+special handling when being used in the context of the Grid field, with
+a few exceptions noted below. For
+example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Only called when being used as a normal fieldtype:</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">display_field</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Display code</span>
+<span class="p">}</span>
+
+<span class="c1">// Only called when being rendered in a Grid field cell:</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">grid_display_field</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Display code for Grid cell</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>However, if a fieldtype does NOT implement <code class="docutils literal"><span class="pre">grid_display_field()</span></code>,
+Grid will call <code class="docutils literal"><span class="pre">display_field()</span></code> to display the field&#8217;s form in the
+cell. This applies to all fieldtype methods except for the following:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Exception</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">install()</span></code></td>
+<td>No unique Grid method required</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">uninstall()</span></code></td>
+<td>No unique Grid method required</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">display_global_settings()</span></code></td>
+<td>No unique Grid method required</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">save_global_settings()</span></code></td>
+<td>No unique Grid method required</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">settings_modify_column()</span></code></td>
+<td>Must use <code class="docutils literal"><span class="pre">grid_settings_modify_column()</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>The idea is that most fieldtypes should be able to use the same code to
+handle their field operations for both Grid and the normal publish form,
+but if not, you can easily override the behavior and run special
+operations when in the context of Grid.</p>
+<p>If you use <code class="docutils literal"><span class="pre">grid_*</span></code> methods, you may want to look for ways to refactor
+your fieldtype where there is overlapping logic to run. For example,
+some of our native fieldtypes require slightly different code to render
+the HTML needed to display fields in <code class="docutils literal"><span class="pre">display_field()</span></code> and
+<code class="docutils literal"><span class="pre">grid_display_field()</span></code>, so we try to centralize the the common logic
+between them for better code maintainability.</p>
+</div>
+<div class="section" id="grid-fieldtype-settings-class-property">
+<h3><a class="toc-backref" href="#id18">Grid Fieldtype Settings Class Property</a><a class="headerlink" href="#grid-fieldtype-settings-class-property" title="Permalink to this headline">¶</a></h3>
+<p>When your fieldtype is in the context of Grid, it will have a few more
+items available to you in your fieldtype&#8217;s <code class="docutils literal"><span class="pre">$settings</span></code> class property.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Settings Key Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">col_id</span></code></td>
+<td>The ID of the column your fieldtype is in
+publish form</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">col_name</span></code></td>
+<td>The short name of the column your fieldtype
+is in</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">col_required</span></code></td>
+<td>Whether or not the column is required (y/n),
+<code class="docutils literal"><span class="pre">field_required</span></code> will also be set to this</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">grid_field_id</span></code></td>
+<td>Field ID of the column&#8217;s parent Grid field</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">grid_row_name</span></code></td>
+<td>In certain instances, such as saving data,
+will be set to a unique row name when a row
+ID might not be available for new rows</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">grid_row_id</span></code></td>
+<td>When available, ID of the current row being
+processed</td>
+</tr>
+</tbody>
+</table>
+<p>These are accessed as array keys of your <code class="docutils literal"><span class="pre">$settings</span></code> class property
+like so:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;col_id&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="grid-javascript-events">
+<h3><a class="toc-backref" href="#id19">Grid Javascript Events</a><a class="headerlink" href="#grid-javascript-events" title="Permalink to this headline">¶</a></h3>
+<p>Several Javascript events are fired on certain actions to let your
+fieldtypes know when those actions have taken place. Here is an
+overview.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="16%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Event Name</th>
+<th class="head" colspan="2">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>display</strong></td>
+<td colspan="2">Called when a row is displayed on the
+publish form</td>
+</tr>
+<tr class="row-odd"><td><strong>remove</strong></td>
+<td colspan="2">Called when a row is deleted from the
+publish form</td>
+</tr>
+<tr class="row-even"><td><strong>beforeSort</strong></td>
+<td colspan="2">Called before a row starts sorting on the
+publish form</td>
+</tr>
+<tr class="row-odd"><td><strong>afterSort</strong></td>
+<td colspan="2">Called after a row finishes sorting on the
+publish form</td>
+</tr>
+<tr class="row-even"><td><strong>displaySettings</strong></td>
+<td colspan="2">Called when a fieldtype&#8217;s settings form is
+displayed on the Grid field settings page</td>
+</tr>
+</tbody>
+</table>
+<p>To bind an event, use the below Javascript as an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">Grid</span><span class="o">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;display&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">cell</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Act on event</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Here are the usage details for this function:</p>
+<dl class="function">
+<dt id="Grid.bind">
+<code class="descclassname">Grid.</code><code class="descname">bind</code><span class="sig-paren">(</span><em>fieldtype</em>, <em>event</em>, <em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#Grid.bind" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>fieldtype</strong> (<em>string</em>) &#8211; Your short fieldtype name</li>
+<li><strong>string</strong> &#8211; Event name</li>
+<li><strong>callback</strong> &#8211; Callback function to use for the event</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>A jQuery object of the cell being affected by the current event (or
+settings form in the case of <code class="docutils literal"><span class="pre">displaySettings</span></code>) is passed to the
+callback function. There are a few data attributes available on the
+cell object such as <code class="docutils literal"><span class="pre">fieldtype</span></code>, <code class="docutils literal"><span class="pre">column-id</span></code> and <code class="docutils literal"><span class="pre">row-id</span></code>
+(<code class="docutils literal"><span class="pre">row-id</span></code> will be undefined for new rows). Plus since it&#8217;s a jQuery
+object, you have all DOM traversal methods available to act upon.</p>
+</div>
+</div>
+<div class="section" id="fluid-field-fieldtype-development">
+<h2><a class="toc-backref" href="#id20">Fluid Field Fieldtype Development</a><a class="headerlink" href="#fluid-field-fieldtype-development" title="Permalink to this headline">¶</a></h2>
+<p>To make your fieldtype recognized by Fluid Fields as a compatible
+fieldtype, you need to modify your implementation of
+<a class="reference internal" href="#EE_Fieldtype::accepts_content_type" title="EE_Fieldtype::accepts_content_type"><code class="xref php php-meth docutils literal"><span class="pre">accepts_content_type</span></code></a> to accept the <code class="docutils literal"><span class="pre">fluid_field</span></code>
+content type. For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">accepts_content_type</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nv">$name</span> <span class="o">==</span> <span class="s1">&#39;channel&#39;</span> <span class="o">||</span> <span class="nv">$name</span> <span class="o">==</span> <span class="s1">&#39;fluid_field&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Once that&#8217;s done, your fieldtype will show up in the list
+of fieldtypes available for use when setting up a new Fluid Field field.</p>
+<div class="section" id="fluid-field-fieldtype-settings-class-property">
+<h3><a class="toc-backref" href="#id21">Fluid Field Fieldtype Settings Class Property</a><a class="headerlink" href="#fluid-field-fieldtype-settings-class-property" title="Permalink to this headline">¶</a></h3>
+<p>When your fieldtype is in the context of Fluid Field, it will have an additional
+item available to you in your fieldtype&#8217;s <code class="docutils literal"><span class="pre">$settings</span></code> class property.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Settings Key Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">fluid_field_data_id</span></code></td>
+<td>When available, ID of the Fluid Field Data
+entity.</td>
+</tr>
+</tbody>
+</table>
+<p>This is accessed as array keys of your <code class="docutils literal"><span class="pre">$settings</span></code> class property
+like so:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;fluid_field_data_id&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fluid-field-javascript-events">
+<h3><a class="toc-backref" href="#id22">Fluid Field Javascript Events</a><a class="headerlink" href="#fluid-field-javascript-events" title="Permalink to this headline">¶</a></h3>
+<p>Several Javascript events are fired on certain actions to let your
+fieldtypes know when those actions have taken place. Here is an
+overview.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="16%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Event Name</th>
+<th class="head" colspan="2">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>add</strong></td>
+<td colspan="2">Called when a field is added to a Fluid
+field</td>
+</tr>
+<tr class="row-odd"><td><strong>remove</strong></td>
+<td colspan="2">Called when a field is removed from a Fluid
+field</td>
+</tr>
+<tr class="row-even"><td><strong>beforeSort</strong></td>
+<td colspan="2">Called before a field starts sorting on the
+publish form</td>
+</tr>
+<tr class="row-odd"><td><strong>afterSort</strong></td>
+<td colspan="2">Called after a field finishes sorting on the
+publish form</td>
+</tr>
+</tbody>
+</table>
+<p>To bind an event, use the below Javascript as an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">FluidField</span><span class="o">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Act on event</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Here are the usage details for this function:</p>
+<dl class="function">
+<dt id="FluidField.on">
+<code class="descclassname">FluidField.</code><code class="descname">on</code><span class="sig-paren">(</span><em>fieldtype</em>, <em>event</em>, <em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#FluidField.on" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>fieldtype</strong> (<em>string</em>) &#8211; Your short fieldtype name</li>
+<li><strong>string</strong> &#8211; Event name</li>
+<li><strong>callback</strong> &#8211; Callback function to use for the event</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>A jQuery object of the field being affected by the current event is passed to
+the callback function.</p>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Extensions Development</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fieldtypes</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

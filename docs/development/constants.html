@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Constants Reference &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="Plugins" href="plugins.html" />
+	    <link rel="prev" title="Shared Form View" href="shared_form_view.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Constants Reference</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="constants-reference">
+<h1>Constants Reference<a class="headerlink" href="#constants-reference" title="Permalink to this headline">¶</a></h1>
+<p>The ExpressionEngine core defines a variety of constants to ensure
+consistency in several aspects. Please be aware that some of the
+constants may not be defined, or have different meaning, in the context
+of the ExpressionEngine installer.</p>
+<div class="section" id="path-constants">
+<h2>Path Constants<a class="headerlink" href="#path-constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">SELF</span></code> - Name of the bootstrap file</li>
+<li><code class="docutils literal"><span class="pre">FCPATH</span></code> - Path to the bootstrap file</li>
+<li><code class="docutils literal"><span class="pre">SYSDIR</span></code> - Name of the system directory</li>
+<li><code class="docutils literal"><span class="pre">SYSPATH</span></code> - Path of the system directory</li>
+<li><code class="docutils literal"><span class="pre">APPPATH</span></code> and <code class="docutils literal"><span class="pre">BASEPATH</span></code> - Path to the <code class="docutils literal"><span class="pre">system/ee/legacy</span></code> directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_ADDONS</span></code> - Path to the first-party addons directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_THEMES</span></code> - Path to the themes directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_RTE</span></code> - Path to the first party RTE tools directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_MBR_THEMES</span></code> - Path to the member themes directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_CP_GBL_IMG</span></code> - Path to the global image directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_JAVASCRIPT</span></code> - Path to the javascript directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_JQUERY</span></code> - Path to the jQuery directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_THIRD</span></code> - Path to third-party addons directory</li>
+<li><code class="docutils literal"><span class="pre">PATH_THIRD_THEMES</span></code> - Path to the third-party themes directory</li>
+</ul>
+</div>
+<div class="section" id="version-constants">
+<h2>Version Constants<a class="headerlink" href="#version-constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">APP_NAME</span></code> - Application Name</li>
+<li><code class="docutils literal"><span class="pre">APP_VER</span></code> - Version number</li>
+<li><code class="docutils literal"><span class="pre">APP_BUILD</span></code> - Build number</li>
+</ul>
+</div>
+<div class="section" id="url-constants">
+<h2>URL Constants<a class="headerlink" href="#url-constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">BASE</span></code> - Base URL to the control panel</li>
+<li><code class="docutils literal"><span class="pre">AMP</span></code> - <code class="docutils literal"><span class="pre">&amp;amp;</span></code></li>
+<li><code class="docutils literal"><span class="pre">QUERY_MARKER</span></code> - Question mark if forcing query strings, blank
+otherwise</li>
+<li><code class="docutils literal"><span class="pre">URL_THEMES</span></code> - URL to the theme folder</li>
+<li><code class="docutils literal"><span class="pre">URL_THIRD_THEMES</span></code> - URL to the third-party theme folder</li>
+</ul>
+</div>
+<div class="section" id="html-constants">
+<h2>HTML Constants<a class="headerlink" href="#html-constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">NBS</span></code> - <code class="docutils literal"><span class="pre">&amp;nbsp;</span></code></li>
+<li><code class="docutils literal"><span class="pre">BR</span></code> - <code class="docutils literal"><span class="pre">&lt;br</span> <span class="pre">/&gt;</span></code></li>
+<li><code class="docutils literal"><span class="pre">NL</span></code> - <code class="docutils literal"><span class="pre">\\n</span></code></li>
+</ul>
+</div>
+<div class="section" id="request-constants">
+<h2>Request Constants<a class="headerlink" href="#request-constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">REQ</span></code> - One of: <code class="docutils literal"><span class="pre">'PAGE'</span></code>, <code class="docutils literal"><span class="pre">'CP'</span></code>, <code class="docutils literal"><span class="pre">'ACT'</span></code></li>
+<li><code class="docutils literal"><span class="pre">AJAX_REQUEST</span></code> - (<code class="docutils literal"><span class="pre">bool</span></code>) <code class="docutils literal"><span class="pre">TRUE</span></code> if request came from one of
+jQuery&#8217;s ajax functions</li>
+</ul>
+</div>
+<div class="section" id="filesystem-mode-constants">
+<h2>Filesystem Mode Constants<a class="headerlink" href="#filesystem-mode-constants" title="Permalink to this headline">¶</a></h2>
+<p>These constants are located in
+<code class="docutils literal"><span class="pre">expressionengine/config/constants.php</span></code>, and are user configurable to
+their hosts&#8217; requirements. You should always use these constants for
+creating and writing to files so that you do not have to worry about
+which permissions to use. Listed alongside each is their default
+equivalency.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">FILE_READ_MODE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">0644</span></code></li>
+<li><code class="docutils literal"><span class="pre">FILE_WRITE_MODE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">0666</span></code></li>
+<li><code class="docutils literal"><span class="pre">DIR_READ_MODE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">0755</span></code></li>
+<li><code class="docutils literal"><span class="pre">DIR_WRITE_MODE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">0777</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_READ</span></code> - Equivalent to <code class="docutils literal"><span class="pre">rb</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_READ_WRITE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">r+b</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_WRITE_CREATE_DESTRUCTIVE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">wb</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_READ_WRITE_CREATE_DESTRUCTIVE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">w+b</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_WRITE_CREATE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">ab</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_READ_WRITE_CREATE</span></code> - Equivalent to <code class="docutils literal"><span class="pre">a+b</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_WRITE_CREATE_STRICT</span></code> - Equivalent to <code class="docutils literal"><span class="pre">xb</span></code></li>
+<li><code class="docutils literal"><span class="pre">FOPEN_READ_WRITE_CREATE_STRICT</span></code> - Equivalent to <code class="docutils literal"><span class="pre">x+b</span></code></li>
+</ul>
+</div>
+<div class="section" id="others">
+<h2>Others<a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">LD</span></code> - Left template tag delimiter (usually <code class="docutils literal"><span class="pre">{</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">RD</span></code> - Right template tag delimiter (usually <code class="docutils literal"><span class="pre">}</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">DEBUG</span></code> - (<code class="docutils literal"><span class="pre">bool</span></code>) <code class="docutils literal"><span class="pre">TRUE</span></code> if <code class="docutils literal"><span class="pre">$debug</span></code> is set to 1</li>
+<li><code class="docutils literal"><span class="pre">CSRF_TOKEN</span></code> - CSRF token, blank if csrf protection is disabled.</li>
+<li><code class="docutils literal"><span class="pre">XID_SECURE_HASH</span></code> - previous name of <code class="docutils literal"><span class="pre">CSRF_TOKEN</span></code></li>
+<li><code class="docutils literal"><span class="pre">MASKED_CP</span></code> - (<code class="docutils literal"><span class="pre">bool</span></code>) <code class="docutils literal"><span class="pre">TRUE</span></code> if the CP is masked for this
+request</li>
+<li><code class="docutils literal"><span class="pre">EXT</span></code> - File extension (<code class="docutils literal"><span class="pre">.php</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">UTF8_ENABLED</span></code> - Server has proper UTF-8 support</li>
+<li><code class="docutils literal"><span class="pre">MB_ENABLED</span></code> - Server has multibyte function support</li>
+<li><code class="docutils literal"><span class="pre">PASSWORD_MAX_LENGTH</span></code> - Maximum number of characters for a password.</li>
+</ul>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Constants Reference</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

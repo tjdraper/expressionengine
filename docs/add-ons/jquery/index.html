@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>jQuery &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Add-Ons" href="../index.html" />
+	    <link rel="next" title="Metaweblog API / Movable Type" href="../metaweblog_api/index.html" />
+	    <link rel="prev" title="IP to Nation" href="../ip_to_nation/index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Add-Ons</a></li>
+								<li class="last">jQuery</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="jquery">
+<h1>jQuery<a class="headerlink" href="#jquery" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id14">Introduction</a></li>
+<li><a class="reference internal" href="#script-tag" id="id15">Script Tag</a><ul>
+<li><a class="reference internal" href="#parameters" id="id16">Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#script-source-tag" id="id17">Script Source Tag</a><ul>
+<li><a class="reference internal" href="#id2" id="id18">Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#output-javascript-tag" id="id19">Output JavaScript Tag</a><ul>
+<li><a class="reference internal" href="#id8" id="id20">Parameters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id14">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The ExpressionEngine jQuery module simplifies how you access jQuery in
+your templates, and allows you to use the provided jQuery resources
+included with ExpressionEngine, without disclosing the system folder
+location or requiring that it reside in a publicly accessible location.</p>
+</div>
+<div class="section" id="script-tag">
+<span id="jquery-script-tag"></span><h2><a class="toc-backref" href="#id15">Script Tag</a><a class="headerlink" href="#script-tag" title="Permalink to this headline">¶</a></h2>
+<p>The Script Tag tag outputs a full script tag to the requested jQuery
+resource.:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When used as above, with no tag parameters, the outputted tag will
+request the main jQuery file, e.g.:
+&lt;script type=&#8221;text/javascript&#8221; charset=&#8221;utf-8&#8221;
+src=&#8221;<a class="reference external" href="http://example.com/index.php?ACT=jquery">http://example.com/index.php?ACT=jquery</a>&#8220;&gt;&lt;/script&gt;</p>
+<p>The following tag parameters allow you to request tags for specific
+jQuery resources.</p>
+<div class="section" id="parameters">
+<h3><a class="toc-backref" href="#id16">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#plugin" id="id21">plugin=</a></li>
+<li><a class="reference internal" href="#ui" id="id22">ui=</a></li>
+<li><a class="reference internal" href="#effect" id="id23">effect=</a></li>
+<li><a class="reference internal" href="#file" id="id24">file=</a></li>
+</ul>
+</div>
+<div class="section" id="plugin">
+<h4><a class="toc-backref" href="#id21">plugin=</a><a class="headerlink" href="#plugin" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span> <span class="na">plugin</span><span class="p">=</span><span class="s1">&#39;corner&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested plugin. Note that the &#8216;js&#8217; file extension is
+not used, just the name of the plugin.</p>
+<p>Output example: &lt;script type=&#8221;text/javascript&#8221; charset=&#8221;utf-8&#8221;
+src=&#8221;<a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;plugin=corner">http://example.com/index.php?ACT=jquery&amp;amp;plugin=corner</a>&#8220;&gt;&lt;/script&gt;</p>
+</div>
+<div class="section" id="ui">
+<h4><a class="toc-backref" href="#id22">ui=</a><a class="headerlink" href="#ui" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span> <span class="na">ui</span><span class="p">=</span><span class="s1">&#39;datepicker&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Widget/Interaction. Note that the &#8216;ui&#8217;
+prefix and &#8216;js&#8217; file extension is not used, just the name of the UI
+item.</p>
+<p>Output example:&lt;script type=&#8221;text/javascript&#8221; charset=&#8221;utf-8&#8221;
+src=&#8221;<a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;ui=datepicker">http://example.com/index.php?ACT=jquery&amp;amp;ui=datepicker</a>&#8220;&gt;&lt;/script&gt;</p>
+<p>Before using jQuery UI effects you must first call the jQuery UI Core:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span> <span class="na">ui</span><span class="p">=</span><span class="s1">&#39;core&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="effect">
+<h4><a class="toc-backref" href="#id23">effect=</a><a class="headerlink" href="#effect" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span> <span class="na">effect</span><span class="p">=</span><span class="s1">&#39;slide&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Effect. Note that the &#8216;effect&#8217; prefix and
+&#8216;js&#8217; file extension is not used, just the name of the UI Effect.</p>
+<p>Output example: &lt;script type=&#8221;text/javascript&#8221; charset=&#8221;utf-8&#8221;
+src=&#8221;<a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;effect=slide">http://example.com/index.php?ACT=jquery&amp;amp;effect=slide</a>&#8220;&gt;&lt;/script&gt;</p>
+</div>
+<div class="section" id="file">
+<h4><a class="toc-backref" href="#id24">file=</a><a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_tag</span> <span class="na">file</span><span class="p">=</span><span class="s1">&#39;foo&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested non-jQuery file. Outputs a URL to a JavaScript
+file in the main javascript folder in ExpressionEngine&#8217;s system folder.</p>
+<p>Output example: &lt;script type=&#8221;text/javascript&#8221; charset=&#8221;utf-8&#8221;
+src=&#8221;<a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;file=foo">http://example.com/index.php?ACT=jquery&amp;amp;file=foo</a>&#8220;&gt;&lt;/script&gt;</p>
+</div>
+</div>
+</div>
+<div class="section" id="script-source-tag">
+<h2><a class="toc-backref" href="#id17">Script Source Tag</a><a class="headerlink" href="#script-source-tag" title="Permalink to this headline">¶</a></h2>
+<p>The Script Source tag outputs a URL to the requested jQuery resource.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_src</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When used as above, with no tag parameters, the outputted URL will
+request the main jQuery file, e.g.
+<a class="reference external" href="http://example.com/index.php?ACT=jquery">http://example.com/index.php?ACT=jquery</a>. The following tag parameters
+allow you to request URLs to specific jQuery resources.</p>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id18">Parameters</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id3">
+<ul class="simple">
+<li><a class="reference internal" href="#id4" id="id25">plugin=</a></li>
+<li><a class="reference internal" href="#id5" id="id26">ui=</a></li>
+<li><a class="reference internal" href="#id6" id="id27">effect=</a></li>
+<li><a class="reference internal" href="#id7" id="id28">file=</a></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h4><a class="toc-backref" href="#id25">plugin=</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_src</span> <span class="na">plugin</span><span class="p">=</span><span class="s1">&#39;corner&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested plugin. Note that the &#8216;js&#8217; file extension is
+not used, just the name of the plugin.</p>
+<p>Output example:
+<a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;plugin=corner">http://example.com/index.php?ACT=jquery&amp;amp;plugin=corner</a></p>
+</div>
+<div class="section" id="id5">
+<h4><a class="toc-backref" href="#id26">ui=</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_src</span> <span class="na">ui</span><span class="p">=</span><span class="s1">&#39;datepicker&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Widget/Interaction. Note that the &#8216;ui&#8217;
+prefix and &#8216;js&#8217; file extension is not used, just the name of the UI
+item.</p>
+<p>Output example: <a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;ui=datepicker">http://example.com/index.php?ACT=jquery&amp;amp;ui=datepicker</a></p>
+</div>
+<div class="section" id="id6">
+<h4><a class="toc-backref" href="#id27">effect=</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_src</span> <span class="na">effect</span><span class="p">=</span><span class="s1">&#39;slide&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Effect. Note that the &#8216;effect&#8217; prefix and
+&#8216;js&#8217; file extension is not used, just the name of the UI Effect.</p>
+<p>Output example: <a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;effect=slide">http://example.com/index.php?ACT=jquery&amp;amp;effect=slide</a></p>
+</div>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id28">file=</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:script_src</span> <span class="na">file</span><span class="p">=</span><span class="s1">&#39;foo&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested non-jQuery file. Outputs a URL to a JavaScript
+file in the main javascript folder in ExpressionEngine&#8217;s system folder.</p>
+<p>Output example: <a class="reference external" href="http://example.com/index.php?ACT=jquery&amp;amp;file=foo">http://example.com/index.php?ACT=jquery&amp;amp;file=foo</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="output-javascript-tag">
+<h2><a class="toc-backref" href="#id19">Output JavaScript Tag</a><a class="headerlink" href="#output-javascript-tag" title="Permalink to this headline">¶</a></h2>
+<p>Outputs the actual script to the browser, with proper headers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tag will output content identically as if it were
+requested via one of the URLs output with the tags above. No other
+content from the template this tag is used on will be output, and
+execution will be halted as soon as this tag is processed. It is
+typically not necessary to use these tags in a template, but the
+option exists if for some reason you need a specific URL structure
+to your jQuery resources.</p>
+</div>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:output_javascript</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When used as above, with no tag parameters, the main jQuery file will be
+output.</p>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id20">Parameters</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id9">
+<ul class="simple">
+<li><a class="reference internal" href="#id10" id="id29">plugin=</a></li>
+<li><a class="reference internal" href="#id11" id="id30">ui=</a></li>
+<li><a class="reference internal" href="#id12" id="id31">effect=</a></li>
+<li><a class="reference internal" href="#id13" id="id32">file=</a></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h4><a class="toc-backref" href="#id29">plugin=</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:output_javascript</span> <span class="na">plugin</span><span class="p">=</span><span class="s1">&#39;corner&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested plugin. Note that the &#8216;js&#8217; file extension is
+not used, just the name of the plugin.</p>
+</div>
+<div class="section" id="id11">
+<h4><a class="toc-backref" href="#id30">ui=</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:output_javascript</span> <span class="na">ui</span><span class="p">=</span><span class="s1">&#39;datepicker&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Widget/Interaction. Note that the &#8216;ui&#8217;
+prefix and &#8216;js&#8217; file extension is not used, just the name of the UI
+item.</p>
+</div>
+<div class="section" id="id12">
+<h4><a class="toc-backref" href="#id31">effect=</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:output_javascript</span> <span class="na">effect</span><span class="p">=</span><span class="s1">&#39;slide&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested UI Effect. Note that the &#8216;effect&#8217; prefix and
+&#8216;js&#8217; file extension is not used, just the name of the UI Effect.</p>
+</div>
+<div class="section" id="id13">
+<h4><a class="toc-backref" href="#id32">file=</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:jquery:output_javascript</span> <span class="na">file</span><span class="p">=</span><span class="s1">&#39;foo&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The name of the requested non-jQuery file.</p>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../forum/index.html">Discussion Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">jQuery</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Service\Model\Query;
 
@@ -6,27 +13,7 @@ use EllisLab\ExpressionEngine\Service\Model\DataStore;
 use EllisLab\ExpressionEngine\Service\Model\Query\Result;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine Query Builder
- *
- * @package		ExpressionEngine
- * @subpackage	Model
- * @category	Service
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Query Builder
  */
 class Builder {
 
@@ -58,7 +45,7 @@ class Builder {
 	}
 
 	/**
-	 * @return \EllisLab\ExpressionEngine\Service\Model\Model|null
+	 *
 	 */
 	public function first()
 	{
@@ -68,7 +55,7 @@ class Builder {
 	}
 
 	/**
-	 * @return \EllisLab\ExpressionEngine\Service\Model\Collection
+	 *
 	 */
 	public function all()
 	{
@@ -100,7 +87,7 @@ class Builder {
 	}
 
 	/**
-	 * @return int
+	 *
 	 */
 	public function count()
 	{
@@ -115,7 +102,7 @@ class Builder {
 	/**
 	 * Run a fetch in batches
 	 *
-	 * @param int     $batch_size Batch size
+	 * @param Int     $batch_size Batch size
 	 * @param Closure $callback   Closure to run for each result
 	 *
 	 * NOTE: The callback can be passed in the first parameter, in
@@ -183,7 +170,7 @@ class Builder {
 	 *
 	 * @param Mixed  $properties  Relationship.columnname [array|string]
 	 * @param Mixed   $value      Value to search for
-	 * @return self
+	 * @return Query  $this
 	 */
 	public function search($properties, $value)
 	{
@@ -224,7 +211,7 @@ class Builder {
 	/**
 	 * Get the current search data
 	 *
-	 * @return array of search data [field1 => [word1 => include?, ...]]
+	 * @return Array of search data [field1 => [word1 => include?, ...]]
 	 */
 	public function getSearch()
 	{
@@ -239,8 +226,8 @@ class Builder {
 	 *    Multiple words in quotes
 	 *    Negation of either of the above
 	 *
-	 * @param string $str Search string
-	 * @return array of search terms, possibly prefixed with a - for negation
+	 * @param String $str Search string
+	 * @return Array of search terms, possibly prefixed with a - for negation
 	 */
 	private function prepSearch($str)
 	{
@@ -290,10 +277,10 @@ class Builder {
 	/**
 	 * Apply a filter
 	 *
-	 * @param string  $property  Relationship.columnname
-	 * @param string  $operator  Comparison operator [default: ==]
-	 * @param mixed   $value     Value to compare to
-	 * @return self
+	 * @param String  $property  Relationship.columnname
+	 * @param String  $operator  Comparison operator [default: ==]
+	 * @param Mixed   $value     Value to compare to
+	 * @return Query  $this
 	 */
 	public function filter($property, $operator, $value = FALSE)
 	{
@@ -304,10 +291,10 @@ class Builder {
 	/**
 	 * Same as `filter()`, but creates an OR statement.
 	 *
-	 * @param string  $property  Relationship.columnname
-	 * @param string  $operator  Comparison operator [default: ==]
-	 * @param mixed   $value     Value to compare to
-	 * @return self
+	 * @param String  $property  Relationship.columnname
+	 * @param String  $operator  Comparison operator [default: ==]
+	 * @param Mixed   $value     Value to compare to
+	 * @return Query  $this
 	 */
 	public function orFilter($property, $operator, $value = FALSE)
 	{
@@ -331,7 +318,6 @@ class Builder {
 
 	/**
 	 * Open a filter group
-	 * @return self
 	 */
 	public function filterGroup()
 	{
@@ -345,7 +331,6 @@ class Builder {
 
 	/**
 	 * Open a filter group that will be OR'd on the query
-	 * @return self
 	 */
 	public function orFilterGroup()
 	{
@@ -358,7 +343,6 @@ class Builder {
 
 	/**
 	 * Close a (or)filterGroup
-	 * @return self
 	 */
 	public function endFilterGroup()
 	{
@@ -377,7 +361,6 @@ class Builder {
 
 	/**
 	 * Check if the filter groups have been open and closed correctly
-	 * @return bool
 	 */
 	protected function filterStackIsEmpty()
 	{
@@ -386,7 +369,6 @@ class Builder {
 
 	/**
 	 * Only select and return a subset of fields.
-	 * @return self
 	 */
 	public function fields()
 	{
@@ -397,7 +379,6 @@ class Builder {
 
 	/**
 	 * Set data for update or insert
-	 * @return self
 	 */
 	public function set($key, $value = NULL)
 	{
@@ -412,7 +393,7 @@ class Builder {
 	}
 
 	/**
-	 * @return self
+	 *
 	 */
 	public function with()
 	{
@@ -467,7 +448,6 @@ class Builder {
 
 	/**
 	 * Add ordering to the query
-	 * @return self
 	 */
 	public function order($property, $direction = '')
 	{
@@ -479,7 +459,7 @@ class Builder {
 	 * Limit the result set.
 	 *
 	 * @param int Number of elements to limit to
-	 * @return self
+	 * @return $this
 	 */
 	public function limit($n = NULL)
 	{
@@ -491,7 +471,7 @@ class Builder {
 	 * Offset the result set.
 	 *
 	 * @param int Number of elements to offset to
-	 * @return self
+	 * @return $this
 	 */
 	public function offset($n)
 	{
@@ -549,7 +529,6 @@ class Builder {
 
 	/**
 	 * Get the query LIMIT
-	 * @return int
 	 */
 	public function getLimit()
 	{
@@ -558,7 +537,6 @@ class Builder {
 
 	/**
 	 * Get the query OFFSET
-	 * @return int
 	 */
 	public function getOffset()
 	{

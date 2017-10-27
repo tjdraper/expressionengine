@@ -10,7 +10,11 @@ $lang = array(
 
 'add' => 'Add',
 
+'add_a_row' => 'Add A Row',
+
 'add_preset_button' => 'Add Preset Button:',
+
+'all_fields' => 'All Fields',
 
 'allow_all_html' => 'Allow ALL HTML',
 
@@ -142,7 +146,7 @@ $lang = array(
 
 'create_field_error_desc' => 'We were unable to create this field, please review and fix errors below.',
 
-'create_field_group' => 'Create Field Group',
+'create_field_group' => 'New Field Group',
 
 'create_field_group_error' => 'Cannot Create Field Group',
 
@@ -230,11 +234,13 @@ $lang = array(
 
 'field' => 'Field',
 
+'fields_assign_to_group' => 'Assign one of more fields to this group.',
+
 'field_content_text' => 'Allowed content',
 
 'field_content_text_desc' => 'Type of content this field can contain.',
 
-'field_groups' => 'Field Groups',
+'field_groups_uc' => 'Field Groups',
 
 'field_groups_desc' => 'Used to group together related custom fields.',
 
@@ -243,6 +249,8 @@ $lang = array(
 'field_is_hidden' => 'Show this field by default?',
 
 'field_label_info' => 'This is the name that will appear in the PUBLISH page',
+
+'field_manager' => 'Field Manager',
 
 'field_options' => 'Field Options',
 
@@ -332,9 +340,11 @@ $lang = array(
 
 'multiselect_options_desc' => '<em><i>Each item in the textarea will be included in a multi-select in the publish form.</i>',
 
-'new_category' => 'Create a New Category',
+'new_category' => 'New Category',
 
 'new_channel' => 'New Channel',
+
+'new_field' => 'New Field',
 
 'new_group_instructions' => 'Field is required if you are creating a new group',
 
@@ -352,7 +362,7 @@ $lang = array(
 
 'no_statuses' => 'No statuses have been found',
 
-'no_value_label_pairs' => 'No <b>value/label pairs</b> found.',
+'no_value_label_pairs' => 'No <b>value/label pairs</b> exist.',
 
 'notification_settings' => 'Notification Preferences',
 
@@ -377,6 +387,10 @@ $lang = array(
 'related_to_channel' => 'Relate channel entries to other channel entries',
 
 'relationship' => 'Relationship',
+
+'removed_fields' => 'The following fields were removed and their data was deleted: %s',
+
+'removed_fields_from_fluid_field' => 'The following fields were removed from the Fluid Field <b>%s</b> and their data was deleted: %s',
 
 'require_field_desc' => 'When set to <b>yes</b>, this field will be required to submit the publish form.',
 
@@ -592,7 +606,7 @@ $lang = array(
 
 'create_new_custom_field' => 'Create a New Channel Field',
 
-'create_new_field' => 'Create a New Field',
+'create_new_field' => 'New Field',
 
 'create_new_field_group' => 'Create a New Channel Field Group',
 
@@ -728,23 +742,15 @@ $lang = array(
 
 'create_new_status' => 'Create a New Status',
 
-'create_new_status_group' => 'Create New Status Group',
-
 'default_entry_title' => 'Default Entry Title',
 
 'delete_status' => 'Delete Status',
 
 'delete_status_confirmation' => 'Are you sure you want to delete the following status?',
 
-'delete_status_group' => 'Delete Status Group',
-
-'delete_status_group_confirmation' => 'Are you sure you want to permanently delete this Status Group?',
-
 'duplicate_status_name' => 'A status already exists with the same name.',
 
 'edit_status' => 'Edit Status',
-
-'edit_status_group_name' => 'Rename',
 
 'field_instructions' => 'Field Instructions',
 
@@ -770,31 +776,17 @@ $lang = array(
 
 'no_live_look_template' => '- No Live Look Template -',
 
-'no_status_group_message' => 'There are currently no custom statuses',
-
 'rtl' => 'Right to Left',
-
-'show_all_status_groups' => 'All %d status groups',
 
 'show_all_statuses' => 'All %d statuses',
 
 'show_pages_cluster' => 'Display Pages Submission Fields',
-
-'status_group' => 'Status Groups',
-
-'status_group_created' => 'Status Group Created:',
-
-'status_group_deleted' => 'Status Group Deleted:',
-
-'status_group_updated' => 'Status Group Updated:',
 
 'status_name' => 'Status Name',
 
 'status_order' => 'Status Order',
 
 'statuses' => 'Statuses',
-
-'taken_status_group_name' => 'This status group name is already taken.',
 
 'text_direction' => 'Text Direction',
 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Times, Localization, and Entry Dates &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Troubleshooting" href="../index.html" />
+	    <link rel="next" title="Moving entries to another channel" href="moving_entries_to_another_channel.html" />
+	    <link rel="prev" title="How to display future entries" href="how_to_display_future_entries.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Troubleshooting</a></li>
+								<li class="last">Times, Localization, and Entry Dates</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="times-localization-and-entry-dates">
+<h1>Times, Localization, and Entry Dates<a class="headerlink" href="#times-localization-and-entry-dates" title="Permalink to this headline">¶</a></h1>
+<p>The Entry Time jumps when updating an entry.</p>
+<div class="section" id="troubleshooting-localization">
+<h2>Troubleshooting Localization<a class="headerlink" href="#troubleshooting-localization" title="Permalink to this headline">¶</a></h2>
+<p>When setting up the ExpressionEngine installation ensure that several
+settings are accurate:</p>
+<ul class="simple">
+<li><span class="menuselection">Settings ‣ General Settings</span> are set properly for the hosting
+server&#8217;s environment.</li>
+<li><span class="menuselection">Profile ‣ Personal Settings</span> are set appropriately for the
+visiting user&#8217;s environment.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ExpressionEngine does not auto-detect localization settings
+so these must be updated by the administrator and user when they
+change in that environment&#8217;s time zone.</p>
+</div>
+<p>If the time an entry was posted should not have any reference to the
+localization of the author, then use
+<a class="reference internal" href="../../channel/channel_entries.html#channel-entries-gmt-entry-date"><span class="std std-ref">gmt_entry_date</span></a>.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Troubleshooting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changing_the_field_formatting_for_existing_entries.html">Changing the field formatting for existing entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_display_future_entries.html">How to display future entries</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Times, Localization, and Entry Dates</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="moving_entries_to_another_channel.html">Moving entries to another channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="new_entry_not_appearing.html">A new entry does not appear on the site right away</a></li>
+<li class="toctree-l2"><a class="reference internal" href="new_members_not_authors.html">New members do not appear as an option in the author list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control_panel/categories_not_appearing_in_edit_tab.html">Category List is not appearing in the Edit tab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control_panel/missing_icon_ui_elements.html">Missing Icon UI Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control_panel/no_login_on_windows_server.html">Can not log into the Control Panel on Windows Based server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control_panel/site_and_cp_login_separate.html">Logging into the front-end does not cause a login to the Control Panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../control_panel/unstyled_cp.html">Control Panel is Unstyled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/emails_not_reaching_destination.html">Emails sent via ExpressionEngine are never reaching their destination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/problems_using_gmail.html">Using a Gmail account to send or receive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/a_problem_was_encountered_while_trying_to_upload_your_file.html">A problem was encountered while attempting to upload your file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/allowed_memory_size_exhausted.html">Allowed memory size of ... bytes exhausted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/call_to_undefined_function_imagettftext.html">Call to undefined function: imagettftext()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/can't_open_file_exp_online_users.myi.html">Can&#8217;t open file: exp_online_users.MYI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/cannot_modify_header_information.html">Warning: Cannot modify header information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/client_does_not_support_authentication_protocol.html">Client does not support authentication protocol requested by server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/mysql_error_1030_got_error_28.html">MySQL Error 1030: Got error 28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/no_suitable_nodes.html">No Suitable Nodes Available</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/supplied_argument_is_not_a_valid_mysql-link_resource.html">Supplied argument is not a valid MySQL-Link resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/unable_to_perform_the_sql_queries_needed.html">Unable to perform the SQL queries needed to install this program.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/unable_to_receive_your_comment.html">Unable to receive your comment at this time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/unexpected_T_STRING.html">Error On View Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../error_messages/you_are_not_authorized_to_perform_this_action.html">You are not authorized to perform this action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/blank_pages.html">Blank Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/file_permissions.html">File Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/form_submissions.html">Submitting a form has no effect and the page simply reloads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install_and_update/browser_downloading_install_php.html">Browser downloading install.php</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../install_and_update/table_already_exists.html">&#8220;Table already exists&#8221; error when upgrading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce_module/IPN_not_recorded.html">IPN not being recorded by Simple Commerce Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/cant_save_template_with_query_tag.html">Can not save a template with the {exp:query} tag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/captchas_not_appearing.html">CAPTCHA images not appearing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/content_from_new_custom_field_not_appearing.html">Content from my new Channel Field is not appearing on the page.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/embedded_templates_not_using_assigned_variables.html">Embedded Templates not using my Assigned Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/php_and_ee_tags_not_parsed_in_css.html">PHP and EE Tags are not parsed in the Stylesheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../templates/tags_within_advanced_conditionals.html">Tags within Conditionals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

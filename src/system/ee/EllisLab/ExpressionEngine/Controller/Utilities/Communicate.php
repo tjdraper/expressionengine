@@ -1,37 +1,23 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Utilities;
-
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
 use EllisLab\ExpressionEngine\Library\CP\Table;
 use EllisLab\ExpressionEngine\Model\Email\EmailCache;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Communicate Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Communicate Controller
  */
 class Communicate extends Utilities {
+
 	private $attachments = array();
 
 	/**
@@ -46,8 +32,6 @@ class Communicate extends Utilities {
 			show_error(lang('unauthorized_access'), 403);
 		}
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Index
@@ -396,8 +380,6 @@ class Communicate extends Utilities {
 		ee()->functions->redirect(ee('CP/URL')->make('utilities/communicate'));
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Batch Email Send
 	 *
@@ -458,8 +440,6 @@ class Communicate extends Utilities {
 		}
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Fetches an email from the cache and presents it to the user for re-sending
 	 *
@@ -485,8 +465,6 @@ class Communicate extends Utilities {
 
 		$this->index($email);
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Sends a single email handling errors
@@ -535,8 +513,6 @@ class Communicate extends Utilities {
 		return $debug_msg;
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Sends multiple emails handling errors
 	 *
@@ -583,8 +559,6 @@ class Communicate extends Utilities {
 	}
 
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Delivers an email
 	 *
@@ -623,8 +597,6 @@ class Communicate extends Utilities {
 		return ee()->email->send(FALSE);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Formats the message of an email based on the text format type
 	 *
@@ -656,7 +628,7 @@ class Communicate extends Utilities {
 	}
 
 	/**
-	 * Censors the subject of an email if necissary
+	 * Censors the subject of an email if necessary
 	 *
 	 * @param	obj	$email	An EmailCache object
 	 * @return	string		The censored subject
@@ -665,23 +637,13 @@ class Communicate extends Utilities {
 	{
 		$subject = $email->subject;
 
-		if (ee()->config->item('enable_censoring') == 'y' &&
-			ee()->config->item('censored_words') != '')
+		if (bool_config_item('enable_censoring'))
     	{
-			ee()->load->library('typography');
-			ee()->typography->initialize(array(
-				'bbencode_links' => FALSE,
-				'parse_images'	=> FALSE,
-				'parse_smileys'	=> FALSE
-			));
-
-			$subject = ee()->typography->filter_censored_words($email->subject);
+			$subject = (string) ee('Format')->make('Text', $subject)->censor();
 		}
 
 		return $subject;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * View sent emails
@@ -832,8 +794,6 @@ class Communicate extends Utilities {
 		ee()->cp->render('utilities/communicate/sent', $vars);
 	}
 
-	// --------------------------------------------------------------------
-
 	/**
 	 * Check for recipients
 	 *
@@ -852,8 +812,6 @@ class Communicate extends Utilities {
 
 		return TRUE;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Attachment Handler
@@ -889,8 +847,6 @@ class Communicate extends Utilities {
 
 		return TRUE;
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Delete Attachments

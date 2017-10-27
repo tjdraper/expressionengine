@@ -1,27 +1,18 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Settings;
-
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 use CP_Controller;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Security & Privacy Settings Class
+ * Security & Privacy Settings Controller
  *
  * @package		ExpressionEngine
  * @subpackage	Control Panel
@@ -50,7 +41,7 @@ class SecurityPrivacy extends Settings {
 					'desc' => '',
 					'fields' => array(
 						'cp_session_type' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'cs' => lang('cs_session'),
 								'c' => lang('c_session'),
@@ -64,7 +55,7 @@ class SecurityPrivacy extends Settings {
 					'desc' => '',
 					'fields' => array(
 						'website_session_type' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'cs' => lang('cs_session'),
 								'c' => lang('c_session'),

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Template Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Typography Class" href="typography.html" />
+	    <link rel="prev" title="Table Class" href="table.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Template Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="template-class">
+<h1>Template Class<a class="headerlink" href="#template-class" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id1">Introduction</a></li>
+<li><a class="reference internal" href="#calling-the-template-class" id="id2">Calling the Template Class</a></li>
+<li><a class="reference internal" href="#parameters" id="id3">Parameters</a></li>
+<li><a class="reference internal" href="#information-within-tag-pairs" id="id4">Information Within Tag Pairs</a></li>
+<li><a class="reference internal" href="#variable-types" id="id5">Variable Types</a></li>
+<li><a class="reference internal" href="#parsing-variables" id="id6">Parsing Variables</a><ul>
+<li><a class="reference internal" href="#overview" id="id7">Overview</a><ul>
+<li><a class="reference internal" href="#master-variables-array" id="id8">Master Variables Array</a></li>
+<li><a class="reference internal" href="#parsing-the-variables" id="id9">Parsing the Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#single-variables" id="id10">Single Variables</a></li>
+<li><a class="reference internal" href="#pair-variables" id="id11">Pair Variables</a></li>
+<li><a class="reference internal" href="#automatic-variables" id="id12">Automatic Variables</a><ul>
+<li><a class="reference internal" href="#date-variables" id="id13">Date Variables</a></li>
+<li><a class="reference internal" href="#path-variables" id="id14">Path Variables</a></li>
+<li><a class="reference internal" href="#conditionals" id="id15">Conditionals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parsing-full-results" id="id16">Parsing Full Results</a></li>
+<li><a class="reference internal" href="#parsing-a-single-result-row" id="id17">Parsing a Single Result Row</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#single-and-pair-variables-legacy" id="id18">Single and Pair Variables (Legacy)</a></li>
+<li><a class="reference internal" href="#conditional-tags" id="id19">Conditional Tags</a></li>
+<li><a class="reference internal" href="#method-and-property-reference" id="id20">Method and Property Reference</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>If you are not familiar with the ExpressionEngine template language,
+you may wish to read the <a class="reference internal" href="../../../templates/index.html"><span class="doc">Template Language Overview</span></a>.</p>
+<p>When you create a <a class="reference internal" href="../../plugins.html"><span class="doc">Plugin</span></a> or
+<a class="reference internal" href="../../modules.html"><span class="doc">Module</span></a>, the name of your add-on and any of its
+public methods become available as ExpressionEngine tags for use in
+templates:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:addon:method</span><span class="p">}</span> some template data <span class="p">{</span><span class="nf">/exp:addon:method</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When one of these tags is encountered, the associated method will be
+called and has a chance to transform this part of the template.</p>
+</div>
+<div class="section" id="calling-the-template-class">
+<h2><a class="toc-backref" href="#id2">Calling the Template Class</a><a class="headerlink" href="#calling-the-template-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="TMPL">
+<em class="property">class </em><code class="descname">TMPL</code><a class="headerlink" href="#TMPL" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the Template class calls a module, the Template class makes
+available to the module class the parameters, variables, and content
+of the tag currently being processed. To make these values available,
+simply access the <code class="docutils literal"><span class="pre">TMPL</span></code> object of the ExpressionEngine super
+object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="nf">module_example</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$name</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="parameters">
+<h2><a class="toc-backref" href="#id3">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>Before calling the method that is being requested by the
+ExpressionEngine tag, the Template class will parse out any parameters
+for that tag and insert them into a Template class variable, thus making
+them easily accessible by the requested method by using this method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$param</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;parameter&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#TMPL::fetch_param" title="TMPL::fetch_param"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::fetch_param</span></code></a> takes an optional second argument, which is
+the value that will be returned if the parameter was not set in the
+opening tag. It defaults to FALSE if the second argument is not
+supplied:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Default value is &#39;random&#39;</span>
+<span class="nv">$order</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;random&#39;</span><span class="p">);</span>
+
+<span class="c1">// If they don&#39;t specify title</span>
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">fetch_param</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">output</span><span class="o">-&gt;</span><span class="na">fatal_error</span><span class="p">(</span><span class="s1">&#39;The &quot;title&quot; parameter is required.&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">values of <code class="docutils literal"><span class="pre">'y'</span></code>, <code class="docutils literal"><span class="pre">'on'</span></code> and <code class="docutils literal"><span class="pre">'yes'</span></code> will all return
+<code class="docutils literal"><span class="pre">'yes'</span></code>, while <code class="docutils literal"><span class="pre">'n'</span></code>, <code class="docutils literal"><span class="pre">'off'</span></code> and <code class="docutils literal"><span class="pre">'no'</span></code> all return
+<code class="docutils literal"><span class="pre">'no'</span></code>.</p>
+</div>
+</div>
+<div class="section" id="information-within-tag-pairs">
+<h2><a class="toc-backref" href="#id4">Information Within Tag Pairs</a><a class="headerlink" href="#information-within-tag-pairs" title="Permalink to this headline">¶</a></h2>
+<p>ExpressionEngine tags are used primarily to output some form of
+content so it can be displayed within a template. The formatting for
+this content is determined by the HTML and variable data contained
+between the opening and closing tags for the tag being called. We
+normally call this formatting information between the opening and
+closing tags the &#8216;tag data&#8217;, and this data can be requested by using
+the <a class="reference internal" href="#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a> variable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Except in rare cases, a module will have both an opening and
+closing tag. There are exceptions to this rule such as when you
+might wish to have a tag that simply performs an automated action.
+An example of this is the <code class="docutils literal"><span class="pre">{exp:moblog:check}</span></code> tag.</p>
+</div>
+<p><strong>Module code in template.</strong> The tag data is everything from the end
+of the opening tag to the beginning of the closing tag, basically the
+HTML and tag variables:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:magic:spell</span><span class="p">}</span>
+
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">summary</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">{</span><span class="nf">/exp:magic:spell</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>A module calling and using the tag data.</strong></p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+<span class="nv">$variables</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$variables</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span>
+      <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">parse_variables</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">,</span> <span class="nv">$variables</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variable-types">
+<h2><a class="toc-backref" href="#id5">Variable Types</a><a class="headerlink" href="#variable-types" title="Permalink to this headline">¶</a></h2>
+<p>ExpressionEngine variables are simply a word or underscored phrase with
+curly brackets on either side. The names are usually quite simple and
+contextually understandable for the tag, thus making it easier for users
+to remember them and understand their usage. There are three kinds of
+variables in ExpressionEngine, single and pair.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>// Single Variable
+<span class="p">{</span><span class="nf">summary</span><span class="p">}</span>
+
+// Pair Variable
+<span class="p">{</span><span class="nf">category</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">/category</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-variables">
+<h2><a class="toc-backref" href="#id6">Parsing Variables</a><a class="headerlink" href="#parsing-variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3><a class="toc-backref" href="#id7">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>The Template class makes parsing your module or plugin&#8217;s variables a
+snap. Using the <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> method, you supply the tag
+data, and an array containing all of your variables, organized as
+&#8220;rows&#8221;. Your single, pair, and conditional tags will automatically
+be parsed for you, and your module or plugin will also automatically
+have <code class="docutils literal"><span class="pre">{count}</span></code> and <code class="docutils literal"><span class="pre">{switch}</span></code> variables. Additionally, date
+variables will be parsed, and you can optionally have typography
+performed automatically for you as well.</p>
+<div class="section" id="master-variables-array">
+<h4><a class="toc-backref" href="#id8">Master Variables Array</a><a class="headerlink" href="#master-variables-array" title="Permalink to this headline">¶</a></h4>
+<p>First let&#8217;s look at a typical variables array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">Array</span>
+<span class="p">(</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+        <span class="p">(</span>
+            <span class="p">[</span><span class="nx">powers</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                <span class="p">(</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">power</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Super</span> <span class="nx">Strength</span>
+                            <span class="p">[</span><span class="nx">scale</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">8</span>
+                        <span class="p">)</span>
+
+                    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">power</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Invisibility</span>
+                            <span class="p">[</span><span class="nx">scale</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">4</span>
+                        <span class="p">)</span>
+
+                <span class="p">)</span>
+
+            <span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Chameleon</span>
+            <span class="p">[</span><span class="nx">dob</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">136771200</span>
+            <span class="p">[</span><span class="nx">type</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Hero</span>
+            <span class="p">[</span><span class="nx">affiliation</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Litigation</span> <span class="nx">Coalition</span>
+            <span class="p">[</span><span class="nx">bio</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                <span class="p">(</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Hailing</span> <span class="nx">from</span> <span class="nx">the</span> <span class="nx">planet</span> <span class="nx">Lizzon</span><span class="p">,</span> <span class="nx">Chameleon</span> <span class="nx">came</span> <span class="nx">to</span> <span class="nx">earth</span> <span class="nx">in</span> <span class="mf">2003.</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">text_format</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">xhtml</span>
+                            <span class="p">[</span><span class="nx">html_format</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">all</span>
+                        <span class="p">)</span>
+
+                <span class="p">)</span>
+
+        <span class="p">)</span>
+
+    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+        <span class="p">(</span>
+            <span class="p">[</span><span class="nx">powers</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                <span class="p">(</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">power</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Poisonous</span> <span class="nx">Breath</span>
+                            <span class="p">[</span><span class="nx">scale</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">5</span>
+                        <span class="p">)</span>
+
+                    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">power</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Wealth</span>
+                            <span class="p">[</span><span class="nx">scale</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">7</span>
+                        <span class="p">)</span>
+
+                <span class="p">)</span>
+
+            <span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Stinkor</span>
+            <span class="p">[</span><span class="nx">dob</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">58924800</span>
+            <span class="p">[</span><span class="nx">type</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">Villain</span>
+            <span class="p">[</span><span class="nx">affiliation</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">N</span><span class="o">.</span><span class="nx">E</span><span class="o">.</span><span class="nx">S</span><span class="o">.</span><span class="nx">T</span><span class="o">.</span>
+            <span class="p">[</span><span class="nx">bio</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                <span class="p">(</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">As</span> <span class="nx">a</span> <span class="nx">child</span><span class="p">,</span> <span class="nx">Stinkor</span> <span class="nx">was</span> <span class="nx">teased</span> <span class="k">for</span> <span class="nx">his</span> <span class="nx">bad</span> <span class="nx">breath</span><span class="o">.</span> <span class="nx">When</span> <span class="nx">he</span> <span class="nx">realized</span> <span class="nx">that</span> <span class="nx">it</span> <span class="nx">was</span> <span class="nx">more</span> <span class="nx">than</span> <span class="nx">bad</span><span class="o">...</span><span class="nx">noxious</span> <span class="nx">even</span><span class="p">,</span> <span class="nx">he</span> <span class="nx">turned</span> <span class="nx">to</span> <span class="nx">a</span> <span class="nx">life</span> <span class="nx">of</span> <span class="nx">crime</span><span class="p">,</span> <span class="nx">robbing</span> <span class="nx">banks</span> <span class="nx">by</span> <span class="nx">knocking</span> <span class="nx">out</span> <span class="nx">the</span> <span class="nx">guards</span> <span class="nx">by</span> <span class="nx">saying</span> <span class="s2">&quot;Hello&quot;</span> <span class="nx">in</span> <span class="nx">their</span> <span class="nx">face</span><span class="o">.</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="k">Array</span>
+                        <span class="p">(</span>
+                            <span class="p">[</span><span class="nx">text_format</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">xhtml</span>
+                            <span class="p">[</span><span class="nx">html_format</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="nx">all</span>
+                        <span class="p">)</span>
+
+                <span class="p">)</span>
+
+        <span class="p">)</span>
+
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Looking at this example, we see two &#8220;rows&#8221; of results. Each &#8220;row&#8221;
+contains a pair variable, <code class="docutils literal"><span class="pre">'powers'</span></code>, which itself has multiple rows
+with some single variables, <code class="docutils literal"><span class="pre">'power'</span></code> and <code class="docutils literal"><span class="pre">'scale'</span></code>. Next we have
+the single variables <code class="docutils literal"><span class="pre">'name'</span></code>, <code class="docutils literal"><span class="pre">'dob'</span></code>, <code class="docutils literal"><span class="pre">'type'</span></code>,
+<code class="docutils literal"><span class="pre">'affiliation'</span></code>, and <code class="docutils literal"><span class="pre">'bio'</span></code>. We can tell by looking that <code class="docutils literal"><span class="pre">'dob'</span></code>
+is a date field, in this case date of birth. The <code class="docutils literal"><span class="pre">'bio'</span></code> field, though
+a single variable is also an array, containing the contents and
+typography formatting instructions, but more on that later. Let&#8217;s look
+at a typical way that this array would have been created in an add-on&#8217;s
+code.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$variables</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$powers</span> <span class="o">=</span> <span class="k">array</span><span class="p">()</span>
+
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$unserialize</span><span class="p">(</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;powers&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="nv">$power</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$powers</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;power&#39;</span> <span class="o">=&gt;</span> <span class="nv">$power</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;scale&#39;</span> <span class="o">=&gt;</span> <span class="nv">$power</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="nv">$variable_row</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;powers&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$powers</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;dob&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;dob&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;affiliation&#39;</span> <span class="o">=&gt;</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;affiliation&#39;</span><span class="p">]</span>
+    <span class="p">);</span>
+
+    <span class="nv">$type_prefs</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;text_format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;xhtml&#39;</span><span class="p">,</span> <span class="s1">&#39;html_format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;all&#39;</span><span class="p">);</span>
+
+    <span class="nv">$variable_row</span><span class="p">[</span><span class="s1">&#39;bio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;bio&#39;</span><span class="p">],</span> <span class="nv">$type_prefs</span><span class="p">);</span>
+
+    <span class="nv">$variables</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$variable_row</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the example above, first the pair variable <code class="docutils literal"><span class="pre">$powers</span></code> array is created.
+Each &#8220;row&#8221; of the pair variable is an array of single variables, or even
+more pair variables. Then an array is used to hold the data for this
+result&#8217;s row. The simple single variables are added in a simple
+<code class="docutils literal"><span class="pre">array()</span></code> declaration, but bio, which needed some typography
+preferences, is added later as an additional key. Whether you use an
+<code class="docutils literal"><span class="pre">array()</span></code> declaration, or keys for assignment is entirely up to you,
+and will often depend on the needs of your code. At the end of the loop,
+we add the entire &#8220;row&#8221; of data to our master $variables array. That row
+is now stored for parsing.</p>
+<p>Note that the order in which the variables are given in the array is the
+same order they will be parsed in. Because of this precedence, it is
+often best to place your pair variable arrays first.</p>
+</div>
+<div class="section" id="parsing-the-variables">
+<h4><a class="toc-backref" href="#id9">Parsing the Variables</a><a class="headerlink" href="#parsing-the-variables" title="Permalink to this headline">¶</a></h4>
+<p>Now that our master array is fully loaded, we simply send it along with
+the tagdata to the <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> method of the Template
+class, which returns the parsed output.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$output</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">parse_variables</span><span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">tagdata</span><span class="p">,</span> <span class="nv">$variables</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Assuming that our tagdata is as follows:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">name</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Date of Birth: <span class="p">{</span><span class="nf">dob</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%d %M, %Y&quot;</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">type</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Affiliation: <span class="p">{</span><span class="nf">affiliation</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">powers</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">{</span><span class="k">if</span> <span class="nv">scale</span> <span class="o">&gt;</span> <span class="m">5</span><span class="p">}</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;great&quot;</span><span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}&gt;{</span><span class="nf">power</span><span class="p">}</span> (<span class="p">{</span><span class="nf">scale</span><span class="p">}</span>)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/powers</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">{</span><span class="nf">bio</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Our returned output would be:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Chameleon<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Date of Birth: 02 May, 1974<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Hero<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Affiliation: Litigation Coalition<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;great&quot;</span><span class="p">&gt;</span>Super Strength (8)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Invisibility (4)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hailing from the planet Lizzon, Chameleon came to earth in 2003.
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Stinkor<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Date of Birth: 18 Feb, 1968<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Villain<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Affiliation: N.E.S.T.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Poisonous Breath (5)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;great&quot;</span><span class="p">&gt;</span>Wealth (7)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>As a child, Stinkor was teased for his bad breath.  When he realized that it was more than bad…noxious even, he turned to a life of crime, robbing banks by knocking out the guards by saying &quot;Hello&quot; in their face.
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The following subsections break down the procedures in detail.</p>
+</div>
+</div>
+<div class="section" id="single-variables">
+<h3><a class="toc-backref" href="#id10">Single Variables</a><a class="headerlink" href="#single-variables" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">name</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Date of Birth: <span class="p">{</span><span class="nf">dob</span> <span class="na">format</span><span class="p">=</span><span class="s2">&quot;%d %M, %Y&quot;</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">type</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Affiliation: <span class="p">{</span><span class="nf">affiliation</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Single variables are defined in the array as simple key =&gt; value pairs.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$vars</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Stinkor&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Villain&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dob&#39;</span> <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">58924800</span><span class="p">,</span>
+    <span class="s1">&#39;affiliation&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;N.E.S.T.&#39;</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p>Additionally, you can have Typography automatically performed on single
+variables, by sending the variable in the form of an array with two keys
+- the first being the content, and the second being an array including
+any of the four available standard <a class="reference internal" href="typography.html"><span class="doc">Typography</span></a>
+preferences that you wish to override. Sending an empty array will
+result in Typography being parsed with the class defaults.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$type_prefs</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;text_format&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;markdown&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;html_format&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;auto_links&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;allow_img_url&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span>
+    <span class="p">);</span>
+
+<span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;bio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;This is the variable contents&#39;</span><span class="p">,</span> <span class="nv">$type_prefs</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pair-variables">
+<h3><a class="toc-backref" href="#id11">Pair Variables</a><a class="headerlink" href="#pair-variables" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">powers</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">power</span><span class="p">}</span> (<span class="p">{</span><span class="nf">scale</span><span class="p">}</span>)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/powers</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Pair variables are defined identically to single variables, but
+contained in a multidimensional array of &#8220;rows&#8221; with the pair variable&#8217;s
+name as the key.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;powers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+      <span class="k">array</span><span class="p">(</span><span class="s1">&#39;power&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Poisonous Breath&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">),</span>
+      <span class="k">array</span><span class="p">(</span><span class="s1">&#39;power&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Wealth&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span> <span class="o">=&gt;</span> <span class="mi">7</span><span class="p">),</span>
+      <span class="k">array</span><span class="p">(</span><span class="s1">&#39;power&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Flying&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span> <span class="o">=&gt;</span> <span class="mi">6</span><span class="p">)</span>
+      <span class="p">);</span>
+</pre></div>
+</div>
+<p>Pair variables can automatically make use of <code class="docutils literal"><span class="pre">backspace</span></code> and <code class="docutils literal"><span class="pre">limit</span></code>
+parameters in their template tags.</p>
+</div>
+<div class="section" id="automatic-variables">
+<h3><a class="toc-backref" href="#id12">Automatic Variables</a><a class="headerlink" href="#automatic-variables" title="Permalink to this headline">¶</a></h3>
+<p>If you are using the <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> method to handle
+variable parsing in your add-on, then your tag will automatically
+inherit the ability to use the following variables:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">count</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8220;count&#8221; of the output; the iteration of the tag pair loop.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">total_results</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The total number of results, or &#8220;rows&#8221;, that your tag will output.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">switch</span><span class="p">=</span><span class="s2">&quot;one|two|three&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This variable permits you to rotate through any number of values as the
+results are displayed. The first result will use &#8220;one&#8221;, the second will
+use &#8220;two&#8221;, the third &#8220;three&#8221;, the fourth &#8220;one&#8221;, and so on.</p>
+<div class="section" id="date-variables">
+<h4><a class="toc-backref" href="#id13">Date Variables</a><a class="headerlink" href="#date-variables" title="Permalink to this headline">¶</a></h4>
+<p>When the Template Parser encounters a variable that looks like a date
+variable (format or timezone parameter, relative modifier), it will
+parse the variable using all of the
+<a class="reference internal" href="../../../templates/date_variable_formatting.html"><span class="doc">parsing options available</span></a>
+to you for date variables, so it is important to send date variables as
+UTC/GMT Unix timestamps. Localization will automatically occur according
+to the site and logged in user&#8217;s preferences.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$var</span><span class="p">[</span><span class="s1">&#39;dob&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">58924800</span><span class="p">;</span>  <span class="c1">// Nov 14, 1971 (UTC/GMT)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="path-variables">
+<h4><a class="toc-backref" href="#id14">Path Variables</a><a class="headerlink" href="#path-variables" title="Permalink to this headline">¶</a></h4>
+<p>Path variables are used to create URLS and may require a unique
+indicator be appended to the final url.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">id_path</span><span class="p">=</span><span class="s2">&quot;template_group/template&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You indicate a path variable in much the same way you pass typography
+information, by sending the variable in the form of an array with two
+keys. The first key is the value you want appended to the final url. The
+second key must be named &#8216;path_variable&#8217; and set to <code class="docutils literal"><span class="pre">TRUE</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$var</span><span class="p">[</span><span class="s1">&#39;id_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;/25&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;path_variable&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conditionals">
+<h4><a class="toc-backref" href="#id15">Conditionals</a><a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h4>
+<p>Your variables will automatically be made available to conditionals. No
+special processing is necessary in your add-on to handle conditionals
+for variables you send to the parser. However, please be aware that in
+the ExpressionEngine template language, the string &#8220;0&#8221; is not considered
+falsy.</p>
+</div>
+</div>
+<div class="section" id="parsing-full-results">
+<h3><a class="toc-backref" href="#id16">Parsing Full Results</a><a class="headerlink" href="#parsing-full-results" title="Permalink to this headline">¶</a></h3>
+<p>Once you have assembled your master array of result &#8220;rows&#8221;, with each
+row containing the single and pair variables that your tag uses, simply
+call the <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> method, providing the tag data,
+and the master array.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">parse_variables</span><span class="p">(</span><span class="nv">$tagdata</span><span class="p">,</span> <span class="nv">$variables</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-a-single-result-row">
+<h3><a class="toc-backref" href="#id17">Parsing a Single Result Row</a><a class="headerlink" href="#parsing-a-single-result-row" title="Permalink to this headline">¶</a></h3>
+<p>You may also parse the result rows yourself, which could be useful if
+for some reason you need to modify the <a class="reference internal" href="#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a> for each
+row based on certain criteria. You can still benefit from the simplified
+variable parsing by using <a class="reference internal" href="#TMPL::parse_variables_row" title="TMPL::parse_variables_row"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables_row</span></code></a>, though you
+will no longer automatically have <code class="docutils literal"><span class="pre">{count}</span></code>, <code class="docutils literal"><span class="pre">{total_results}</span></code>, or
+<code class="docutils literal"><span class="pre">{switch=}</span></code> variables. To include these variables when parsing your
+own result rows, you will need to add them yourself.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">++</span><span class="nv">$count</span><span class="p">;</span>
+  <span class="nv">$row</span><span class="p">[</span><span class="err">&#39;</span><span class="nx">total_results</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">num_rows</span><span class="p">;</span>
+
+  <span class="nv">$output</span> <span class="o">.=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">parse_variables_row</span><span class="p">(</span><span class="nv">$tagdata</span><span class="p">,</span> <span class="nv">$row</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="single-and-pair-variables-legacy">
+<h2><a class="toc-backref" href="#id18">Single and Pair Variables (Legacy)</a><a class="headerlink" href="#single-and-pair-variables-legacy" title="Permalink to this headline">¶</a></h2>
+<p>Before calling the module for the ExpressionEngine tag, the Template
+class parses out all of the variables contain in the tag&#8217;s data and puts
+them into arrays which are Template class variables. This allows the
+module to have a list of all the single, pair, and conditional tags
+that it needs to replace with content.</p>
+<p>Single variables output a single piece of content, and in the module&#8217;s
+code these variables are usually handled by doing a simple find and
+replace, where the outputted content is replacing the variable. The
+Template class array for single variables is <a class="reference internal" href="#TMPL::$var_single" title="TMPL::$var_single"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$var_single</span></code></a>,
+where the keys are the variable&#8217;s name and the values are the full
+variable contents including any formatting parameters. For dates using
+<code class="docutils literal"><span class="pre">format=&quot;%Y</span> <span class="pre">%m</span> <span class="pre">%d&quot;</span></code>, only the formatting string is assigned to the
+array value. The Template class also provides a method,
+<a class="reference internal" href="#TMPL::swap_var_single" title="TMPL::swap_var_single"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::swap_var_single</span></code></a>, for performing the find and replace,
+making sure that the variable is replaced correctly in the template.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">foreach</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">var_single</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$val</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$key</span> <span class="o">==</span> <span class="s2">&quot;spell_name&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$tagdata</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">swap_var_single</span><span class="p">(</span><span class="nv">$val</span><span class="p">,</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;spell_name&#39;</span><span class="p">],</span> <span class="nv">$tagdata</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">strncmp</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="s2">&quot;spell_date&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$date</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">localize</span><span class="o">-&gt;</span><span class="na">format_date</span><span class="p">(</span><span class="nv">$val</span><span class="p">,</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;spell_date&#39;</span><span class="p">]);</span>
+
+        <span class="nv">$tagdata</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">swap_var_single</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$date</span><span class="p">,</span> <span class="nv">$tagdata</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Pair variables are a bit more complicated since they are often used for
+performing a loop within the tag data when there are multiple pieces of
+content of a similar type. A good example of this is the channel module
+where an entry might have multiple categories.</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span><span class="p">}</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">categories</span><span class="p">}</span>
+<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">category_name</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/categories</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">{</span><span class="nf">exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The Template class variable containing the variable pairs in the tag
+data is <a class="reference internal" href="#TMPL::$var_pair" title="TMPL::$var_pair"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$var_pair</span></code></a>, which is an array where the keys are
+the contents of the pair variable&#8217;s opening tag and the values are an
+array containing any parameters for the pair variable. Since the
+<a class="reference internal" href="#TMPL::$var_pair" title="TMPL::$var_pair"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$var_pair</span></code></a> variable does not contain the content of the
+variable pair, you will have to search the template for it yourself
+using a <code class="docutils literal"><span class="pre">preg_match()</span></code> (or possibly a <code class="docutils literal"><span class="pre">preg_match_all()</span></code>, if you
+believe there could be multiple instances of this variable pair).</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">foreach</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">TMPL</span><span class="o">-&gt;</span><span class="na">var_pair</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$val</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">strncmp</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="nv">$temp</span> <span class="o">=</span> <span class="nb">preg_match</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="nx">LD</span><span class="o">.</span><span class="nv">$key</span><span class="o">.</span><span class="nx">RD</span><span class="o">.</span><span class="s2">&quot;(.*?)&quot;</span><span class="o">.</span><span class="nx">LD</span><span class="o">.</span><span class="s1">&#39;\&#39;.SLASH.&#39;</span><span class="nx">items</span><span class="s1">&#39;.RD.&quot;/s&quot;, ee()-&gt;TMPL-&gt;tagdata, $matches)</span>
+
+<span class="s1">        // Set the display preference</span>
+<span class="s1">        $nest = (is_array($val) &amp;&amp; isset($val[&#39;</span><span class="nx">nest</span><span class="s1">&#39;])) ? $val[&#39;</span><span class="nx">nest</span><span class="s1">&#39;] : &#39;</span><span class="nx">no</span><span class="s1">&#39;;</span>
+
+<span class="s1">        if ($nest == &#39;</span><span class="nx">yes</span><span class="err">&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="nv">$temp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">nested_items</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">items</span><span class="p">,</span> <span class="nv">$temp</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+          <span class="nv">$temp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">linear_items</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">items</span><span class="p">,</span> <span class="nv">$temp</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conditional-tags">
+<h2><a class="toc-backref" href="#id19">Conditional Tags</a><a class="headerlink" href="#conditional-tags" title="Permalink to this headline">¶</a></h2>
+<p>Conditional tags allow scripting to be added to your module&#8217;s tag
+data in order to show data if certain defined criteria are met. The
+structure should be a variable being checked against another variable or
+value via an operator:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>// Structure
+<span class="p">{</span><span class="k">if</span> <span class="nv">variable</span> <span class="nv">comparison-operator</span> <span class="nv">value</span><span class="p">}</span>
+
+Data between the tags that gets shown if the condition is met.
+
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+// Example
+<span class="p">{</span><span class="k">if</span> <span class="nv">spell_level</span> <span class="o">&gt;</span> <span class="m">3</span><span class="p">}</span>
+
+Advance Magicians Only
+
+<span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>There is a great deal more information about possible conditionals in
+the <a class="reference internal" href="../../../templates/conditionals.html"><span class="doc">Conditional Tags</span></a>, so we suggest you give it a quick
+look over.</p>
+<p>If you are scripting conditional tags in your module, then they
+should be done first when processing tag data before any other variables
+are parsed. Instead of writing your own conditional parsing routine,
+ExpressionEngine allows you to simply give your data to a method that
+then takes care of all the work. The data needs to be in the form of an
+array where the key is the name of the variable and the value is the
+data for that variable.</p>
+<p>If you have <em>short conditionals</em> that can be evaluated without a
+comparison operator (ex: <code class="docutils literal"><span class="pre">{if</span> <span class="pre">allow_comments}</span></code>), then instead of
+sending data you will send a string of either <code class="docutils literal"><span class="pre">'TRUE'</span></code> or <code class="docutils literal"><span class="pre">'FALSE'</span></code>
+depending on whether that conditional should be evaluated as true or
+false. The example belows gives you an idea of how this should work:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$cond</span>       <span class="o">=</span> <span class="nv">$row</span><span class="p">;</span>   <span class="c1">// $row contains query fields and values, ex:  &#39;title&#39; =&gt; &quot;First Entry&quot;</span>
+
+<span class="nv">$cond</span><span class="p">[</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">userdata</span><span class="p">(</span><span class="s1">&#39;member_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;FALSE&#39;</span> <span class="o">:</span> <span class="s1">&#39;TRUE&#39;</span><span class="p">;</span>
+<span class="nv">$cond</span><span class="p">[</span><span class="s1">&#39;logged_out&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">session</span><span class="o">-&gt;</span><span class="na">userdata</span><span class="p">(</span><span class="s1">&#39;member_id&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;FALSE&#39;</span> <span class="o">:</span> <span class="s1">&#39;TRUE&#39;</span><span class="p">;</span>
+<span class="nv">$cond</span><span class="p">[</span><span class="s1">&#39;allow_comments&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;allow_comments&#39;</span><span class="p">])</span> <span class="k">AND</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;allow_comments&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;FALSE&#39;</span> <span class="o">:</span> <span class="s1">&#39;TRUE&#39;</span><span class="p">;</span>
+
+<span class="nv">$tagdata</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">prep_conditionals</span><span class="p">(</span><span class="nv">$tagdata</span><span class="p">,</span> <span class="nv">$cond</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once you send your tag data and your array of conditional tags, the
+<a class="reference internal" href="functions.html#Functions::prep_conditionals" title="Functions::prep_conditionals"><code class="xref php php-meth docutils literal"><span class="pre">Functions::prep_conditionals</span></code></a> method processes the conditionals
+so that they can be evaluated by the Template parser.</p>
+</div>
+<div class="section" id="method-and-property-reference">
+<h2><a class="toc-backref" href="#id20">Method and Property Reference</a><a class="headerlink" href="#method-and-property-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="attr">
+<dt id="TMPL::$tagdata">
+<em class="property">property </em><code class="descclassname">TMPL::$</code><code class="descname">tagdata</code><a class="headerlink" href="#TMPL::$tagdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>String containing the data within the tag you&#8217;re currently parsing.</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="TMPL::$var_single">
+<em class="property">property </em><code class="descclassname">TMPL::$</code><code class="descname">var_single</code><a class="headerlink" href="#TMPL::$var_single" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array containing single variables within <a class="reference internal" href="#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attr">
+<dt id="TMPL::$var_pair">
+<em class="property">property </em><code class="descclassname">TMPL::$</code><code class="descname">var_pair</code><a class="headerlink" href="#TMPL::$var_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array containing variable pairs within <a class="reference internal" href="#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="TMPL::fetch_param">
+<code class="descclassname">TMPL::</code><code class="descname">fetch_param</code><span class="sig-paren">(</span><em>$which</em><span class="optional">[</span>, <em>$default = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#TMPL::fetch_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the parameter of a template tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$which</strong> (<em>string</em>) &#8211; Name of the parameter</li>
+<li><strong>$default</strong> (<em>mixed</em>) &#8211; Default value for parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value of the parameter or the default</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="TMPL::parse_variables">
+<code class="descclassname">TMPL::</code><code class="descname">parse_variables</code><span class="sig-paren">(</span><em>$tagdata</em>, <em>$variables</em><span class="optional">[</span>, <em>$enable_backspace = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#TMPL::parse_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the variables within in a string&#8211;usually
+<a class="reference internal" href="#TMPL::$tagdata" title="TMPL::$tagdata"><code class="xref php php-attr docutils literal"><span class="pre">TMPL::$tagdata</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$tagdata</strong> (<em>string</em>) &#8211; Tagdata or text to be parsed</li>
+<li><strong>$variables</strong> (<em>array</em>) &#8211; Array of variables and their data (see
+<a class="reference internal" href="#master-variables-array">Master Variables Array</a> for an example)</li>
+<li><strong>$enable_backspace</strong> (<em>boolean</em>) &#8211; Optionally disable the <code class="docutils literal"><span class="pre">backspace</span></code>
+tag parameter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The <code class="docutils literal"><span class="pre">$tagdata</span></code> parsed with <code class="docutils literal"><span class="pre">$variables</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="TMPL::parse_variables_row">
+<code class="descclassname">TMPL::</code><code class="descname">parse_variables_row</code><span class="sig-paren">(</span><em>$tagdata</em>, <em>$variables</em><span class="optional">[</span>, <em>$solo = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#TMPL::parse_variables_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a single row of data instead of letting
+<a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> handle all of the rows for you.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$tagdata</strong> (<em>string</em>) &#8211; Tagdata or text to be parsed</li>
+<li><strong>$variables</strong> (<em>array</em>) &#8211; Array of variables for a single row of data</li>
+<li><strong>$solo</strong> (<em>boolean</em>) &#8211; Should be set to <code class="docutils literal"><span class="pre">TRUE</span></code> if not being called
+from <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a>&#8211;forces some caching</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The <code class="docutils literal"><span class="pre">$tagdata</span></code> parsed with <code class="docutils literal"><span class="pre">$variables</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="TMPL::swap_var_single">
+<code class="descclassname">TMPL::</code><code class="descname">swap_var_single</code><span class="sig-paren">(</span><em>$search</em>, <em>$replace</em>, <em>$source</em><span class="sig-paren">)</span><a class="headerlink" href="#TMPL::swap_var_single" title="Permalink to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 2.0: </span>Use <a class="reference internal" href="#TMPL::parse_variables" title="TMPL::parse_variables"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables</span></code></a> or
+<a class="reference internal" href="#TMPL::parse_variables_row" title="TMPL::parse_variables_row"><code class="xref php php-meth docutils literal"><span class="pre">TMPL::parse_variables_row</span></code></a> instead</p>
+</div>
+<p>Replace a single variable with a value, a callable method that simply
+plugs into <code class="docutils literal"><span class="pre">str_replace()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$search</strong> (<em>string</em>) &#8211; Name of the tag without the curly braces</li>
+<li><strong>$replace</strong> (<em>string</em>) &#8211; Value to put in the tag&#8217;s place</li>
+<li><strong>$source</strong> (<em>string</em>) &#8211; String to parse</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">$source</span></code> with <code class="docutils literal"><span class="pre">$search</span></code> replaced with <code class="docutils literal"><span class="pre">$replace</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Template Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

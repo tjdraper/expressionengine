@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Image Manipulation Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Input Class" href="input.html" />
+	    <link rel="prev" title="Functions Class" href="functions.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Image Manipulation Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="image-manipulation-class">
+<h1>Image Manipulation Class<a class="headerlink" href="#image-manipulation-class" title="Permalink to this headline">¶</a></h1>
+<p>ExpressionEngine&#8217;s Image Manipulation class lets you perform the following actions:</p>
+<ul class="simple">
+<li>Image Resizing</li>
+<li>Thumbnail Creation</li>
+<li>Image Cropping</li>
+<li>Image Rotating</li>
+<li>Image Watermarking</li>
+</ul>
+<p>While the Image Manipulation library can support other image libraries, ExpressionEngine requires and uses GD2.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Watermarking is only available using the GD/GD2 library. In addition, even though other libraries are supported, GD is required in order for the script to calculate the image properties. The image processing, however, will be performed with the library you specify.</p>
+</div>
+<div class="section" id="initializing-the-class">
+<h2>Initializing the Class<a class="headerlink" href="#initializing-the-class" title="Permalink to this headline">¶</a></h2>
+<p>Like most other classes in ExpressionEngine, the image class is initialized in your controller using the <code class="docutils literal"><span class="pre">ee()-&gt;load-&gt;library</span></code> function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;image_lib&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="processing-an-image">
+<h3>Processing an Image<a class="headerlink" href="#processing-an-image" title="Permalink to this headline">¶</a></h3>
+<p>Regardless of the type of processing you would like to perform (resizing, cropping, rotation, or watermarking), the general process is identical. You will set some preferences corresponding to the action you intend to perform, then call one of four available processing functions. For example, to create an image thumbnail you&#8217;ll do this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;image_library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gd2&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;source_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;create_thumb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">TRUE</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;maintain_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">TRUE</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span>         <span class="o">=</span> <span class="mi">75</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;image_lib&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">resize</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The above code tells the image_resize function to look for an image called <code class="docutils literal"><span class="pre">mypic.jpg</span></code> located in the source_image folder, then create a thumbnail that is 75 X 50 pixels using the GD2 image_library. Since the maintain_ratio option is enabled, the thumb will be as close to the target width and height as possible while preserving the original aspect ratio. The thumbnail will be called <code class="docutils literal"><span class="pre">mypic_thumb.jpg</span></code></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order for the image class to be allowed to do any processing, the folder containing the image files must have write permissions.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Image processing can require a considerable amount of server memory for some operations. If you are experiencing out of memory errors while processing images you may need to limit their maximum size, and/or adjust PHP memory limits.</p>
+</div>
+</div>
+<div class="section" id="processing-methods">
+<h3>Processing Methods<a class="headerlink" href="#processing-methods" title="Permalink to this headline">¶</a></h3>
+<p>There are four available processing methods:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#EE_Image_lib::resize" title="EE_Image_lib::resize"><code class="xref php php-meth docutils literal"><span class="pre">EE_Image_lib::resize()</span></code></a></li>
+<li><a class="reference internal" href="#EE_Image_lib::crop" title="EE_Image_lib::crop"><code class="xref php php-meth docutils literal"><span class="pre">EE_Image_lib::crop()</span></code></a></li>
+<li><a class="reference internal" href="#EE_Image_lib::rotate" title="EE_Image_lib::rotate"><code class="xref php php-meth docutils literal"><span class="pre">EE_Image_lib::rotate()</span></code></a></li>
+<li><a class="reference internal" href="#EE_Image_lib::watermark" title="EE_Image_lib::watermark"><code class="xref php php-meth docutils literal"><span class="pre">EE_Image_lib::watermark()</span></code></a></li>
+</ul>
+<p>These methods return boolean <code class="docutils literal"><span class="pre">TRUE</span></code> upon success and <code class="docutils literal"><span class="pre">FALSE</span></code> for failure. If they fail you can retrieve the error message using this function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>A good practice is use the processing function conditionally, showing an error upon failure, like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">resize</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You can optionally specify the HTML formatting to be applied to the errors, by submitting the opening/closing tags in the function, like this</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preferences">
+<span id="processing-preferences"></span><h3>Preferences<a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h3>
+<p>The preferences described below allow you to tailor the image processing to suit your needs.</p>
+<p>Note that not all preferences are available for every function. For example, the x/y axis preferences are only available for image cropping. Likewise, the width and height preferences have no effect on cropping. The &#8220;availability&#8221; column indicates which functions support a given preference.</p>
+<p>Availability Legend:</p>
+<ul class="simple">
+<li>R - Image Resizing</li>
+<li>C - Image Cropping</li>
+<li>X - Image Rotation</li>
+<li>W - Image Watermarking</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="19%" />
+<col width="45%" />
+<col width="8%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+<th class="head">Availability</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">image_library</span></code></td>
+<td>GD2</td>
+<td>GD, GD2, ImageMagick, NetPBM</td>
+<td>Sets the image library to be used.</td>
+<td>R, C, X, W</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">library_path</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the server path to your ImageMagick or NetPBM library. If you use
+either of those libraries you must supply the path.</td>
+<td>R, C, X
+R, C, S, W</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">source_image</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the source image name/path. The path must be a relative or absolute
+server path, not a URL.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">dynamic_output</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>Determines whether the new image file should be written to disk or
+generated dynamically. Note: If you choose the dynamic setting, only one
+image can be shown at a time, and it can&#8217;t be positioned on the page. It
+simply outputs the raw image dynamically to your browser, along with
+image headers.</td>
+<td>R, C, X, W</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">file_permissions</span></code></td>
+<td>0644</td>
+<td>(integer)</td>
+<td>File system permissions to apply on the resulting image file,
+writing it to the disk. WARNING: Use octal integer notation!</td>
+<td>R, C, X, W</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">quality</span></code></td>
+<td>90%</td>
+<td>1 - 100%</td>
+<td>Sets the quality of the image. The higher the quality the larger the
+file size.</td>
+<td>R, C, X, W</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">new_image</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the destination image name/path. You&#8217;ll use this preference when
+creating an image copy. The path must be a relative or absolute server
+path, not a URL.</td>
+<td>R, C, X, W</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">width</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the width you would like the image set to.</td>
+<td>R, C</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">height</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the height you would like the image set to.</td>
+<td>R, C</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">create_thumb</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>Tells the image processing function to create a thumb.</td>
+<td>R</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">thumb_marker</span></code></td>
+<td>_thumb</td>
+<td>None</td>
+<td>Specifies the thumbnail indicator. It will be inserted just before the
+file extension, so mypic.jpg would become mypic_thumb.jpg</td>
+<td>R</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">maintain_ratio</span></code></td>
+<td>TRUE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>Specifies whether to maintain the original aspect ratio when resizing or
+use hard values.</td>
+<td>R, C</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">master_dim</span></code></td>
+<td>auto</td>
+<td>auto, width, height</td>
+<td>Specifies what to use as the master axis when resizing or creating
+thumbs. For example, let&#8217;s say you want to resize an image to 100 X 75
+pixels. If the source image size does not allow perfect resizing to
+those dimensions, this setting determines which axis should be used as
+the hard value. &#8220;auto&#8221; sets the axis automatically based on whether the
+image is taller than wider, or vice versa.</td>
+<td>R</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">rotation_angle</span></code></td>
+<td>None</td>
+<td>90, 180, 270, vrt, hor</td>
+<td>Specifies the angle of rotation when rotating images. Note that PHP
+rotates counter-clockwise, so a 90 degree rotation to the right must be
+specified as 270.</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">x_axis</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the X coordinate in pixels for image cropping. For example, a
+setting of 30 will crop an image 30 pixels from the left.</td>
+<td>C</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">y_axis</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the Y coordinate in pixels for image cropping. For example, a
+setting of 30 will crop an image 30 pixels from the top.</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="image-watermarking">
+<h2>Image Watermarking<a class="headerlink" href="#image-watermarking" title="Permalink to this headline">¶</a></h2>
+<p>The Watermarking feature requires the GD/GD2 library.</p>
+<div class="section" id="two-types-of-watermarking">
+<h3>Two Types of Watermarking<a class="headerlink" href="#two-types-of-watermarking" title="Permalink to this headline">¶</a></h3>
+<p>There are two types of watermarking that you can use:</p>
+<ul class="simple">
+<li><strong>Text</strong>: The watermark message will be generating using text, either with a True Type font that you specify, or using the native text output that the GD library supports. If you use the True Type version your GD installation must be compiled with True Type support (most are, but not all).</li>
+<li><strong>Overlay</strong>: The watermark message will be generated by overlaying an image (usually a transparent PNG or GIF) containing your watermark over the source image.</li>
+</ul>
+</div>
+<div class="section" id="watermarking-an-image">
+<span id="watermarking"></span><h3>Watermarking an Image<a class="headerlink" href="#watermarking-an-image" title="Permalink to this headline">¶</a></h3>
+<p>Just as with the other methods (resizing, cropping, and rotating) the general process for watermarking involves setting the preferences corresponding to the action you intend to perform, then calling the watermark function. Here is an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;source_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Copyright 2006 - John Doe&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_font_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;./system/fonts/texb.ttf&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_font_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;16&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_font_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ffffff&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_vrt_alignment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bottom&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_hor_alignment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wm_padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;20&#39;</span><span class="p">;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">watermark</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The above example will use a 16 pixel True Type font to create the text &#8220;Copyright 2006 - John Doe&#8221;. The watermark will be positioned at the bottom/center of the image, 20 pixels from the bottom of the image.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order for the image class to be allowed to do any processing, the image file must have &#8220;write&#8221; file permissions. See <a class="reference internal" href="../../../troubleshooting/general/file_permissions.html"><span class="doc">File Permissions</span></a> for details.</p>
+</div>
+</div>
+<div class="section" id="watermarking-preferences">
+<h3>Watermarking Preferences<a class="headerlink" href="#watermarking-preferences" title="Permalink to this headline">¶</a></h3>
+<p>This table shown the preferences that are available for both types of watermarking (text or overlay)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="14%" />
+<col width="17%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_type</span></code></td>
+<td>text</td>
+<td>text, overlay</td>
+<td>Sets the type of watermarking that should be used.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">source_image</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>Sets the source image name/path. The path must be a relative or absolute
+server path, not a URL.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">dynamic_output</span></code></td>
+<td>FALSE</td>
+<td>TRUE/FALSE (boolean)</td>
+<td>Determines whether the new image file should be written to disk or
+generated dynamically. Note: If you choose the dynamic setting, only one
+image can be shown at a time, and it can&#8217;t be positioned on the page. It
+simply outputs the raw image dynamically to your browser, along with
+image headers.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">quality</span></code></td>
+<td>90%</td>
+<td>1 - 100%</td>
+<td>Sets the quality of the image. The higher the quality the larger the
+file size.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_padding</span></code></td>
+<td>None</td>
+<td>A number</td>
+<td>The amount of padding, set in pixels, that will be applied to the
+watermark to set it away from the edge of your images.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_vrt_alignment</span></code></td>
+<td>bottom</td>
+<td>top, middle, bottom</td>
+<td>Sets the vertical alignment for the watermark image.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_hor_alignment</span></code></td>
+<td>center</td>
+<td>left, center, right</td>
+<td>Sets the horizontal alignment for the watermark image.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_hor_offset</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>You may specify a horizontal offset (in pixels) to apply to the
+watermark position. The offset normally moves the watermark to the
+right, except if you have your alignment set to &#8220;right&#8221; then your offset
+value will move the watermark toward the left of the image.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_vrt_offset</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>You may specify a vertical offset (in pixels) to apply to the watermark
+position. The offset normally moves the watermark down, except if you
+have your alignment set to &#8220;bottom&#8221; then your offset value will move the
+watermark toward the top of the image.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="text-preferences">
+<h4>Text Preferences<a class="headerlink" href="#text-preferences" title="Permalink to this headline">¶</a></h4>
+<p>This table shown the preferences that are available for the text type of watermarking.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="14%" />
+<col width="14%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_text</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The text you would like shown as the watermark. Typically this will be a
+copyright notice.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_font_path</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The server path to the True Type Font you would like to use. If you do
+not use this option, the native GD font will be used.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_font_size</span></code></td>
+<td>16</td>
+<td>None</td>
+<td>The size of the text. Note: If you are not using the True Type option
+above, the number is set using a range of 1 - 5. Otherwise, you can use
+any valid pixel size for the font you&#8217;re using.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_font_color</span></code></td>
+<td>ffffff</td>
+<td>None</td>
+<td>The font color, specified in hex. Both the full 6-length (ie, 993300) and
+the short three character abbreviated version (ie, fff) are supported.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_shadow_color</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The color of the drop shadow, specified in hex. If you leave this blank
+a drop shadow will not be used. Both the full 6-length (ie, 993300) and
+the short three character abbreviated version (ie, fff) are supported.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_shadow_distance</span></code></td>
+<td>3</td>
+<td>None</td>
+<td>The distance (in pixels) from the font that the drop shadow should
+appear.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="overlay-preferences">
+<h4>Overlay Preferences<a class="headerlink" href="#overlay-preferences" title="Permalink to this headline">¶</a></h4>
+<p>This table shown the preferences that are available for the overlay type of watermarking.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="4%" />
+<col width="4%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_overlay_path</span></code></td>
+<td>None</td>
+<td>None</td>
+<td>The server path to the image you wish to use as your watermark. Required only if you are using the overlay method.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_opacity</span></code></td>
+<td>50</td>
+<td>1 - 100</td>
+<td>Image opacity. You may specify the opacity (i.e. transparency) of your watermark image. This allows the watermark to be faint and not completely obscure the details from the original image behind it. A 50% opacity is typical.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wm_x_transp</span></code></td>
+<td>4</td>
+<td>A number</td>
+<td>If your watermark image is a PNG or GIF image, you may specify a color on the image to be &#8220;transparent&#8221;. This setting (along with the next) will allow you to specify that color. This works by specifying the &#8220;X&#8221; and &#8220;Y&#8221; coordinate pixel (measured from the upper left) within the image that corresponds to a pixel representative of the color you want to be transparent.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wm_y_transp</span></code></td>
+<td>4</td>
+<td>A number</td>
+<td>Along with the previous setting, this allows you to specify the coordinate to a pixel representative of the color you want to be transparent.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EE_Image_lib">
+<em class="property">class </em><code class="descname">EE_Image_lib</code><a class="headerlink" href="#EE_Image_lib" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::initialize">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">initialize</code><span class="sig-paren">(</span><span class="optional">[</span><em>$props = array()</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::initialize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$props</strong> (<em>array</em>) &#8211; Image processing preferences</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE in case of invalid settings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Initializes the class for processing an image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::resize">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">resize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::resize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>The image resizing method lets you resize the original image, create a copy (with or without resizing), or create a thumbnail image.</p>
+<p>For practical purposes there is no difference between creating a copy and creating a thumbnail except a thumb will have the thumbnail marker as part of the name (i.e. mypic_thumb.jpg).</p>
+<p>All preferences listed in the <a class="reference internal" href="#processing-preferences"><span class="std std-ref">Preferences</span></a> table are available for this method except these three: <code class="docutils literal"><span class="pre">rotation_angle</span></code>, <code class="docutils literal"><span class="pre">x_axis</span></code> and <code class="docutils literal"><span class="pre">y_axis</span></code>.</p>
+<p><strong>Creating a Thumbnail</strong></p>
+<p>The resizing method will create a thumbnail file (and preserve the original) if you set this preference to TRUE:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;create_thumb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">TRUE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This single preference determines whether a thumbnail is created or not.</p>
+<p><strong>Creating a Copy</strong></p>
+<p>The resizing method will create a copy of the image file (and preserve the original) if you set a path and/or a new filename using this preference:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;new_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/new_image.jpg&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Notes regarding this preference:</p>
+<ul class="simple">
+<li>If only the new image name is specified it will be placed in the same folder as the original</li>
+<li>If only the path is specified, the new image will be placed in the destination with the same name as the original.</li>
+<li>If both the path and image name are specified it will placed in its own destination and given the new name.</li>
+</ul>
+<p><strong>Resizing the Original Image</strong></p>
+<p>If neither of the two preferences listed above (create_thumb, and new_image) are used, the resizing method will instead target the original image for processing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::crop">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">crop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::crop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>The cropping method works nearly identically to the resizing function except it requires that you set preferences for the X and Y axis (in pixels) specifying where to crop, like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;x_axis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;y_axis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>All preferences listed in the <a class="reference internal" href="#processing-preferences"><span class="std std-ref">Preferences</span></a> table are available for this method except these: <em>rotation_angle</em>, <em>create_thumb</em> and <em>new_image</em>.</p>
+<p>Here&#8217;s an example showing how you might crop an image:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;image_library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;imagemagick&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;library_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/usr/X11R6/bin/&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;source_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;x_axis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;y_axis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">crop</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Without a visual interface it is difficult to crop images, so this method is not very useful unless you intend to build such an interface.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::rotate">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">rotate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::rotate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>The image rotation method requires that the angle of rotation be set via its preference:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;rotation_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;90&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>There are 5 rotation options:</p>
+<ol class="arabic simple">
+<li>90 - rotates counter-clockwise by 90 degrees.</li>
+<li>180 - rotates counter-clockwise by 180 degrees.</li>
+<li>270 - rotates counter-clockwise by 270 degrees.</li>
+<li>hor - flips the image horizontally.</li>
+<li>vrt - flips the image vertically.</li>
+</ol>
+<p>Here&#8217;s an example showing how you might rotate an image:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;image_library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;netpbm&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;library_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/usr/bin/&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;source_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;rotation_angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hor&#39;</span><span class="p">;</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">rotate</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">display_errors</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::watermark">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">watermark</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::watermark" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>Creates a watermark over an image, please refer to the <a class="reference internal" href="#watermarking"><span class="std std-ref">Watermarking an Image</span></a>
+section for more info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::clear">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::clear" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+<p>The clear method resets all of the values used when processing an image. You will want to call this if you are processing images in a loop.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="EE_Image_lib::display_errors">
+<code class="descclassname">EE_Image_lib::</code><code class="descname">display_errors</code><span class="sig-paren">(</span><span class="optional">[</span><em>$open = '&lt;p&gt;</em><span class="optional">[</span>, <em>$close = '&lt;/p&gt;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#EE_Image_lib::display_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$open</strong> (<em>string</em>) &#8211; Error message opening tag</li>
+<li><strong>$close</strong> (<em>string</em>) &#8211; Error message closing tag</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Error messages</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns all detected errors formatted as a string.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">image_lib</span><span class="o">-&gt;</span><span class="na">diplay_errors</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Image Manipulation Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="input.html">Input Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

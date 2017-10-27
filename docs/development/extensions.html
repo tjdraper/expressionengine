@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Extensions Development &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Add-On Development" href="index.html" />
+	    <link rel="next" title="Extension Hooks" href="extension_hooks/index.html" />
+	    <link rel="prev" title="Modules" href="modules.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Add-On Development</a></li>
+								<li class="last">Extensions Development</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="extensions-development">
+<h1>Extensions Development<a class="headerlink" href="#extensions-development" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#naming-convention">Naming Convention</a></li>
+<li><a class="reference internal" href="#the-base-extension-class">The Base Extension Class</a></li>
+<li><a class="reference internal" href="#activating-and-updating">Activating and Updating</a></li>
+<li><a class="reference internal" href="#disabling">Disabling</a></li>
+<li><a class="reference internal" href="#settings">Settings</a></li>
+<li><a class="reference internal" href="#calling-of-the-extension">Calling of the Extension</a></li>
+<li><a class="reference internal" href="#multiple-extensions-same-hook">Multiple Extensions, Same Hook</a></li>
+<li><a class="reference internal" href="extension_hooks/index.html"><span class="doc">Extension Hooks</span></a></li>
+</ul>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Within ExpressionEngine are what is known as &#8216;hooks&#8217;; little snippets of
+code in over 100 strategic places that allow the calling of third-party
+scripts that can rewrite and modify the inner workings of the program.
+Extensions can do things like modify an entire Control Panel page,
+add/remove functionality, and modify the appearance of certain page
+elements. Extensions enable third party developers to modify aspects of
+ExpressionEngine without hacking the backend scripts. You can think of
+an Extension as a plugin. But unlike a plugin, Extensions are not used
+within your templates, they instead allow you to modify the core system
+itself.</p>
+<p>An Extension is an add-on script that is placed in the
+<code class="docutils literal"><span class="pre">/system/user/addons/&lt;package_name&gt;/</span></code> directory and
+then enabled via the <a class="reference internal" href="../cp/addons/index.html"><span class="doc">Add-on Manager</span></a> in the Control Panel. Extensions can
+have their own settings and their own database tables, if necessary, but
+neither is required. If settings are available for an Extension, a
+language file is required, but unlike a module there is no control panel
+for Extensions.</p>
+</div>
+<div class="section" id="naming-convention">
+<h2>Naming Convention<a class="headerlink" href="#naming-convention" title="Permalink to this headline">¶</a></h2>
+<p>Extensions have a similar naming convention to ExpressionEngine plugins
+so current developers should get the hang of them quickly. There is only
+a single file required for an extension and inside this file should be a
+PHP class. The name of the class is used in the file name of the
+extension with the addition of the suffix <code class="docutils literal"><span class="pre">_ext</span></code> so that the name of the
+file is the <em>lower-cased</em> class name with the prefix ext. and the
+standard PHP suffix of <code class="docutils literal"><span class="pre">.php</span></code>. So, if we have an extension named
+&#8216;<code class="docutils literal"><span class="pre">Link_truncator</span></code>&#8216;, then the file name for this extension would be
+&#8216;<code class="docutils literal"><span class="pre">ext.link_truncator.php</span></code>&#8216; and the class would be called
+&#8216;<code class="docutils literal"><span class="pre">Link_truncator_ext</span></code>&#8216;.</p>
+</div>
+<div class="section" id="addon-setup-file">
+<h2>Addon Setup file<a class="headerlink" href="#addon-setup-file" title="Permalink to this headline">¶</a></h2>
+<p>All addons must have an <code class="docutils literal"><span class="pre">addon.setup.php</span></code> file. This one will be quite simple:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;author&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Me&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;author_url&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;name&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Link Truncator&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;version&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;1.0.0&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;namespace&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;MyAddon\LinkTruncator&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;settings_exist&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-base-extension-class">
+<h2>The Base Extension Class<a class="headerlink" href="#the-base-extension-class" title="Permalink to this headline">¶</a></h2>
+<p>Inside an extension file should be a class, which will be called by
+ExpressionEngine whenever this particular extension is required. The
+constructor for the class will require one parameter that will receive
+settings for the extension and set a class variable.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Link_truncator_ext</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">$settings</span>        <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Constructor</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param   mixed   Settings array or empty string if none exist.</span>
+<span class="sd">     */</span>
+    <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$settings</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span> <span class="o">=</span> <span class="nv">$settings</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// END</span>
+<span class="p">}</span>
+<span class="c1">// END CLASS</span>
+</pre></div>
+</div>
+<p>Besides the $settings class variable, there are five other required
+class variables that your extension should have. These variables output
+meta information about your extension to the Extensions Manager so that
+it can describe your extension, provide documentation, and update
+settings (if any).</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Link_truncator_ext</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">$name</span>       <span class="o">=</span> <span class="s1">&#39;Link Truncator&#39;</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nv">$version</span>        <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nv">$description</span>    <span class="o">=</span> <span class="s1">&#39;Truncates long links&#39;</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nv">$settings_exist</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nv">$docs_url</span>       <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="c1">// &#39;https://ellislab.com/expressionengine/user-guide/&#39;;</span>
+
+    <span class="k">var</span> <span class="nv">$settings</span>       <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Constructor</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param   mixed   Settings array or empty string if none exist.</span>
+<span class="sd">     */</span>
+    <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$settings</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span> <span class="o">=</span> <span class="nv">$settings</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// END CLASS</span>
+</pre></div>
+</div>
+<p>If your extension has a language file, then you the $name and
+$description class variables can be set in the constructor by calling
+the language file and variables using the <a class="reference internal" href="legacy/libraries/language.html"><span class="doc">Language ($LANG)
+class</span></a>. If your plugin is likely to be used
+internationally and by non-English speakers this is a recommended course
+of action.</p>
+</div>
+<div class="section" id="activating-and-updating">
+<h2>Activating and Updating<a class="headerlink" href="#activating-and-updating" title="Permalink to this headline">¶</a></h2>
+<p>There are two required methods for your extensions class that control
+the activating and updating of your extension. The most important is the
+function used to activate the extension in ExpressionEngine. To activate
+an extension, you are simply inserting a query into the database with
+various pieces of information like the extension hook and the name of
+the method in your extension&#8217;s class to call for this hook.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Activate Extension</span>
+<span class="sd"> *</span>
+<span class="sd"> * This function enters the extension into the exp_extensions table</span>
+<span class="sd"> *</span>
+<span class="sd"> * @see https://ellislab.com/codeigniter/user-guide/database/index.html for</span>
+<span class="sd"> * more information on the db class.</span>
+<span class="sd"> *</span>
+<span class="sd"> * @return void</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">activate_extension</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;max_link_length&#39;</span>   <span class="o">=&gt;</span> <span class="mi">18</span><span class="p">,</span>
+        <span class="s1">&#39;truncate_cp_links&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;use_in_forum&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;no&#39;</span>
+    <span class="p">);</span>
+
+
+    <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;class&#39;</span>     <span class="o">=&gt;</span> <span class="nx">__CLASS__</span><span class="p">,</span>
+        <span class="s1">&#39;method&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;truncate_this&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hook&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;typography_parse_type_end&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;settings&#39;</span>  <span class="o">=&gt;</span> <span class="nb">serialize</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">),</span>
+        <span class="s1">&#39;priority&#39;</span>  <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s1">&#39;version&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">,</span>
+        <span class="s1">&#39;enabled&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span>
+    <span class="p">);</span>
+
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is a quick run down of what each of these fields in the database
+table mean:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">extension_id</span></code> - primary id for row in table</li>
+<li><code class="docutils literal"><span class="pre">class</span></code> - name of your extension&#8217;s class</li>
+<li><code class="docutils literal"><span class="pre">method</span></code> - method being called for this extension hook</li>
+<li><code class="docutils literal"><span class="pre">hook</span></code> - name of the extension hook in the program</li>
+<li><code class="docutils literal"><span class="pre">settings</span></code> - serialized array of settings, usually empty by default</li>
+<li><code class="docutils literal"><span class="pre">priority</span></code> - an extension hook could have many extensions being
+called, so there needs to be priority. 1 =&gt; First, 10 =&gt; Last.</li>
+<li><code class="docutils literal"><span class="pre">version</span></code> - version of extension when activated, used for updating</li>
+<li><code class="docutils literal"><span class="pre">enabled</span></code> - is this extension activated</li>
+</ul>
+<p>Updating an extension is extremely easy in ExpressionEngine. The user
+will simply upload the new version of the extension and ExpressionEngine
+will automatically update the extension the next time it is called. All
+that is required is an intelligent function called
+<code class="docutils literal"><span class="pre">update_extension()</span></code>. The program will automatically compare the
+version of the extension information in the database against the version
+of the extension file, and if the extension file is a newer version it
+calls this function.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Update Extension</span>
+<span class="sd"> *</span>
+<span class="sd"> * This function performs any necessary db updates when the extension</span>
+<span class="sd"> * page is visited</span>
+<span class="sd"> *</span>
+<span class="sd"> * @return  mixed   void on update / false if none</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">update_extension</span><span class="p">(</span><span class="nv">$current</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$current</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="k">OR</span> <span class="nv">$current</span> <span class="o">==</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">FALSE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$current</span> <span class="o">&lt;</span> <span class="s1">&#39;1.0&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Update to version 1.0</span>
+    <span class="p">}</span>
+
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="nx">__CLASS__</span><span class="p">);</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span>
+                <span class="s1">&#39;extensions&#39;</span><span class="p">,</span>
+                <span class="k">array</span><span class="p">(</span><span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">version</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disabling">
+<h2>Disabling<a class="headerlink" href="#disabling" title="Permalink to this headline">¶</a></h2>
+<p>When an extension is enabled for the very <em>first</em> time, the
+<code class="docutils literal"><span class="pre">activate_extension()</span></code> function is called and all of the extension
+calls are inserted into the database. When an extension is disabled
+though, these extension calls are not removed from the database. Instead
+they are merely disabled, which allows settings to be preserved and not
+removed so that they are still there if the extension is enabled again
+in the future.</p>
+<p>This causes a problem for developers who, while developing an extension,
+will often enable an extension to test their code but before they have
+added all of their extension calls to the <code class="docutils literal"><span class="pre">activate_extension()</span></code>
+function. What we have done is allowed the creation of a
+<code class="docutils literal"><span class="pre">disable_extension()</span></code> function in an extension&#8217;s class. If this
+function exists in the class, it will be called whenever your extension
+is disabled. This will allow you to clear out your extension&#8217;s data and
+basically start fresh every single time.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Disable Extension</span>
+<span class="sd"> *</span>
+<span class="sd"> * This method removes information from the exp_extensions table</span>
+<span class="sd"> *</span>
+<span class="sd"> * @return void</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">disable_extension</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="nx">__CLASS__</span><span class="p">);</span>
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;extensions&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="abstracted-settings-form-and-processing">
+<h3>Abstracted Settings Form and Processing<a class="headerlink" href="#abstracted-settings-form-and-processing" title="Permalink to this headline">¶</a></h3>
+<p>If you want to give your extension the ability to have settings, then we
+have written an abstracted layer to make it extremely easy. First, you
+have to make sure that you have your <code class="docutils literal"><span class="pre">$settings_exist</span></code> class variable
+set to &#8216;<code class="docutils literal"><span class="pre">y</span></code>&#8216;. Second, you need a language file for your extension with
+the file name of the language file being the extension&#8217;s lower-cased
+class name with a suffix of &#8216;<code class="docutils literal"><span class="pre">_lang.php</span></code>&#8216;. Make sure the language file
+is put in the <code class="docutils literal"><span class="pre">/system/user/addons/package</span>
+<span class="pre">name/language/</span></code> directory too. And finally, you need to have a method
+in your extension&#8217;s class called <code class="docutils literal"><span class="pre">settings()</span></code>. This function will
+return an array in a certain form that will help the Extensions Manager
+automatically create a form for your settings.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// --------------------------------</span>
+<span class="c1">//  Settings</span>
+<span class="c1">// --------------------------------</span>
+
+<span class="k">function</span> <span class="nf">settings</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$settings</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+    <span class="c1">// Creates a text input with a default value of &quot;EllisLab Brand Butter&quot;</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;brand&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s2">&quot;EllisLab Brand Butter&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Creates a textarea with 20 rows and an empty default value</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;rows&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;20&#39;</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+    <span class="c1">// Creates a set of radio buttons, one for &quot;Yes&quot; (y), one for &quot;No&quot; (n) and a default of &quot;Yes&quot;</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;tasty&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;y&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Yes&quot;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;No&quot;</span><span class="p">),</span> <span class="s1">&#39;y&#39;</span><span class="p">);</span>
+
+    <span class="c1">// Creates a set of checkboxes, one for &quot;Lowfat&quot; (l) and one for &quot;Salty&quot; (s), and a</span>
+    <span class="c1">// default of both items being checked</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;details&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;l&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Lowfat&quot;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Salty&quot;</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">));</span>
+
+    <span class="c1">// Creates a select dropdown with the options &quot;France&quot; (fr), &quot;Germany&quot; (de), and &quot;United States&quot;</span>
+    <span class="c1">// (us), with a default of &quot;United States&quot;</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;fr&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;us&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;United States&#39;</span><span class="p">),</span> <span class="s1">&#39;us&#39;</span><span class="p">);</span>
+
+    <span class="c1">// Creates a multi-select box with the options &quot;Derek&quot; (dj), &quot;Leslie&quot; (lc), and &quot;Rick&quot; (re) with</span>
+    <span class="c1">// Derek and Rick selected by default</span>
+    <span class="nv">$settings</span><span class="p">[</span><span class="s1">&#39;enjoyed_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ms&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;dj&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Derek&#39;</span><span class="p">,</span> <span class="s1">&#39;lc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Leslie&#39;</span><span class="p">,</span> <span class="s1">&#39;re&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Rick&#39;</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;dj&#39;</span><span class="p">,</span> <span class="s1">&#39;re&#39;</span><span class="p">));</span>
+
+
+    <span class="c1">// General pattern:</span>
+    <span class="c1">//</span>
+    <span class="c1">// $settings[variable_name] =&gt; array(type, options, default);</span>
+    <span class="c1">//</span>
+    <span class="c1">// variable_name: short name for the setting and the key for the language file variable</span>
+    <span class="c1">// type:          i - text input, t - textarea, r - radio buttons, c - checkboxes, s - select, ms - multiselect</span>
+    <span class="c1">// options:       can be string (i, t) or array (r, c, s, ms)</span>
+    <span class="c1">// default:       array member, array of members, string, nothing</span>
+
+    <span class="k">return</span> <span class="nv">$settings</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// END</span>
+</pre></div>
+</div>
+<p>A note about the values array for the second field: The keys will be
+used as the value for that item while the value will be the language
+text for that item. If you want, the value can be the name of a language
+variable from your extension&#8217;s language file and the Extensions Manager
+will automatically retrieve it for you.</p>
+</div>
+<div class="section" id="built-in-settings-form-and-processing">
+<h3>Built In Settings Form and Processing<a class="headerlink" href="#built-in-settings-form-and-processing" title="Permalink to this headline">¶</a></h3>
+<p>Alternatively, if your settings require a special form that cannot be
+created by the abstracted layer above, then ExpressionEngine permits you
+to create your own settings form and processing functions within your
+Extension. First, you will need to have a method in your
+extension&#8217;s class called <code class="docutils literal"><span class="pre">settings_form()</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Settings Form</span>
+<span class="sd"> *</span>
+<span class="sd"> * @param   Array   Settings</span>
+<span class="sd"> * @return  void</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">settings_form</span><span class="p">(</span><span class="nv">$current</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;link_truncator&#39;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$current</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="nv">$current</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="nv">$defaults</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;max_link_length&#39;</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">&#39;truncate_cp_links&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;n&#39;</span>
+  <span class="p">);</span>
+
+  <span class="nv">$values</span> <span class="o">=</span> <span class="nb">array_replace</span><span class="p">(</span><span class="nv">$defaults</span><span class="p">,</span> <span class="nv">$current</span><span class="p">);</span>
+
+  <span class="nv">$vars</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;base_url&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addons/settings/&#39;</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39;/save&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;cp_page_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Link Truncator Settings&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;save_btn_text&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;btn_save_settings&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;save_btn_text_working&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;btn_saving&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;alerts_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;link-truncator-save&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sections&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="k">array</span><span class="p">())</span>
+  <span class="p">);</span>
+
+  <span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;sections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;max_link_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+          <span class="s1">&#39;max_link_length&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;max_link_length&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+      <span class="p">),</span>
+      <span class="c1">// Site short name field</span>
+      <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;truncate_cp_links&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;truncate_cp_links_desc&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+          <span class="s1">&#39;truncate_cp_links&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;yes_no&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;truncate_cp_links&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span>
+          <span class="p">)</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;link_truncator:index&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="view-file">
+<h3>View File<a class="headerlink" href="#view-file" title="Permalink to this headline">¶</a></h3>
+<p>Since we&#8217;re using the <a class="reference internal" href="shared_form_view.html"><span class="doc">Shared Form View</span></a>, our view file remains
+quite simple. In this case we will call it <cite>Views/index.php</cite></p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;ee:_shared/form&#39;</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="save-settings">
+<h3>Save Settings<a class="headerlink" href="#save-settings" title="Permalink to this headline">¶</a></h3>
+<p>Lastly, you will need to have a method in your extension&#8217;s class called
+<code class="docutils literal"><span class="pre">save_settings()</span></code>. This function will be called when your
+<code class="docutils literal"><span class="pre">settings_form()</span></code> method&#8217;s form is submitted. Use it to process the
+data sent and put it into the exp_extensions database table. Remember
+that the data put into the database is a serialized array, so handle it
+appropriately.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Save Settings</span>
+<span class="sd"> *</span>
+<span class="sd"> * This function provides a little extra processing and validation</span>
+<span class="sd"> * than the generic settings form.</span>
+<span class="sd"> *</span>
+<span class="sd"> * @return void</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">save_settings</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="nx">show_error</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;unauthorized_access&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">lang</span><span class="o">-&gt;</span><span class="na">loadfile</span><span class="p">(</span><span class="s1">&#39;link_truncator&#39;</span><span class="p">);</span>
+
+    <span class="nv">$len</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;max_link_length&#39;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">is_numeric</span><span class="p">(</span><span class="nv">$len</span><span class="p">)</span> <span class="k">OR</span> <span class="nv">$len</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Alert&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">makeInline</span><span class="p">(</span><span class="s1">&#39;link-truncator-save&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">asIssue</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">withTitle</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;message_failure&#39;</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">addToBody</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;max_link_length_range&#39;</span><span class="p">),</span> <span class="nv">$len</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">defer</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Alert&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">makeInline</span><span class="p">(</span><span class="s1">&#39;link-truncator-save&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">asSuccess</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">withTitle</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;message_success&#39;</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">addToBody</span><span class="p">(</span><span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;preferences_updated&#39;</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">defer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">functions</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addons/settings/link_truncator&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="calling-of-the-extension">
+<h2>Calling of the Extension<a class="headerlink" href="#calling-of-the-extension" title="Permalink to this headline">¶</a></h2>
+<p>The following is an example of an ExpressionEngine Extension Hook that
+is available for use:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// -------------------------------------------</span>
+<span class="c1">// &#39;typography_parse_type_end&#39; hook.</span>
+<span class="c1">//  - Modify string after all other typography processing</span>
+<span class="c1">//</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">extensions</span><span class="o">-&gt;</span><span class="na">active_hook</span><span class="p">(</span><span class="s1">&#39;typography_parse_type_end&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">TRUE</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$str</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">extensions</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;typography_parse_type_end&#39;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">,</span> <span class="nv">$this</span><span class="p">,</span> <span class="nv">$prefs</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="c1">//</span>
+<span class="c1">// -------------------------------------------</span>
+</pre></div>
+</div>
+<p>The first parameter of <code class="docutils literal"><span class="pre">$this-&gt;extensions-&gt;call_extension</span></code> is the name
+of the hook, which lets the Extension class know what extensions to
+call. The other three parameters are variables taken from the function
+that the hook is embedded within. They provide information and data for
+the extensions being called for this hook, which allows those extensions
+to have information about the script that allow them to perform certain
+actions or manipulate data. When an extension is called,
+ExpressionEngine loads the extension file, instantiates the extension&#8217;s
+class, and then calls the method specified for this extension hook as
+specified by the extension when it was activated (see above concerning
+activation).</p>
+<p>When that method is called in the extension&#8217;s class those other three
+parameters will be sent to the method automatically. Here is what the
+method might look like:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="sd">/**</span>
+<span class="sd"> * Shorten Link Text</span>
+<span class="sd"> *</span>
+<span class="sd"> * This function is a callback method for preg_replace_callback in the method below.</span>
+<span class="sd"> *</span>
+<span class="sd"> * @param   array   array from the preg_match</span>
+<span class="sd"> * @return  string  Newly truncated Link.</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">_shorten_link_text</span><span class="p">(</span><span class="nv">$matches</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$link_text</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="nv">$link_text</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$link_text</span><span class="p">,</span> <span class="nb">strpos</span><span class="p">(</span><span class="nv">$link_text</span><span class="p">,</span> <span class="s1">&#39;://&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">strlen</span><span class="p">(</span><span class="nv">$link_text</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;max_link_length&#39;</span><span class="p">]</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$l</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;max_link_length&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="nv">$b_part</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$link_text</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="nv">$l</span><span class="p">);</span>
+        <span class="nv">$e_part</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$link_text</span><span class="p">,</span> <span class="o">-</span><span class="nv">$l</span><span class="p">);</span>
+
+        <span class="nv">$link_text</span> <span class="o">=</span> <span class="nv">$b_part</span> <span class="o">.</span> <span class="s1">&#39;&amp;hellip;&#39;</span> <span class="o">.</span> <span class="nv">$e_part</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="nv">$link_text</span><span class="o">.</span><span class="s1">&#39;&lt;/a&gt;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Truncate This</span>
+<span class="sd"> *</span>
+<span class="sd"> * This function is the meat &amp; potatoes of the extension, where all</span>
+<span class="sd"> * the work is done.</span>
+<span class="sd"> *</span>
+<span class="sd"> * @see https://ellislab.com/expressionengine/user-guide/development/extension_hooks/global/typography/index.html#typography-parse-type-end</span>
+<span class="sd"> *</span>
+<span class="sd"> * @param   string  string to look</span>
+<span class="sd"> * @param   object  typography object</span>
+<span class="sd"> * @param   array   array of preferences</span>
+<span class="sd"> * @return  string</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">truncate_this</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$obj</span><span class="p">,</span> <span class="nv">$prefs</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;truncate_cp_links&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">REQ</span> <span class="o">==</span> <span class="s1">&#39;CP&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">EE</span><span class="o">-&gt;</span><span class="na">FRM_CORE</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">settings</span><span class="p">[</span><span class="s1">&#39;use_in_forum&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nv">$pattern</span> <span class="o">=</span> <span class="s2">&quot;/(&lt;a[^&gt;]*\s+href\s*=\s*(</span><span class="se">\042</span><span class="s2">|047)([^</span><span class="se">\\</span><span class="s2">2]*?)</span><span class="se">\\</span><span class="s2">2[^&gt;]*&gt;)</span><span class="se">\\</span><span class="s2">3&lt;\/a&gt;/i&quot;</span><span class="p">;</span>
+
+    <span class="nv">$str</span> <span class="o">=</span> <span class="nb">preg_replace_callback</span><span class="p">(</span><span class="nv">$pattern</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nb">get_class</span><span class="p">(</span><span class="nv">$this</span><span class="p">),</span> <span class="s1">&#39;_shorten_link_text&#39;</span><span class="p">),</span> <span class="nv">$str</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The three parameters from the extension hook are mapped straight to the
+three parameters of the method being called, and so your extension can
+easily use those parameters and do what it needs to do. The
+ExpressionEngine.com <a class="reference internal" href="extension_hooks/index.html"><span class="doc">Extension Hook library</span></a> will have a record of all
+extension hooks and the parameters available to you, along with a
+suggestion or two about what can be done with the extension hook.</p>
+</div>
+<div class="section" id="multiple-extensions-same-hook">
+<h2>Multiple Extensions, Same Hook<a class="headerlink" href="#multiple-extensions-same-hook" title="Permalink to this headline">¶</a></h2>
+<p>When an extension hook is called, ExpressionEngine checks the database
+to see if there are any extensions available for the hook. If there are
+extensions, then it processes them in order based on their priority
+level with the lower the priority number the sooner the extension is
+called. Because of priority, extensions might interfere with each other,
+so we have provided two variables for helping with that.</p>
+<div class="section" id="this-extensions-last-call">
+<h3>$this-&gt;extensions-&gt;last_call<a class="headerlink" href="#this-extensions-last-call" title="Permalink to this headline">¶</a></h3>
+<p>There will be rather popular hooks being used by multiple extensions and
+some hooks will expect you to return data to the extension hook. Because
+of that, there is a variable available from the Extensions class
+(<code class="docutils literal"><span class="pre">$this-&gt;extensions</span></code>) that will contain the returned data of any prior
+extensions for that hook. Say, there is a hook for formatting text and
+an extension before yours is called. That extension will be returning
+the text formatted in its own way, but then your extension is called
+with the original text details being sent. In such an instance of data
+being returned and possible prior extensions, there is a variable
+available to retrieve that already formatted text:
+<code class="docutils literal"><span class="pre">$this-&gt;extensions-&gt;last_call</span></code>. This variable will return whatever the
+last extension returned to this hook. If there was no prior extension,
+then the value of this variable is <code class="docutils literal"><span class="pre">FALSE</span></code>.</p>
+</div>
+<div class="section" id="this-extensions-end-script">
+<h3>$this-&gt;extensions-&gt;end_script<a class="headerlink" href="#this-extensions-end-script" title="Permalink to this headline">¶</a></h3>
+<p>Many extension hooks exist for the express purpose of totally
+controlling a page or script in the Control Panel. They are meant for
+redesigning the appearance of a form or perhaps usurping a script for
+processing form data. In those instances you want your extension to be
+the last thing called for that extension hook so that nothing else is
+processed after that point. The <code class="docutils literal"><span class="pre">$this-&gt;extensions-&gt;end_script</span></code> exists
+solely for that purpose. If you set this value to TRUE, then once your
+extension is done being processed the execution of the hook is finished,
+as is the script that the extension hook is contained within.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extensions Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extension_hooks/index.html">Extension Hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

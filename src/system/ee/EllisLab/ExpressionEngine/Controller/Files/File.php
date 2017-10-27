@@ -1,4 +1,11 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 namespace EllisLab\ExpressionEngine\Controller\Files;
 
@@ -6,27 +13,7 @@ use EllisLab\ExpressionEngine\Controller\Files\AbstractFiles as AbstractFilesCon
 use EllisLab\ExpressionEngine\Service\Validation\Result as ValidationResult;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine CP Files\File Class
- *
- * @package		ExpressionEngine
- * @subpackage	Control Panel
- * @category	Control Panel
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Files\File Controller
  */
 class File extends AbstractFilesController {
 
@@ -115,7 +102,6 @@ class File extends AbstractFilesController {
 		$this->generateSidebar($file->upload_location_id);
 		$this->stdHeader();
 		ee()->view->cp_page_title = sprintf(lang('edit_file_metadata'), $file->title);
-		ee()->view->cp_page_title_alt = ee()->view->cp_page_title . '<a class="btn action ta" href="' . ee('CP/URL')->make('files/file/crop/' . $id) . '">' . lang('btn_crop') . '</a>';
 
 		ee()->view->cp_breadcrumbs = array(
 			ee('CP/URL')->make('files')->compile() => lang('file_manager'),

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Relationships &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../index.html" />
+	    <link rel="up" title="Fieldtypes" href="index.html" />
+	    <link rel="next" title="Rich Text Editor" href="rte.html" />
+	    <link rel="prev" title="Grid" href="grid.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../index.html">Home</a></li>
+								<li><a href="index.html" accesskey="U">Fieldtypes</a></li>
+								<li class="last">Relationships</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="relationships">
+<h1>Relationships<a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h1>
+<p>Relationships are an extremely powerful tool that allow you to connect Entries
+in one Channel to those in another one, or even to other entries in the same
+channel. This ability allows you to store very complex content in your Channel
+entries.</p>
+<p>This fieldtype is currently only limited to Channels.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#field-options" id="id13">Field Options</a></li>
+<li><a class="reference internal" href="#template-tags" id="id14">Template Tags</a></li>
+<li><a class="reference internal" href="#examples" id="id15">Examples</a></li>
+</ul>
+</div>
+<div class="section" id="field-options">
+<h2><a class="toc-backref" href="#id13">Field Options</a><a class="headerlink" href="#field-options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="channels-to-relate">
+<h3>Channels to Relate<a class="headerlink" href="#channels-to-relate" title="Permalink to this headline">¶</a></h3>
+<p>Choose which channels can related content be pulled from.</p>
+</div>
+<div class="section" id="include-in-selection">
+<h3>Include in Selection<a class="headerlink" href="#include-in-selection" title="Permalink to this headline">¶</a></h3>
+<p>Allow expired or future entries in this relationships field.</p>
+</div>
+<div class="section" id="limit-by-category">
+<h3>Limit by Category<a class="headerlink" href="#limit-by-category" title="Permalink to this headline">¶</a></h3>
+<p>Choose categories to limit the entries in this relationships field.</p>
+</div>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<p>Choose authors to limit the entries in this relationships field.</p>
+</div>
+<div class="section" id="limit-by-status">
+<h3>Limit By Status<a class="headerlink" href="#limit-by-status" title="Permalink to this headline">¶</a></h3>
+<p>Choose statuses to limit the entries in this relationships field.</p>
+</div>
+<div class="section" id="maximum-entries">
+<h3>Maximum Entries<a class="headerlink" href="#maximum-entries" title="Permalink to this headline">¶</a></h3>
+<p>Maximum number of entries to show in the relationship field. Leave blank to allow all entries.</p>
+</div>
+<div class="section" id="order-by">
+<h3>Order By<a class="headerlink" href="#order-by" title="Permalink to this headline">¶</a></h3>
+<p>Default ordering of entries in relationship field.</p>
+</div>
+<div class="section" id="allow-multiple-relationships">
+<h3>Allow Multiple Relationships?<a class="headerlink" href="#allow-multiple-relationships" title="Permalink to this headline">¶</a></h3>
+<p>When set to yes, authors will be allowed to create multiple relationships in a single field.</p>
+</div>
+</div>
+<div class="section" id="template-tags">
+<h2><a class="toc-backref" href="#id14">Template Tags</a><a class="headerlink" href="#template-tags" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#parameters" id="id16">Parameters</a></li>
+<li><a class="reference internal" href="#accessing-children" id="id17">Accessing Children</a></li>
+<li><a class="reference internal" href="#accessing-siblings" id="id18">Accessing Siblings</a></li>
+<li><a class="reference internal" href="#accessing-parents" id="id19">Accessing Parents</a></li>
+<li><a class="reference internal" href="#fetching-entry-ids-only" id="id20">Fetching Entry IDs Only</a></li>
+<li><a class="reference internal" href="#namespacing-variables" id="id21">Namespacing Variables</a></li>
+</ul>
+</div>
+<div class="section" id="parameters">
+<span id="relationship-tag-params"></span><h3><a class="toc-backref" href="#id16">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<p>The following parameters are available to all looping relationship tags,
+allowing you to further filter or sort the entries being retrieved. They
+function the same as they do when used on the
+<a class="reference internal" href="../channel/channel_entries.html#channel-entries-parameters"><span class="std std-ref">{exp:channel:entries} tag</span></a>. The
+available parameters are:</p>
+<ul class="simple">
+<li>author_id</li>
+<li>backspace</li>
+<li>category</li>
+<li>channel</li>
+<li>entry_id</li>
+<li>group_id</li>
+<li>offset</li>
+<li>orderby</li>
+<li>show_expired</li>
+<li>show_future_entries</li>
+<li>sort</li>
+<li>start_on</li>
+<li>status</li>
+<li>stop_before</li>
+<li>url_title</li>
+<li>username</li>
+</ul>
+<p>Some relationship tags may have additional parameters available.  These are
+included in the usage instructions below.</p>
+</div>
+<div class="section" id="accessing-children">
+<h3><a class="toc-backref" href="#id17">Accessing Children</a><a class="headerlink" href="#accessing-children" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id3">
+<ul class="simple">
+<li><a class="reference internal" href="#usage-multiple-related-entries" id="id22">Usage: Multiple Related Entries</a></li>
+<li><a class="reference internal" href="#usage-single-related-entries" id="id23">Usage: Single Related Entries</a></li>
+</ul>
+</div>
+<div class="section" id="usage-multiple-related-entries">
+<h4><a class="toc-backref" href="#id22">Usage: Multiple Related Entries</a><a class="headerlink" href="#usage-multiple-related-entries" title="Permalink to this headline">¶</a></h4>
+<p>Given the following channel layout:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>ParentChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+  relationship_field    Relationship (ChildChannel, Multiple)
+
+
+ChildChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+</pre></div>
+</div>
+<p>You would access the child entries in your template using the following syntax:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;parentChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">title</span><span class="p">}</span> - <span class="p">{</span><span class="nf">field1</span><span class="p">}</span> - <span class="p">{</span><span class="nf">field2</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">relationship_field:title</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">relationship_field:field1</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">relationship_field:field2</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/relationship_field</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The section of the template that belongs to the <code class="docutils literal"><span class="pre">relationship_field</span></code>:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relationship_field</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:title</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:field1</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:field2</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/relationship_field</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Will be looped over.  It acts very similarly to a <code class="docutils literal"><span class="pre">channel:entries</span></code> tag.</p>
+</div>
+<div class="section" id="usage-single-related-entries">
+<h4><a class="toc-backref" href="#id23">Usage: Single Related Entries</a><a class="headerlink" href="#usage-single-related-entries" title="Permalink to this headline">¶</a></h4>
+<p>Given the following channel layout, where <code class="docutils literal"><span class="pre">relationship_field</span></code> is limited to
+taking a single child entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>ParentChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+  relationship_field    Relationship (ChildChannel, Single)
+
+
+ChildChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+</pre></div>
+</div>
+<p>You would access the child entry in your template using the following syntax:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;parentChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">title</span><span class="p">}</span> - <span class="p">{</span><span class="nf">field1</span><span class="p">}</span> - <span class="p">{</span><span class="nf">field2</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:title</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:field1</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field:field2</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>No looping occurs.</p>
+</div>
+</div>
+<div class="section" id="accessing-siblings">
+<h3><a class="toc-backref" href="#id18">Accessing Siblings</a><a class="headerlink" href="#accessing-siblings" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id4">
+<ul class="simple">
+<li><a class="reference internal" href="#usage" id="id24">Usage</a></li>
+<li><a class="reference internal" href="#id5" id="id25">Parameters</a><ul>
+<li><a class="reference internal" href="#field" id="id26">field</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h4><a class="toc-backref" href="#id24">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
+<p>Given the following channel layout:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>ParentChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+  relationship_field    Relationship (ChildChannel, Multiple)
+
+
+ChildChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+</pre></div>
+</div>
+<p>You can access siblings of the current entry in <code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> tag
+using the following syntax:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;childChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">siblings</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">siblings:title</span><span class="p">}</span> - <span class="p">{</span><span class="nf">siblings:field1</span><span class="p">}</span> - <span class="p">{</span><span class="nf">siblings:field2</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/siblings</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">{siblings}</span></code> tag does not need to be a top level tag. It may be used
+from a nested relationship in order to access that relationship&#8217;s siblings.
+The syntax is:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;parentChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">relationship_field:siblings</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+      <span class="p">{</span><span class="nf">relationship_field:siblings:title</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">/relationship_field:siblings</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/relationship_field</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4><a class="toc-backref" href="#id25">Parameters</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>In addition to the standard parameters, the following parameter may be used in
+this tag:</p>
+<div class="section" id="field">
+<h5><a class="toc-backref" href="#id26">field</a><a class="headerlink" href="#field" title="Permalink to this headline">¶</a></h5>
+<p>There can be multiple relationship fields in a field group, thus child entries
+may be related to the same parent via different fields.  Use the <code class="docutils literal"><span class="pre">field</span></code>
+parameter to specify which field in the parent entry we should be pulling the
+siblings from. The syntax is:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">siblings</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-parents">
+<h3><a class="toc-backref" href="#id19">Accessing Parents</a><a class="headerlink" href="#accessing-parents" title="Permalink to this headline">¶</a></h3>
+<div class="contents local topic" id="id6">
+<ul class="simple">
+<li><a class="reference internal" href="#id7" id="id27">Usage</a></li>
+<li><a class="reference internal" href="#id8" id="id28">Parameters</a><ul>
+<li><a class="reference internal" href="#id9" id="id29">field</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4><a class="toc-backref" href="#id27">Usage</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>Given the following channel layout:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>ParentChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+  relationship_field    Relationship (ChildChannel, Multiple)
+
+
+ChildChannel
+  title
+  url_title
+  field1          Text
+  field2          Text
+</pre></div>
+</div>
+<p>You can access the parents of the current entry in a <code class="docutils literal"><span class="pre">channel:entries</span></code> tag
+using the following syntax:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;childChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">parents:title</span><span class="p">}</span> - <span class="p">{</span><span class="nf">parents:field1</span><span class="p">}</span> - <span class="p">{</span><span class="nf">parents:field2</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">{parents}</span></code> tag may be accessed through nested relationships tags using
+the following syntax:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;parentChannel&quot;</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">relationship_field</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">relationship_field:parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+      <span class="p">{</span><span class="nf">relationship_field:parents:title</span><span class="p">}</span>
+    <span class="p">{</span><span class="nf">/relationship_field:parents</span><span class="p">}</span>
+  <span class="p">{</span><span class="nf">/relationship_field</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4><a class="toc-backref" href="#id28">Parameters</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>In addition to the standard parameters, the following parameter may be used in
+this tag:</p>
+<div class="section" id="id9">
+<h5><a class="toc-backref" href="#id29">field</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h5>
+<p>There can be multiple relationship fields in a field group, and thus an entry
+may be selected as a child in multiple fields. Use the <code class="docutils literal"><span class="pre">field</span></code> parameter to
+specify which field in the parent entry we should be checking for our child.
+The syntax is:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="fetching-entry-ids-only">
+<h3><a class="toc-backref" href="#id20">Fetching Entry IDs Only</a><a class="headerlink" href="#fetching-entry-ids-only" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes it&#8217;s useful to get just a list of the entry IDs of related entries,
+to pass on to a plugin as a tag a parameter or similar. If you need to do this,
+you can use the single variable <code class="docutils literal"><span class="pre">:entry_ids</span></code> shortcut modifier:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relationship_field:entry_ids</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Outputs in the format:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>43|58|127
+</pre></div>
+</div>
+<p>Note that this is not used inside a relationships tag pair, but is a standalone variable.</p>
+<div class="section" id="id10">
+<h4>Usage<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>For children:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relationship_field:entry_ids</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>For parents:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">parents:entry_ids</span><span class="p">}</span>
+
+<span class="cm">{!-- or --}</span>
+
+<span class="p">{</span><span class="nf">parents:entry_ids</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;relationship_field&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>Parameters<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>entry_ids</cite> shortcut tag has only one optional parameter:</p>
+<div class="section" id="delimiter">
+<h5>delimiter<a class="headerlink" href="#delimiter" title="Permalink to this headline">¶</a></h5>
+<p>By default the entry IDs will be pipe-delimited, but you can choose to
+have them delimited with something else:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">relationship_field:entry_ids</span> <span class="na">delimiter</span><span class="p">=</span><span class="s2">&quot;,&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Would output in the format:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>43,48,127
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="namespacing-variables">
+<h3><a class="toc-backref" href="#id21">Namespacing Variables</a><a class="headerlink" href="#namespacing-variables" title="Permalink to this headline">¶</a></h3>
+<p>Any variable available to the channel entries tag can be used inside a
+relationship tag pair.  Use prefixes to specify which entry or set of entries
+the variable belongs to:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;childChannel&quot;</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="nf">parents</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="k">if</span> <span class="nv">parents:count</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Parents<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="nf">parents:title</span><span class="p">}</span> - <span class="p">{</span><span class="nf">parents:field1</span><span class="p">}</span> - <span class="p">{</span><span class="nf">parents:field2</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="k">if</span> <span class="nv">parents:no_results</span><span class="p">}</span>
+      No parent entries
+    <span class="p">{</span><span class="nf">/</span><span class="k">if</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="nf">parents:switch</span><span class="p">=</span><span class="s2">&quot;one|two&quot;</span><span class="p">}</span>
+
+  <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="grid-compatibility">
+<h4>Grid Compatibility<a class="headerlink" href="#grid-compatibility" title="Permalink to this headline">¶</a></h4>
+<p>The Relationships field can be used as a Grid field column. Currently it
+is not possible to get the parents of a relationship field that is inside
+of a Grid field. You can also not use Relationships inside of a Grid field
+that does not store Channel data.</p>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id15">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="id12">
+<ul class="simple">
+<li><a class="reference internal" href="#the-pizza-shop" id="id30">The Pizza Shop</a><ul>
+<li><a class="reference internal" href="#child-entries-displaying-the-stores-and-their-menus" id="id31">Child Entries: Displaying the Stores and their Menus</a></li>
+<li><a class="reference internal" href="#parent-entries-which-stores-have-which-pizza" id="id32">Parent Entries: Which Stores have Which Pizza?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-music-venue" id="id33">The Music Venue</a><ul>
+<li><a class="reference internal" href="#child-entries-upcoming-shows" id="id34">Child Entries: Upcoming Shows</a></li>
+<li><a class="reference internal" href="#parent-entries-a-band-s-recent-shows" id="id35">Parent Entries: A Band&#8217;s Recent Shows</a></li>
+<li><a class="reference internal" href="#parent-entries-a-musician-s-bands" id="id36">Parent Entries: A Musician&#8217;s Bands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-community-sports-league" id="id37">The Community Sports League</a><ul>
+<li><a class="reference internal" href="#child-entries-showing-games-and-teams-in-a-season" id="id38">Child Entries: Showing Games and Teams in a Season</a></li>
+<li><a class="reference internal" href="#child-entries-showing-details-of-a-game" id="id39">Child Entries: Showing Details of a Game</a></li>
+<li><a class="reference internal" href="#parent-entries-showing-a-team-s-history" id="id40">Parent Entries: Showing A Team&#8217;s History</a></li>
+<li><a class="reference internal" href="#sibling-entries-navigating-between-games" id="id41">Sibling Entries: Navigating Between Games</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="the-pizza-shop">
+<h3><a class="toc-backref" href="#id30">The Pizza Shop</a><a class="headerlink" href="#the-pizza-shop" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s start with a very simple example.  You&#8217;ve been tasked with building a
+website for a small chain of local pizza joints.  These pizza places share a
+menu of specialty pizzas, but each individual store manager gets to decide
+which pizzas will be available on any particular week.  You need to make a
+website for the whole chain with store pages for each store to display that
+store&#8217;s menu for the week.</p>
+<p>Since this is a template writing tutorial, we&#8217;ll go ahead and layout the
+channels for you:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Stores
+  title       Text Input
+  url_title     Text Input
+  address       Textarea
+  phone       Text Input
+  specialty_pizzas  Relationship (to Pizzas, multiple)
+
+Pizzas
+  title       Text Input
+  url_title     Text Input
+  description     Textarea
+  ingredients     Checkbox
+</pre></div>
+</div>
+<div class="section" id="child-entries-displaying-the-stores-and-their-menus">
+<h4><a class="toc-backref" href="#id31">Child Entries: Displaying the Stores and their Menus</a><a class="headerlink" href="#child-entries-displaying-the-stores-and-their-menus" title="Permalink to this headline">¶</a></h4>
+<p>First things first.  We need to write a page to list each Store and which
+pizzas they have to offer.  We do that with this template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;stores&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Phone: <span class="p">{</span><span class="nf">phone</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Address: <span class="p">{</span><span class="nf">address</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Specialty Pizzas<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">specialty_pizzas</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:title</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:ingredients</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/specialty_pizzas</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We start with the standard <code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> tag, pulling from the
+Stores channel.  For each Store entry we display the Store name, the Store&#8217;s
+phone number and its address.  Then we display which specialty pizzas are
+available:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Specialty Pizzas<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">specialty_pizzas</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:title</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:ingredients</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/specialty_pizzas</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">{specialty_pizzas}</span></code> tag is a Relationship variable tag.  Since it is a
+relationship that can take multiple entries, it is a looping tag pair.  So these
+three lines, contained in the pair, will be looped over:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:title</span><span class="p">}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">specialty_pizzas:ingredients</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The variables will be replaced for each Pizza entry that is attached to the
+current Store entry.  In those lines <code class="docutils literal"><span class="pre">{specialty_pizzas:title}</span></code> will be
+replaced by the title of the current Pizza entry,
+<code class="docutils literal"><span class="pre">{specialty_pizzas:description}</span></code> will be replaced by its description and so
+on.</p>
+<p>Notice that what we&#8217;re doing here is prefixing the names of the variables in
+the Pizza channel with the name of the Relationship field that relates the
+Store channel to the Pizza channel.  We call this namespacing and it&#8217;s a very
+powerful tool. This is what allows us to access the variables of the related
+entries, even though they may be the same as those of the parent entries.</p>
+<p>Inside the <code class="docutils literal"><span class="pre">{specialty_pizzas}</span></code> tag pair, you can use <code class="docutils literal"><span class="pre">{title}</span></code> to display
+the title of the current Store entry and <code class="docutils literal"><span class="pre">{specialty_pizzas:title}</span></code> to
+display the title of the current Pizza entry.  This means we can nest
+relationships as deeply as we want to with out having to worry too much about
+naming collisions.</p>
+</div>
+<div class="section" id="parent-entries-which-stores-have-which-pizza">
+<h4><a class="toc-backref" href="#id32">Parent Entries: Which Stores have Which Pizza?</a><a class="headerlink" href="#parent-entries-which-stores-have-which-pizza" title="Permalink to this headline">¶</a></h4>
+<p>Another template you might want to make is a page for each pizza where you give
+a description of the pizza, list its ingredients and show which stores
+currently have the pizza available.  You can do this with the <code class="docutils literal"><span class="pre">{parents}</span></code> tag.
+Like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;pizzas&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">description</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">ingredients</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Where can I find this pizza?<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;specialty_pizzas&quot;</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>: <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">{</span><span class="nf">parents:phone</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">parents:address</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In this template we list the Pizza channel&#8217;s variables &#8211; <code class="docutils literal"><span class="pre">{title}</span></code>,
+<code class="docutils literal"><span class="pre">{description}</span></code> and <code class="docutils literal"><span class="pre">{ingredients}</span></code>.  Then we have a section to show in
+which stores this pizza is currently available.  To accomplish this, we use the
+<code class="docutils literal"><span class="pre">{parents}</span></code> tag.</p>
+<p>The <code class="docutils literal"><span class="pre">{parents}</span></code> tag will pull entries that have the current Entry from the
+<code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> tag as a child through the field that you specify.
+If you use the same field group in multiple channels, you may want to also
+specify the channel.  In this case, we&#8217;re passing it the <code class="docutils literal"><span class="pre">specialty_pizzas</span></code>
+field.  It will look for all entries attached to any channel through the
+<code class="docutils literal"><span class="pre">specialty_pizzas</span></code> field that have the current Pizza entry as a child.  In
+our case, <code class="docutils literal"><span class="pre">specialty_pizzas</span></code> is only used in the Stores channel and this will
+have the result of finding all Stores that currently have this Pizza available.</p>
+<p>The <code class="docutils literal"><span class="pre">{parents}</span></code> tag is a looping tag pair.  So for each Store it finds, it will
+loop over the section of template contained in the pair:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>: <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">{</span><span class="nf">parents:phone</span><span class="p">}</span> <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">parents:address</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>It will replace that section&#8217;s variables and append it to the final output.
+Here, we use namespacing again to access the parent Store&#8217;s variables.  We
+access its title, phone and address using <code class="docutils literal"><span class="pre">parents:title</span></code>, <code class="docutils literal"><span class="pre">parents:phone</span></code>,
+and <code class="docutils literal"><span class="pre">parents:address</span></code>.</p>
+</div>
+</div>
+<div class="section" id="the-music-venue">
+<h3><a class="toc-backref" href="#id33">The Music Venue</a><a class="headerlink" href="#the-music-venue" title="Permalink to this headline">¶</a></h3>
+<p>Another case in which Relationships can be handy is the Music Venue website.
+We&#8217;ll assume this is a small venue that plays a lot of local bands.  These
+bands return for many shows. They also change pretty frequently.  And it is
+often the same musicians moving between the bands as they breakup, reform or
+trade musicians.  So we&#8217;ll want three channels, <code class="docutils literal"><span class="pre">Bands</span></code>, <code class="docutils literal"><span class="pre">Musicians</span></code>, and
+<code class="docutils literal"><span class="pre">Shows</span></code>.  Here&#8217;s the layout:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Musicians
+  title     Text
+  url_title   Text
+  first_name    Text
+  last_name   Text
+  biography   Text
+  instruments   Text
+
+Bands
+  title     Text
+  url_title   Text
+  history     Text
+  style     Text
+  members     Relationship (to Musicians, multiple)
+
+Shows
+  title     Text
+  url_title   Text
+  what      Text
+  when      Date
+  bands     Relationship (to Bands, multiple)
+</pre></div>
+</div>
+<div class="section" id="child-entries-upcoming-shows">
+<h4><a class="toc-backref" href="#id34">Child Entries: Upcoming Shows</a><a class="headerlink" href="#child-entries-upcoming-shows" title="Permalink to this headline">¶</a></h4>
+<p>The first thing we tackle is creating a listing of upcoming shows and the bands
+that are playing in them.  We assume the Show entry is set to expire the day
+after the show, so we don&#8217;t have to worry about any date stuff for now.  Here&#8217;s
+what that template might look like:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;shows&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;show&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;shows/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;show-body&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;what&quot;</span><span class="p">&gt;&lt;</span><span class="nt">label</span><span class="p">&gt;</span>What<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;{</span><span class="nf">what</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;when&quot;</span><span class="p">&gt;&lt;</span><span class="nt">label</span><span class="p">&gt;</span>When<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;{</span><span class="nf">when</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;who&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Who&#39;s playing?<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">bands</span><span class="p">}</span>
+          <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band&quot;</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">bands:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">bands:style</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">{</span><span class="nf">/bands</span><span class="p">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Most of this should look pretty familiar to you if you&#8217;re familiar with the
+<code class="docutils literal"><span class="pre">channel:entries</span></code> tag.  But notice this section:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;who&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Who&#39;s playing?<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">bands</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band&quot;</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">bands:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">bands:style</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/bands</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>This section uses the Relationships field.  On the publish page, we attached
+the Bands that are going to playing this Show to the Show&#8217;s entry.  With the
+<code class="docutils literal"><span class="pre">{bands}</span></code> tag, we are now looping over those bands.  For each Band entry
+attached to the Show entry, we append this line of the template with the
+variables replaced:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band&quot;</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">bands:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> <span class="p">{</span><span class="nf">bands:style</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>In each loop, we replace the Band&#8217;s name <code class="docutils literal"><span class="pre">{bands:title}</span></code> and what style of
+music they play <code class="docutils literal"><span class="pre">{bands:style}</span></code>. Again, the namespacing of relationships with
+the relationship tag name allows us to specify which title we want, in this
+case, the Band&#8217;s and not the Show&#8217;s.</p>
+</div>
+<div class="section" id="parent-entries-a-band-s-recent-shows">
+<h4><a class="toc-backref" href="#id35">Parent Entries: A Band&#8217;s Recent Shows</a><a class="headerlink" href="#parent-entries-a-band-s-recent-shows" title="Permalink to this headline">¶</a></h4>
+<p>Now we want to build a page for each Band.  And on that page, we want to
+display all the Shows that Band has played.  To do this, we need a parent tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;bands&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;style&quot;</span><span class="p">&gt;{</span><span class="nf">style</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{</span><span class="nf">history</span><span class="p">}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;members&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">members</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;member&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;musicians/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">members:url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">members:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">members:last_name</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/members</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;shows&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Recent Shows<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">parents</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;shows&quot;</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;bands&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;show&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;what&quot;</span><span class="p">&gt;{</span><span class="nf">parents:what</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;when&quot;</span><span class="p">&gt;{</span><span class="nf">parents:when</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The part to notice is this bit:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;shows&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Recent Shows<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">parents</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;shows&quot;</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;bands&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;show&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;what&quot;</span><span class="p">&gt;{</span><span class="nf">parents:what</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;when&quot;</span><span class="p">&gt;{</span><span class="nf">parents:when</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Here, we use the <code class="docutils literal"><span class="pre">{parents}</span></code> tag to access this Band&#8217;s parent
+entries in the Shows channel. It will cycle through each Show that
+has this particular Band entry as a child through the <code class="docutils literal"><span class="pre">bands</span></code> field and
+display this part of the template for that Show entry:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;show&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;what&quot;</span><span class="p">&gt;{</span><span class="nf">parents:what</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;when&quot;</span><span class="p">&gt;{</span><span class="nf">parents:when</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parent-entries-a-musician-s-bands">
+<h4><a class="toc-backref" href="#id36">Parent Entries: A Musician&#8217;s Bands</a><a class="headerlink" href="#parent-entries-a-musician-s-bands" title="Permalink to this headline">¶</a></h4>
+<p>On the musician page, we want to be able to display the bands a musican currently
+plays with.  To do that, we use the <code class="docutils literal"><span class="pre">{parents}</span></code> tag again. Here
+is the template:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;musicians&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;musician&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">last_name</span><span class="p">}&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;instruments&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">instruments</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;biography&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">biography</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;past-bands&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;members&quot;</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band-name&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;bands/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">parents:url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+      <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The relevant section is this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;past-bands&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;members&quot;</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;band-name&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;bands/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">parents:url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">parents:title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Here we use the <code class="docutils literal"><span class="pre">{parents}</span></code> tag to access the Band entries that this Musician
+is a member of.  Since the <code class="docutils literal"><span class="pre">members</span></code> field is only used in the Band channel
+we do not need to specify the channel.  It will only pull Bands.</p>
+</div>
+</div>
+<div class="section" id="the-community-sports-league">
+<h3><a class="toc-backref" href="#id37">The Community Sports League</a><a class="headerlink" href="#the-community-sports-league" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s tackle something more complex.  We&#8217;re building a website for a local
+community sports league.  The league runs multiple seasons every year with
+different teams and games.  The channels might look like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span>Seasons
+  title     Text Input
+  url_title   Text Input
+  games     Relationship (pointing to Games channel, multiple Games)
+  teams     Relationship (pointing to Teams channel, multiple Teams)
+
+Games
+  title     Text Input
+  url_title   Text Input
+  home      Relationship (pointing to Teams channel, a single Team)
+  away      Relationship (pointing to Teams channel, a single Team)
+  home_score    Text Input (Number)
+  away_score    Text Input (Number)
+
+Teams
+  title     Text Input
+  url_title   Text Input
+  players     Relationship (pointing to Players channel, multiple Players)
+
+Players
+  title     Text Input
+  url_title   Text Input
+  first_name    Text Input
+  last_name   Text Input
+  number      Text Input (Number)
+</pre></div>
+</div>
+<div class="section" id="child-entries-showing-games-and-teams-in-a-season">
+<h4><a class="toc-backref" href="#id38">Child Entries: Showing Games and Teams in a Season</a><a class="headerlink" href="#child-entries-showing-games-and-teams-in-a-season" title="Permalink to this headline">¶</a></h4>
+<p>The first thing we do is show all games and teams in a particular season.
+The &#8216;Spring 2013&#8217; season. While we&#8217;re at it, lets list all the players on each
+team, so that players know which team they&#8217;ve been placed on.  The template
+might look something like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;seasons&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;Spring 2013&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;season&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">title</span><span class="p">}&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Teams<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;teams&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">teams</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;team&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;{</span><span class="nf">teams:title</span><span class="p">}&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+          <span class="p">{</span><span class="nf">teams:players</span><span class="p">}</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;{</span><span class="nf">teams:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">teams:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+          <span class="p">{</span><span class="nf">/teams:players</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/teams</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Games<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;games&quot;</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">games</span><span class="p">}</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;game&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;{</span><span class="nf">games:title</span><span class="p">}&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+          <span class="p">{</span><span class="nf">games:home:title</span><span class="p">}</span> vs <span class="p">{</span><span class="nf">games:away:title</span><span class="p">}</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">{</span><span class="nf">/games</span><span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Let&#8217;s break that down to see what we are doing.  The first thing you see is
+the good old channel entries tag:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;seasons&quot;</span> <span class="na">title</span><span class="p">=</span><span class="s2">&quot;Spring 2013&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We pull a single entry from the Seasons channel.  The one titled &#8220;Spring 2013&#8221;.
+Just inside of that we see our standard <code class="docutils literal"><span class="pre">{title}</span></code> tag to pull the title of
+the entry.  After that things get more interesting:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">teams</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;team&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;{</span><span class="nf">teams:title</span><span class="p">}&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">teams:players</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">&gt;{</span><span class="nf">teams:players:number</span><span class="p">}{</span><span class="nf">teams:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">teams:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/teams:players</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/teams</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice, the tag name <code class="docutils literal"><span class="pre">teams</span></code> is the same as our relationship field name in
+the Seasons channel.  This is a Relationship tag.  It works very similarly to
+the <code class="docutils literal"><span class="pre">channel:entries</span></code> tag.  It will loop over the entries you have assigned
+to the <code class="docutils literal"><span class="pre">teams</span></code> field on the publish page and use them to replace the
+variables contained.</p>
+<p>Here, things differ a little bit from standard channel entries.  We need a way
+to separate the related entry&#8217;s variables from your <code class="docutils literal"><span class="pre">channel:entries</span></code> tag&#8217;s
+variables.  To accomplish this we prefix the variables of the related entries
+with the name of the field they belong to.  So:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;{</span><span class="nf">teams:title</span><span class="p">}&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>In that bit of code, we&#8217;re accessing the title of the entry from the Teams
+channel related to our current Season through the <code class="docutils literal"><span class="pre">teams</span></code> field.  This is
+very powerful.  It allows you to relate entries even from the same channel to
+each other and still access their variables.  Say you wanted to add a field for
+the previous and next seasons to a season&#8217;s entry.  You could give it a
+<code class="docutils literal"><span class="pre">previous</span></code> and <code class="docutils literal"><span class="pre">next</span></code> field.  In your <code class="docutils literal"><span class="pre">channel:entries</span></code> tag you might
+access them like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;seasons&quot;</span> <span class="na">url-title</span><span class="p">=</span><span class="s2">&quot;winter-2013&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;seasons/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">previous:url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">previous:title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s2">&quot;seasons/index&quot;</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="nf">next:url_title</span><span class="p">}</span><span class="s">&quot;</span><span class="p">&gt;{</span><span class="nf">next:title</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Even though all the variables would be the same, you can easily access any
+variable from the current entry or either of the related entries.</p>
+<p>Prefixing variables this way also allows us to access nested relationships.  Look
+back up to our previous example.  Notice this bit of code:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">teams:players</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;{</span><span class="nf">teams:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">teams:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/teams:players</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In our Teams channel you&#8217;ll notice that we have a relationship field to the
+Players channel that can take multiple entries.  We access those entries
+through the <code class="docutils literal"><span class="pre">{teams:players}</span></code> tag.  This works exactly the same as the
+<code class="docutils literal"><span class="pre">{teams}</span></code> tag.  It&#8217;s an entries loop tag.  Except in this case, we&#8217;re getting
+the entries that were assigned to our current Team.  We can access the Player
+channel&#8217;s variables in the same way as we do our Team channel&#8217;s variables, by
+prefixing them:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;{</span><span class="nf">teams:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">teams:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>You may also have noticed that in some places we wrap our relationship in an
+open and close tag, like we did above with players:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">teams:players</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;{</span><span class="nf">teams:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">teams:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/teams:players</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In other places, however, we don&#8217;t.  We just access the relationship&#8217;s
+variables directly using the prefixing, like we did with the <code class="docutils literal"><span class="pre">home</span></code> and
+<code class="docutils literal"><span class="pre">away</span></code> fields:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">games</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;game&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h4</span><span class="p">&gt;{</span><span class="nf">games:title</span><span class="p">}&lt;/</span><span class="nt">h4</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">games:home:title</span><span class="p">}</span> vs <span class="p">{</span><span class="nf">games:away:title</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/games</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In the above example, <code class="docutils literal"><span class="pre">home</span></code> and <code class="docutils literal"><span class="pre">away</span></code> are relationship fields in the
+Games channel.  However, they are limited to a single entry. In that case, you
+can access the relationship&#8217;s variables directly, at any time, by adding the
+prefix. There&#8217;s no need to specify the bit of your template you want to loop
+over. There can only be one!</p>
+</div>
+<div class="section" id="child-entries-showing-details-of-a-game">
+<h4><a class="toc-backref" href="#id39">Child Entries: Showing Details of a Game</a><a class="headerlink" href="#child-entries-showing-details-of-a-game" title="Permalink to this headline">¶</a></h4>
+<p>Let&#8217;s try another example.  Let&#8217;s say you need another page on this league
+website that shows the details of a single game: when, who played and who
+won.  That template might look something like this:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;games&quot;</span> <span class="na">limit</span><span class="p">=</span><span class="s2">&quot;1&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;{</span><span class="nf">home:title</span><span class="p">}</span> (<span class="p">{</span><span class="nf">home_score</span><span class="p">}</span>) vs <span class="p">{</span><span class="nf">away:title</span><span class="p">}</span> (<span class="p">{</span><span class="nf">away_score</span><span class="p">}</span>)<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>In this game the <span class="p">{</span><span class="nf">home:title</span><span class="p">}</span> played the <span class="p">{</span><span class="nf">away:title</span><span class="p">}</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The final scores were <span class="p">{</span><span class="nf">home:title</span><span class="p">}</span> with <span class="p">{</span><span class="nf">home_score</span><span class="p">}</span> and <span class="p">{</span><span class="nf">away:title</span><span class="p">}</span> with <span class="p">{</span><span class="nf">away_score</span><span class="p">}</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Playing for <span class="p">{</span><span class="nf">home:title</span><span class="p">}</span> were:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;players&quot;</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">home:players</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;</span>#<span class="p">{</span><span class="nf">home:players:number</span><span class="p">}</span> <span class="p">{</span><span class="nf">home:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">home:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/home:players</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Playing for <span class="p">{</span><span class="nf">away:title</span><span class="p">}</span> were:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;players&quot;</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">away:players</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;player&quot;</span><span class="p">&gt;</span>#<span class="p">{</span><span class="nf">away:players:number</span><span class="p">}</span> <span class="p">{</span><span class="nf">away:players:first_name</span><span class="p">}</span> <span class="p">{</span><span class="nf">away:players:last_name</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/away:players</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, the <code class="docutils literal"><span class="pre">{exp:channel:entries}</span></code> tag accesses the Games channel.  The first
+thing we do is display which teams are playing and what the score was.  We do
+that by going through the <code class="docutils literal"><span class="pre">home</span></code> and <code class="docutils literal"><span class="pre">away</span></code> fields which both point to the
+Teams channel.  We grab the title (<code class="docutils literal"><span class="pre">{home:title}</span></code> and <code class="docutils literal"><span class="pre">{away:title}</span></code>) and
+display it.</p>
+<p>Further down we list the players on each team using <code class="docutils literal"><span class="pre">{home:players}</span></code> and
+<code class="docutils literal"><span class="pre">{away:players}</span></code>.  Since the <code class="docutils literal"><span class="pre">players</span></code> field is a multiple relationship, we
+need a tag pair.   But notice that we don&#8217;t need to be the <code class="docutils literal"><span class="pre">{home:players}</span></code> tag
+itself inside a <code class="docutils literal"><span class="pre">{home}</span></code> pair.  <code class="docutils literal"><span class="pre">{home}</span></code> takes a single entry, and so we can
+just use it as a prefix to access its custom field variables.</p>
+<p>Inside the <code class="docutils literal"><span class="pre">{home:players}</span></code> and <code class="docutils literal"><span class="pre">{away:players}</span></code> pairs we can access the
+field variables of the Players channels by prefixing them with <code class="docutils literal"><span class="pre">home:players</span></code>
+or <code class="docutils literal"><span class="pre">away:players</span></code> respectively.  So, inside <code class="docutils literal"><span class="pre">{home:players}</span></code> we can get the
+Player&#8217;s first name, last name and number with <code class="docutils literal"><span class="pre">{home:players:first_name}</span></code>,
+<code class="docutils literal"><span class="pre">{home:players:last_name}</span></code> and <code class="docutils literal"><span class="pre">{home:players:number}</span></code>.</p>
+</div>
+<div class="section" id="parent-entries-showing-a-team-s-history">
+<h4><a class="toc-backref" href="#id40">Parent Entries: Showing A Team&#8217;s History</a><a class="headerlink" href="#parent-entries-showing-a-team-s-history" title="Permalink to this headline">¶</a></h4>
+<p>Say you had a Team page where you showed details of a particular team and you
+wanted to show all Games that team had played in.  You could accomplish this
+like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;teams&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;games&quot;</span><span class="p">&gt;&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">parents</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;home|away&quot;</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">parents:home:title</span><span class="p">}</span> (<span class="p">{</span><span class="nf">parents:home_score</span><span class="p">}</span>) vs <span class="p">{</span><span class="nf">parents:away:title</span><span class="p">}</span> (<span class="p">{</span><span class="nf">parents:away_score</span><span class="p">}</span>)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/parents</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In this case, we have two different fields in the parent channel that relate to
+the Teams channel: <code class="docutils literal"><span class="pre">home</span></code> and <code class="docutils literal"><span class="pre">away</span></code>.  We want to pull from both of them,
+so in our <code class="docutils literal"><span class="pre">{parents}</span></code> tag field parameter we use <code class="docutils literal"><span class="pre">field=&quot;home|away&quot;</span></code>.  Here
+the channel parameter is unnecessary as neither <code class="docutils literal"><span class="pre">home</span></code> or <code class="docutils literal"><span class="pre">away</span></code> is used in
+any channel other than Games.</p>
+</div>
+<div class="section" id="sibling-entries-navigating-between-games">
+<h4><a class="toc-backref" href="#id41">Sibling Entries: Navigating Between Games</a><a class="headerlink" href="#sibling-entries-navigating-between-games" title="Permalink to this headline">¶</a></h4>
+<p>What if you wanted to have a series of pages showing the details of a single
+game?  On these pages, you want to show a navigation section, showing other
+games from the current season.  You could accomplish this by using
+<code class="docutils literal"><span class="pre">channel:entries</span></code> for the Seaons channel and walking down to games.  But that
+would require an <code class="docutils literal"><span class="pre">if</span></code> tag to determine whether the game we&#8217;re showing in
+navigation is the current game. An easier way to accomplish this would be to
+use the <code class="docutils literal"><span class="pre">siblings</span></code> tag, like so:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:channel:entries</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;games&quot;</span><span class="p">}</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navigation&quot;</span><span class="p">&gt;&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">siblings</span> <span class="na">channel</span><span class="p">=</span><span class="s2">&quot;seasons&quot;</span> <span class="na">field</span><span class="p">=</span><span class="s2">&quot;games&quot;</span><span class="p">}</span>
+      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;{</span><span class="nf">siblings:title</span><span class="p">}</span>  - <span class="p">{</span><span class="nf">siblings:home:title</span><span class="p">}</span> vs <span class="p">{</span><span class="nf">siblings:away:title</span><span class="p">}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">{</span><span class="nf">/siblings</span><span class="p">}</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">{</span><span class="nf">/exp:channel:entries</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">siblings</span></code> tag pulls all entries in the Games channel that are related to
+the Seasons channel through the <code class="docutils literal"><span class="pre">games</span></code> field, except for the current one.
+The current entry in the Games channel that the <code class="docutils literal"><span class="pre">channel:entries</span></code> tag has
+pulled up must be related to the channel through the field given to the
+siblings tag.  Otherwise it won&#8217;t work.</p>
+</div>
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../comment/index.html">Comment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Fieldtypes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="date.html">Date</a></li>
+<li class="toctree-l2"><a class="reference internal" href="duration.html">Duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email_address.html">Email Address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluid_field.html">Fluid Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid.html">Grid</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Relationships</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rte.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select.html">Checkboxes, Radio Buttons, Select, Multiselect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="textarea.html">Textarea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toggle.html">Toggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url.html">URL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../_static/jquery.js"></script>
+		<script type="text/javascript" src="../_static/underscore.js"></script>
+		<script type="text/javascript" src="../_static/doctools.js"></script>
+		<script type="text/javascript" src="../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

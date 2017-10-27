@@ -1,4 +1,12 @@
 <?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
+
 namespace EllisLab\ExpressionEngine\Service\Alert;
 
 use \EE_Session;
@@ -7,26 +15,7 @@ use EllisLab\ExpressionEngine\Service\Alert\Alert;
 use EllisLab\ExpressionEngine\Service\View\View;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
- * @filesource
- */
-
-// ------------------------------------------------------------------------
-
-/**
- * ExpressionEngine Alert Collection Class
- *
- * @package		ExpressionEngine
- * @category	Service
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * Alert Service Collection
  */
 class AlertCollection {
 
@@ -251,7 +240,7 @@ class AlertCollection {
 	 *
 	 * @param string $name The name of the alert
 	 * @param string $type The type of the alert (inline, banner, or standard)
-	 * @return \EllisLab\ExpressionEngine\Service\Alert\Alert
+	 * @return EllisLab\ExpressionEngine\Service\Alert\Alert An Alert
 	 */
 	public function make($name = '', $type = 'standard')
 	{
@@ -262,7 +251,7 @@ class AlertCollection {
 	 * Makes a new named inline alert.
 	 *
 	 * @param string $name The name of the alert
-	 * @return \EllisLab\ExpressionEngine\Service\Alert\Alert
+	 * @return EllisLab\ExpressionEngine\Service\Alert\Alert An Alert
 	 */
 	public function makeInline($name = '')
 	{

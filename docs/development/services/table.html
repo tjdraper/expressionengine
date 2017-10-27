@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>CP/Table Service &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../index.html" />
+	    <link rel="up" title="Services" href="index.html" />
+	    <link rel="next" title="CP/URL Service" href="url.html" />
+	    <link rel="prev" title="Spam Service" href="spam.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" >Add-On Development</a></li>
+								<li><a href="index.html" accesskey="U">Services</a></li>
+								<li class="last">CP/Table Service</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="cp-table-service">
+<h1>CP/Table Service<a class="headerlink" href="#cp-table-service" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#creating-a-new-table" id="id2">Creating a new table</a></li>
+<li><a class="reference internal" href="#setting-the-columns" id="id3">Setting the columns</a></li>
+<li><a class="reference internal" href="#setting-the-data" id="id4">Setting the data</a></li>
+<li><a class="reference internal" href="#reorder-able-rows" id="id5">Reorder-able rows</a></li>
+<li><a class="reference internal" href="#using-as-a-grid-input" id="id6">Using as a Grid input</a></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id1">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Tables are the most common way to view and navigate data in the ExpressionEngine control panel. Since tables share a lot of common functionality, we&#8217;ve abstracted most of it out to a Table service to handle tasks such as displaying the table markup, and sorting and filtering tabular content. The Table service should handle most idioms covered in the <a class="reference external" href="https://ellislab.com/style-guide/c/listings#tables-common">style-guide for tables</a>.</p>
+<p>Below, we&#8217;ll cover the steps needed to create a table from inside a
+controller.</p>
+</div>
+<div class="section" id="creating-a-new-table">
+<h2><a class="toc-backref" href="#id2">Creating a new table</a><a class="headerlink" href="#creating-a-new-table" title="Permalink to this headline">¶</a></h2>
+<p>The first thing we need to do is create our table object. This can be
+done by reaching into the dependency injection container and optionally
+passing along a few options that can affect the behavior and appearance
+of the table:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Use default options</span>
+<span class="nv">$table</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Table&#39;</span><span class="p">);</span>
+
+<span class="c1">// Specify other options</span>
+<span class="nv">$table</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Table&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;autosort&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;autosearch&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Here are the available options:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="47%" />
+<col width="19%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option name</th>
+<th class="head">Description</th>
+<th class="head">Accepted values</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>autosearch</strong></td>
+<td>Assuming the entire dataset is given to <code class="docutils literal"><span class="pre">setData()</span></code>,
+the Table service can automatically handle searching
+of the table&#8217;s data. The Table service will
+automatically get a search term from the <code class="docutils literal"><span class="pre">search</span></code>
+key in <code class="docutils literal"><span class="pre">POST</span></code> or <code class="docutils literal"><span class="pre">GET</span></code>, or a search term can be
+specified via the <code class="docutils literal"><span class="pre">search</span></code> configuration option
+outlined below. If you have a large data set, it&#8217;s
+recommended to disable <code class="docutils literal"><span class="pre">autosearch</span></code> and perform the
+search via SQL or other means before handing the data
+off to the table.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
+</tr>
+<tr class="row-odd"><td><strong>autosort</strong></td>
+<td>Assuming the entire dataset is given to <code class="docutils literal"><span class="pre">setData()</span></code>,
+the Table service can automatically handle sorting
+of the table&#8217;s data via column. The Table service will
+automatically look for a sort column and direction in
+<code class="docutils literal"><span class="pre">GET</span></code>, or they can be set manually via the
+<code class="docutils literal"><span class="pre">sort_col</span></code> and <code class="docutils literal"><span class="pre">sort_dir</span></code> configuration options
+outlined below. If you have a large data set, it&#8217;s
+recommended to disable <code class="docutils literal"><span class="pre">autosort</span></code> and perform the
+sort via SQL or other means before handing the data
+off to the table.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>class</strong></td>
+<td>An optional CSS class to add to the table tag</td>
+<td>String</td>
+<td><code class="docutils literal"><span class="pre">NULL</span></code></td>
+</tr>
+<tr class="row-odd"><td><strong>lang_cols</strong></td>
+<td>Whether or not to run passed column names through the
+<code class="docutils literal"><span class="pre">lang()</span></code> helper on the front-end.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>limit</strong></td>
+<td>Number of table rows to limit the data display by for
+the purposes of pagination.</td>
+<td>A natural number
+greater than zero.</td>
+<td>20</td>
+</tr>
+<tr class="row-odd"><td><strong>grid_input</strong></td>
+<td>Whether or not this table is to behave as Grid-like
+input interface.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>page</strong></td>
+<td>When <code class="docutils literal"><span class="pre">autosort</span></code> and optionally <code class="docutils literal"><span class="pre">autosearch</span></code> are
+set to <code class="docutils literal"><span class="pre">TRUE</span></code>, specifies the page number to show in
+a set of paginated data. If <code class="docutils literal"><span class="pre">page</span></code> is found in the
+page&#8217;s query string, its value will be used.</td>
+<td>A natural number
+greater than zero.</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td><strong>reorder</strong></td>
+<td>Whether or not to show a reorder handle on the left
+side of the table for reordering table rows. This can
+be used in conjunction with the <code class="docutils literal"><span class="pre">eeTableReorder</span></code>
+jQuery plugin documented below.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>search</strong></td>
+<td>When <code class="docutils literal"><span class="pre">autosearch</span></code> is set to <code class="docutils literal"><span class="pre">TRUE</span></code>, specifies the
+search term used to search table contents.
+be used in conjunction with the <code class="docutils literal"><span class="pre">eeTableReorder</span></code>
+jQuery plugin documented below.</td>
+<td>String or integer</td>
+<td><code class="docutils literal"><span class="pre">NULL</span></code></td>
+</tr>
+<tr class="row-odd"><td><strong>sort_col</strong></td>
+<td>Specifies the column the table is currently being
+sorted by, identified by the column identifier,
+described below. If <code class="docutils literal"><span class="pre">sort_col</span></code> is found in the
+page&#8217;s query string, its value will be used. When
+<code class="docutils literal"><span class="pre">autosort</span></code> is enabled, the Table library will
+perform the sort. The <code class="docutils literal"><span class="pre">sort_col</span></code> value also
+determines which column is visually highlighted on the
+table interface.</td>
+<td>String</td>
+<td><code class="docutils literal"><span class="pre">NULL</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>sort_col_qs_var</strong></td>
+<td>Specifies the query string variable used to specify
+the column to sort the table by. This is typically
+only used if more than one table is displayed on a
+page.</td>
+<td>String</td>
+<td><code class="docutils literal"><span class="pre">sort_col</span></code></td>
+</tr>
+<tr class="row-odd"><td><strong>sort_dir</strong></td>
+<td>Specifies the direction of the table sort.
+sorted by, identified by the column identifier,
+described below. If <code class="docutils literal"><span class="pre">sort_dir</span></code> is found in the
+page&#8217;s query string, its value will be used. When
+<code class="docutils literal"><span class="pre">autosort</span></code> is enabled, the Table library will
+perform the sort. The <code class="docutils literal"><span class="pre">sort_dir</span></code> value also sets the
+visual indicator for sort direction on the table
+interface.</td>
+<td><code class="docutils literal"><span class="pre">asc</span></code> or <code class="docutils literal"><span class="pre">desc</span></code></td>
+<td><code class="docutils literal"><span class="pre">asc</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>sort_dir_qs_var</strong></td>
+<td>Specifies the query string variable used to specify
+the direction of the table sort. This is typically
+only used if more than one table is displayed on a
+page.</td>
+<td>String</td>
+<td><code class="docutils literal"><span class="pre">sort_dir</span></code></td>
+</tr>
+<tr class="row-odd"><td><strong>sortable</strong></td>
+<td>Whether or not the table should allow sorting via
+user interaction. When set to <code class="docutils literal"><span class="pre">FALSE</span></code>, column
+headings will not be click-able, highlighted, or show
+the visual sort direction indicators.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+to enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setting-the-columns">
+<h2><a class="toc-backref" href="#id3">Setting the columns</a><a class="headerlink" href="#setting-the-columns" title="Permalink to this headline">¶</a></h2>
+<p>Now that our Table object is set up, let&#8217;s start describing our data.
+First, we&#8217;ll set up the headings for each column. Let&#8217;s say we want to
+show a list of Channels, we&#8217;ll then pass in an array of language keys
+that represent the relevant columns:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setColumns</span><span class="p">(</span>
+  <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;channel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;short_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;manage&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="nx">Table</span><span class="o">::</span><span class="na">COL_TOOLBAR</span>
+    <span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="nx">Table</span><span class="o">::</span><span class="na">COL_CHECKBOX</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be sure to include the Table class&#8217;s namespace at the top of
+your file to use its constants:
+<code class="docutils literal"><span class="pre">use</span> <span class="pre">EllisLab\ExpressionEngine\Library\CP\Table;</span></code></p>
+</div>
+<p>Notice we specified some extra parameters for two of the columns. The
+&#8220;Manage&#8221; column is going to be of type <code class="docutils literal"><span class="pre">COL_TOOLBAR</span></code> which can have
+various action buttons related to the individual Channel. And our last
+column is just for checkboxes, so that a user can select Channels to
+perform actions on them in bulk.</p>
+<p>While we&#8217;re here, let&#8217;s set the &#8220;no results&#8221; text. This is the message
+that appears in the table when there are no items to display, and also
+provides a call-to-action to add items to the table:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setNoResultsText</span><span class="p">(</span><span class="s1">&#39;no_channels&#39;</span><span class="p">,</span> <span class="s1">&#39;create_channel&#39;</span><span class="p">,</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;channels/create&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The first parameter is the language key that lets the user know there
+are no Channels to display. The second parameter is the text for the
+call-to-action button, and the third parameter is the URL for the
+button.</p>
+<p>We should be at a point where we can see how our table is coming along.
+To show the table in a view, we&#8217;ll ask the Table object to compile data
+to be consumed by a view, and then pass that data to our view:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="c1">// Pass in a base URL to create sorting links</span>
+<span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">viewData</span><span class="p">(</span><span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;channels&#39;</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;channels/index&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In our view, we&#8217;ll take the data and render the table markup by loading
+a shared view:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;ee:_shared/table&#39;</span><span class="p">,</span> <span class="nv">$table</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>Given what we&#8217;ve done so far, our table looks like this:</p>
+<div class="figure">
+<img alt="../../_images/table_service_1.png" src="../../_images/table_service_1.png" />
+</div>
+<p>Table columns can have the following options set on them:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="42%" />
+<col width="20%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option name</th>
+<th class="head">Description</th>
+<th class="head">Accepted values</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>label</strong></td>
+<td>If you&#8217;d rather not specify the label has the options
+array&#8217;s key as done above, you can specify it here.
+This would also allow columns to have the same label,
+if needed.</td>
+<td>String</td>
+<td>NULL</td>
+</tr>
+<tr class="row-odd"><td><strong>encode</strong></td>
+<td>Whether or not to encode and escape the content of the
+cell to prevent markup or other code from executing on
+display. It&#8217;s typically best practice when dynamic,
+user-generated content is displayed, to escape its
+output. But if a table cell needs to contain and
+render HTML, <code class="docutils literal"><span class="pre">encode</span></code> should be set to <code class="docutils literal"><span class="pre">FALSE</span></code> for
+those columns.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code> to
+enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code></td>
+</tr>
+<tr class="row-even"><td><strong>sort</strong></td>
+<td>Whether or not to allow the column data to be sorted.
+By default, all text-based columns can be sorted, but
+other columns, such as toolbars and checkboxes, are
+not sortable.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code> to
+enable or disable,
+respectively.</td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code> for <code class="docutils literal"><span class="pre">COL_TEXT</span></code>
+and <code class="docutils literal"><span class="pre">COL_STATUS</span></code> columns.
+<code class="docutils literal"><span class="pre">FALSE</span></code> for
+<code class="docutils literal"><span class="pre">COL_CHECKBOX</span></code> and
+<code class="docutils literal"><span class="pre">COL_TOOLBAR</span></code> columns.</td>
+</tr>
+<tr class="row-odd"><td><strong>type</strong></td>
+<td>Specifies the type of column, which ultimately
+determines how data will be interpreted and displayed
+in the view.</td>
+<td><code class="docutils literal"><span class="pre">Table::COL_TEXT</span></code>
+<code class="docutils literal"><span class="pre">Table::COL_TOOLBAR</span></code>
+<code class="docutils literal"><span class="pre">Table::COL_CHECKBOX</span></code>
+<code class="docutils literal"><span class="pre">Table::COL_STATUS</span></code></td>
+<td><code class="docutils literal"><span class="pre">Table::COL_TEXT</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setting-the-data">
+<h2><a class="toc-backref" href="#id4">Setting the data</a><a class="headerlink" href="#setting-the-data" title="Permalink to this headline">¶</a></h2>
+<p>For the purposes of this guide, we&#8217;ll get all the Channels for the
+current site:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$channels</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Channel&#39;</span><span class="p">)</span>
+  <span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="s1">&#39;site_id&#39;</span><span class="p">,</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">config</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">(</span><span class="s1">&#39;site_id&#39;</span><span class="p">))</span>
+  <span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Next, we&#8217;ll construct an array with the Channel data we want to
+display:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$channels</span> <span class="k">as</span> <span class="nv">$channel</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$edit_url</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;channels/edit/&#39;</span><span class="o">.</span><span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">());</span>
+  <span class="nv">$data</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">(),</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">channel_title</span><span class="p">,</span>
+      <span class="s1">&#39;href&#39;</span> <span class="o">=&gt;</span> <span class="nv">$edit_url</span>
+    <span class="p">),</span>
+    <span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">channel_name</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;toolbar_items&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;edit&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;href&#39;</span> <span class="o">=&gt;</span> <span class="nv">$edit_url</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;edit&#39;</span><span class="p">)</span>
+      <span class="p">),</span>
+      <span class="s1">&#39;settings&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;href&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/URL&#39;</span><span class="p">,</span> <span class="s1">&#39;channels/settings/&#39;</span><span class="o">.</span><span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">()),</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;settings&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="p">)),</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;channels[]&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">(),</span>
+      <span class="s1">&#39;data&#39;</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;confirm&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;: &lt;b&gt;&#39;</span> <span class="o">.</span> <span class="nb">htmlentities</span><span class="p">(</span><span class="nv">$channel</span><span class="o">-&gt;</span><span class="na">channel_title</span><span class="p">,</span> <span class="nx">ENT_QUOTES</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;&lt;/b&gt;&#39;</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice the data is in the same order we set the columns. For the toolbar
+column, we pass a specifically-formatted array that tells the Table
+service what kind of button to show, as well as the link but the button
+and its title text. For the checkbox column, we need to specify the
+input name for the checkboxes, its value, as well as any optional data
+like the data we set here to work with an action modal.</p>
+<p>Passing an array with the keys <code class="docutils literal"><span class="pre">content</span></code> and <code class="docutils literal"><span class="pre">href</span></code> will wrap the contents
+in an <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> tag, but only if the column has <code class="docutils literal"><span class="pre">encode</span></code> set to <code class="docutils literal"><span class="pre">TRUE</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only use an edit URL when sending an <code class="docutils literal"><span class="pre">href</span></code> key along with the
+contents of a column.</p>
+</div>
+<p>Finally, we&#8217;ll tell our Table object about our data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Our table should now be filled with the available data and look the way
+we&#8217;ve configured:</p>
+<div class="figure">
+<img alt="../../_images/table_service_2.png" src="../../_images/table_service_2.png" />
+</div>
+</div>
+<div class="section" id="reorder-able-rows">
+<h2><a class="toc-backref" href="#id5">Reorder-able rows</a><a class="headerlink" href="#reorder-able-rows" title="Permalink to this headline">¶</a></h2>
+<p>Tables built with the Table service support reordering of its rows and
+provides a JavaScript callback to perform any actions necessary
+post-reorder, such as any AJAX calls.</p>
+<p>To create a table with reorder-able rows, we&#8217;ll create a new Table
+object with some specific options set:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$table</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Table&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;reorder&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+  <span class="s1">&#39;sortable&#39;</span> <span class="o">=&gt;</span> <span class="k">FALSE</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+<p>From there, we&#8217;ll set our columns and data as usual. But to get it all
+working, we&#8217;ll need to include some JavaScript assets to facilitate the
+reorder:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">add_js_script</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;cp/sort_helper&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">add_js_script</span><span class="p">(</span><span class="s1">&#39;plugin&#39;</span><span class="p">,</span> <span class="s1">&#39;ee_table_reorder&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Notice we loaded ExpressionEngine&#8217;s table reordering plugin. We&#8217;ll need
+to write some custom JavaScript to bind the plugin to our table, as well
+as perform any callback actions we may need:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="err">$</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">)</span><span class="o">.</span><span class="nx">eeTableReorder</span><span class="p">({</span>
+  <span class="nx">afterSort</span><span class="o">:</span> <span class="k">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Whatever you like</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Notice there is a row object passed to the callback so that you can
+access the row that was moved, or any of its parents, siblings or
+children.</p>
+<p>If we load our view, we should now see our table has reorder handles on
+the left side and we can drag them up and down the page to reorder
+the rows:</p>
+<div class="figure">
+<img alt="../../_images/table_service_3.png" src="../../_images/table_service_3.png" />
+</div>
+</div>
+<div class="section" id="using-as-a-grid-input">
+<h2><a class="toc-backref" href="#id6">Using as a Grid input</a><a class="headerlink" href="#using-as-a-grid-input" title="Permalink to this headline">¶</a></h2>
+<p>The Table service is extend-able, and we&#8217;ve extended it to create a
+special GridInput service that can be used to create the very same user
+interface as our Grid field. Working with it is very similar to building
+a regular table.</p>
+<p>First, we&#8217;ll create a new GridInput object and specify the base input
+name that all inputs will be namespaced under. This is the name you&#8217;ll
+access the Grid&#8217;s data from <code class="docutils literal"><span class="pre">POST</span></code> with:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$grid</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/GridInput&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;field_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;image_manipulations&#39;</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+<p>Next, we&#8217;ll set our columns as usual, but GridInput offers one more
+option to columns, and it&#8217;s the option to set instructions or a
+description for the column. So we&#8217;ll specify the column titles and their
+corresponding descriptions with language keys:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">setColumns</span><span class="p">(</span>
+  <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;image_manip_name&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;desc&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;image_manip_name_desc&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;image_manip_type&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;desc&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;image_manip_type_desc&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;image_manip_width&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;desc&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;image_manip_width_desc&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;image_manip_height&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;desc&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;image_manip_height_desc&#39;</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>While we&#8217;re here, we&#8217;ll go ahead and set our &#8220;no results&#8221; message and
+button label. The function only takes two parameters here as a URL is
+not needed:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">setNoResultsText</span><span class="p">(</span><span class="s1">&#39;no_manipulations&#39;</span><span class="p">,</span> <span class="s1">&#39;add_manipulation&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now, assuming we&#8217;ve already gathered the data we need in our <code class="docutils literal"><span class="pre">$sizes</span></code>
+variable, we&#8217;ll set our data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$sizes</span> <span class="k">as</span> <span class="nv">$size</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nv">$data</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;attrs&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;row_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$size</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;columns&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;short_name&#39;</span><span class="p">,</span> <span class="nv">$size</span><span class="p">[</span><span class="s1">&#39;short_name&#39;</span><span class="p">]),</span>
+      <span class="nx">form_dropdown</span><span class="p">(</span>
+        <span class="s1">&#39;resize_type&#39;</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span>
+          <span class="s1">&#39;constrain&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;image_manip_type_opt_constrain&#39;</span><span class="p">),</span>
+          <span class="s1">&#39;crop&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;image_manip_type_opt_crop&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="nv">$size</span><span class="p">[</span><span class="s1">&#39;resize_type&#39;</span><span class="p">]</span>
+      <span class="p">),</span>
+      <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nv">$size</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]),</span>
+      <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="nv">$size</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+    <span class="p">)</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Notice the row is a bit more multidimensional this time. The data row
+now has an <code class="docutils literal"><span class="pre">attrs</span></code> key to set attributes on the table row element,
+and the actual row data has moved to the <code class="docutils literal"><span class="pre">columns</span></code> key. This can be
+done on any Table object for specifying row attributes. But we&#8217;re
+setting a content ID attribute here so that GridInput can properly
+namespace the inputs. And since this table is for inputting data, we
+enter inputs directly in to the data array this time, and populate them
+with our existing data, if available.</p>
+<p>Which may beg the question, where do new rows come from? We&#8217;ve only
+entered existing rows so far, but GridInput needs a template to base new
+rows off of. We&#8217;ll call <code class="docutils literal"><span class="pre">setBlankRow()</span></code> to tell GridInput what a blank
+row should look like:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">setBlankRow</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;short_name&#39;</span><span class="p">),</span>
+  <span class="nx">form_dropdown</span><span class="p">(</span>
+    <span class="s1">&#39;resize_type&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;constrain&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;image_manip_type_opt_constrain&#39;</span><span class="p">),</span>
+      <span class="s1">&#39;crop&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;image_manip_type_opt_crop&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+  <span class="p">),</span>
+  <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">),</span>
+  <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">)</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+<p>Before we hand the Grid off to the view, we need to load all of its
+JavaScript assets and initialization:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">loadAssets</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Finally, just as we do with regular tables, we call <code class="docutils literal"><span class="pre">viewData()</span></code> and
+pass the data to our view where we render it with the
+<code class="docutils literal"><span class="pre">ee:_shared/table</span></code> view in our add-on view:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$vars</span><span class="p">[</span><span class="s1">&#39;grid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">viewData</span><span class="p">();</span>
+
+<span class="k">return</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myaddon/myview&#39;</span><span class="p">,</span> <span class="nv">$vars</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Here is the final, fully functional output of our code:</p>
+<div class="figure">
+<img alt="../../_images/table_service_4.png" src="../../_images/table_service_4.png" />
+</div>
+<p>If you&#8217;re using the <a class="reference internal" href="../shared_form_view.html"><span class="doc">Shared Form View</span></a>, your fieldset
+definition should look something like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;constrain_or_crop&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;desc&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;constrain_or_crop_desc&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;wide&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+  <span class="s1">&#39;grid&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+  <span class="s1">&#39;fields&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;image_manipulations&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">cp</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;ee:_shared/table&#39;</span><span class="p">,</span> <span class="nv">$grid</span><span class="o">-&gt;</span><span class="na">viewData</span><span class="p">(),</span> <span class="k">TRUE</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Note we&#8217;re setting <code class="docutils literal"><span class="pre">wide</span></code> to denote the field should take up the entire width
+of the form, and <code class="docutils literal"><span class="pre">grid</span></code> so the form display logic can do the necessary markup
+tweaks for proper styling and behavior of the Grid.</p>
+<p>For those not using the Shared Form View, make sure your Grid is in a div tag
+instead of a fieldset tag and make sure it has a class of <code class="docutils literal"><span class="pre">grid-publish</span></code>.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Services</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="addon.html">Addon Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="alert.html">CP/Alert Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html">Config Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="csv.html">CSV Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encrypt.html">Encrypt Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="event.html">Event Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filepicker.html">CP/FilePicker Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filter.html">CP/Filter Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html">Format Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modal.html">CP/Modal Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Model Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pagination.html">CP/Pagination Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="permission.html">Permission Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sidebar.html">CP/Sidebar Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spam.html">Spam Service</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CP/Table Service</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="url.html">CP/URL Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html">Validation Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="view.html">View Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../legacy/index.html">Legacy Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

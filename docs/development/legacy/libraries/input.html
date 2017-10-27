@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Input Class &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Libraries" href="index.html" />
+	    <link rel="next" title="Javascript Class" href="javascript.html" />
+	    <link rel="prev" title="Image Manipulation Class" href="image_lib.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Libraries</a></li>
+								<li class="last">Input Class</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="input-class">
+<h1>Input Class<a class="headerlink" href="#input-class" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#calling-the-input-class" id="id1">Calling the Input Class</a></li>
+<li><a class="reference internal" href="#fetching-a-superglobal-value" id="id2">Fetching a Superglobal value</a></li>
+<li><a class="reference internal" href="#cleaning-superglobals" id="id3">Cleaning Superglobals</a></li>
+<li><a class="reference internal" href="#setting-and-deleting-cookies" id="id4">Setting and Deleting Cookies</a><ul>
+<li><a class="reference internal" href="#set-cookie" id="id5">set_cookie</a></li>
+<li><a class="reference internal" href="#delete-cookie" id="id6">delete_cookie</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="calling-the-input-class">
+<h2><a class="toc-backref" href="#id1">Calling the Input Class</a><a class="headerlink" href="#calling-the-input-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Input">
+<em class="property">class </em><code class="descname">Input</code><a class="headerlink" href="#Input" title="Permalink to this definition">¶</a></dt>
+<dd><p>ExpressionEngine uses the Input class for two main purposes:</p>
+<ol class="arabic simple">
+<li>To provide some helper methods for fetching input data and
+pre-processing it.</li>
+<li>To pre-process global input data for security.</li>
+</ol>
+<p>This class is initialized automatically.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="fetching-a-superglobal-value">
+<h2><a class="toc-backref" href="#id2">Fetching a Superglobal value</a><a class="headerlink" href="#fetching-a-superglobal-value" title="Permalink to this headline">¶</a></h2>
+<p>You are not required to use this class to call the incoming data from
+the superglobal arrays, it will still be available through the
+superglobals themselves. However, the input class does offer some
+benefits.</p>
+<p>The superglobal methods all allow the specification of an optional
+second parameter that lets you run the data through the <a class="reference internal" href="security.html"><span class="doc">XSS filter</span></a>. It&#8217;s enabled by setting the second
+parameter to boolean TRUE.</p>
+<p>Lastly, the superglobal methods will check to see if the item is set
+and return <code class="docutils literal"><span class="pre">FALSE</span></code> (boolean) if not. This lets you conveniently use
+data without having to test whether an item exists first. In other
+words, normally you might do something like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;something&#39;</span><span class="p">]))</span>
+<span class="p">{</span>
+    <span class="nv">$something</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="nv">$something</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;something&#39;</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>With the built-in methods you can simply do this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$something</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;something&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To automatically run the returned data through the
+<a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a> method, simply specify the second
+parameter is <code class="docutils literal"><span class="pre">TRUE</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$something</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;something&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The available superglobal methods are:</p>
+<dl class="method">
+<dt id="Input::post">
+<code class="descclassname">Input::</code><code class="descname">post</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xss_clean = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The first parameter will contain the name of the <code class="docutils literal"><span class="pre">POST</span></code> item you are
+looking for:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$index</strong> (<em>string</em>) &#8211; Name of the input in the <code class="docutils literal"><span class="pre">$_POST</span></code> array</li>
+<li><strong>$xss_clean</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">TRUE</span></code> the value will be run
+through <a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value stored in <code class="docutils literal"><span class="pre">$_POST</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::get">
+<code class="descclassname">Input::</code><code class="descname">get</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xss_clean = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::get" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to the post method, only it fetches get
+data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$index</strong> (<em>string</em>) &#8211; Name of the input in the <code class="docutils literal"><span class="pre">$_GET</span></code> array</li>
+<li><strong>$xss_clean</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">TRUE</span></code> the value will be run
+through <a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value stored in <code class="docutils literal"><span class="pre">$_GET</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::get_post">
+<code class="descclassname">Input::</code><code class="descname">get_post</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xss_clean = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::get_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will search through both the post and get streams for
+data, looking first in post, and then in get:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">get_post</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$index</strong> (<em>string</em>) &#8211; Name of the input in the <code class="docutils literal"><span class="pre">$_POST</span></code> or <code class="docutils literal"><span class="pre">$_GET</span></code>
+array</li>
+<li><strong>$xss_clean</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">TRUE</span></code> the value will be run
+through <a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value stored in <code class="docutils literal"><span class="pre">$_POST</span></code> or <code class="docutils literal"><span class="pre">$_GET</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::cookie">
+<code class="descclassname">Input::</code><code class="descname">cookie</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xss_clean = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to the post method, only it fetches
+cookie data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">cookie</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$index</strong> (<em>string</em>) &#8211; Name of the input in the <code class="docutils literal"><span class="pre">$_COOKIE</span></code> array</li>
+<li><strong>$xss_clean</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">TRUE</span></code> the value will be run
+through <a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value stored in <code class="docutils literal"><span class="pre">$_COOKIE</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::server">
+<code class="descclassname">Input::</code><code class="descname">server</code><span class="sig-paren">(</span><em>$index</em><span class="optional">[</span>, <em>$xss_clean = FALSE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::server" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to the above method, only it fetches
+server data:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">server</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$index</strong> (<em>string</em>) &#8211; Name of the input in the <code class="docutils literal"><span class="pre">$_SERVER</span></code> array</li>
+<li><strong>$xss_clean</strong> (<em>boolean</em>) &#8211; If set to <code class="docutils literal"><span class="pre">TRUE</span></code> the value will be run
+through <a class="reference internal" href="security.html#Security::xss_clean" title="Security::xss_clean"><code class="xref php php-meth docutils literal"><span class="pre">Security::xss_clean</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Value stored in <code class="docutils literal"><span class="pre">$_SERVER</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">String</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::ip_address">
+<code class="descclassname">Input::</code><code class="descname">ip_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::ip_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the IP address for the current user. If the IP address is not
+valid, the method will return an IP of: 0.0.0.0:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">ip_address</span><span class="p">();</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">IP address for the current user</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::valid_ip">
+<code class="descclassname">Input::</code><code class="descname">valid_ip</code><span class="sig-paren">(</span><em>$ip</em><span class="optional">[</span>, <em>$which = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::valid_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an IP address as input and returns <code class="docutils literal"><span class="pre">TRUE</span></code> or <code class="docutils literal"><span class="pre">FALSE</span></code>
+(boolean) if it is valid or not.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="#Input::ip_address" title="Input::ip_address"><code class="xref php php-meth docutils literal"><span class="pre">Input::ip_address</span></code></a> method above validates
+the IP automatically.</p>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">valid_ip</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Not Valid&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Valid&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$ip</strong> (<em>string</em>) &#8211; IP address to validate</li>
+<li><strong>$which</strong> (<em>string</em>) &#8211; Specify <code class="docutils literal"><span class="pre">'ipv4'</span></code> or <code class="docutils literal"><span class="pre">'ipv6'</span></code> to validate
+a specific type of IP address</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">TRUE</span></code> if valid, <code class="docutils literal"><span class="pre">FALSE</span></code> otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Input::user_agent">
+<code class="descclassname">Input::</code><code class="descname">user_agent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::user_agent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the user agent (web browser) being used by the current user:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">input</span><span class="o">-&gt;</span><span class="na">user_agent</span><span class="p">();</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The user agent, otherwise <code class="docutils literal"><span class="pre">FALSE</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Mixed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cleaning-superglobals">
+<h2><a class="toc-backref" href="#id3">Cleaning Superglobals</a><a class="headerlink" href="#cleaning-superglobals" title="Permalink to this headline">¶</a></h2>
+<p>The input class is loaded by EE core early in processing. It
+automatically does the following:</p>
+<ul class="simple">
+<li>Destroys all global variables in the event <code class="docutils literal"><span class="pre">register_globals</span></code> is
+turned on.</li>
+<li>Filters the <code class="docutils literal"><span class="pre">POST</span></code>/<code class="docutils literal"><span class="pre">GET</span></code>/<code class="docutils literal"><span class="pre">COOKIE</span></code> array keys, permitting only
+alpha-numeric (and a few other) characters.</li>
+<li>Standardizes newline characters to <code class="docutils literal"><span class="pre">\\n</span></code></li>
+</ul>
+</div>
+<div class="section" id="setting-and-deleting-cookies">
+<h2><a class="toc-backref" href="#id4">Setting and Deleting Cookies</a><a class="headerlink" href="#setting-and-deleting-cookies" title="Permalink to this headline">¶</a></h2>
+<p>The input library contains two methods for manipulating cookies. One
+for setting them and one for deleting them before their expiration.</p>
+<div class="section" id="set-cookie">
+<h3><a class="toc-backref" href="#id5">set_cookie</a><a class="headerlink" href="#set-cookie" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Input::set_cookie">
+<code class="descclassname">Input::</code><code class="descname">set_cookie</code><span class="sig-paren">(</span><span class="optional">[</span><em>$name = ''</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$expire = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#Input::set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets cookie based on name and value. The advantage to using this function
+over the standard PHP function is EE will automatically add the cookie
+domain, cookie prefix, and cookie path as specified in the preferences. Those
+are helpful for making these cookies unique to EE and not interfering with
+other cookies set for your site by other software.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; Name of the cookie</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Value of the cookie</li>
+<li><strong>$expire</strong> (<em>integer</em>) &#8211; When the cookie should expire, if left blank
+the time is set to the past and the cookie will expire immediately</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="delete-cookie">
+<h3><a class="toc-backref" href="#id6">delete_cookie</a><a class="headerlink" href="#delete-cookie" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="Input::delete_cookie">
+<code class="descclassname">Input::</code><code class="descname">delete_cookie</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#Input::delete_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleanly delete a cookie. The advantage to using this
+function over the standard PHP function is EE will
+automatically add the cookie domain, cookie prefix, and cookie path as
+specified in the preferences.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; Name of the cookie</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Libraries</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="benchmark.html">Benchmarking Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">Cache Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html">Config Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cp.html">CP Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="creating_libraries.html">Creating Libraries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html">Database Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_field.html">File Field Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_uploading.html">File Uploading Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_validation.html">Form Validation Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">Functions Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="image_lib.html">Image Manipulation Class</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Input Class</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="javascript.html">Javascript Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language.html">Language Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="layout.html">Layout Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loader.html">Loader Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="localization.html">Localize Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logger.html">Logger Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mime_type.html">Mime Type Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="output.html">Output Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pagination.html">Pagination Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rss_parser.html">RSS Parser Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="session.html">Session Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="table.html">Table Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">Template Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typography.html">Typography Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uri.html">URI Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="xmlparser.html">XML Parser Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>URL Helper &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Helpers" href="index.html" />
+	    <link rel="next" title="XML Helper" href="xml_helper.html" />
+	    <link rel="prev" title="Text Helper" href="text_helper.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Helpers</a></li>
+								<li class="last">URL Helper</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="url-helper">
+<h1>URL Helper<a class="headerlink" href="#url-helper" title="Permalink to this headline">¶</a></h1>
+<p>The URL Helper file contains functions that assist in working with URLs. This helper is loaded using the following code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">helper</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="available-functions">
+<h2>Available Functions<a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cp_url">
+<code class="descname">cp_url</code><span class="sig-paren">(</span><em>$path</em><span class="optional">[</span>, <em>$qs = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cp_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a CP Path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> (<em>string</em>) &#8211; The path within the CP</li>
+<li><strong>$qs</strong> (<em>mixed</em>) &#8211; The query string either as a string or an associative array</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0.0: </span>Use <a class="reference internal" href="../../services/url.html"><span class="doc">CP/URL Service</span></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="site_url">
+<code class="descname">site_url</code><span class="sig-paren">(</span><span class="optional">[</span><em>$uri = ''</em><span class="optional">[</span>, <em>$protocol = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#site_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
+<li><strong>$protocol</strong> (<em>string</em>) &#8211; Protocol, e.g. &#8216;http&#8217; or &#8216;https&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Site URL</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns your site URL, as specified in your config file. The index.php file (or whatever you have set as your site <strong>index_page</strong> in your config file) will be added to the URL, as will any URI segments you pass to the function, plus the <strong>url_suffix</strong> as set in your config file.</p>
+<p>You are encouraged to use this function any time you need to generate a local URL so that your pages become more portable in the event your URL changes.</p>
+<p>Segments can be optionally passed to the function as a string or an array. Here is a string example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above example would return something like: <code class="docutils literal"><span class="pre">http://example.com/index.php/news/local/123</span></code></p>
+<p>Here is an example of segments passed as an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This function is an alias for <a class="reference internal" href="../libraries/config.html#EE_Config::site_url" title="EE_Config::site_url"><code class="xref php php-meth docutils literal"><span class="pre">EE_Config::site_url()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="base_url">
+<code class="descname">base_url</code><span class="sig-paren">(</span><em>$uri = ''</em>, <em>$protocol = NULL</em><span class="sig-paren">)</span><a class="headerlink" href="#base_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
+<li><strong>$protocol</strong> (<em>string</em>) &#8211; Protocol, e.g. &#8216;http&#8217; or &#8216;https&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Base URL</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns your site base URL, as specified in your config file. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, without the <em>index_page</em> or <em>url_suffix</em> being appended.</p>
+<p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or an array. Here is a string example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;blog/post/123&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above example would return something like: <code class="docutils literal"><span class="pre">http://example.com/blog/post/123</span></code></p>
+<p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a>, you can supply a string to a file, such as an image or stylesheet. For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s2">&quot;images/icons/edit.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This would give you something like: <code class="docutils literal"><span class="pre">http://example.com/images/icons/edit.png</span></code></p>
+<p>This function is an alias for <code class="xref php php-meth docutils literal"><span class="pre">EE_Config::base_url()</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="current_url">
+<code class="descname">current_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#current_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current URL</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the full URL (including segments) of the page being currently viewed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Calling this function is the same as doing this: <code class="docutils literal"><span class="pre">site_url(uri_string());</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="uri_string">
+<code class="descname">uri_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uri_string" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An URI string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the URI segments of any page that contains this function. For example, if your URL was this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+<p>The function would return:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+<p>This function is an alias for <code class="xref php php-meth docutils literal"><span class="pre">EE_Config::uri_string()</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="index_page">
+<code class="descname">index_page</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#index_page" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;index_page&#8217; value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">mixed</td>
+</tr>
+</tbody>
+</table>
+<p>Returns your site <strong>index_page</strong>, as specified in your config file. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="anchor">
+<code class="descname">anchor</code><span class="sig-paren">(</span><em>$uri = ''</em>, <em>$title = ''</em>, <em>$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#anchor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
+<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML hyperlink (anchor tag)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Creates a standard HTML anchor link based on your local site URL.</p>
+<p>The first parameter can contain any segments you wish appended to the URL. As with the <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal"><span class="pre">site_url()</span></code></a> function above, segments can be a string or an array.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are building links that are internal do not include the base URL (<a class="reference external" href="http://">http://</a>...). This will be added automatically from the information specified in your config file. Include only the URI segments you wish appended to the URL.</p>
+</div>
+<p>The second segment is the text you would like the link to say. If you leave it blank, the URL will be used.</p>
+<p>The third parameter can contain a list of attributes you would like added to the link. The attributes can be a simple string or an associative array.</p>
+<p>Here are some examples:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
+<span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;News title&quot;&gt;My News&lt;/a&gt;</span>
+
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">));</span>
+<span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;The best news!&quot;&gt;My News&lt;/a&gt;</span>
+
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Click here&#39;</span><span class="p">);</span>
+<span class="c1">// Prints: &lt;a href=&quot;http://example.com&quot;&gt;Click Here&lt;/a&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="anchor_popup">
+<code class="descname">anchor_popup</code><span class="sig-paren">(</span><em>$uri = ''</em>, <em>$title = ''</em>, <em>$attributes = FALSE</em><span class="sig-paren">)</span><a class="headerlink" href="#anchor_popup" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
+<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pop-up hyperlink</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Nearly identical to the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal"><span class="pre">anchor()</span></code></a> function except that it opens the URL in a new window. You can specify JavaScript window attributes in the third parameter to control how the window is opened. If the third parameter is not set it will simply open a new window with your own browser settings.</p>
+<p>Here is an example with attributes:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;width&#39;</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
+        <span class="s1">&#39;height&#39;</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;scrollbars&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="nx">    </span> <span class="nx"> </span><span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;resizable&#39;</span><span class="nx"> </span> <span class="nx"> </span><span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;screenx&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;screeny&#39;</span>     <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;window_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_blank&#39;</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="nv">$atts</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The above attributes are the function defaults so you only need to set the ones that are different from what you need. If you want the function to use all of its defaults simply pass an empty array in the third parameter: <code class="docutils literal"><span class="pre">echo</span> <span class="pre">anchor_popup('news/local/123',</span> <span class="pre">'Click</span> <span class="pre">Me!',</span> <span class="pre">array());</span></code></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">window_name</span></code> is not really an attribute, but an argument to the JavaScript <a class="reference external" href="http://www.w3schools.com/jsref/met_win_open.asp">window.open()</a> method, which accepts either a window name or a window target.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any other attribute than the listed above will be parsed as an HTML attribute to the anchor tag.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mailto">
+<code class="descname">mailto</code><span class="sig-paren">(</span><em>$email</em>, <em>$title = ''</em>, <em>$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#mailto" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$email</strong> (<em>string</em>) &#8211; E-mail address</li>
+<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A &#8220;mail to&#8221; hyperlink</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Creates a standard HTML e-mail link. Usage example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the third parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Contact Me&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="safe_mailto">
+<code class="descname">safe_mailto</code><span class="sig-paren">(</span><em>$email</em>, <em>$title = ''</em>, <em>$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#safe_mailto" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$email</strong> (<em>string</em>) &#8211; E-mail address</li>
+<li><strong>$title</strong> (<em>string</em>) &#8211; Anchor title</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A spam-safe &#8220;mail to&#8221; hyperlink</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Identical to the <a class="reference internal" href="#mailto" title="mailto"><code class="xref php php-func docutils literal"><span class="pre">mailto()</span></code></a> function except it writes an obfuscated version of the <code class="docutils literal"><span class="pre">mailto</span></code> tag using ordinal numbers written with JavaScript to help prevent the e-mail address from being harvested by spam bots.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="auto_link">
+<code class="descname">auto_link</code><span class="sig-paren">(</span><em>$str</em>, <em>$type = 'both'</em>, <em>$popup = FALSE</em><span class="sig-paren">)</span><a class="headerlink" href="#auto_link" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$type</strong> (<em>string</em>) &#8211; Link type (&#8216;email&#8217;, &#8216;url&#8217; or &#8216;both&#8217;)</li>
+<li><strong>$popup</strong> (<em>bool</em>) &#8211; Whether to create popup links</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Linkified string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Automatically turns URLs and e-mail addresses contained in a string into links. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second parameter determines whether URLs and e-mails are converted or just one or the other. Default behavior is both if the parameter is not specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal"><span class="pre">safe_mailto()</span></code></a> as shown above.</p>
+<p>Converts only URLs:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Converts only e-mail addresses:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The third parameter determines whether links are shown in a new window. The value can be TRUE or FALSE (boolean):</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="url_title">
+<code class="descname">url_title</code><span class="sig-paren">(</span><em>$str</em>, <em>$separator = '-'</em>, <em>$lowercase = FALSE</em><span class="sig-paren">)</span><a class="headerlink" href="#url_title" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; Input string</li>
+<li><strong>$separator</strong> (<em>string</em>) &#8211; Word separator</li>
+<li><strong>$lowercase</strong> (<em>string</em>) &#8211; Whether to transform the output string to lower-case</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">URL-formatted string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Takes a string as input and creates a human-friendly URL string. This is useful if, for example, you have a blog in which you&#8217;d like to use the title of your entries in the URL. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$title</span> <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span>
+<span class="c1">// Produces: Whats-wrong-with-CSS</span>
+</pre></div>
+</div>
+<p>The second parameter determines the word delimiter. By default dashes are used. Preferred options are: <code class="docutils literal"><span class="pre">-</span></code> (dash) or <code class="docutils literal"><span class="pre">_</span></code> (underscore)</p>
+<p>Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$title</span> <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: Whats_wrong_with_CSS</span>
+</pre></div>
+</div>
+<p>The third parameter determines whether or not lowercase characters are forced. By default they are not. Options are boolean <code class="docutils literal"><span class="pre">TRUE</span></code>/<code class="docutils literal"><span class="pre">FALSE</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$title</span> <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;underscore&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<span class="c1">// Produces: whats_wrong_with_css</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="prep_url">
+<code class="descname">prep_url</code><span class="sig-paren">(</span><em>$str = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_url" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; URL string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Protocol-prefixed URL string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function will add <code class="docutils literal"><span class="pre">http://</span></code> in the event that a protocol prefix is missing from a URL.</p>
+<p>Pass the URL string to the function like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="redirect">
+<code class="descname">redirect</code><span class="sig-paren">(</span><em>$uri = ''</em>, <em>$method = 'auto'</em>, <em>$code = NULL</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$uri</strong> (<em>string</em>) &#8211; URI string</li>
+<li><strong>$method</strong> (<em>string</em>) &#8211; Redirect method (&#8216;auto&#8217;, &#8216;location&#8217; or &#8216;refresh&#8217;)</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; HTTP Response code (usually 302 or 303)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Does a &#8220;header redirect&#8221; to the URI specified. If you specify the full site URL that link will be built, but for local links simply providing the URI segments to the controller you want to direct to will create the link. The function will build the URL based on your config file values.</p>
+<p>The optional second parameter allows you to force a particular redirection method. The available methods are <code class="docutils literal"><span class="pre">auto</span></code>, <code class="docutils literal"><span class="pre">location</span></code> and <code class="docutils literal"><span class="pre">refresh</span></code>, with location being faster but less reliable on IIS servers. The default is <code class="docutils literal"><span class="pre">auto</span></code>, which will attempt to intelligently choose the method based on the server environment.</p>
+<p>The optional third parameter allows you to send a specific HTTP Response
+Code - this could be used for example to create 301 redirects for search
+engine purposes. The default Response Code is 302. The third parameter is
+<em>only</em> available with <code class="docutils literal"><span class="pre">location</span></code> redirects, and not <code class="docutils literal"><span class="pre">refresh</span></code>. Examples:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$logged_in</span> <span class="o">==</span> <span class="k">FALSE</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/login/form/&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// with 301 redirect</span>
+<span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/article/13&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order for this function to work it must be used before anything is outputted to the browser since it utilizes server headers.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For very fine grained control over headers, you should use the <a class="reference internal" href="../libraries/output.html#EE_Output::set_header" title="EE_Output::set_header"><code class="xref php php-meth docutils literal"><span class="pre">EE_Output::set_header()</span></code></a> method.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When the <code class="docutils literal"><span class="pre">location</span></code> method is used, an HTTP status code of 303 will <em>automatically</em> be selected when the page is currently accessed via POST and HTTP/1.1 is used.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This function will terminate script execution.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../database/index.html">Database Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../libraries/index.html">Libraries</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Helpers</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="array_helper.html">Array Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="directory_helper.html">Directory Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="download_helper.html">Download Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="file_helper.html">File Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="form_helper.html">Form Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="html_helper.html">HTML Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="language_helper.html">Language Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="number_helper.html">Number Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="path_helper.html">Path Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="security_helper.html">Security Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="string_helper.html">String Helper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="text_helper.html">Text Helper</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">URL Helper</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

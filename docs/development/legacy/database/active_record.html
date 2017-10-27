@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Active Record &mdash; ExpressionEngine 4.0.0-dp.2 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../../',
+	        VERSION:     '4.0.0-dp.2',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.2 documentation" href="../../../index.html" />
+	    <link rel="up" title="Database Driver" href="index.html" />
+	    <link rel="next" title="Query Results" href="results.html" />
+	    <link rel="prev" title="Database Driver" href="index.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../../index.html">Home</a></li>
+								<li><a href="../../index.html" >Add-On Development</a></li>
+								<li><a href="../index.html" >Legacy Reference</a></li>
+								<li><a href="index.html" accesskey="U">Database Driver</a></li>
+								<li class="last">Active Record</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="active-record">
+<h1>Active Record<a class="headerlink" href="#active-record" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#selecting-data" id="id1">Selecting Data</a></li>
+<li><a class="reference internal" href="#inserting-data" id="id2">Inserting Data</a></li>
+<li><a class="reference internal" href="#updating-data" id="id3">Updating Data</a></li>
+<li><a class="reference internal" href="#deleting-data" id="id4">Deleting Data</a></li>
+<li><a class="reference internal" href="#query-grouping" id="id5">Query Grouping</a></li>
+<li><a class="reference internal" href="#method-chaining" id="id6">Method Chaining</a></li>
+<li><a class="reference internal" href="#caching" id="id7">Caching</a></li>
+</ul>
+</div>
+<dl class="class">
+<dt id="CI_DB_active_record">
+<em class="property">class </em><code class="descname">CI_DB_active_record</code><a class="headerlink" href="#CI_DB_active_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>ExpressionEngine gives you access to a Active Record class. This pattern allows information to be retrieved, inserted, and updated in your database with minimal scripting. In some cases only one or two lines of code are necessary to perform a database action. It also allows for safer queries, since the values are escaped automatically by the system.</p>
+</dd></dl>
+
+<div class="section" id="selecting-data">
+<h2><a class="toc-backref" href="#id1">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="CI_DB_active_record::get">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">get</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the selection query and returns the result. Can be used by itself to retrieve all records from a table:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>  <span class="c1">// Produces: SELECT * FROM mytable</span>
+</pre></div>
+</div>
+<p>The second and third parameters enable you to set a limit and offset clause:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<span class="c1">// Produces: SELECT * FROM mytable LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)</span>
+</pre></div>
+</div>
+<p>You&#8217;ll notice that the above function is assigned to a variable named <code class="docutils literal"><span class="pre">$query</span></code>, which can be used to show the results:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">result</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Please visit the <a class="reference internal" href="results.html"><span class="doc">result functions</span></a> page for a full discussion regarding result generation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The table name to pull results from</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The number of rows to pull</li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The number of rows to offset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::get_where">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">get_where</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::get_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identical to the above function except that it permits you to add a <code class="docutils literal"><span class="pre">WHERE</span></code> clause in the second parameter, instead of using the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get_where</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">),</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Please read the about the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> function below for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The table name to pull results from</li>
+<li><strong>$where</strong> (<em>mixed</em>) &#8211; Either a string or associative array containing a <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The number of rows to pull</li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The number of rows to offset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::select">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">select</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = '*'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to write the <code class="docutils literal"><span class="pre">SELECT</span></code> portion of your query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>  <span class="c1">// Produces: SELECT title, content, date FROM mytable</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a> accepts an optional second parameter. If you set it to <code class="docutils literal"><span class="pre">FALSE</span></code>, your field or table names will not be escaped or protected. This is useful if you need a compound select statement:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="nx">amount_paid</span><span class="s1">&#39;, FALSE);</span>
+<span class="s1">$query = ee()-&gt;db-&gt;get(&#39;</span><span class="nx">mytable</span><span class="err">&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The columns to select, omit to <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span></code></li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::select_max">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">select_max</code><span class="sig-paren">(</span><em>$select</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::select_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">MAX(field)</span></code> portion for your query. You can optionally include a second parameter to rename the resulting field.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_max</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span>  <span class="c1">// Produces: SELECT MAX(age) as age FROM members</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_max</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;member_age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span> <span class="c1">// Produces: SELECT MAX(age) as member_age FROM members</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The field to <code class="docutils literal"><span class="pre">SELECT</span></code></li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; The alias for the <code class="docutils literal"><span class="pre">MAX($select)</span></code> query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::select_min">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">select_min</code><span class="sig-paren">(</span><em>$select</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::select_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">MIN(field)</span></code> portion for your query. As with <a class="reference internal" href="#CI_DB_active_record::select_max" title="CI_DB_active_record::select_max"><code class="xref php php-meth docutils literal"><span class="pre">select_max()</span></code></a>, You can optionally include a second parameter to rename the resulting field.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_min</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span> <span class="c1">// Produces: SELECT MIN(age) as age FROM members</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The field to <code class="docutils literal"><span class="pre">SELECT</span></code></li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; The alias for the <code class="docutils literal"><span class="pre">MIN($select)</span></code> query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::select_avg">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">select_avg</code><span class="sig-paren">(</span><em>$select</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::select_avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">AVG(field)</span></code> portion for your query. As with <a class="reference internal" href="#CI_DB_active_record::select_max" title="CI_DB_active_record::select_max"><code class="xref php php-meth docutils literal"><span class="pre">select_max()</span></code></a>, You can optionally include a second parameter to rename the resulting field.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_avg</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span> <span class="c1">// Produces: SELECT AVG(age) as age FROM members</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The field to <code class="docutils literal"><span class="pre">SELECT</span></code></li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; The alias for the <code class="docutils literal"><span class="pre">AVG($select)</span></code> query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::select_sum">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">select_sum</code><span class="sig-paren">(</span><em>$select</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::select_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">SUM(field)</span></code> portion for your query. As with <a class="reference internal" href="#CI_DB_active_record::select_max" title="CI_DB_active_record::select_max"><code class="xref php php-meth docutils literal"><span class="pre">select_max()</span></code></a>, You can optionally include a second parameter to rename the resulting field.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select_sum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">);</span> <span class="c1">// Produces: SELECT SUM(age) as age FROM members</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The field to <code class="docutils literal"><span class="pre">SELECT</span></code></li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; The alias for the <code class="docutils literal"><span class="pre">SUM($select)</span></code> query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::from">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">from</code><span class="sig-paren">(</span><em>$from</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to write the <code class="docutils literal"><span class="pre">FROM</span></code> portion of your query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>  <span class="c1">// Produces: SELECT title, content, date FROM mytable</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As shown earlier, the <code class="docutils literal"><span class="pre">FROM</span></code> portion of your query can be specified in the <a class="reference internal" href="#CI_DB_active_record::get" title="CI_DB_active_record::get"><code class="xref php php-meth docutils literal"><span class="pre">get()</span></code></a> function, so use whichever method you prefer.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$from</strong> (<em>mixed</em>) &#8211; The table to pull <code class="docutils literal"><span class="pre">FROM</span></code>, can either be a <code class="docutils literal"><span class="pre">string</span></code> or an <code class="docutils literal"><span class="pre">array</span></code> of <code class="docutils literal"><span class="pre">strings</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::join">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">join</code><span class="sig-paren">(</span><em>$table</em>, <em>$cond</em><span class="optional">[</span>, <em>$type = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to write the <code class="docutils literal"><span class="pre">JOIN</span></code> portion of your query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;blogs&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id</span>
+</pre></div>
+</div>
+<p>Multiple function calls can be made if you need several joins in one
+query.</p>
+<p>If you need a specific type of JOIN you can specify it via the third
+parameter of the function. Options are: left, right, outer, inner, left
+outer, and right outer.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: LEFT JOIN comments ON comments.id = blogs.id</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The table to <code class="docutils literal"><span class="pre">JOIN</span></code></li>
+<li><strong>$cond</strong> (<em>string</em>) &#8211; The condition to join <code class="docutils literal"><span class="pre">ON</span></code></li>
+<li><strong>$type</strong> (<em>string</em>) &#8211; The type of <code class="docutils literal"><span class="pre">JOIN</span></code> to perform: <code class="docutils literal"><span class="pre">LEFT</span></code>, <code class="docutils literal"><span class="pre">RIGHT</span></code>, <code class="docutils literal"><span class="pre">OUTER</span></code>, <code class="docutils literal"><span class="pre">INNER</span></code>, <code class="docutils literal"><span class="pre">LEFT</span> <span class="pre">OUTER</span></code>, <code class="docutils literal"><span class="pre">RIGHT</span> <span class="pre">OUTER</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::where">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">where</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::where" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function enables you to set <code class="docutils literal"><span class="pre">WHERE</span></code> clauses using one of four methods:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values passed to this function are escaped automatically, producing safer queries.</p>
+</div>
+<ol class="arabic">
+<li><p class="first"><strong>Simple key/value method:</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span> <span class="c1">// Produces: WHERE name = &#39;Joe&#39;</span>
+</pre></div>
+</div>
+<p>Notice that the equal sign is added for you.</p>
+<p>If you use multiple function calls they will be chained together with <code class="docutils literal"><span class="pre">AND</span></code> between them:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+<span class="c1">// WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Custom key/value method:</strong> You can include an operator in the first parameter in order to control the comparison:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &lt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span> <span class="c1">// Produces: WHERE name != &#39;Joe&#39; AND id &lt; 45</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Associative array method:</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
+</pre></div>
+</div>
+<p>You can include your own operators using this method as well:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;date &gt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Custom string:</strong> You can write your own clauses manually:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> accepts an optional third parameter. If you set it to <code class="docutils literal"><span class="pre">FALSE</span></code>, your field or table names will not be escaped or protected:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Either the field to compare or an <code class="docutils literal"><span class="pre">array</span></code> containing the fields as keys and the value as the value. The field will contain the comparison operators (e.g. <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&gt;=</span></code>, <code class="docutils literal"><span class="pre">!=</span></code>, <code class="docutils literal"><span class="pre">=</span></code>). By default <code class="docutils literal"><span class="pre">=</span></code> is used if no comparison operator is provided.</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The value to compare to</li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_where">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_where</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is identical to the one above, except that multiple instances are joined by <code class="docutils literal"><span class="pre">OR</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">or_where</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>  <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Either the field to compare or an <code class="docutils literal"><span class="pre">array</span></code> containing the fields as keys and the value as the value. The field will contain the comparison operators (e.g. <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&gt;=</span></code>, <code class="docutils literal"><span class="pre">!=</span></code>, <code class="docutils literal"><span class="pre">=</span></code>). By default <code class="docutils literal"><span class="pre">=</span></code> is used if no comparison operator is provided.</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The value to compare to</li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::where_in">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">where_in</code><span class="sig-paren">(</span><em>$key</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::where_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with <code class="docutils literal"><span class="pre">AND</span></code> if appropriate:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where_in</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field for the <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">...</span> <span class="pre">IN</span></code> clause</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The array of values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_where_in">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_where_in</code><span class="sig-paren">(</span><em>$key</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_where_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with <code class="docutils literal"><span class="pre">OR</span></code> if appropriate:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">or_where_in</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field for the <code class="docutils literal"><span class="pre">OR</span> <span class="pre">WHERE</span> <span class="pre">...</span> <span class="pre">IN</span></code> clause</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The array of values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::where_not_in">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">where_not_in</code><span class="sig-paren">(</span><em>$key</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::where_not_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with <code class="docutils literal"><span class="pre">AND</span></code> if appropriate:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where_not_in</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field for the <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">NOT</span> <span class="pre">...</span> <span class="pre">IN</span></code> clause</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The array of values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_where_not_in">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_where_not_in</code><span class="sig-paren">(</span><em>$key</em>, <em>$values</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_where_not_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">field</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">('item',</span> <span class="pre">'item')</span></code> SQL query joined with <code class="docutils literal"><span class="pre">OR</span></code> if appropriate:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">or_where_not_in</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field for the <code class="docutils literal"><span class="pre">OR</span> <span class="pre">WHERE</span> <span class="pre">NOT</span> <span class="pre">...</span> <span class="pre">IN</span></code> clause</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The array of values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::like">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::like" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method enables you to generate <code class="docutils literal"><span class="pre">LIKE</span></code> clauses, useful for doing searches.</p>
+<ol class="arabic">
+<li><p class="first"><strong>Simple key/value method</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you use multiple method calls they will be chained together with <code class="docutils literal"><span class="pre">AND</span></code> between them:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `body` LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you want to control where the wildcard (<code class="docutils literal"><span class="pre">%</span></code>) is placed, you can use an optional third argument. Your options are <code class="docutils literal"><span class="pre">'before'</span></code>, <code class="docutils literal"><span class="pre">'after'</span></code>, and <code class="docutils literal"><span class="pre">'both'</span></code> (which is the default):</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>     <span class="c1">// Produces: WHERE `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>      <span class="c1">// Produces: WHERE `title` LIKE &#39;match%&#39; ESCAPE &#39;!&#39;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span>       <span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Associative array method</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page1` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page2` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>mixed</em>) &#8211; Either the field name for the <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">...</span> <span class="pre">LIKE</span></code> clause, or an associative array where the keys are fields and the values are the match</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; The value to match against</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Controls where the wildcard (<code class="docutils literal"><span class="pre">%</span></code>) is placed, by default uses <code class="docutils literal"><span class="pre">'both'</span></code> for both sides, but you can also use <code class="docutils literal"><span class="pre">left</span></code> or <code class="docutils literal"><span class="pre">right</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_like">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to the one above, except that multiple instances are joined by <code class="docutils literal"><span class="pre">OR</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">or_like</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>mixed</em>) &#8211; Either the field name for the <code class="docutils literal"><span class="pre">OR</span> <span class="pre">...</span> <span class="pre">LIKE</span></code> clause, or an associative array where the keys are fields and the values are the match</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; The value to match against</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Controls where the wildcard (<code class="docutils literal"><span class="pre">%</span></code>) is placed, by default uses <code class="docutils literal"><span class="pre">'both'</span></code> for both sides, but you can also use <code class="docutils literal"><span class="pre">left</span></code> or <code class="docutils literal"><span class="pre">right</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::not_like">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">not_like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::not_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to <a class="reference internal" href="#CI_DB_active_record::like" title="CI_DB_active_record::like"><code class="xref php php-meth docutils literal"><span class="pre">like()</span></code></a>, except that it generates <code class="docutils literal"><span class="pre">NOT</span> <span class="pre">LIKE</span></code> statements:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">not_like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>   <span class="c1">// WHERE `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>mixed</em>) &#8211; Either the field name for the <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">...</span> <span class="pre">NOT</span> <span class="pre">LIKE</span></code> clause, or an associative array where the keys are fields and the values are the match</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; The value to match against</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Controls where the wildcard (<code class="docutils literal"><span class="pre">%</span></code>) is placed, by default uses <code class="docutils literal"><span class="pre">'both'</span></code> for both sides, but you can also use <code class="docutils literal"><span class="pre">left</span></code> or <code class="docutils literal"><span class="pre">right</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_not_like">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_not_like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_not_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is identical to <a class="reference internal" href="#CI_DB_active_record::not_like" title="CI_DB_active_record::not_like"><code class="xref php php-meth docutils literal"><span class="pre">not_like()</span></code></a>, except that multiple instances are joined by <code class="docutils literal"><span class="pre">OR</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">or_not_like</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>mixed</em>) &#8211; Either the field name for the <code class="docutils literal"><span class="pre">OR</span> <span class="pre">...</span> <span class="pre">NOT</span> <span class="pre">LIKE</span></code> clause, or an associative array where the keys are fields and the values are the match</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; The value to match against</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Controls where the wildcard (<code class="docutils literal"><span class="pre">%</span></code>) is placed, by default uses <code class="docutils literal"><span class="pre">'both'</span></code> for both sides, but you can also use <code class="docutils literal"><span class="pre">left</span></code> or <code class="docutils literal"><span class="pre">right</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::group_by">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">group_by</code><span class="sig-paren">(</span><em>$by</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::group_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to write the <code class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span></code> portion of your query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">group_by</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">);</span> <span class="c1">// Produces: GROUP BY title</span>
+</pre></div>
+</div>
+<p>You can also pass an array of multiple values as well:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">group_by</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">));</span>  <span class="c1">// Produces: GROUP BY title, date</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$by</strong> (<em>mixed</em>) &#8211; Either the field or an array of fields for the <code class="docutils literal"><span class="pre">GROUP</span> <span class="pre">BY</span> <span class="pre">...</span></code> clause</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::distinct">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em>$val = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::distinct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the <code class="docutils literal"><span class="pre">DISTINCT</span></code> keyword to a query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">distinct</span><span class="p">();</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">);</span> <span class="c1">// Produces: SELECT DISTINCT * FROM table</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$val</strong> (<em>boolean</em>) &#8211; _Optionally_ set to <code class="docutils literal"><span class="pre">FALSE</span></code> to disable <code class="docutils literal"><span class="pre">DISTINCT</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::having">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">having</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::having" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to write the <code class="docutils literal"><span class="pre">HAVING</span></code> portion of your query. There are 2 possible syntaxes, 1 argument or 2:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id = 45&#39;</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+</pre></div>
+</div>
+<p>You can also pass an array of multiple values as well:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;title =&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Title&#39;</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+<span class="c1">// Produces: HAVING title = &#39;My Title&#39;, id &lt; 45</span>
+</pre></div>
+</div>
+<p>You can prevent escaping content by passing an optional third argument, and setting it to <code class="docutils literal"><span class="pre">FALSE</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span>  <span class="c1">// Produces: HAVING `user_id` = 45 in some databases such as MySQL</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Either the field for the <code class="docutils literal"><span class="pre">HAVING</span></code> clause or an associative array containing the field as the key and the condition as the value</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The condition to check for</li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_having">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_having</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_having" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identical to <a class="reference internal" href="#CI_DB_active_record::having" title="CI_DB_active_record::having"><code class="xref php php-meth docutils literal"><span class="pre">having()</span></code></a>, only separates multiple clauses with <code class="docutils literal"><span class="pre">OR</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Either the field for the <code class="docutils literal"><span class="pre">HAVING</span></code> clause or an associative array containing the field as the key and the condition as the value</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The condition to check for</li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::order_by">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">order_by</code><span class="sig-paren">(</span><em>$orderby</em><span class="optional">[</span>, <em>$direction = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::order_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets you set an <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clause.</p>
+<p>The first parameter contains the name of the column you would like to order by.</p>
+<p>The second parameter lets you set the direction of the result. Options are <code class="docutils literal"><span class="pre">ASC</span></code>, <code class="docutils literal"><span class="pre">DESC</span></code> AND <code class="docutils literal"><span class="pre">RANDOM</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC</span>
+</pre></div>
+</div>
+<p>You can also pass your own string in the first parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="s1">&#39;title DESC, name ASC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
+</pre></div>
+</div>
+<p>Or multiple function calls can be made if you need multiple fields.</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;ASC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
+</pre></div>
+</div>
+<p>If you choose the <code class="docutils literal"><span class="pre">RANDOM</span></code> direction option, then the first parameters will be ignored, unless you specify a numeric seed value:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY RAND()</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">order_by</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY RAND(42)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$orderby</strong> (<em>mixed</em>) &#8211; The field to <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code></li>
+<li><strong>$direction</strong> (<em>string</em>) &#8211; The direction to <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code>: <code class="docutils literal"><span class="pre">ASC</span></code>, <code class="docutils literal"><span class="pre">DESC</span></code>, or <code class="docutils literal"><span class="pre">RANDOM</span></code></li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::limit">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">limit</code><span class="sig-paren">(</span><em>$value</em><span class="optional">[</span>, <em>$offset = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets you limit the number of rows you would like returned by the query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 10</span>
+</pre></div>
+</div>
+<p>The second parameter lets you set a result offset:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 20, 10 (in MySQL.  Other databases have slightly different syntax)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$value</strong> (<em>int</em>) &#8211; The number of rows to <code class="docutils literal"><span class="pre">LIMIT</span></code></li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The number of rows to offset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::offset">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">offset</code><span class="sig-paren">(</span><em>$offset</em><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets you set the offset separately from <a class="reference internal" href="#CI_DB_active_record::limit" title="CI_DB_active_record::limit"><code class="xref php php-meth docutils literal"><span class="pre">limit()</span></code></a>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">offset</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT n, 10</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The number of rows to offset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::count_all_results">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">count_all_results</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::count_all_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits you to determine the number of rows in a particular Active Record query. Queries will accept Active Record restrictors such as <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::or_where" title="CI_DB_active_record::or_where"><code class="xref php php-meth docutils literal"><span class="pre">or_where()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::like" title="CI_DB_active_record::like"><code class="xref php php-meth docutils literal"><span class="pre">like()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::or_like" title="CI_DB_active_record::or_like"><code class="xref php php-meth docutils literal"><span class="pre">or_like()</span></code></a>, etc. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">count_all_results</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>  <span class="c1">// Produces an integer, like 25</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">count_all_results</span><span class="p">();</span> <span class="c1">// Produces an integer, like 17</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The table to count results <code class="docutils literal"><span class="pre">FROM</span></code>, can be omitted if you&#8217;ve used <a class="reference internal" href="#CI_DB_active_record::from" title="CI_DB_active_record::from"><code class="xref php php-meth docutils literal"><span class="pre">from()</span></code></a> already</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The number of rows for a particular Active Record query</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="inserting-data">
+<h2><a class="toc-backref" href="#id2">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="CI_DB_active_record::insert">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$set = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an insert string based on the data you supply, and runs the query. You can either pass an <code class="docutils literal"><span class="pre">array</span></code> or an <code class="docutils literal"><span class="pre">object</span></code> to the function. Here is an example using an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter will contain the table name, the second is an associative array of values.</p>
+<p>Here is an example using an object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$object</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, content, date) VALUES (&#39;My Title&#39;, &#39;My Content&#39;, &#39;My Date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter will contain the table name, the second is an
+object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span></code></li>
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field names as keys and the values as values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::insert_batch">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">insert_batch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$set = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::insert_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an insert string based on the data you supply, and runs the query. You can either pass an <code class="docutils literal"><span class="pre">array</span></code> or an <code class="docutils literal"><span class="pre">object</span></code> to the function. Here is an example using an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+        <span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another Name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another date&#39;</span>
+        <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert_batch</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;),  (&#39;Another title&#39;, &#39;Another name&#39;, &#39;Another date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter will contain the table name, the second is an associative array of values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">INSERT</span> <span class="pre">INTO</span></code></li>
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field names as keys and the values as values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">TRUE</span></code> if successful, <code class="docutils literal"><span class="pre">FALSE</span></code> otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::replace">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$set = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes a <code class="docutils literal"><span class="pre">REPLACE</span></code> statement, which is basically the SQL standard for (optional) <code class="docutils literal"><span class="pre">DELETE</span></code> + <code class="docutils literal"><span class="pre">INSERT</span></code>, using <code class="docutils literal"><span class="pre">PRIMARY</span></code> and <code class="docutils literal"><span class="pre">UNIQUE</span></code> keys as the determining factor. In our case, it will save you from the need to implement complex logics with different combinations of  <a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::update" title="CI_DB_active_record::update"><code class="xref php php-meth docutils literal"><span class="pre">update()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::delete" title="CI_DB_active_record::delete"><code class="xref php php-meth docutils literal"><span class="pre">delete()</span></code></a> and <a class="reference internal" href="#CI_DB_active_record::insert" title="CI_DB_active_record::insert"><code class="xref php php-meth docutils literal"><span class="pre">insert()</span></code></a> calls.</p>
+<p>Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// Executes: REPLACE INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+</pre></div>
+</div>
+<p>In the above example, if we assume that the <code class="docutils literal"><span class="pre">title</span></code> field is our primary key, then if a row containing &#8216;My title&#8217; as the <code class="docutils literal"><span class="pre">title</span></code> value, that row will be deleted with our new row data replacing it.</p>
+<p>Usage of the <a class="reference internal" href="#CI_DB_active_record::set" title="CI_DB_active_record::set"><code class="xref php php-meth docutils literal"><span class="pre">set()</span></code></a> method is also allowed and all fields are automatically escaped, just like with <a class="reference internal" href="#CI_DB_active_record::insert" title="CI_DB_active_record::insert"><code class="xref php php-meth docutils literal"><span class="pre">insert()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">REPLACE</span> <span class="pre">INTO</span></code></li>
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field names as keys and the values as values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::set">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">set</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::set" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function enables you to set values for inserts or updates. <strong>It can be used instead of passing a data array directly to the insert or update functions</strong>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>  <span class="c1">// Produces: INSERT INTO mytable (name) VALUES (&#39;{$name}&#39;)</span>
+</pre></div>
+</div>
+<p>If you use multiple function called they will be assembled properly based on whether you are doing an insert or an update:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#CI_DB_active_record::set" title="CI_DB_active_record::set"><code class="xref php php-meth docutils literal"><span class="pre">set()</span></code></a> will also accept an optional third parameter (<cite>$escape</cite>), that will prevent data from being escaped if set to <code class="docutils literal"><span class="pre">FALSE</span></code>. To illustrate the difference, here is set() used both with and without the escape parameter:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span> <span class="c1">// gives INSERT INTO mytable (field) VALUES (field+1)</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span> <span class="c1">// gives INSERT INTO mytable (field) VALUES (&#39;field+1&#39;)</span>
+</pre></div>
+</div>
+<p>You can also pass an associative array to this function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or an object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Either the field for the <code class="docutils literal"><span class="pre">SET</span></code> clause or an associative array containing the field as the key and the value as the value</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The value to <code class="docutils literal"><span class="pre">SET</span></code></li>
+<li><strong>$escape</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to prevent <a class="reference internal" href="raw.html#CI_DB_driver::protect_identifiers" title="CI_DB_driver::protect_identifiers"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::protect_identifiers()</span></code></a> and <a class="reference internal" href="raw.html#CI_DB_driver::escape" title="CI_DB_driver::escape"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::escape()</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Active Record object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="updating-data">
+<h2><a class="toc-backref" href="#id3">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="CI_DB_active_record::update">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$set = NULL</em><span class="optional">[</span>, <em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an update string and runs the query based on the data you supply. You can pass an <code class="docutils literal"><span class="pre">array</span></code> or an <code class="docutils literal"><span class="pre">object</span></code> to the function. Here is an example using an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: // UPDATE mytable  // SET title = &#39;{$title}&#39;, name = &#39;{$name}&#39;, date = &#39;{$date}&#39; // WHERE id = $id</span>
+</pre></div>
+</div>
+<p>Or you can supply an object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$object</span><span class="p">);</span>
+<span class="c1">// Produces: // UPDATE mytable  // SET title = &#39;{$title}&#39;, name = &#39;{$name}&#39;, date = &#39;{$date}&#39; // WHERE id = $id</span>
+</pre></div>
+</div>
+<p>You&#8217;ll notice the use of the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> function, enabling you to set the <code class="docutils literal"><span class="pre">WHERE</span></code> clause. You can optionally pass this information directly into the update function as a string:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s2">&quot;id = 4&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or as an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>You may also use the <a class="reference internal" href="#CI_DB_active_record::set" title="CI_DB_active_record::set"><code class="xref php php-meth docutils literal"><span class="pre">set()</span></code></a> function described above when performing updates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">UPDATE</span></code></li>
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array with fields as the keys and values as the values</li>
+<li><strong>$where</strong> (<em>array</em>) &#8211; An associative array representing the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; Set to a numerical value to <code class="docutils literal"><span class="pre">LIMIT</span></code> the <code class="docutils literal"><span class="pre">UPDATE</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::update_batch">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">update_batch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$set = NULL</em><span class="optional">[</span>, <em>$index = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::update_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an update string based on the data you supply, and runs the query. You can either pass an <code class="docutils literal"><span class="pre">array</span></code> or an <code class="docutils literal"><span class="pre">object</span></code> to the function. Here is an example using an array:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+   <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Name 2&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My date 2&#39;</span>
+   <span class="p">),</span>
+   <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another Name 2&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another date 2&#39;</span>
+   <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">update_batch</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">);</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// UPDATE `mytable` SET `name` = CASE</span>
+<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My Name 2&#39;</span>
+<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another Name 2&#39;</span>
+<span class="c1">// ELSE `name` END,</span>
+<span class="c1">// `date` = CASE</span>
+<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My date 2&#39;</span>
+<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another date 2&#39;</span>
+<span class="c1">// ELSE `date` END</span>
+<span class="c1">// WHERE `title` IN (&#39;My title&#39;,&#39;Another title&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter will contain the table name, the second is an associative array of values, the third parameter is the where key.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="raw.html#CI_DB_driver::affected_rows" title="CI_DB_driver::affected_rows"><code class="xref php php-meth docutils literal"><span class="pre">CI_DB_driver::affected_rows()</span></code></a> won&#8217;t give you proper results with this method, due to the very nature of how it works. Instead, <a class="reference internal" href="#CI_DB_active_record::update_batch" title="CI_DB_active_record::update_batch"><code class="xref php php-meth docutils literal"><span class="pre">update_batch()</span></code></a> returns the number of rows affected.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">UPDATE</span></code></li>
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array with fields as the keys and values as the values</li>
+<li><strong>$index</strong> (<em>string</em>) &#8211; The <code class="docutils literal"><span class="pre">WHERE</span></code> key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">TRUE</span></code> if successful, <code class="docutils literal"><span class="pre">FALSE</span></code> otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="deleting-data">
+<h2><a class="toc-backref" href="#id4">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="CI_DB_active_record::delete">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">[</span>, <em>$where = ''</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$reset_data = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a delete SQL string and runs the query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+<span class="c1">// Produces:</span>
+<span class="c1">// DELETE FROM mytable</span>
+<span class="c1">// WHERE id = $id</span>
+</pre></div>
+</div>
+<p>The first parameter is the table name, the second is the where clause. You can also use the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> or <a class="reference internal" href="#CI_DB_active_record::or_where" title="CI_DB_active_record::or_where"><code class="xref php php-meth docutils literal"><span class="pre">or_where()</span></code></a> functions instead of passing the data to the second parameter of the function:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// DELETE FROM mytable</span>
+<span class="c1">// WHERE id = $id</span>
+</pre></div>
+</div>
+<p>An array of table names can be passed into <a class="reference internal" href="#CI_DB_active_record::delete" title="CI_DB_active_record::delete"><code class="xref php php-meth docutils literal"><span class="pre">delete()</span></code></a> if you would like to delete data from more than 1 table:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$tables</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;table1&#39;</span><span class="p">,</span> <span class="s1">&#39;table2&#39;</span><span class="p">,</span> <span class="s1">&#39;table3&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$tables</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you want to delete all data from a table, you can use the <a class="reference internal" href="#CI_DB_active_record::truncate" title="CI_DB_active_record::truncate"><code class="xref php php-meth docutils literal"><span class="pre">truncate()</span></code></a> function, or <a class="reference internal" href="#CI_DB_active_record::empty_table" title="CI_DB_active_record::empty_table"><code class="xref php php-meth docutils literal"><span class="pre">empty_table()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">DELETE</span></code> from</li>
+<li><strong>$where</strong> (<em>array</em>) &#8211; An associative array representing the <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a> clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; Set to a numerical value to <code class="docutils literal"><span class="pre">LIMIT</span></code> the <code class="docutils literal"><span class="pre">DELETE</span></code></li>
+<li><strong>$reset_data</strong> (<em>boolean</em>) &#8211; Set to <code class="docutils literal"><span class="pre">FALSE</span></code> to not reset Active Record&#8217;s &#8220;write&#8221; values</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::empty_table">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">empty_table</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::empty_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a delete SQL string and runs the query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">empty_table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span> <span class="c1">// Produces: DELETE FROM mytable</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::truncate">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">truncate</code><span class="sig-paren">(</span><span class="optional">[</span><em>$table = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::truncate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a truncate SQL string and runs the query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">();</span>
+
+<span class="c1">// or</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+
+<span class="c1">// Produce:</span>
+<span class="c1">// TRUNCATE mytable</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the <code class="docutils literal"><span class="pre">TRUNCATE</span></code> command isn&#8217;t available, <a class="reference internal" href="#CI_DB_active_record::truncate" title="CI_DB_active_record::truncate"><code class="xref php php-meth docutils literal"><span class="pre">truncate()</span></code></a> will execute as <code class="docutils literal"><span class="pre">DELETE</span> <span class="pre">FROM</span> <span class="pre">table</span></code>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; The name of the table to <code class="docutils literal"><span class="pre">TRUNCATE</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A query result object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="results.html#CI_DB_result" title="CI_DB_result"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_result</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="query-grouping">
+<h2><a class="toc-backref" href="#id5">Query Grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline">¶</a></h2>
+<p>Query grouping allows you to create groups of <code class="docutils literal"><span class="pre">WHERE</span></code> clauses by enclosing them in parentheses. This will allow you to create queries with complex <code class="docutils literal"><span class="pre">WHERE</span></code> clauses. Nested groups are supported. Example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">start_group</span><span class="p">()</span>
+                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">or_start_group</span><span class="p">()</span>
+                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">end_group</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">end_group</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// Generates:</span>
+<span class="c1">// SELECT * FROM (`my_table`) WHERE ( `a` = &#39;a&#39; OR ( `b` = &#39;b&#39; AND `c` = &#39;c&#39; ) ) AND `d` = &#39;d&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">groups need to be balanced, make sure every <a class="reference internal" href="#CI_DB_active_record::start_group" title="CI_DB_active_record::start_group"><code class="xref php php-meth docutils literal"><span class="pre">start_group()</span></code></a> is matched by a <a class="reference internal" href="#CI_DB_active_record::end_group" title="CI_DB_active_record::end_group"><code class="xref php php-meth docutils literal"><span class="pre">end_group()</span></code></a>.</p>
+</div>
+<dl class="method">
+<dt id="CI_DB_active_record::start_group">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">start_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::start_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new group by adding an opening parenthesis to the <code class="docutils literal"><span class="pre">WHERE</span></code> clause of the query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A query result object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::or_start_group">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">or_start_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::or_start_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new group by adding an opening parenthesis to the <code class="docutils literal"><span class="pre">WHERE</span></code> clause of the query, prefixing it with <code class="docutils literal"><span class="pre">OR</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A query result object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::end_group">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">end_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::end_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ends the current group by adding an closing parenthesis to the <code class="docutils literal"><span class="pre">WHERE</span></code> clause of the query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A query result object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#CI_DB_active_record" title="CI_DB_active_record"><code class="xref php php-class docutils literal"><span class="pre">CI_DB_active_record</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="method-chaining">
+<h2><a class="toc-backref" href="#id6">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline">¶</a></h2>
+<p>Method chaining allows you to simplify your syntax by connecting multiple functions. Consider this example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="caching">
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id7">Caching</a><a class="headerlink" href="#caching" title="Permalink to this headline">¶</a></h2>
+<p>While not &#8220;true&#8221; caching, Active Record enables you to save (or &#8220;cache&#8221;) certain parts of your queries for reuse at a later point in your script&#8217;s execution. Normally, when an Active Record call is completed, all stored information is reset for the next call. With caching, you can prevent this reset, and reuse information easily.</p>
+<p>Cached calls are cumulative. If you make 2 cached <a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a> calls, and then 2 uncached <a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a> calls, this will result in 4 <a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a> calls.</p>
+<dl class="method">
+<dt id="CI_DB_active_record::start_cache">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">start_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::start_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function must be called to begin caching. All Active Record queries of the correct type (see below for supported queries) are stored for later use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::stop_cache">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">stop_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::stop_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can be called to stop caching.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="CI_DB_active_record::flush_cache">
+<code class="descclassname">CI_DB_active_record::</code><code class="descname">flush_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CI_DB_active_record::flush_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function deletes all items from the Active Record cache.</p>
+<p>Here&#8217;s a usage example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">start_cache</span><span class="p">();</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">stop_cache</span><span class="p">();</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span>
+<span class="c1">//Generates: SELECT `field1` FROM (`tablename`)</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;field2&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span>
+<span class="c1">//Generates:  SELECT `field1`, `field2` FROM (`tablename`)</span>
+
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">flush_cache</span><span class="p">();</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;field2&#39;</span><span class="p">);</span>
+<span class="nx">ee</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;tablename&#39;</span><span class="p">);</span>
+<span class="c1">//Generates:  SELECT `field2` FROM (`tablename`)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following statements can be cached: <a class="reference internal" href="#CI_DB_active_record::select" title="CI_DB_active_record::select"><code class="xref php php-meth docutils literal"><span class="pre">select()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::from" title="CI_DB_active_record::from"><code class="xref php php-meth docutils literal"><span class="pre">from()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::join" title="CI_DB_active_record::join"><code class="xref php php-meth docutils literal"><span class="pre">join()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::where" title="CI_DB_active_record::where"><code class="xref php php-meth docutils literal"><span class="pre">where()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::like" title="CI_DB_active_record::like"><code class="xref php php-meth docutils literal"><span class="pre">like()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::group_by" title="CI_DB_active_record::group_by"><code class="xref php php-meth docutils literal"><span class="pre">group_by()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::having" title="CI_DB_active_record::having"><code class="xref php php-meth docutils literal"><span class="pre">having()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::order_by" title="CI_DB_active_record::order_by"><code class="xref php php-meth docutils literal"><span class="pre">order_by()</span></code></a>, <a class="reference internal" href="#CI_DB_active_record::set" title="CI_DB_active_record::set"><code class="xref php php-meth docutils literal"><span class="pre">set()</span></code></a>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.2 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../add-ons/index.html">Add-Ons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Add-On Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../v4_addon_migration.html">v4 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../v3_addon_migration/index.html">v3 Add-on Migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addon_setup_php_file.html">The <code class="docutils literal"><span class="pre">addon.setup.php</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../core/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../services/index.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../shared_form_view.html">Shared Form View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants.html">Constants Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../extensions.html">Extensions Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fieldtypes.html">Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../rte_tools.html">RTE Tools API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cp_javascript/index.html">Control Panel Javascript Reference</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Legacy Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Database Driver</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Active Record</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="results.html">Query Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="raw.html">Raw Queries and Metadata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="utilities.html">Database Utility Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="forge.html">Database Forge Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="connecting-to-an-external-database.html">Connecting to an External Database</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../libraries/index.html">Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../views.html">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../controllers.html">Controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers.html">Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/index.html">Legacy API Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common_functions.html">Common Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../guidelines/index.html">Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/tree_datastructure.html">Tree Datastructure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../emoticons.html">Emoticon Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer_preview_program.html">Developer Preview Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../json_version_feed.html">JSON Version Feed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

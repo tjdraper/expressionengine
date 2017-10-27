@@ -1,35 +1,22 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+/**
+ * ExpressionEngine (https://expressionengine.com)
+ *
+ * @link      https://expressionengine.com/
+ * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @license   https://expressionengine.com/license
+ */
 
 use EllisLab\ExpressionEngine\Service\Validation\Result as ValidationResult;
 use EllisLab\ExpressionEngine\Library\CP\Table;
 
 /**
- * ExpressionEngine - by EllisLab
- *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
- * @filesource
+ * Discussion Forum Module control panel
  */
-
-// --------------------------------------------------------------------
-
-/**
- * ExpressionEngine Discussion Forum Module
- *
- * @package		ExpressionEngine
- * @subpackage	Modules
- * @category	Modules
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
- */
-
 class Forum_mcp extends CP_Controller {
 
 	public $base = 'addons/settings/forum/';
+	public $forum_checkboxes = array('can_view_forum', 'can_view_hidden', 'can_view_topics', 'can_post_topics', 'can_post_reply', 'can_upload_files', 'can_report', 'can_search');
 
 	/**
 	 * Constructor
@@ -204,7 +191,7 @@ class Forum_mcp extends CP_Controller {
 							'content' => form_checkbox(array(
 								'name' => 'selection[]',
 								'value' => $category->getId(),
-								'data-confirm' => lang('forum') . ' <b>' . htmlentities($category->forum_name, ENT_QUOTES, 'UTF-8') . '</b>'
+								'data-confirm' => lang('forum') . ': <b>' . htmlentities($category->forum_name, ENT_QUOTES, 'UTF-8') . '</b>'
 							))
 						)
 					)
@@ -235,7 +222,7 @@ class Forum_mcp extends CP_Controller {
 							'name' => 'selection[]',
 							'value' => $forum->forum_id,
 							'data'	=> array(
-								'confirm' => lang('forum') . ' <b>' . htmlentities($forum->forum_name, ENT_QUOTES, 'UTF-8') . '</b>'
+								'confirm' => lang('forum') . ': <b>' . htmlentities($forum->forum_name, ENT_QUOTES, 'UTF-8') . '</b>'
 							)
 						)
 					);
@@ -395,8 +382,6 @@ class Forum_mcp extends CP_Controller {
 
 		show_404();
 	}
-
-	// --------------------------------------------------------------------
 
 	private function createBoard()
 	{
@@ -591,6 +576,14 @@ class Forum_mcp extends CP_Controller {
 	{
 		$action = ($board->isNew()) ? 'create' : 'edit';
 
+		// Check for empty checkboxes
+		$set_permissions = array_keys($_POST['permissions']);
+
+		foreach (array_diff($this->forum_checkboxes, $set_permissions) as $permission)
+		{
+			$_POST['permissions'][$permission] = '';
+		}
+
 		foreach ($_POST['permissions'] as $key => $value)
 		{
 			$board->setPermission($key, $value);
@@ -621,9 +614,12 @@ class Forum_mcp extends CP_Controller {
 				'title' => 'site',
 				'fields' => array(
 					'board_site_id' => array(
-						'type' => 'select',
+						'type' => 'radio',
 						'choices' => ee('Model')->get('Site')->all()->getDictionary('site_id', 'site_label'),
 						'value' => $board->board_site_id,
+						'no_results' => [
+							'text' => sprintf(lang('no_found'), lang('sites'))
+						]
 					)
 				)
 			);
@@ -693,7 +689,7 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'default_theme',
 					'fields' => array(
 						'board_default_theme' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => ee('ee:Theme')->listThemes('forum'),
 							'value' => $board->board_default_theme,
 						)
@@ -761,7 +757,7 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'allowed_file_types',
 					'fields' => array(
 						'board_attach_types' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'img' => lang('images_only'),
 								'all' => lang('all_files')
@@ -880,7 +876,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'topic_ordering_desc',
 					'fields' => array(
 						'board_topic_order' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'r' => lang('most_recent_post'),
 								'a' => lang('most_recent_first'),
@@ -895,7 +891,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'post_ordering_desc',
 					'fields' => array(
 						'board_post_order' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'a' => lang('most_recent_first'),
 								'd' => lang('most_recent_last'),
@@ -953,7 +949,7 @@ class Forum_mcp extends CP_Controller {
 						'board_notify_emails_topics' => array(
 							'type' => 'text',
 							'value' => $board->board_notify_emails_topics,
-							'attrs' => 'placeholder="' . lang('recipients'). '"'
+							'attrs' => 'placeholder="' . lang('recipients'). '"',
 						),
 					)
 				),
@@ -964,7 +960,7 @@ class Forum_mcp extends CP_Controller {
 						'board_notify_emails' => array(
 							'type' => 'text',
 							'value' => $board->board_notify_emails,
-							'attrs' => 'placeholder="' . lang('recipients'). '"'
+							'attrs' => 'placeholder="' . lang('recipients'). '"',
 						),
 					)
 				),
@@ -975,7 +971,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'text_formatting_desc',
 					'fields' => array(
 						'board_text_formatting' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => $fmt_options,
 							'value' => $board->board_text_formatting,
 						)
@@ -985,7 +981,7 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'html_formatting',
 					'fields' => array(
 						'board_html_formatting' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'all'  => lang('html_all'),
 								'safe' => lang('html_safe'),
@@ -1069,9 +1065,9 @@ class Forum_mcp extends CP_Controller {
 			->all()
 			->getDictionary('group_id', 'group_title');
 
-		$member_groups = array_map(function($group_name) {
-			return htmlentities($group_name, ENT_QUOTES, 'UTF-8');
-		}, $member_groups);
+		$member_groups_no_results = [
+			'text' => sprintf(lang('no_found'), lang('member_groups'))
+		];
 
 		$sections = array(
 			array(
@@ -1102,6 +1098,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_view_forum'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1113,6 +1110,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_view_hidden'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1124,6 +1122,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_view_topics'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1135,6 +1134,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_post_topics'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1146,6 +1146,9 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_post_reply'),
+							'no_results' => [
+								'text' => sprintf(lang('no_found'), lang('member_groups'))
+							]
 						)
 					)
 				),
@@ -1153,10 +1156,13 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'upload',
 					'desc' => 'upload_desc',
 					'fields' => array(
-						'permissions[upload_files]' => array(
+						'permissions[can_upload_files]' => array(
 							'type' => 'checkbox',
 							'choices' => $member_groups,
-							'value' => $board->getPermission('upload_files'),
+							'value' => $board->getPermission('can_upload_files'),
+							'no_results' => [
+								'text' => sprintf(lang('no_found'), lang('member_groups'))
+							]
 						)
 					)
 				),
@@ -1168,6 +1174,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_report'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1179,6 +1186,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $board->getPermission('can_search'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1222,8 +1230,6 @@ class Forum_mcp extends CP_Controller {
 
 		ee()->functions->redirect($return);
 	}
-
-	// --------------------------------------------------------------------
 
 	private function createAlias()
 	{
@@ -1451,9 +1457,12 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'forum_board_desc',
 					'fields' => array(
 						'board_alias_id' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => $boards,
 							'value' => $alias->board_alias_id,
+							'no_results' => [
+								'text' => sprintf(lang('no_found'), lang('forum_boards'))
+							]
 						)
 					)
 				),
@@ -1491,8 +1500,6 @@ class Forum_mcp extends CP_Controller {
 
 		ee()->functions->redirect($return);
 	}
-
-	// --------------------------------------------------------------------
 
 	private function createCategory($board_id)
 	{
@@ -1683,7 +1690,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'status_desc',
 					'fields' => array(
 						'forum_status' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'o' => lang('live'),
 								'c' => lang('hidden'),
@@ -1749,6 +1756,14 @@ class Forum_mcp extends CP_Controller {
 
 		if ( ! empty($_POST))
 		{
+			// Check for empty checkboxes
+			$set_permissions = array_keys($_POST['permissions']);
+
+			foreach (array_diff(array('can_view_forum', 'can_view_hidden'), $set_permissions) as $permission)
+			{
+				$_POST['permissions'][$permission] = '';
+			}
+
 			foreach ($_POST['permissions'] as $key => $value)
 			{
 				$category->setPermission($key, $value);
@@ -1781,9 +1796,9 @@ class Forum_mcp extends CP_Controller {
 			->all()
 			->getDictionary('group_id', 'group_title');
 
-		$member_groups = array_map(function($group_name) {
-			return htmlentities($group_name, ENT_QUOTES, 'UTF-8');
-		}, $member_groups);
+		$member_groups_no_results = [
+			'text' => sprintf(lang('no_found'), lang('member_groups'))
+		];
 
 		$vars['sections'] = array(
 			array(
@@ -1800,6 +1815,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $category->getPermission('can_view_forum'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1811,6 +1827,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $category->getPermission('can_view_hidden'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -1829,8 +1846,6 @@ class Forum_mcp extends CP_Controller {
 			'heading'    => $vars['cp_page_title'],
 		);
 	}
-
-	// --------------------------------------------------------------------
 
 	private function createForum($cat_id)
 	{
@@ -2033,7 +2048,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'status_desc',
 					'fields' => array(
 						'forum_status' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'o' => lang('live'),
 								'c' => lang('hidden'),
@@ -2070,7 +2085,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'topic_ordering_desc',
 					'fields' => array(
 						'forum_topic_order' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'r' => lang('most_recent_post'),
 								'a' => lang('most_recent_first'),
@@ -2085,7 +2100,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'post_ordering_desc',
 					'fields' => array(
 						'forum_post_order' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'a' => lang('most_recent_first'),
 								'd' => lang('most_recent_last'),
@@ -2178,7 +2193,7 @@ class Forum_mcp extends CP_Controller {
 					'desc' => 'text_formatting_desc',
 					'fields' => array(
 						'forum_text_formatting' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => $fmt_options,
 							'value' => $forum->forum_text_formatting,
 						)
@@ -2188,7 +2203,7 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'html_formatting',
 					'fields' => array(
 						'forum_html_formatting' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => array(
 								'all'  => lang('html_all'),
 								'safe' => lang('html_safe'),
@@ -2286,6 +2301,14 @@ class Forum_mcp extends CP_Controller {
 
 		if ( ! empty($_POST))
 		{
+			// Check for empty checkboxes
+			$set_permissions = array_keys($_POST['permissions']);
+
+			foreach (array_diff($this->forum_checkboxes, $set_permissions) as $permission)
+			{
+				$_POST['permissions'][$permission] = '';
+			}
+
 			foreach ($_POST['permissions'] as $key => $value)
 			{
 				$forum->setPermission($key, $value);
@@ -2318,9 +2341,9 @@ class Forum_mcp extends CP_Controller {
 			->all()
 			->getDictionary('group_id', 'group_title');
 
-		$member_groups = array_map(function($group_name) {
-			return htmlentities($group_name, ENT_QUOTES, 'UTF-8');
-		}, $member_groups);
+		$member_groups_no_results = [
+			'text' => sprintf(lang('no_found'), lang('member_groups'))
+		];
 
 		$vars['sections'] = array(
 			array(
@@ -2337,6 +2360,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_view_forum'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2348,6 +2372,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_view_hidden'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2359,6 +2384,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_view_topics'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2370,6 +2396,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_post_topics'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2381,6 +2408,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_post_reply'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2388,10 +2416,11 @@ class Forum_mcp extends CP_Controller {
 					'title' => 'upload',
 					'desc' => 'upload_desc',
 					'fields' => array(
-						'permissions[upload_files]' => array(
+						'permissions[can_upload_files]' => array(
 							'type' => 'checkbox',
 							'choices' => $member_groups,
-							'value' => $forum->getPermission('upload_files'),
+							'value' => $forum->getPermission('can_upload_files'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2403,6 +2432,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_report'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2414,6 +2444,7 @@ class Forum_mcp extends CP_Controller {
 							'type' => 'checkbox',
 							'choices' => $member_groups,
 							'value' => $forum->getPermission('can_search'),
+							'no_results' => $member_groups_no_results
 						)
 					)
 				),
@@ -2463,8 +2494,6 @@ class Forum_mcp extends CP_Controller {
 		ee()->functions->redirect($return);
 	}
 
-
-	// --------------------------------------------------------------------
 
 	public function ranks()
 	{
@@ -2768,8 +2797,6 @@ class Forum_mcp extends CP_Controller {
 		ee()->functions->redirect(ee('CP/URL')->make($this->base . 'ranks', ee()->cp->get_url_state()));
 	}
 
-	// --------------------------------------------------------------------
-
 	public function admins($board_id)
 	{
 		if (ee()->input->post('bulk_action') == 'remove')
@@ -2927,10 +2954,6 @@ class Forum_mcp extends CP_Controller {
 			->all()
 			->getDictionary('group_id', 'group_title');
 
-		$member_groups = array_map(function($group_name) {
-			return htmlentities($group_name, ENT_QUOTES, 'UTF-8');
-		}, $member_groups);
-
 		$vars['sections'] = array(
 			array(
 				array(
@@ -2944,11 +2967,16 @@ class Forum_mcp extends CP_Controller {
 								'group' => lang('admin_type_member_group'),
 							),
 							'value' => 'group',
+							'encode' => FALSE
 						),
 						'member_group' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => $member_groups,
-							'value' => 5
+							'value' => 5,
+							'margin_left' => TRUE,
+							'no_results' => [
+								'text' => sprintf(lang('no_found'), lang('member_groups'))
+							]
 						),
 						'administrator_type_individual' => array(
 							'type' => 'radio',
@@ -2956,6 +2984,7 @@ class Forum_mcp extends CP_Controller {
 							'choices' => array(
 								'individual' => lang('admin_type_individual')
 							),
+							'encode' => FALSE
 						),
 						'individual' => array(
 							'type' => 'text',
@@ -3076,8 +3105,6 @@ class Forum_mcp extends CP_Controller {
 
 		ee()->functions->redirect($return);
 	}
-
-	// --------------------------------------------------------------------
 
 	public function moderators($id)
 	{
@@ -3319,10 +3346,6 @@ class Forum_mcp extends CP_Controller {
 			->all()
 			->getDictionary('group_id', 'group_title');
 
-		$member_groups = array_map(function($group_name) {
-			return htmlentities($group_name, ENT_QUOTES, 'UTF-8');
-		}, $member_groups);
-
 		$sections = array(
 			array(
 				array(
@@ -3338,9 +3361,12 @@ class Forum_mcp extends CP_Controller {
 							'value' => ($moderator->getType()) ?: 'group',
 						),
 						'member_group' => array(
-							'type' => 'select',
+							'type' => 'radio',
 							'choices' => $member_groups,
-							'value' => ($moderator->mod_group_id) ?: 5
+							'value' => ($moderator->mod_group_id) ?: 5,
+							'no_results' => [
+								'text' => sprintf(lang('no_found'), lang('member_groups'))
+							]
 						),
 						'moderator_type_individual' => array(
 							'type' => 'radio',
@@ -3362,7 +3388,6 @@ class Forum_mcp extends CP_Controller {
 					'fields' => array(
 						'permissions' => array(
 							'type' => 'checkbox',
-							'wrap' => TRUE,
 							'choices' => array(
 								'mod_can_edit'          => lang('mod_can_edit'),
 								'mod_can_move'          => lang('mod_can_move'),
@@ -3509,8 +3534,6 @@ class Forum_mcp extends CP_Controller {
 
 		ee()->functions->redirect(ee('CP/URL')->make($this->base . 'moderators/' . $board_id));
 	}
-
-	// --------------------------------------------------------------------
 
 	/**
 	 * Conditionally adds forum specific specialty templates for a given site
