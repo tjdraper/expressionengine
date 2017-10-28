@@ -35,7 +35,7 @@ foreach ($setting['fields'] as $field_name => $field)
 }
 if (isset($setting['security']) && $setting['security'] == TRUE)
 {
-	$fieldset_classes .= ' fieldset-security-enhance';
+	$fieldset_classes .= ' fieldset-security-enhanced';
 }
 if (isset($setting['caution']) && $setting['caution'] == TRUE)
 {
@@ -137,8 +137,9 @@ $element = ($grid) ? 'div' : 'fieldset'; ?>
 			$button = $setting['button'];
 			$rel = isset($button['rel']) ? $button['rel'] : '';
 			$href = isset($button['href']) ? $button['href'] : '#';
+			$for = isset($button['for']) ? $button['for'] : '';
 		?>
-		<a class="btn action submit js-modal-link--side" rel="<?=$rel?>" href="<?=$href?>"><?=lang($button['text'])?></a>
+		<a class="btn action submit js-modal-link--side" rel="<?=$rel?>" href="<?=$href?>" data-for="<?=$for?>"><?=lang($button['text'])?></a>
 		<?php endif; ?>
 	</div>
 </<?=$element?>>

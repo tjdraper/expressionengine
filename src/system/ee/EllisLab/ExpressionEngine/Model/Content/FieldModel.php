@@ -274,7 +274,13 @@ abstract class FieldModel extends Model {
 			return;
 		}
 
-		$data_table = $this->getDataTable();
+		$data_table = $this->getTableName();
+
+		if ( ! $this->hasProperty($this->getColumnPrefix().'legacy_field_data')
+			|| $this->getProperty($this->getColumnPrefix().'legacy_field_data') == TRUE)
+		{
+			$data_table = $this->getDataTable();
+		}
 
 		foreach ($columns as $name => &$column)
 		{

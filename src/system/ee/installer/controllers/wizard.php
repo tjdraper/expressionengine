@@ -12,7 +12,7 @@
  */
 class Wizard extends CI_Controller {
 
-	public $version           = '4.0.0-dp.2';	// The version being installed
+	public $version           = '4.0.0-dp.3';	// The version being installed
 	public $installed_version = ''; 		// The version the user is currently running (assuming they are running EE)
 	public $minimum_php       = '5.3.10';	// Minimum version required to run EE
 	public $schema            = NULL;		// This will contain the schema object with our queries
@@ -110,7 +110,8 @@ class Wizard extends CI_Controller {
 		'captcha_path'          => '../images/captchas/',
 		'theme_folder_path'     => '../themes/',
 		'modules'               => array(),
-		'install_default_theme' => 'n'
+		'install_default_theme' => 'n',
+		'utf8mb4_supported'     => NULL
 	);
 
 	// These are the default values for the config array.  Since the
@@ -139,7 +140,7 @@ class Wizard extends CI_Controller {
 		define('PASSWORD_MAX_LENGTH', 72);
 		define('PATH_CACHE',  SYSPATH.'user/cache/');
 		define('PATH_TMPL',   SYSPATH.'user/templates/');
-		define('DOC_URL', 'https://docs.expressionengine.com/v3/');
+		define('DOC_URL', 'https://docs.expressionengine.com/v4/');
 
 		// Third party constants
 		define('PATH_THIRD',  SYSPATH.'user/addons/');
@@ -565,6 +566,48 @@ class Wizard extends CI_Controller {
 		return ($this->userdata['db_prefix'] == '') ? 'exp_' : preg_replace("#([^_])/*$#", "\\1_", $this->userdata['db_prefix']);
 	}
 
+	private function serverSupportsUtf8mb4()
+	{
+		static $supported;
+
+		if (is_null($supported))
+		{
+			$msyql_server_version = ee('Database')->getConnection()->getNative()->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+			$supported = version_compare($msyql_server_version, '5.5.3', '>=');
+		}
+
+		return $supported;
+	}
+
+	private function clientSupportsUtf8mb4()
+	{
+		static $supported;
+
+		if (is_null($supported))
+		{
+			$client_info = ee('Database')->getConnection()->getNative()->getAttribute(PDO::ATTR_CLIENT_VERSION);
+
+			if (strpos($client_info, 'mysqlnd') === 0)
+			{
+				$msyql_client_version = preg_replace('/^mysqlnd ([\d.]+).*/', '$1', $client_info);
+				$supported = version_compare($msyql_client_version, '5.0.9', '>=');
+			}
+			else
+			{
+				$msyql_client_version = $client_info;
+				$supported = version_compare($msyql_client_version, '5.5.3', '>=');
+			}
+		}
+
+		return $supported;
+	}
+
+	private function isUtf8mb4Supported()
+	{
+		return ($this->serverSupportsUtf8mb4() && $this->clientSupportsUtf8mb4());
+	}
+
 	/**
 	 * Form validation callback for checking DB prefixes
 	 *
@@ -708,6 +751,36 @@ class Wizard extends CI_Controller {
 			'char_set' => 'utf8mb4',
 			'dbcollat' => 'utf8mb4_unicode_ci',
 		);
+
+		// Fallback to UTF8 if we cannot do UTF8MB4
+		if ( ! $this->isUtf8mb4Supported())
+		{
+			$db['char_set'] = 'utf8';
+			$db['dbcollat'] = 'utf8_unicode_ci';
+
+			if (is_null($this->userdata['utf8mb4_supported']))
+			{
+				$which = '';
+
+				if ( ! $this->clientSupportsUtf8mb4())
+				{
+					$which = lang('client');
+
+					if ( ! $this->serverSupportsUtf8mb4())
+					{
+						$which .= ' ' . lang('and') . ' ';
+					}
+				}
+
+				if ( ! $this->serverSupportsUtf8mb4())
+				{
+					$which .= lang('server');
+				}
+
+				$this->userdata['utf8mb4_supported'] = FALSE;
+				$errors[] = sprintf(lang('utf8mb4_not_supported'), $which);
+			}
+		}
 
 		// Need to reset the connection based on the above settings.
 		ee('Database')->closeConnection();

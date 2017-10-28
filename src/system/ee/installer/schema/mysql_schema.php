@@ -596,7 +596,7 @@ class EE_Schema {
 			live_look_template int(10) UNSIGNED NOT NULL default 0,
 			max_entries int(10) unsigned NOT NULL DEFAULT '0',
 			PRIMARY KEY `channel_id` (`channel_id`),
-			KEY `cat_group` (`cat_group`),
+			KEY `cat_group` (`cat_group`(191)),
 			KEY `channel_name` (`channel_name`),
 			KEY `site_id` (`site_id`)
 		)";
@@ -1647,7 +1647,7 @@ class EE_Schema {
 		}
 
 		// Default field types
-		$default_fts = array('select', 'text', 'textarea', 'date', 'email_address', 'file', 'fluid_field', 'grid', 'multi_select', 'checkboxes', 'radio', 'relationship', 'rte', 'toggle', 'url');
+		$default_fts = array('select', 'text', 'textarea', 'date', 'duration', 'email_address', 'file', 'fluid_field', 'grid', 'multi_select', 'checkboxes', 'radio', 'relationship', 'rte', 'toggle', 'url');
 
 		foreach($default_fts as $name)
 		{

@@ -58,7 +58,7 @@ $lang = array(
 
 'create_member' => 'Create Member',
 
-'create_member_group' => 'Create a Member Group',
+'create_member_group' => 'Create Member Group',
 
 'create_new_member_group' => 'Create a New Member Group',
 
@@ -320,7 +320,7 @@ $lang = array(
 
 'profile_templates' => 'Member Profile Templates',
 
-'register_member' => 'Register a New Member',
+'register_member' => 'New Member',
 
 'resend' => 'Resend Activation Email',
 

@@ -643,6 +643,8 @@ class Groups extends Members\Members {
 
 	private function buildForm($values)
 	{
+		ee()->cp->set_breadcrumb(ee('CP/URL')->make('members'), lang('member_manager'));
+
 		// @TODO: This should be refactored to remove the need for the
 		// `element()` method
 		ee()->load->helper('array');
@@ -720,6 +722,19 @@ class Groups extends Members\Members {
 				->filter('site_id', ee()->config->item('site_id'))
 				->all()
 				->getDictionary('channel_id', 'channel_title');
+
+			$default_homepage_choices = array(
+				'overview' => lang('cp_overview').' &mdash; <i>'.lang('default').'</i>',
+				'entries_edit' => lang('edit_listing')
+			);
+
+			if (count($allowed_channels))
+			{
+				$default_homepage_choices['publish_form'] = lang('publish_form').' &mdash; '.
+					form_dropdown('cp_homepage_channel', $allowed_channels, element('cp_homepage_channel', $values));
+			}
+
+			$default_homepage_choices['custom'] = lang('custom_uri');
 
 			$vars = array(
 				array(
@@ -969,13 +984,7 @@ class Groups extends Members\Members {
 						'fields' => array(
 							'cp_homepage' => array(
 								'type' => 'radio',
-								'choices' => array(
-									'overview' => lang('cp_overview').' &mdash; <i>'.lang('default').'</i>',
-									'entries_edit' => lang('edit_listing'),
-									'publish_form' => lang('publish_form').' &mdash; '.
-										form_dropdown('cp_homepage_channel', $allowed_channels, element('cp_homepage_channel', $values)),
-									'custom' => lang('custom_uri'),
-								),
+								'choices' => $default_homepage_choices,
 								'value' => element('cp_homepage', $values, 'overview'),
 								'encode' => FALSE
 							),

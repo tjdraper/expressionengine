@@ -313,6 +313,14 @@ class Template extends AbstractDesignController {
 			$view_url .= $group->group_name.(($template->template_name == 'index') ? '' : '/'.$template->template_name);
 		}
 
+		$vars['action_button'] = [
+			'text' => 'view_rendered',
+			'href' => $view_url,
+			'rel' => 'external'
+		];
+
+		$vars['view_url'] = $view_url;
+
 		$this->stdHeader();
 		$this->loadCodeMirrorAssets();
 
@@ -999,7 +1007,7 @@ class Template extends AbstractDesignController {
 						'no_auth_bounce' => array(
 							'type' => 'radio',
 							'choices' => $existing_templates,
-							'value' => $template->no_auth_bounce,
+							'value' => $template->no_auth_bounce ?: NULL,
 							'no_results' => [
 								'text' => sprintf(lang('no_found'), lang('templates'))
 							]
