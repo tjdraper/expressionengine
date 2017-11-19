@@ -323,7 +323,7 @@ abstract class FieldModel extends Model {
 	 * Add the default columns if they don't exist
 	 *
 	 * @param Array $columns Column definitions
-	 * @return Array Updated column definitions
+	 * @return array Updated column definitions
 	 */
 	private function ensureDefaultColumns($columns)
 	{
@@ -396,6 +396,17 @@ abstract class FieldModel extends Model {
 	public function getTableName()
 	{
 		return $this->getDataTable() . '_field_' . $this->getId();
+	}
+
+	public function getDataStorageTable()
+	{
+		if ( ! $this->hasProperty($this->getColumnPrefix().'legacy_field_data')
+			|| $this->getProperty($this->getColumnPrefix().'legacy_field_data') == TRUE)
+		{
+			return $this->getDataTable();
+		}
+
+		return $this->getTableName();
 	}
 
 	protected function getForeignKey()

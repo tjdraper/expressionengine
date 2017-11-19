@@ -69,9 +69,9 @@ class EE_Core {
 		// application constants
 		define('IS_CORE',		FALSE);
 		define('APP_NAME',		'ExpressionEngine'.(IS_CORE ? ' Core' : ''));
-		define('APP_BUILD',		'20171103');
-		define('APP_VER',		'4.0.0-dp.4');
-		define('APP_VER_ID',	'dp.4');
+		define('APP_BUILD',		'20171117');
+		define('APP_VER',		'4.0.0-dp.5');
+		define('APP_VER_ID',	'dp.5');
 		define('SLASH',			'&#47;');
 		define('LD',			'{');
 		define('RD',			'}');
@@ -83,6 +83,7 @@ class EE_Core {
 		define('USERNAME_MAX_LENGTH', 75);
 		define('PASSWORD_MAX_LENGTH', 72);
 		define('DOC_URL',       'https://docs.expressionengine.com/v4/');
+		define('URL_TITLE_MAX_LENGTH', 200);
 
 		ee()->load->helper('language');
 		ee()->load->helper('string');

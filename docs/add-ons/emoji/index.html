@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+
+
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
+	    
+	    <title>Emoji &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
+
+	    <meta name="viewport" content="initial-scale=1">
+
+	    <link rel="stylesheet" href="../../_static/asset/css/default.min.css" type="text/css" />
+	    <script type="text/javascript">
+	      var DOCUMENTATION_OPTIONS = {
+	        URL_ROOT:    '../../',
+	        VERSION:     '4.0.0-dp.5',
+	        COLLAPSE_INDEX: false,
+	        FILE_SUFFIX: '.html',
+	        HAS_SOURCE:  true
+	      };
+	    </script>
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../../index.html" />
+	    <link rel="up" title="Add-Ons" href="../index.html" />
+	    <link rel="next" title="Emoticon" href="../emoticon/index.html" />
+	    <link rel="prev" title="Tell-A-Friend Form" href="../email/tellafriend.html" /> 
+	</head>
+	<body id="top">
+		<section class="fill">
+			<section class="row align-right fluid-fix">
+				<section class="w-12 fluid-col" id="docs-main">
+					<div class="box docs-wrap">
+						<nav class="ver-nav">
+							Switch to:
+							<a href="https://docs.expressionengine.com/latest/"><b>v3</b> (Latest)</a>
+							<a href="https://docs.expressionengine.com/v2/"><b>v2</b></a>
+							<a href="https://docs.expressionengine.com/v1/"><b>v1</b></a>
+						</nav>
+						<div class="docs-header">
+							<a class="small-menu" href="#docs-nav"></a>
+							<h1>ExpressionEngine&reg; User Guide</h1>
+							<form class="docs-download">
+								<select>
+									<option value="">Download&hellip;</option>
+									<option value="https://docs.expressionengine.com/downloads/v3">Download v3 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v2">Download v2 User Guide</option>
+									<option value="https://docs.expressionengine.com/downloads/v1">Download v1 User Guide</option>
+								</select>
+							</form>
+							<script>
+								document.querySelector('.docs-download select').onchange = function() {
+									window.location.href = this.value;
+								};
+							</script>
+						</div>
+						<div class="top-nav">
+							<ul class="breadcrumb">
+								<li><a href="../../index.html">Home</a></li>
+								<li><a href="../index.html" accesskey="U">Add-Ons</a></li>
+								<li class="last">Emoji</li>
+							</ul>
+						</div>
+						<div id="content">
+						<div class="section" id="emoji">
+<h1>Emoji<a class="headerlink" href="#emoji" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#introduction" id="id2">Introduction</a></li>
+<li><a class="reference internal" href="#exp-emoji-emoji-list" id="id3">{exp:emoji:emoji_list}</a></li>
+<li><a class="reference internal" href="#exp-emoji-parse-shorthand" id="id4">{exp:emoji:parse_shorthand}</a></li>
+<li><a class="reference internal" href="#emoji-picker-example" id="id5">Emoji picker example</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id2">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Emoji module can make it easy for you to provide your visitors with a catalog / click-interface to add expressive emoji to their content. It also enables you to parse emoji code shorthand in content that ExpressionEngine hasn&#8217;t parsed, such as from an external data source.</p>
+</div>
+<div class="section" id="exp-emoji-emoji-list">
+<span id="id1"></span><h2><a class="toc-backref" href="#id3">{exp:emoji:emoji_list}</a><a class="headerlink" href="#exp-emoji-emoji-list" title="Permalink to this headline">¶</a></h2>
+<p>This tag outputs a list of all cataloged emoji:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">dl</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">exp:emoji:emoji_list</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;{</span><span class="nf">short_name</span><span class="p">}&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;{</span><span class="nf">html_entity</span><span class="p">}&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/exp:emoji:emoji_list</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">dl</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="html-entity">
+<h4>html_entity<a class="headerlink" href="#html-entity" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">html_entity</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The HTML entity which will render the emoji.</p>
+</div>
+<div class="section" id="short-name">
+<h4>short_name<a class="headerlink" href="#short-name" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">short_name</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The short name for the emoji, e.g. <cite>joy</cite>, <cite>man-woman-girl-boy</cite>. Note that this does <em>not</em> include the <cite>:</cite> before and after the short name that would be necessary for ExpressionEngine to parse and render it for you.</p>
+</div>
+</div>
+</div>
+<div class="section" id="exp-emoji-parse-shorthand">
+<h2><a class="toc-backref" href="#id4">{exp:emoji:parse_shorthand}</a><a class="headerlink" href="#exp-emoji-parse-shorthand" title="Permalink to this headline">¶</a></h2>
+<p>This tag will convert emoji shorthand code (<code class="docutils literal"><span class="pre">:robot_face:</span></code>) to an HTML entity (<code class="docutils literal"><span class="pre">&amp;#x1F916;</span></code>) which the browser will render (🤖). ExpressionEngine will automatically parse emoji shorthand codes in content, but this tag enables you to do the same from any content source:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nf">exp:emoji:parse_shorthand</span><span class="p">}</span>
+  Flying a :rocket: to Mars with Elon Musk
+<span class="p">{</span><span class="nf">/exp:emoji:parse_shorthand</span><span class="p">}</span>
+
+<span class="cm">{!-- outputs &quot;Flying a &amp;#x1F680; to Mars with Elon Musk&quot; --}</span>
+<span class="cm">{!-- renders as &quot;Flying a 🚀 to Mars with Elon Musk&quot; --}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="emoji-picker-example">
+<h2><a class="toc-backref" href="#id5">Emoji picker example</a><a class="headerlink" href="#emoji-picker-example" title="Permalink to this headline">¶</a></h2>
+<p>The door is wide open for how and where you can implement a clickable emoji catalog / autocomplete using the Emoji module. This simple example uses an ajax jQuery UI Dialog, but the basic technique is applicable to any UI or utility you wish to build.</p>
+<ol class="arabic">
+<li><p class="first">In the template containing your comment form, add a link for the picker and a container for your modal content:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emoji-picker-link&quot;</span><span class="p">&gt;</span>Pick Emoji<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;emoji-picker&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">And include the following JavaScript (including jQuery, jQuery UI, and the jQuery UI CSS):</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;//code.jquery.com/jquery-3.2.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;//code.jquery.com/ui/1.12.1/jquery-ui.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#emoji-picker&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
+      <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nx">maxHeight</span><span class="o">:</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="p">});</span>
+
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.emoji-picker-link&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#emoji-picker&quot;</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="s2">&quot;</span><span class="p">{</span><span class="nf">path</span><span class="p">=</span><span class="s1">&#39;site/emoji-picker&#39;</span><span class="p">}</span><span class="s2">&quot;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">addEmoji</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emoji</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">comment</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#comment_form textarea[name=comment]&#39;</span><span class="p">);</span>
+        <span class="nx">comment</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">comment</span><span class="p">.</span><span class="nx">val</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">emoji</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a template called <code class="docutils literal"><span class="pre">emoji-picker</span></code> (or whatever you like, just match your <code class="docutils literal"><span class="pre">{path=}</span></code> variable above).</p>
+</li>
+<li><p class="first">In your new emoji picker template, add the following:</p>
+<div class="highlight-ee"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+  <span class="nc">.container</span><span class="p">{</span>
+    <span class="nb">display</span><span class="o">:</span> <span class="n">grid</span><span class="p">;</span>
+    <span class="n">grid</span><span class="o">-</span><span class="n">template</span><span class="o">-</span><span class="n">columns</span><span class="o">:</span> <span class="nb">repeat</span><span class="p">(</span><span class="nb">auto</span><span class="o">-</span><span class="n">fit</span><span class="o">,</span> <span class="n">minmax</span><span class="p">(</span><span class="m">50px</span><span class="o">,</span> <span class="m">1</span><span class="n">fr</span><span class="p">));</span>
+    <span class="n">grid</span><span class="o">-</span><span class="n">gap</span><span class="o">:</span> <span class="m">1</span><span class="n">rem</span>
+  <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">exp:emoji:emoji_list</span><span class="p">}</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;item&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;addEmoji(&#39;:</span><span class="p">{</span><span class="nf">short_name</span><span class="p">}</span><span class="s">:&#39;);&quot;</span><span class="p">&gt;{</span><span class="nf">html_entity</span><span class="p">}&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">{</span><span class="nf">/exp:emoji:emoji_list</span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">🎉💃🕺✨🌐✨</p>
+</li>
+</ol>
+<p>Now visitors can click your emoji picker link, and add emoji to their comments without having to remember 1500+ emoji shorthand codes.</p>
+</div>
+</div>
+
+						</div>
+						<div class="docs-footer">
+							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+							<p><a class="scroll" href="#top"></a></p>
+						</div>
+
+					</div>
+				</section>
+
+				<section class="w-4 fixed-col" id="docs-nav">
+					<div class="box docs-sidebar">
+						<form class="docs-search" method="get" action="https://docs.expressionengine.com/search/latest/">
+							<input type="text" name="q" id="q" placeholder="search eecms docs">
+						</form>
+
+						<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Installation &amp; Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cp/index.html">The Control Panel</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Add-Ons</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../add_on_types.html">Differences between Modules, Plugins, Extensions, and Fieldtypes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blacklist/index.html">Black/White List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../email/index.html">Email</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Emoji</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../emoticon/index.html">Emoticon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file/index.html">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../forum/index.html">Discussion Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ip_to_nation/index.html">IP to Nation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jquery/index.html">jQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metaweblog_api/index.html">Metaweblog API / Movable Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moblog/index.html">Moblog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pages/index.html">Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query/index.html">Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss/index.html">RSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rss_parser/index.html">RSS Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rte/index.html">Rich Text Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../search/index.html">Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simple_commerce/index.html">Simple Commerce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spam/index.html">Spam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../statistics/index.html">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../downloadable_add-ons.html">Downloadable Add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../channel/index.html">Channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../comment/index.html">Comment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fieldtypes/index.html">Fieldtypes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../member/index.html">Member Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../msm/index.html">Multiple Site Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization/index.html">Optimizing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/index.html">Securing ExpressionEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/index.html">Template Language Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../urls/index.html">URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to/index.html">How-To Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Add-On Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/index.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bugs_and_security_reports/index.html">Bugs and Security Reports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/changelog.html">ExpressionEngine 4.x Change Log</a></li>
+</ul>
+
+					</div>
+				</section>
+			</section>
+		</section>
+		<script type="text/javascript" src="../../_static/jquery.js"></script>
+		<script type="text/javascript" src="../../_static/underscore.js"></script>
+		<script type="text/javascript" src="../../_static/doctools.js"></script>
+		<script type="text/javascript" src="../../_static/asset/js/common.js"></script>
+		<script>
+		!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+		n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+		document,'script','https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '565259520351602'); // Insert your pixel ID here.
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=565259520351602&ev=PageView&noscript=1"
+		/></noscript>
+	</body>
+</html>

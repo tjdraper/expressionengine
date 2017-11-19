@@ -172,7 +172,7 @@ $lang = array(
 
 'login_as_user' => 'SuperAdmin Logging In as User',
 
-'manage_bans' => 'Manage Bans',
+'manage_bans' => 'Ban Settings',
 
 'maximum_members_reached' => 'You have reached the maximum number of Members allowed.',
 
@@ -394,7 +394,7 @@ $lang = array(
 
 'ban_options_desc' => 'You can prevent access completely by forwarding them to another website, or show them an unavailable message, or allow them to access the website in view only mode.',
 
-'ban_settings_updated' => 'Banned Settings Updated',
+'ban_settings_updated' => 'Ban Settings updated',
 
 'banned_members' => 'Banned Members',
 
@@ -544,7 +544,7 @@ $lang = array(
 
 'can_edit_all_comments' => 'Edit comments by others',
 
-'can_edit_html_buttons' => 'Can edit own <abbr title=\'Hyper-Text Markup Language\'>HTML</abbr> formatting buttons',
+'can_edit_html_buttons' => 'Can edit own HTML formatting buttons',
 
 'can_edit_other_entries' => 'Edit entries, by others',
 

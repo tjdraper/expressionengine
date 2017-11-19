@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
 	    
-	    <title>CP/Sidebar Service &mdash; ExpressionEngine 4.0.0-dp.4 documentation</title>
+	    <title>CP/Sidebar Service &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
 
 	    <meta name="viewport" content="initial-scale=1">
 
@@ -14,13 +14,13 @@
 	    <script type="text/javascript">
 	      var DOCUMENTATION_OPTIONS = {
 	        URL_ROOT:    '../../',
-	        VERSION:     '4.0.0-dp.4',
+	        VERSION:     '4.0.0-dp.5',
 	        COLLAPSE_INDEX: false,
 	        FILE_SUFFIX: '.html',
 	        HAS_SOURCE:  true
 	      };
 	    </script>
-	    <link rel="top" title="ExpressionEngine 4.0.0-dp.4 documentation" href="../../index.html" />
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../../index.html" />
 	    <link rel="up" title="Services" href="index.html" />
 	    <link rel="next" title="Spam Service" href="spam.html" />
 	    <link rel="prev" title="Permission Service" href="permission.html" /> 
@@ -75,6 +75,7 @@
 <li><a class="reference internal" href="#basicitem-methods" id="id7">BasicItem Methods</a></li>
 <li><a class="reference internal" href="#folderlist-methods" id="id8">FolderList Methods</a></li>
 <li><a class="reference internal" href="#folderitem-methods" id="id9">FolderItem Methods</a></li>
+<li><a class="reference internal" href="#actionbar-methods" id="id10">ActionBar Methods</a></li>
 </ul>
 </div>
 <div class="section" id="simple-example">
@@ -83,7 +84,7 @@
 <div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$sidebar</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Sidebar&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>In accordance with our <a class="reference external" href="https://ellislab.com/style-guide/c/structure#content-box-sidebar">style guide</a> sidebars have headers:</p>
+<p>You can add a header:</p>
 <div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$header</span> <span class="o">=</span> <span class="nv">$sidebar</span><span class="o">-&gt;</span><span class="na">addHeader</span><span class="p">(</span><span class="nv">$text</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -114,6 +115,21 @@
 </div>
 <p>Basic list items may also be marked as a delete action:</p>
 <div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$basic_item</span><span class="o">-&gt;</span><span class="na">asDeleteAction</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You can add a folder list directly to a sidebar without a header:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$folder_list</span> <span class="o">=</span> <span class="nv">$sidebar</span><span class="o">-&gt;</span><span class="na">addFolderList</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sidebars can have an action bar at the bottom with one or two buttons:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$sidebar</span><span class="o">-&gt;</span><span class="na">addActionBar</span><span class="p">()</span>
+  <span class="o">-&gt;</span><span class="na">withLeftButton</span><span class="p">(</span>
+    <span class="nv">$left_button_text</span><span class="p">,</span>
+    <span class="nv">$left_button_url</span>
+  <span class="p">)</span><span class="o">-&gt;</span><span class="na">withRightButton</span><span class="p">(</span>
+    <span class="nv">$right_button_text</span><span class="p">,</span>
+    <span class="nv">$right_button_url</span>
+  <span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -219,6 +235,45 @@
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Header</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::addFolderList">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::</code><code class="descname">addFolderList</code><span class="sig-paren">(</span><em>$name</em><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::addFolderList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a folder list to the sidebar</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the folder list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new FolderList object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">FolderList</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::addActionBar">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::</code><code class="descname">addActionBar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Sidebar\Sidebar::addActionBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an action bar to the bottom of the sidebar</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A new ActionBar object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">ActionBar</td>
 </tr>
 </tbody>
 </table>
@@ -819,12 +874,70 @@
 </dd></dl>
 
 </div>
+<div class="section" id="actionbar-methods">
+<h2><a class="toc-backref" href="#id10">ActionBar Methods</a><a class="headerlink" href="#actionbar-methods" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="EllisLab\ExpressionEngine\Service\Sidebar\ActionBar">
+<em class="property">class </em><code class="descclassname">EllisLab\ExpressionEngine\Service\Sidebar\</code><code class="descname">ActionBar</code><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Sidebar\ActionBar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::withLeftButton">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::</code><code class="descname">withLeftButton</code><span class="sig-paren">(</span><em>$text</em>, <em>$url</em>, <em>$rel = NULL</em><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::withLeftButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the button that appears on the left side of the bar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$text</strong> (<em>string</em>) &#8211; The text of the item</li>
+<li><strong>$url</strong> (<em>CP/URL or string</em>) &#8211; A CPURL object or string containing the URL for the item.</li>
+<li><strong>$rel</strong> (<em>string</em>) &#8211; Optional string to set on the <code class="docutils literal"><span class="pre">rel=</span></code> attribute of the button.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$this</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ActionBar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::withRightButton">
+<code class="descclassname">EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::</code><code class="descname">withRightButton</code><span class="sig-paren">(</span><em>$text</em>, <em>$url</em>, <em>$rel = NULL</em><span class="sig-paren">)</span><a class="headerlink" href="#EllisLab\ExpressionEngine\Service\Sidebar\ActionBar::withRightButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the button that appears on the right side of the bar.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$text</strong> (<em>string</em>) &#8211; The text of the item</li>
+<li><strong>$url</strong> (<em>CP/URL or string</em>) &#8211; A CPURL object or string containing the URL for the item.</li>
+<li><strong>$rel</strong> (<em>string</em>) &#8211; Optional string to set on the <code class="docutils literal"><span class="pre">rel=</span></code> attribute of the button.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">$this</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ActionBar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 
 						</div>
 						<div class="docs-footer">
 							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
-								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.4 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
 							<p><a class="scroll" href="#top"></a></p>
 						</div>
 

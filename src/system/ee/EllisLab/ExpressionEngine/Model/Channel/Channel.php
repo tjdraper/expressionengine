@@ -216,7 +216,7 @@ class Channel extends StructureModel {
 
 		foreach ($emails as $email)
 		{
-			if ($value != filter_var($value, FILTER_SANITIZE_EMAIL) OR ! filter_var($value, FILTER_VALIDATE_EMAIL))
+			if ($email != filter_var($email, FILTER_SANITIZE_EMAIL) OR ! filter_var($email, FILTER_VALIDATE_EMAIL))
 			{
 				$rule->stop();
 				return 'valid_email';
@@ -260,7 +260,7 @@ class Channel extends StructureModel {
 	 * Display the CP entry form
 	 *
 	 * @param Content $content  An object implementing the Content interface
-	 * @return Array of HTML field elements for the entry / edit form
+	 * @return array of HTML field elements for the entry / edit form
 	 */
 	public function getPublishForm($content = NULL)
 	{

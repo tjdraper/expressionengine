@@ -1,10 +1,11 @@
 <?php
 $too_many = 8;
+$class = isset($class) ? $class : '';
 
 if (count($choices) == 0)
 {
 	if (isset($no_results)): ?>
-		<div data-input-value="<?=$field_name?>">
+		<div data-input-value="<?=$field_name?>" class="<?=$class?>">
 			<?=$this->make('ee:_shared/form/no_results')->render($no_results)?>
 		</div>
 	<?php endif;
@@ -33,19 +34,22 @@ foreach ($normalized_choices as $key => $choice)
 	}
 }
 
+$count = ee('View/Helpers')->countChoices($normalized_choices);
+
 // If it's a small list, just render it server-side
-if (ee('View/Helpers')->countChoices($normalized_choices) <= $too_many
+if ($count <= $too_many
+	&& ! ($count > 2 && $multi)
 	&& ! $nested
 	&& ! $has_groupings
 	&& ! $force_react):
 
 	// For radios with no value, set value to first choice
-	if ($value !== FALSE && empty($value) && ! $multi) {
+	if ($value !== FALSE && $value !== '0' && empty($value) && ! $multi) {
 		$keys = array_keys($choices);
 		$value = $keys[0];
 	}
 	?>
-	<div class="fields-select" data-input-value="<?=$field_name?>">
+	<div class="fields-select <?=$class?>" data-input-value="<?=$field_name?>">
 		<?php if ( ! isset($scalar) && $multi) $field_name .= '[]'; ?>
 		<div class="field-inputs">
 			<?php foreach ($choices as $key => $choice):
@@ -98,7 +102,7 @@ else:
 		'tooMany' => $too_many,
 		'filterUrl' => isset($filter_url) ? $filter_url : NULL,
 		'limit' => isset($limit) ? $limit : 100,
-		'toggleAll' => NULL,
+		'toggleAll' => isset($toggle_all) ? $toggle_all : $count > 2 && $multi,
 		'groupToggle' => isset($group_toggle) ? $group_toggle : NULL,
 		'editing' => isset($editing) ? $editing : NULL,
 		'manageable' => isset($manageable) ? $manageable : NULL,
@@ -112,7 +116,7 @@ else:
 		'noResults' => isset($no_results['text']) ? lang($no_results['text']) : NULL
 	];
 	?>
-	<div data-select-react="<?=base64_encode(json_encode($component))?>" data-input-value="<?=$field_name?>">
+	<div data-select-react="<?=base64_encode(json_encode($component))?>" data-input-value="<?=$field_name?>" class="<?=$class?>">
 		<div class="fields-select">
 			<div class="field-inputs">
 				<label class="field-loading">

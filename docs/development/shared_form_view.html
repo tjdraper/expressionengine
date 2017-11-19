@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
 	    
-	    <title>Shared Form View &mdash; ExpressionEngine 4.0.0-dp.4 documentation</title>
+	    <title>Shared Form View &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
 
 	    <meta name="viewport" content="initial-scale=1">
 
@@ -14,13 +14,13 @@
 	    <script type="text/javascript">
 	      var DOCUMENTATION_OPTIONS = {
 	        URL_ROOT:    '../',
-	        VERSION:     '4.0.0-dp.4',
+	        VERSION:     '4.0.0-dp.5',
 	        COLLAPSE_INDEX: false,
 	        FILE_SUFFIX: '.html',
 	        HAS_SOURCE:  true
 	      };
 	    </script>
-	    <link rel="top" title="ExpressionEngine 4.0.0-dp.4 documentation" href="../index.html" />
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../index.html" />
 	    <link rel="up" title="Add-On Development" href="index.html" />
 	    <link rel="next" title="Constants Reference" href="constants.html" />
 	    <link rel="prev" title="View Service" href="services/view.html" /> 
@@ -125,19 +125,13 @@
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>Given we have a view file named <cite>form.php</cite> with this as the contents:</p>
-<div class="highlight-php"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="o">&gt;</span>
-  <span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">embed</span><span class="p">(</span><span class="s1">&#39;ee:_shared/form&#39;</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">&lt;/div&gt;</span>
-</pre></div>
-</div>
 <p>We can then render the form by returning this at the end of our controller method:</p>
-<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;addon_name:form&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">);</span>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">make</span><span class="p">(</span><span class="s1">&#39;ee:_shared/form&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$vars</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Assuming our language keys are defined above, we should end up with a form that looks like this:</p>
 <div class="figure">
-<img alt="../_images/shared_form_1.png" src="../_images/shared_form_1.png" />
+<a class="reference internal image-reference" href="../_images/shared_form_1.png"><img alt="../_images/shared_form_1.png" src="../_images/shared_form_1.png" style="width: 895px;" /></a>
 </div>
 </div>
 <div class="section" id="fieldset-definitions">
@@ -202,16 +196,7 @@ styles and markup handling to show a Grid field.</td>
 <td>Boolean</td>
 <td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">wide</span></code></td>
-<td>Whether or not the fieldset&#8217;s fields should take up the entire width
-of the fieldset. By default, fields are confined to a column to the
-right of the field name and description. When <code class="docutils literal"><span class="pre">TRUE</span></code>, fields will
-have the full width of the fieldset <em>below</em> the field name and
-description. It&#8217;s a good idea to use this displaying a Grid input.</td>
-<td>Boolean</td>
-<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">attrs</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">attrs</span></code></td>
 <td>Specify any extra attributes such as classes or data attributes on
 the parent <code class="docutils literal"><span class="pre">fieldset</span></code> element of the field(s). An array can be
 passed in the format of <code class="docutils literal"><span class="pre">array('attr-name'</span> <span class="pre">=&gt;</span> <span class="pre">'value')</span></code> and
@@ -219,7 +204,7 @@ multiple attributes can be specified.</td>
 <td>Array</td>
 <td>N/A</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">group</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">group</span></code></td>
 <td>Specify the group name this fieldset should be included in. See
 <a class="reference internal" href="#toggling-field-visibility">Toggling field visibility</a>  for more information.</td>
 <td>String</td>
@@ -282,11 +267,19 @@ the required style <a class="reference external" href="https://ellislab.com/styl
 <td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">choices</span></code></td>
-<td>For field types that have multiple options to choose from, such as
-radio buttons or checkboxes, sets the selectable choices for that
-field. Array format is <code class="docutils literal"><span class="pre">'value'</span> <span class="pre">=&gt;</span> <span class="pre">lang('label')</span></code>.</td>
+<td><p class="first">For checkboxes, radio buttons and select fields, sets the
+selectable choices for that field. Array format is
+<code class="docutils literal"><span class="pre">'my_value'</span> <span class="pre">=&gt;</span> <span class="pre">lang('my_label')</span></code>. If you need instructional
+text, structure your array like this:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span></span><span class="s1">&#39;my_value&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;my_label&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;instructions&#39;</span> <span class="o">=&gt;</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;my_instructions&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</td>
 <td>Array</td>
-<td><code class="docutils literal"><span class="pre">NULL</span></code></td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">disabled_choices</span></code></td>
 <td>For checkboxes, indicates options that are not currently choosable
@@ -320,11 +313,11 @@ with other <code class="docutils literal"><span class="pre">short-text</span></c
 <td>String</td>
 <td><code class="docutils literal"><span class="pre">NULL</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">wrap</span></code></td>
-<td>Whether or not to wrap the field in a scrollable div, good for
-potentially long lists of selectable options.</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">encode</span></code></td>
+<td>For checkboxes, radio buttons and select fields, whether or not to
+encode the items&#8217; display value for security.</td>
 <td>Boolean</td>
-<td><code class="docutils literal"><span class="pre">FALSE</span></code></td>
+<td><code class="docutils literal"><span class="pre">TRUE</span></code></td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">content</span></code></td>
 <td>When <code class="docutils literal"><span class="pre">type</span></code> is set to <code class="docutils literal"><span class="pre">html</span></code>, allows for any freeform markup to
@@ -369,17 +362,17 @@ normally numeric, values set.</td>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">select</span></code></td>
 <td>Select dropdown input.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">checkbox</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">dropdown</span></code></td>
+<td>A rich select dropdown               .</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">checkbox</span></code></td>
 <td>Checkboxes displayed in a vertical list.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">radio</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">radio</span></code></td>
 <td>Radio buttons displayed in a vertical list.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">inline_radio</span></code></td>
-<td>Radio buttons displayed in an in-line, horizontal list.</td>
-</tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">yes_no</span></code></td>
-<td>Two color-coded radio buttons for selecting either &#8220;yes&#8221; or &#8220;no&#8221;.</td>
+<td>A Toggle control that returns either <code class="docutils literal"><span class="pre">y</span></code> or <code class="docutils literal"><span class="pre">n</span></code> respectively.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">file</span></code></td>
 <td>File input. Requires filepicker configuration.</td>
@@ -487,7 +480,7 @@ definition to have a custom input field.</td>
 <p>Notice we&#8217;ve made use of many more field types here. Also notice, we aren&#8217;t setting values on many of our new fields, that&#8217;s because we&#8217;re working with site-wide configuration settings. <strong>When a value is not specified for a field, the shared form view automatically looks in the site&#8217;s configuration for a value.</strong></p>
 <p>With these additions, our form should now look like this:</p>
 <div class="figure">
-<img alt="../_images/shared_form_2.png" src="../_images/shared_form_2.png" />
+<a class="reference internal image-reference" href="../_images/shared_form_2.png"><img alt="../_images/shared_form_2.png" src="../_images/shared_form_2.png" style="width: 895px;" /></a>
 </div>
 <p>Our form is fully rendered and ready to write a form handler for without having to write any markup.</p>
 </div>
@@ -680,7 +673,7 @@ definition to have a custom input field.</td>
 						</div>
 						<div class="docs-footer">
 							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
-								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.4 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
 							<p><a class="scroll" href="#top"></a></p>
 						</div>
 

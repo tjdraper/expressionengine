@@ -57,7 +57,7 @@ abstract class ContentModel extends VariableColumnModel {
 	/**
 	 * Optionally return an array of default fields.
 	 *
-	 * @return Array of field definitions
+	 * @return array of field definitions
 	 */
 	protected function getDefaultFields()
 	{
@@ -540,7 +540,7 @@ abstract class ContentModel extends VariableColumnModel {
 		if ( ! empty($tables))
 		{
 			ee('Model/Datastore')->rawQuery()
-				->where('entry_id', $this->getId())
+				->where($this->getPrimaryKey(), $this->getId())
 				->delete($tables);
 		}
 	}

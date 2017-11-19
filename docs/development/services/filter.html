@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
 	    
-	    <title>CP/Filter Service &mdash; ExpressionEngine 4.0.0-dp.4 documentation</title>
+	    <title>CP/Filter Service &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
 
 	    <meta name="viewport" content="initial-scale=1">
 
@@ -14,13 +14,13 @@
 	    <script type="text/javascript">
 	      var DOCUMENTATION_OPTIONS = {
 	        URL_ROOT:    '../../',
-	        VERSION:     '4.0.0-dp.4',
+	        VERSION:     '4.0.0-dp.5',
 	        COLLAPSE_INDEX: false,
 	        FILE_SUFFIX: '.html',
 	        HAS_SOURCE:  true
 	      };
 	    </script>
-	    <link rel="top" title="ExpressionEngine 4.0.0-dp.4 documentation" href="../../index.html" />
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../../index.html" />
 	    <link rel="up" title="Services" href="index.html" />
 	    <link rel="next" title="Format Service" href="format.html" />
 	    <link rel="prev" title="CP/FilePicker Service" href="filepicker.html" /> 
@@ -73,12 +73,13 @@
 <li><a class="reference internal" href="#perpage-filter" id="id5">Perpage Filter</a></li>
 <li><a class="reference internal" href="#site-filter" id="id6">Site Filter</a></li>
 <li><a class="reference internal" href="#username-filter" id="id7">Username Filter</a></li>
+<li><a class="reference internal" href="#keyword-filter" id="id8">Keyword Filter</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#custom-filters" id="id8">Custom Filters</a><ul>
-<li><a class="reference internal" href="#setdefaultvalue-value" id="id9">setDefaultValue($value)</a></li>
-<li><a class="reference internal" href="#setplaceholder-placeholder" id="id10">setPlaceholder($placeholder)</a></li>
-<li><a class="reference internal" href="#disablecustomvalue" id="id11">disableCustomValue()</a></li>
+<li><a class="reference internal" href="#custom-filters" id="id9">Custom Filters</a><ul>
+<li><a class="reference internal" href="#setdefaultvalue-value" id="id10">setDefaultValue($value)</a></li>
+<li><a class="reference internal" href="#setplaceholder-placeholder" id="id11">setPlaceholder($placeholder)</a></li>
+<li><a class="reference internal" href="#disablecustomvalue" id="id12">disableCustomValue()</a></li>
 </ul>
 </li>
 </ul>
@@ -187,9 +188,18 @@ thus:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="keyword-filter">
+<h3><a class="toc-backref" href="#id8">Keyword Filter</a><a class="headerlink" href="#keyword-filter" title="Permalink to this headline">¶</a></h3>
+<p>The keyword filter is just a text field placed next to the other filters, allowing the user to search your list via arbitrary text. It&#8217;s used thus:</p>
+<div class="highlight-php"><div class="highlight"><pre><span></span><span class="nv">$filters</span> <span class="o">=</span> <span class="nx">ee</span><span class="p">(</span><span class="s1">&#39;CP/Filter&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;Keyword&#39;</span><span class="p">);</span>
+<span class="nv">$values</span> <span class="o">=</span> <span class="nv">$filters</span><span class="o">-&gt;</span><span class="na">values</span><span class="p">();</span>
+<span class="nv">$keyword_value</span> <span class="o">=</span> <span class="nv">$values</span><span class="p">[</span><span class="s1">&#39;filter_by_keyword&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="custom-filters">
-<h2><a class="toc-backref" href="#id8">Custom Filters</a><a class="headerlink" href="#custom-filters" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Custom Filters</a><a class="headerlink" href="#custom-filters" title="Permalink to this headline">¶</a></h2>
 <p>When none of the built-in filters will suit your needs, it&#8217;s time for a custom
 filter. Using a custom filter is much like using one of the built-in ones in
 terms of how they behave, how the render, and how you fetch their values. With
@@ -212,15 +222,15 @@ rendered:</p>
 </div>
 <p>The returned <code class="docutils literal"><span class="pre">$filter</span></code> object has a few methods available detailed below.</p>
 <div class="section" id="setdefaultvalue-value">
-<h3><a class="toc-backref" href="#id9">setDefaultValue($value)</a><a class="headerlink" href="#setdefaultvalue-value" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">setDefaultValue($value)</a><a class="headerlink" href="#setdefaultvalue-value" title="Permalink to this headline">¶</a></h3>
 <p>Use this if your filter has a default value</p>
 </div>
 <div class="section" id="setplaceholder-placeholder">
-<h3><a class="toc-backref" href="#id10">setPlaceholder($placeholder)</a><a class="headerlink" href="#setplaceholder-placeholder" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">setPlaceholder($placeholder)</a><a class="headerlink" href="#setplaceholder-placeholder" title="Permalink to this headline">¶</a></h3>
 <p>Use this to set a specific placeholder for the custom text input.</p>
 </div>
 <div class="section" id="disablecustomvalue">
-<h3><a class="toc-backref" href="#id11">disableCustomValue()</a><a class="headerlink" href="#disablecustomvalue" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">disableCustomValue()</a><a class="headerlink" href="#disablecustomvalue" title="Permalink to this headline">¶</a></h3>
 <p>Use this if you do not want a custom text input for your filter.</p>
 </div>
 </div>
@@ -229,7 +239,7 @@ rendered:</p>
 						</div>
 						<div class="docs-footer">
 							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
-								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.4 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
 							<p><a class="scroll" href="#top"></a></p>
 						</div>
 

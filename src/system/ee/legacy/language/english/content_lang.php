@@ -30,7 +30,7 @@ $lang = array(
 
 'btn_create_new' => 'Create New',
 
-'btn_create_new_entry_in_channel' => 'Create New in %s',
+'btn_create_new_entry_in_channel' => 'New in %s',
 
 'btn_edit_comment' => 'Edit Comment',
 
@@ -395,6 +395,12 @@ $lang = array(
 'forum' => 'Forum',
 
 'forum_body' => 'Forum Topic Text',
+
+'forum_no_forum_body' => 'You cannot create a forum topic without content.',
+
+'forum_no_forum_title' => 'You must give the forum topic a title.',
+
+'forum_no_forum_id' => 'You must choose a forum.',
 
 'forum_title' => 'Forum Topic Title',
 
@@ -786,7 +792,7 @@ $lang = array(
 /* Relationships */
 'add_new_html_button' => 'Add New HTML button',
 
-'add_new_row' => 'add new row',
+'add_new_row' => 'Add new row',
 
 'hide' => 'Hide',
 

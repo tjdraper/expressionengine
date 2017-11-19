@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
 	    
-	    <title>Version Notes for 4.0.0 &mdash; ExpressionEngine 4.0.0-dp.4 documentation</title>
+	    <title>Version Notes for 4.0.0 &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
 
 	    <meta name="viewport" content="initial-scale=1">
 
@@ -14,13 +14,13 @@
 	    <script type="text/javascript">
 	      var DOCUMENTATION_OPTIONS = {
 	        URL_ROOT:    '../',
-	        VERSION:     '4.0.0-dp.4',
+	        VERSION:     '4.0.0-dp.5',
 	        COLLAPSE_INDEX: false,
 	        FILE_SUFFIX: '.html',
 	        HAS_SOURCE:  true
 	      };
 	    </script>
-	    <link rel="top" title="ExpressionEngine 4.0.0-dp.4 documentation" href="../index.html" />
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../index.html" />
 	    <link rel="up" title="Version Update Notes" href="version_notes.html" />
 	    <link rel="next" title="The Control Panel" href="../cp/index.html" />
 	    <link rel="prev" title="Version Notes for 3.5.5" href="version_notes_3.5.5.html" /> 
@@ -64,18 +64,45 @@
 						<div id="content">
 						<div class="section" id="version-notes-for-4-0-0">
 <h1>Version Notes for 4.0.0<a class="headerlink" href="#version-notes-for-4-0-0" title="Permalink to this headline">¶</a></h1>
-<p>Text field types that have been set to a number content type will now show zero by default when empty.</p>
-<p>The control panel template setting &#8216;Save templates as text files&#8217; has been removed from the control panel.  It now defaults to <code class="docutils literal"><span class="pre">y</span></code> and can only be overridden
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#templates-now-always-saved-as-files" id="id1">Templates Now Always Saved as Files</a></li>
+<li><a class="reference internal" href="#emoji-support-for-third-party-tables" id="id2">Emoji Support for Third-party Tables</a></li>
+<li><a class="reference internal" href="#member-field-changes" id="id3">Member Field Changes</a></li>
+<li><a class="reference internal" href="#emoticon-module" id="id4">Emoticon Module</a></li>
+<li><a class="reference internal" href="#other-changes" id="id5">Other Changes</a></li>
+</ul>
+</div>
+<div class="section" id="templates-now-always-saved-as-files">
+<h2><a class="toc-backref" href="#id1">Templates Now Always Saved as Files</a><a class="headerlink" href="#templates-now-always-saved-as-files" title="Permalink to this headline">¶</a></h2>
+<p>Saving templates as files is the new gold standard. As part of this, the control panel template setting &#8216;Save templates as text files&#8217; has been removed from the control panel.  It now defaults to <code class="docutils literal"><span class="pre">y</span></code> and can only be overridden
 via <a class="reference internal" href="../general/system_configuration_overrides.html#overrides-save-tmpl-files"><span class="std std-ref">configuration override</span></a></p>
-<p>Developers: The default character set for the database has changed to <code class="docutils literal"><span class="pre">utf8mb4</span></code>. If you have an INDEX on any text column that is larger than 191, you will need either resize the column, drop the index, or resize the index to 191 characters.</p>
+</div>
+<div class="section" id="emoji-support-for-third-party-tables">
+<h2><a class="toc-backref" href="#id2">Emoji Support for Third-party Tables</a><a class="headerlink" href="#emoji-support-for-third-party-tables" title="Permalink to this headline">¶</a></h2>
+<p>Third-party Developers: The default character set for the database has changed to <code class="docutils literal"><span class="pre">utf8mb4</span></code>. If you have an INDEX on any text column that is larger than 191, you will need either resize the column, drop the index, or resize the index to 191 characters. To update an existing ExpressionEngine install that was using <code class="docutils literal"><span class="pre">utf</span></code>, you can convert your database to take advantage of this using the <a class="reference external" href="https://github.com/EllisLab/Emoji-Support">Emoji Support utility</a>.</p>
+</div>
+<div class="section" id="member-field-changes">
+<h2><a class="toc-backref" href="#id3">Member Field Changes</a><a class="headerlink" href="#member-field-changes" title="Permalink to this headline">¶</a></h2>
 <p>The following fields are no longer default member fields: url, location, occupation, interests, bday_d, bday_m, bday_y, aol_im, yahoo_im, msn_im, icq, bio. Any of the fields that had content in them were replaced by custom member fields with the same name. The variables have been removed from the member templates, though they will display as custom field data if a custom field was created.</p>
 <p>Member bday_d, bday_m, bday_y default member fields were replaced by a birthday date field.</p>
+</div>
+<div class="section" id="emoticon-module">
+<h2><a class="toc-backref" href="#id4">Emoticon Module</a><a class="headerlink" href="#emoticon-module" title="Permalink to this headline">¶</a></h2>
+<p>The Emoticon module has been replaced with the Emoji module. The Emoticon module will be removed in ExpressionEngine 5, so you will want to replace your <code class="docutils literal"><span class="pre">{exp:emoticon}</span></code> tags with <code class="docutils literal"><span class="pre">{exp:emoji:emoji_list}</span></code> tags. The Emoji module&#8217;s tags are vastly superior to the old Emoticon module. Please see the <a class="reference internal" href="../add-ons/emoji/index.html"><span class="doc">Emoji</span></a> module documentation for details.</p>
+</div>
+<div class="section" id="other-changes">
+<h2><a class="toc-backref" href="#id5">Other Changes</a><a class="headerlink" href="#other-changes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Text field types that have been set to a number content type will now show zero by default when empty.</li>
+</ul>
+</div>
 </div>
 
 						</div>
 						<div class="docs-footer">
 							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
-								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.4 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
 							<p><a class="scroll" href="#top"></a></p>
 						</div>
 
@@ -111,7 +138,9 @@ via <a class="reference internal" href="../general/system_configuration_override
 <li class="toctree-l3"><a class="reference internal" href="version_notes_3.4.4.html">Version Notes for 3.4.4</a></li>
 <li class="toctree-l3"><a class="reference internal" href="version_notes_3.5.1.html">Version Notes for 3.5.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="version_notes_3.5.5.html">Version Notes for 3.5.5</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Version Notes for 4.0.0</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Version Notes for 4.0.0</a><ul class="simple">
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../operations/index.html">Maintenance &amp; Operations</a></li>

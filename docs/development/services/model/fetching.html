@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html" charset="utf-8" dir="ltr" lang="en-us">
 	    
-	    <title>Fetching Models &mdash; ExpressionEngine 4.0.0-dp.4 documentation</title>
+	    <title>Fetching Models &mdash; ExpressionEngine 4.0.0-dp.5 documentation</title>
 
 	    <meta name="viewport" content="initial-scale=1">
 
@@ -14,13 +14,13 @@
 	    <script type="text/javascript">
 	      var DOCUMENTATION_OPTIONS = {
 	        URL_ROOT:    '../../../',
-	        VERSION:     '4.0.0-dp.4',
+	        VERSION:     '4.0.0-dp.5',
 	        COLLAPSE_INDEX: false,
 	        FILE_SUFFIX: '.html',
 	        HAS_SOURCE:  true
 	      };
 	    </script>
-	    <link rel="top" title="ExpressionEngine 4.0.0-dp.4 documentation" href="../../../index.html" />
+	    <link rel="top" title="ExpressionEngine 4.0.0-dp.5 documentation" href="../../../index.html" />
 	    <link rel="up" title="Model Service" href="../model.html" />
 	    <link rel="next" title="Working with Relationships" href="relationships.html" />
 	    <link rel="prev" title="Using the Model Service" href="index.html" /> 
@@ -160,6 +160,30 @@ be applied by using the <code class="docutils literal"><span class="pre">orFilte
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">NOT</span> <span class="pre">IN</span></code></td>
 <td>Not in list of options</td>
 <td><code class="docutils literal"><span class="pre">filter('id',</span> <span class="pre">'NOT</span> <span class="pre">IN',</span> <span class="pre">array(5,</span> <span class="pre">8))</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">LIKE</span></code></td>
+<td>Matches wildcard string</td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'LIKE',</span> <span class="pre">'hello%')</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">NOT</span> <span class="pre">LIKE</span></code></td>
+<td>No wildcard matches</td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'NOT</span> <span class="pre">LIKE',</span> <span class="pre">'hello%')</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">REGEXP</span></code></td>
+<td>Matches regular expression</td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'REGEXP',</span> <span class="pre">'^w')</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">NOT</span> <span class="pre">REGEXP</span></code></td>
+<td>No regular expression match</td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'NOT</span> <span class="pre">REGEXP',</span> <span class="pre">'hello%')</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">IS</span></code></td>
+<td>Is <code class="docutils literal"><span class="pre">NULL</span></code></td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'IS',</span> <span class="pre">NULL)</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">IS</span> <span class="pre">NOT</span></code></td>
+<td>Is not <code class="docutils literal"><span class="pre">NULL</span></code></td>
+<td><code class="docutils literal"><span class="pre">filter('title',</span> <span class="pre">'IS</span> <span class="pre">NOT',</span> <span class="pre">NULL)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -333,7 +357,7 @@ processing.</p>
 						</div>
 						<div class="docs-footer">
 							<p><a href="https://expressionengine.com/support/bugs/new">Report a problem with this page</a><br>
-								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.4 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
+								ExpressionEngine<b class="reg-mark">&reg;</b> 4.0.0-dp.5 User Guide<br><span>&copy;2002–2017 <a href="https://ellislab.com/" rel="external">EllisLab, Inc.</a></span></p>
 							<p><a class="scroll" href="#top"></a></p>
 						</div>
 
