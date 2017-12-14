@@ -1,4 +1,5 @@
 {
     "name": "tjdraper/expressionengine",
-    "description": "ExpressionEngine - dependency management"
+    "description": "ExpressionEngine - dependency management",
+    "version": "4.0.2"
 }

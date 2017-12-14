@@ -63,7 +63,8 @@ class Set {
 	private $assignments = array(
 		'channel_field_groups' => array(),
 		'channel_fields'       => array(),
-		'field_group_fields'   => array()
+		'field_group_fields'   => array(),
+		'statuses'             => array(),
 	);
 
 	/**
@@ -155,7 +156,6 @@ class Set {
 
 		if ( ! $this->result->isValid())
 		{
-			$this->deleteFiles();
 			return $this->result;
 		}
 
@@ -173,7 +173,7 @@ class Set {
 	/**
 	 * Deletes the source files used in the import
 	 */
-	protected function deleteFiles()
+	public function cleanUpSourceFiles()
 	{
 		$filesystem = new Filesystem();
 		$filesystem->delete($this->getPath());
@@ -258,8 +258,6 @@ class Set {
                 $fn();
             }
         }
-
-		$this->deleteFiles();
 	}
 
 	/**
@@ -783,7 +781,7 @@ class Set {
 	private function loadFieldGroup($group_name)
 	{
 		$group = ee('Model')->make('ChannelFieldGroup');
-		$group->site_id = $this->site_id;
+		$group->site_id = 0;
 		$group->group_name = $group_name;
 
 		$this->applyOverrides($group, $group_name);
@@ -830,7 +828,7 @@ class Set {
 		}
 
 		$field = ee('Model')->make('ChannelField');
-		$field->site_id = $this->site_id;
+		$field->site_id = 0;
 		$field->field_name = $name;
 		$field->field_type = $type;
 

@@ -72,7 +72,6 @@ class Groups extends AbstractFieldsController {
 		if ( ! empty($_POST))
 		{
 			$field_group = $this->setWithPost(ee('Model')->make('ChannelFieldGroup'));
-			$field_group->site_id = ee()->config->item('site_id');
 			$result = $field_group->validate();
 
 			if (isset($_POST['ee_fv_field']) && $response = $this->ajaxValidation($result))
@@ -178,6 +177,7 @@ class Groups extends AbstractFieldsController {
 			if ($result->isValid())
 			{
 				$field_group->save();
+				$field_group->onAfterUpdate([]);
 
 				ee('CP/Alert')->makeInline('shared-form')
 					->asSuccess()
@@ -212,6 +212,7 @@ class Groups extends AbstractFieldsController {
 
 	private function setWithPost(ChannelFieldGroup $field_group)
 	{
+		$field_group->site_id = ($field_group->site_id) ?: 0;
 		$field_group->set($_POST);
 		$field_group->ChannelFields = ee('Model')->get('ChannelField', ee()->input->post('channel_fields'))->all();
 		return $field_group;

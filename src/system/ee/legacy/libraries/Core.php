@@ -63,15 +63,15 @@ class EE_Core {
 		define('PATH_THIRD',  SYSPATH . 'user/addons/');
 		define('PATH_CACHE',  SYSPATH . 'user/cache/');
 		define('PATH_TMPL',   SYSPATH . 'user/templates/');
-		define('PATH_JS',     'src');
+		define('PATH_JS',     'compressed');
 		define('PATH_DICT',   SYSPATH . 'user/config/');
 
 		// application constants
 		define('IS_CORE',		FALSE);
 		define('APP_NAME',		'ExpressionEngine'.(IS_CORE ? ' Core' : ''));
-		define('APP_BUILD',		'20171117');
-		define('APP_VER',		'4.0.0-dp.5');
-		define('APP_VER_ID',	'dp.5');
+		define('APP_BUILD',		'20171213');
+		define('APP_VER',		'4.0.2');
+		define('APP_VER_ID',	'');
 		define('SLASH',			'&#47;');
 		define('LD',			'{');
 		define('RD',			'}');
@@ -430,7 +430,7 @@ class EE_Core {
 		// Fetch control panel language file
 		ee()->lang->loadfile('cp');
 
-		// Prevent CodeIgniter Pseudo Output variables from being parsed
+		// Prevent Pseudo Output variables from being parsed
 		ee()->output->parse_exec_vars = FALSE;
 
 		/** ------------------------------------

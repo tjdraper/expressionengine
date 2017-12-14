@@ -363,6 +363,40 @@ class Channel {
 		$this->ffields  = $fields['fluid_field_fields'];
 		$this->tfields  = $fields['toggle_fields'];
 
+		// If there are install-wide fields, make them available to each site
+		if (isset($this->cfields[0]))
+		{
+			$site_ids = ee('Model')->get('Site')
+				->fields('site_id')
+				->all()
+				->getIds();
+
+			foreach (['cfields', 'dfields', 'rfields', 'gfields',
+				'pfields', 'ffields', 'tfields'] as $custom_fields)
+			{
+				$tmp = $this->$custom_fields;
+
+				if ( ! isset($tmp[0]))
+				{
+					continue;
+				}
+
+				foreach ($site_ids as $site_id)
+				{
+					if ( ! isset($tmp[$site_id]))
+					{
+						$tmp[$site_id] = $tmp[0];
+					}
+					else
+					{
+						$tmp[$site_id] = $tmp[0] + $tmp[$site_id];
+					}
+				}
+
+				$this->$custom_fields = $tmp;
+			}
+		}
+
 		ee()->session->cache['channel']['custom_channel_fields'] = $this->cfields;
 		ee()->session->cache['channel']['date_fields']           = $this->dfields;
 		ee()->session->cache['channel']['relationship_fields']   = $this->rfields;
@@ -2096,7 +2130,29 @@ class Channel {
 						case 'custom_field' :
 							if (strpos($corder[$key], '|') !== FALSE)
 							{
-								$field_list = 'wd.field_id_'.implode(", wd.field_id_", explode('|', $corder[$key]));
+								$field_list = [];
+
+								foreach (explode('|', $corder[$key]) as $field_id)
+								{
+									$field = ee('Model')->get('ChannelField', $field_id)->first();
+
+									if ($field->legacy_field_data)
+									{
+										$field_list[] = "wd.field_id_{$field_id}";
+									}
+									else
+									{
+										if (strpos($sql, "exp_channel_data_field_{$field_id}") === FALSE)
+										{
+											$join .= "LEFT JOIN exp_channel_data_field_{$field_id} ON exp_channel_data_field_{$field_id}.entry_id = t.entry_id ";
+											$sql = str_replace('WHERE ', $join . 'WHERE ', $sql);
+										}
+
+										$field_list[] = "exp_channel_data_field_{$field_id}.field_id_{$field_id}";
+
+									}
+								}
+
 								$end .= "CONCAT(".$field_list.")";
 								$distinct_select .= ', '.$field_list.' ';
 							}
@@ -2104,14 +2160,24 @@ class Channel {
 							{
 								$field_id = $corder[$key];
 
-								if (strpos($sql, "exp_channel_data_field_{$field_id}") === FALSE)
-								{
-									$join = "LEFT JOIN exp_channel_data_field_{$field_id} ON exp_channel_data_field_{$field_id}.entry_id = t.entry_id ";
-									$sql = str_replace('WHERE ', $join . 'WHERE ', $sql);
-								}
+								$field = ee('Model')->get('ChannelField', $field_id)->first();
 
-								$end .= "exp_channel_data_field_{$field_id}.field_id_{$field_id}";
-								$distinct_select .= ", exp_channel_data_field_{$field_id}.field_id_{$field_id} ";
+								if ($field->legacy_field_data)
+								{
+									$end .= "wd.field_id_{$field_id}";
+									$distinct_select .= ", wd.field_id_{$field_id} ";
+								}
+								else
+								{
+									if (strpos($sql, "exp_channel_data_field_{$field_id}") === FALSE)
+									{
+										$join = "LEFT JOIN exp_channel_data_field_{$field_id} ON exp_channel_data_field_{$field_id}.entry_id = t.entry_id ";
+										$sql = str_replace('WHERE ', $join . 'WHERE ', $sql);
+									}
+
+									$end .= "exp_channel_data_field_{$field_id}.field_id_{$field_id}";
+									$distinct_select .= ", exp_channel_data_field_{$field_id}.field_id_{$field_id} ";
+								}
 							}
 						break;
 
@@ -2168,6 +2234,11 @@ class Channel {
 		else
 		{
 			$this->pagination->per_page  = ( ! is_numeric(ee()->TMPL->fetch_param('limit')))  ? $this->limit : ee()->TMPL->fetch_param('limit');
+		}
+
+		if ($join_member_table)
+		{
+			$sql = str_replace(' WHERE ', ' ' . $member_join . ' WHERE ', $sql);
 		}
 
 		/**------
@@ -2267,11 +2338,6 @@ class Channel {
 		/**------
 		/**  Fetch the entry_id numbers
 		/**------*/
-
-		if ($join_member_table)
-		{
-			$sql = str_replace(' WHERE ', $member_join . ' WHERE ', $sql);
-		}
 
 		$query = ee()->db->query($sql_a.$sql_b.$sql);
 
@@ -4090,8 +4156,7 @@ class Channel {
 			$variables = ee()->TMPL->var_single;
 		}
 
-		// native metadata fields with modifiers will pass through here. Thos without modifiers
-		// will have already been handled with a simple string replace by EE_Channel_category_parser
+		// native metadata fields with will pass through here, treat them like text fields
 		ee()->api_channel_fields->include_handler('text');
 		$fieldtype = ee()->api_channel_fields->setup_handler('text', TRUE);
 		ee()->api_channel_fields->field_types['text'] = $fieldtype;
@@ -4100,6 +4165,12 @@ class Channel {
 		{
 			$var_props = ee('Variables/Parser')->parseVariableProperties($tag);
 			$field_name = $var_props['field_name'];
+
+			// only deal with variables we own
+			if ( ! isset($data[$field_name]))
+			{
+				continue;
+			}
 
 			if (isset($field_index[$field_name]) && isset($data['field_id_'.$field_index[$field_name]]))
 			{
@@ -4121,18 +4192,22 @@ class Channel {
 					$tag
 				);
 			}
-			elseif (isset($data[$field_name]) && ! empty($var_props['modifier']))
+			elseif (isset($data[$field_name]))
 			{
 				$content = $data[$field_name];
-				$parse_fnc = 'replace_'.$var_props['modifier'];
 
-				if (method_exists($fieldtype, $parse_fnc))
+				if ( ! empty($var_props['modifier']))
 				{
-					$content = ee()->api_channel_fields->apply($parse_fnc, array(
-						$content,
-						$var_props['params'],
-						FALSE
-					));
+					$parse_fnc = 'replace_'.$var_props['modifier'];
+
+					if (method_exists($fieldtype, $parse_fnc))
+					{
+						$content = ee()->api_channel_fields->apply($parse_fnc, array(
+							$content,
+							$var_props['params'],
+							FALSE
+						));
+					}
 				}
 
 				$chunk = str_replace(LD.$tag.RD, $content, $chunk);

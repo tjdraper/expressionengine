@@ -106,11 +106,9 @@ class ChannelEntry extends ContentModel {
 		)
 	);
 
-	protected static $_auto_join = array('Channel');
-
 	protected static $_field_data = array(
 		'field_model'     => 'ChannelField',
-		'group_column'    => 'Channel__channel_id',
+		'group_column'    => 'channel_id',
 		'structure_model' => 'Channel',
 	);
 
@@ -1013,6 +1011,7 @@ class ChannelEntry extends ContentModel {
 			? NULL : array_keys(ee()->session->userdata('assigned_channels'));
 
 		$my_fields = $this->Channel->getAllCustomFields()->pluck('field_id');
+		$my_statuses = $this->Channel->Statuses->getIds();
 
 		$channel_filter_options = array();
 
@@ -1023,7 +1022,8 @@ class ChannelEntry extends ContentModel {
 
 		foreach ($channels as $channel)
 		{
-			if ($my_fields == $channel->getAllCustomFields()->pluck('field_id'))
+			if ($my_fields == $channel->getAllCustomFields()->pluck('field_id') &&
+				$my_statuses == $channel->Statuses->getIds())
 			{
 				$channel_filter_options[$channel->channel_id] = $channel->channel_title;
 			}
@@ -1118,6 +1118,32 @@ class ChannelEntry extends ContentModel {
 	public function getAuthorName()
 	{
 		return ($this->author_id && $this->Author) ? $this->Author->getMemberName() : '';
+	}
+
+	public function getModChannelResultsArray()
+	{
+		$data = array_merge($this->getValues(), $this->Channel->getValues(), $this->Author->getValues());
+		$data['entry_site_id'] = $this->site_id;
+		if ($this->edit_date)
+		{
+			$data['edit_date'] = $this->edit_date->format('U');
+		}
+		if ($this->recent_comment_date)
+		{
+			$data['recent_comment_date'] = $this->recent_comment_date->format('U');
+		}
+
+		foreach ($this->getStructure()->getAllCustomFields() as $field)
+		{
+			$key = 'field_id_' . $field->getId();
+
+			if ( ! array_key_exists($key, $data))
+			{
+				$data[$key] = NULL;
+			}
+		}
+
+		return $data;
 	}
 }
 
