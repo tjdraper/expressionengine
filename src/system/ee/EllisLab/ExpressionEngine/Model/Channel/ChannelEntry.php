@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @copyright Copyright (c) 2003-2018, EllisLab, Inc. (https://ellislab.com)
  * @license   https://expressionengine.com/license
  */
 
@@ -450,7 +450,8 @@ class ChannelEntry extends ContentModel {
 		// store the author and dissociate. otherwise saving the author will
 		// attempt to save this entry to ensure relationship integrity.
 		// TODO make sure everything is already dissociated when we hit this
-		$last_author = $this->Author;
+
+		$last_author = $this->getModelFacade()->get('Member', $this->Author->member_id)->first();
 		$this->Author = NULL;
 
 		$last_author->updateAuthorStats();
