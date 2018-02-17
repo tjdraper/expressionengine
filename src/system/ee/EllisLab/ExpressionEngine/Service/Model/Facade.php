@@ -62,7 +62,7 @@ class Facade {
 		{
 			$shortname = $this->removeAlias($name);
 
-			if (count($default_ids) == 0)
+			if (empty($default_ids))
 			{
 				$builder->markAsFutile();
 			}
