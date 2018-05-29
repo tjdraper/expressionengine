@@ -1085,7 +1085,7 @@ class Forum_Core extends Forum {
 	{
 		if ( ! is_array($member_ids))
 		{
-			$member_ids[$member_ids] = $member_ids;
+			$member_ids = [$member_ids];
 		}
 
 		foreach ($member_ids as $member_id)
@@ -8149,8 +8149,7 @@ class Forum_Core extends Forum {
 		}
 		else
 		{
-			ee()->load->model('member_model');
-			ee()->member_model->delete_member($this->current_id);
+			ee('Model')->get('Member', $this->current_id)->delete();
 
 			$ban_msg = lang('user_account_deleted');
 		}
@@ -8988,7 +8987,7 @@ class Forum_Core extends Forum {
 
 		if ($new_topic_search == TRUE)
 		{
-			$last_visit = ee()->session->userdata('last_visit');
+			$last_visit = (int) ee()->session->userdata('last_visit');
 			$sql .= "AND topic_date > ".$last_visit." ";
 
 			// Do we need to igore any recently visited topics?
