@@ -3,7 +3,7 @@
  * ExpressionEngine (https://expressionengine.com)
  *
  * @link      https://expressionengine.com/
- * @copyright Copyright (c) 2003-2017, EllisLab, Inc. (https://ellislab.com)
+ * @copyright Copyright (c) 2003-2018, EllisLab, Inc. (https://ellislab.com)
  * @license   https://expressionengine.com/license
  */
 
@@ -72,7 +72,6 @@ class Updater {
 
 	private function updateFieldFmtOptionForMemberFields()
 	{
-		// Fields can span Sites and do not need Groups
 		ee()->smartforge->modify_column('member_fields', array(
 			'm_field_fmt' => array(
 				'type'       => 'varchar',
