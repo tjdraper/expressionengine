@@ -1,5 +1,10 @@
 {
     "name": "tjdraper/expressionengine",
     "description": "ExpressionEngine - dependency managed",
-    "version": "4.3.4"
+    "version": "4.3.4.1",
+    "type": "ee",
+    "extra": {
+        "systemEEDir": "src/system/ee",
+        "themesEEDir": "src/themes/ee"
+    }
 }
